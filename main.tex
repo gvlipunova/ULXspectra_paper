@@ -1,0 +1,53 @@
+% Journal class not chosen yet: article + natbib for now.
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[authoryear,round]{natbib}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+
+\graphicspath{{figures/}}
+
+% Symbols used throughout (as in the ULXspectra README)
+\newcommand{\mdot}{\dot m}
+\newcommand{\Mdot}{\dot M}
+\newcommand{\Rsph}{R_{\rm sph}}
+\newcommand{\Rtrap}{R_{\rm trap}}
+\newcommand{\rin}{r_{\rm in}}
+\newcommand{\Teff}{T_{\rm eff}}
+
+\title{Spectra of ultraluminous X-ray sources from a supercritical disc with an optically thick wind}
+% Working title
+\author{Galina Lipunova \and Collaborators}
+\date{Draft, \today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+% OUTLINE: model, fits, main result.
+\end{abstract}
+
+\input{sections/01_introduction}
+\input{sections/02_model_overview}
+\input{sections/03_critical_radii}
+\input{sections/04_disc}
+\input{sections/05_central_emitter}
+\input{sections/06_wind}
+\input{sections/07_wind_temperature}
+\input{sections/08_spectrum}
+\input{sections/09_fitting}
+\input{sections/10_results}
+\input{sections/11_discussion}
+\input{sections/12_conclusions}
+
+\appendix
+\input{sections/A1_numerics}
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}

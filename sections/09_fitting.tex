@@ -1,0 +1,12 @@
+% Sources: README "Adaptive Run Length", "Spectrum Thinning"; PLAN.md section 7
+
+\section{Fitting method}
+\label{sec:fitting}
+
+% OUTLINE: Data: SEDs of the selected ULXs (data/selected); LMIN = 1e36 erg/s cut;
+%          full energy range vs <= 1 keV.
+% OUTLINE: Likelihood in log nuLnu with sigma_log = 0.08; 20 points per decade of
+%          energy (equal weight per decade) and why (SEDs smooth; Fisher test).
+% OUTLINE: MCMC: emcee with differential-evolution moves (ter Braak 2006; ter Braak &
+%          Vrugt 2008), 200 walkers, adaptive burn-in and run length (N >= 20 tau,
+%          ESS ~ 4000).

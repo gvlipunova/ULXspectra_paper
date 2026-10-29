@@ -1,0 +1,15 @@
+% Sources: README "Model Physics" (intro), "Units and radii", "Wind scenarios and the accretion-rate profile"
+
+\section{Model overview}
+\label{sec:model}
+
+% OUTLINE: Geometry: disc, wind cone between the funnel (theta_c) and the disc
+%          surface, central emitter; sketch figure.
+% OUTLINE: Order of the calculation (README Model Physics steps 1-8).
+% OUTLINE: Units: x = R/r_in_disc, mdot = Mdot/Mdot_Edd, Mdot_Edd = L_Edd/(eta_edd
+%          c^2). code: apply_physical_radii() (csrcs/disc_struct.c).
+% OUTLINE: Inner disc radius: BH r_in = r_in_factor GM/c^2; NS r_in = r_m, the wind
+%          launched from r_in_disc (C8).
+% OUTLINE: Wind scenarios (presets) and Mdot(R) inside R_sph: P07, SS73, set_mdot_in.
+%          code: mdot_acc_profile_scalar().
+% OUTLINE: Table of parameters: free/fixed, priors (from ULX.conf presets).

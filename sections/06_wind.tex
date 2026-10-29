@@ -1,0 +1,15 @@
+% Sources: README "Wind: streamlines, density and photosphere"; docs/wind_velocity_laws.md
+
+\section{Wind: streamlines, density and photosphere}
+\label{sec:wind}
+
+% OUTLINE: Straight streamlines; linear cos(theta_0) law between theta_c and theta_d.
+%          code: theta_of_launch_radius() (csrcs/wind_struct.c).
+% OUTLINE: Streamlines never cross: unique launch radius (C12, proof in
+%          find_launch_radius_for_point()).
+% OUTLINE: Density from mass conservation along streamtubes, rho = Sigmadot_w R_0/(v
+%          R |J|). code: rho_wind_streamtube_scalar().
+% OUTLINE: Speed along a streamline: ballistic (default), launch, P07, accelerating;
+%          comparison figure from docs/scripts/compare_wind_velocity_laws.py. code:
+%          v_wind_streamline().
+% OUTLINE: Photosphere z_ph(R): tau = 1 from above; outer wall.

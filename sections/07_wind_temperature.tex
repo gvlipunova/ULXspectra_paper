@@ -1,0 +1,13 @@
+% Sources: README "Wind temperature and energy budget"; docs/wind_column_angles.md
+
+\section{Wind temperature and energy budget}
+\label{sec:wtemp}
+
+% OUTLINE: Advection: T_w,raw(R) = T_disc(x_eff), x_eff = x/(1 + tau_perp v_w/c).
+%          code: wind_temperature_profile_array() (csrcs/wind_surface.c).
+% OUTLINE: tau_perp with the mass-weighted streamline angle (C14); v_w cancels in the
+%          ratio, equal to (1/c) int kappa rho v dz for any velocity law (C17). code:
+%          tau_perpendicular_simple_scalar(). Figure from
+%          docs/scripts/compare_wind_column_angles.py.
+% OUTLINE: Energy budget: L_wind = (1 - eps_w)(L_disc - L_disc,seen), f_cor. code:
+%          wind_temperature_correction_factor() (csrcs/wind_emission.c).
