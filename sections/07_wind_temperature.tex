@@ -1,13 +1,89 @@
 % Sources: README "Wind temperature and energy budget"; docs/wind_column_angles.md
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Wind temperature and energy budget}
 \label{sec:wtemp}
 
-% OUTLINE: Advection: T_w,raw(R) = T_disc(x_eff), x_eff = x/(1 + tau_perp v_w/c).
-%          code: wind_temperature_profile_array() (csrcs/wind_surface.c).
-% OUTLINE: tau_perp with the mass-weighted streamline angle (C14); v_w cancels in the
-%          ratio, equal to (1/c) int kappa rho v dz for any velocity law (C17). code:
-%          tau_perpendicular_simple_scalar(). Figure from
-%          docs/scripts/compare_wind_column_angles.py.
-% OUTLINE: Energy budget: L_wind = (1 - eps_w)(L_disc - L_disc,seen), f_cor. code:
-%          wind_temperature_correction_factor() (csrcs/wind_emission.c).
+\subsection{Advection of photons by the wind}
+\label{sec:wtemp:raw}
+
+Photons released by the disc are carried outwards by the wind before they diffuse out of it (P07).
+The photosphere above $R$ therefore shows the disc temperature of a smaller radius:
+\begin{equation}
+T_{\rm w,raw}(R) = \Teff(\xeff\,\rin), \qquad \xeff = \frac{x}{1 + \taup v_{\rm w}/c} ,
+\label{eq:Twraw}
+\end{equation}
+% code: wind_temperature_profile_array() (csrcs/wind_surface.c); README "Wind temperature"
+where $\Teff$ is the disc profile~\eqref{eq:Teff}, defined also beyond $\rout$, so that a hidden outer disc still sets the wind temperature.
+$\xeff$ is never below $1$ or below the radius of the hottest disc ring.
+% code: wind_temperature_profile_array() (x_eff_min = max(x_launch, x_Tmax)); README "Wind temperature"
+Here $\taup$ is the vertical optical depth of the wind at $R$ and $v_{\rm w}$ its mean speed, so that $\taup v_{\rm w}/c$ is the ratio of the time of photon diffusion to the time in which the wind shifts them, $t_{\rm dif}/t_{\rm wind}$, for photons moving out of the disc in the vertical direction.
+Eq.~\eqref{eq:Twraw} is a bridging formula, which reduces to the prescription of P07 at radii far enough from the centre.
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Effective temperature at the wind last-scattering surface"; Fig. photon_adv.png)
+% VERIFY: the P07 equation it reduces to, and in which limit.
+Each streamline crossing $R$ contributes with its own launch angle:
+\begin{equation}
+\taup = \frac{\kT}{4\pi R\,v_{\rm w}} \int_{\rin}^{\min(R, \Rsph)} \frac{{\rm d}\Mdot_{\rm w}(R_0)}{\sin\theta_0} ,
+\label{eq:tauperp}
+\end{equation}
+% code: tau_perpendicular_simple_scalar(), wind_column_table_init() (csrcs/wind_surface.c); README "Wind temperature"; PLAN C14
+with $v_{\rm w} = \beta_{\rm w}\sqrt{GM/\min(R, \Rsph)}$ (P07, eq.~27).
+% code: v_wind_scalar() (csrcs/wind_struct.c)
+The speed cancels in the advection ratio,
+\begin{equation}
+\frac{\taup v_{\rm w}}{c} = \frac{\kT}{4\pi R\,c} \int \frac{{\rm d}\Mdot_{\rm w}}{\sin\theta_0}
+= \frac{\rg}{\etaEdd R} \int \frac{{\rm d}\mdot_{\rm w}}{\sin\theta_0} ,
+\label{eq:advratio}
+\end{equation}
+% code: docs/wind_column_angles.md "Speed in the advection ratio (C17)"; PLAN C17
+% derived: kappa_T Mdot_Edd/(4 pi c) = G M/(eta_Edd c^2) by eqs. (LEdd), (MEdd)
+so the wind temperature depends on neither $\beta_{\rm w}$ nor the velocity law.
+
+Eqs.~\eqref{eq:tauperp} and \eqref{eq:advratio} follow from the streamline density~\eqref{eq:rho}.
+Streamlines do not cross (Eq.~\ref{eq:dzdx0}), so the points of the vertical line at $R$ inside the wind correspond one to one to the launch radii $\rin \le R_0 \le \min(R, \Rsph)$, with ${\rm d}z = |\partial z/\partial R_0|\,{\rm d}R_0$.
+Since $|J| = \sin\theta_0\,|\partial z/\partial R_0|$, Eqs.~\eqref{eq:Sigmadotw} and \eqref{eq:rho} give
+\begin{equation}
+\kT\rho v\,{\rm d}z = \frac{\kT}{4\pi R}\,\frac{{\rm d}\Mdot_{\rm w}(R_0)}{\sin\theta_0} .
+\label{eq:column_element}
+\end{equation}
+% derived (Claude) from Eqs. (Sigmadotw), (rho); generalises the old manuscript's derivation of tau_perp for
+%       parallel streamlines (SEA_spectrum.zip, main.tex, "old Density in the wind")
+For a speed $v = v_{\rm w}$ constant along the vertical, the integral over $z$ is Eq.~\eqref{eq:tauperp}.
+For any velocity law, $\rho v$ is the mass flux along the streamlines, and $(1/c)\int\kT\rho v\,{\rm d}z$ equals the ratio~\eqref{eq:advratio}.
+The advection ratio is therefore the one of the same density from which the photosphere is built.
+In the code the two are computed independently, and at the NGC~7793 best fits they agree to 0.15 per cent.
+% numbers: docs/wind_column_angles.md, table in "Speed in the advection ratio (C17)" (0.9985-1.0000), script docs/scripts/check_advection_ratio.py
+% AUTHOR: give the commit for this check (docs say C17; CHANGELOG entry 2026-10-28).
+Earlier versions of the code assigned all the wind at $R$ the angle $\theta_{\rm c}$; Eq.~\eqref{eq:tauperp} lowers $\taup$ by up to 20 per cent beyond $0.1\Rsph$ and changes the spectra at the NGC~7793 best fits by at most 0.056~dex.
+% numbers: CHANGELOG 2026-10-28 "Streamline angle in the wind column", docs/wind_column_angles.md
+% AUTHOR: keep this history in the paper, or drop it?
+% OUTLINE: figure wind_column_angles.png (docs/scripts/compare_wind_column_angles.py, commit b6a9964).
+
+\subsection{Energy budget}
+\label{sec:wtemp:budget}
+
+The wind radiates what the disc releases but does not show directly, minus the fraction $\epsilon_{\rm w}$ spent on launching the wind:
+\begin{equation}
+L_{\rm wind} = (1 - \epsilon_{\rm w})\,(L_{\rm disc} - L_{\rm disc,seen}) .
+\label{eq:Lwind}
+\end{equation}
+% code: wind_temperature_correction_factor() (available_for_wind) (csrcs/wind_emission.c); README "Wind temperature"
+Here $L_{\rm disc}$ is given by Eq.~\eqref{eq:Ldisc} and $L_{\rm disc,seen}$ is the luminosity of the disc rings with $\rin \le R < \rout$ that the optically thick wind does not cover; these keep their temperature~\eqref{eq:Teff}, also where they are seen through a transparent inner wind.
+The raw wind temperatures are scaled by one factor,
+\begin{equation}
+\Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}, \qquad f_{\rm cor} = \frac{L_{\rm wind}}{L_{\rm wind,raw}} ,
+\label{eq:fcor}
+\end{equation}
+% code: wind_temperature_correction_factor() (f_cor) (csrcs/wind_emission.c); README "Wind temperature"
+where $L_{\rm wind,raw}$ is the luminosity of both sides of the wind photosphere at the temperatures~\eqref{eq:Twraw},
+\begin{equation}
+L_{\rm wind,raw} = 2\int \sigma T_{\rm w,raw}^4\,2\pi R\,\sqrt{1 + \left(\frac{{\rm d}z_{\rm ph}}{{\rm d}R}\right)^2}\,{\rm d}R .
+\label{eq:Lwindraw}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Luminosity of the last-scattering surface");
+% code: dS_curve_one_side (csrcs/wind_surface.c), bolometric_wind_power_from_surface() (csrcs/wind_emission.c)
+The integral runs along the photosphere including the outer wall, where it becomes $2\pi R_{\rm wall}\,{\rm d}z$.
+% code: wind_model_api.c (include_outer_vertical_wall = 0: the wall is part of the surface curve)
+If $L_{\rm wind} \le 0$, we keep $f_{\rm cor} = 1$ and flag the model.
+% code: wind_temperature_correction_factor() (wind_budget_fallback)
+% AUTHOR: is a flagged model rejected in the fits, or kept? (Sect. fitting)

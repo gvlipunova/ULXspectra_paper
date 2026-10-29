@@ -1,15 +1,190 @@
 % Sources: README "Model Physics" (intro), "Units and radii", "Wind scenarios and the accretion-rate profile"
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Model overview}
 \label{sec:model}
 
-% OUTLINE: Geometry: disc, wind cone between the funnel (theta_c) and the disc
-%          surface, central emitter; sketch figure.
-% OUTLINE: Order of the calculation (README Model Physics steps 1-8).
-% OUTLINE: Units: x = R/r_in_disc, mdot = Mdot/Mdot_Edd, Mdot_Edd = L_Edd/(eta_edd
-%          c^2). code: apply_physical_radii() (csrcs/disc_struct.c).
-% OUTLINE: Inner disc radius: BH r_in = r_in_factor GM/c^2; NS r_in = r_m, the wind
-%          launched from r_in_disc (C8).
-% OUTLINE: Wind scenarios (presets) and Mdot(R) inside R_sph: P07, SS73, set_mdot_in.
-%          code: mdot_acc_profile_scalar().
-% OUTLINE: Table of parameters: free/fixed, priors (from ULX.conf presets).
+\subsection{Geometry and order of the calculation}
+\label{sec:model:geometry}
+
+The accretor is a black hole (BH) or a neutron star (NS) with a magnetosphere.
+Matter arrives at the outer disc radius at a constant rate $\Mdot_0$.
+Inside the spherization radius $\Rsph$ part of it leaves the disc in a wind, so that the accretion rate $\Mdot(R)$ falls towards the inner disc radius $\rin$.
+The wind fills the cone between the funnel, the innermost streamline at angle $\theta_{\rm c}$ to the axis, and the disc surface.
+For a NS, the matter inside $\rin = \rmag$ radiates from the magnetosphere, which we call the central emitter.
+% OUTLINE: sketch figure of the geometry (disc, wind cone, funnel, photosphere,
+%          outer wall, central emitter, observer at inclination i). AUTHOR: make or
+%          provide; it must come from a script in the code repository.
+
+The calculation goes through these steps in order:
+\begin{enumerate}
+\item radii and units (this section);
+\item $\Mdot(R)$, $\Rsph$ and the trapping radius $\Rtrap$ (Sects.~\ref{sec:model:mdot} and~\ref{sec:radii});
+\item viscous torque and disc effective temperature (Sect.~\ref{sec:disc});
+\item luminosity budget of the disc and the central emitter (Sect.~\ref{sec:disc:budget});
+\item the NS magnetosphere (Sect.~\ref{sec:central});
+\item wind streamlines, density and photosphere (Sect.~\ref{sec:wind});
+\item wind temperature and its energy budget (Sect.~\ref{sec:wtemp});
+\item visibility and spectrum (Sect.~\ref{sec:spectrum}).
+\end{enumerate}
+% Source: README "Model Physics", steps 1-8.
+
+\subsection{Units and radii}
+\label{sec:model:units}
+
+The Eddington luminosity is
+\begin{equation}
+\LEdd = \frac{4\pi G M c}{\kT}, \qquad \kT = 0.34~{\rm cm^2\,g^{-1}},
+\label{eq:LEdd}
+\end{equation}
+% code: README "Units and radii"; KAPPA_T_CGS in csrcs
+and the Eddington accretion rate is
+\begin{equation}
+\MEdd = \frac{\LEdd}{\etaEdd\, c^2}, \qquad \mdot = \frac{\Mdot}{\MEdd}.
+\label{eq:MEdd}
+\end{equation}
+% code: README "Units and radii"; eta_edd_of() (csrcs/disc_struct.c)
+We take $\etaEdd = 1/12$, that is $\MEdd = 12\,\LEdd/c^2$, as in \citet{Poutanen2007} and \citet{Lipunova1999}; \citet{Middleton2026} use $\etaEdd = 1/10$.
+The outer accretion rate is $\mdot_0$.
+% AUTHOR: one sentence on why 1/12 (e.g. efficiency of a Newtonian disc with
+%         r_in = 6 r_g)? The sources only say "as in P07 and L99".
+
+Radii are measured in $\rg = GM/c^2$, and in the code in units of the inner disc radius, $x = R/\rin$.
+For a BH, $\rin = r_{\rm in,f}\,\rg$, where $r_{\rm in,f}$ (\code{r\_in\_factor}) is a free parameter.
+For a NS, the inner disc radius is the magnetospheric radius,
+\begin{equation}
+\rin = \rmag = x_{\rm m}\, r_{\rm in,f}\, \rg ,
+\label{eq:rm}
+\end{equation}
+% code: apply_physical_radii() (csrcs/disc_struct.c); README "Units and radii"
+where $x_{\rm m}$ is \code{wind\_inner\_launch\_x}; only the product of the two factors matters.
+The prior rejects $\rmag \le \RNS = 10$~km.
+In both cases the wind is launched from $\rin$ outwards.
+% AUTHOR: the code names (wind_inner_launch_x, r_in_factor) are historical; is the
+%         paper notation r_in,f and x_m fine, or would you parametrise the NS by r_m
+%         directly?
+
+The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Sect.~\ref{sec:model:mdot}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
+The actual inner disc radius only truncates them.
+% code: R_IN_REF_FACTOR (csrcs); README "Units and radii"
+
+The outer disc radius $\rout$ is free.
+Only the disc inside $\rout$ emits and counts in the disc luminosity.
+If $\rout$ lies inside the outer wall of the wind (Sect.~\ref{sec:wind:photosphere}), the disc there is hidden but still sets the wind temperature (Sect.~\ref{sec:wtemp}); beyond the wall the outer disc is seen directly.
+The radial grid extends to $\max(10^4\mdot_0\,\rin, \rout)$; the rings beyond $\rout$ do not emit but can occult.
+% code: README "Units and radii"; radial_grid_edges() (csrcs/wind_surface.c)
+
+\subsection{Accretion rate in the disc}
+\label{sec:model:mdot}
+
+Outside $\Rsph$ the accretion rate is constant, $\mdot = \mdot_0$.
+For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$ (Sect.~\ref{sec:radii}).
+Inside $\Rsph$ the main model of this paper prescribes the fraction $f_{\rm in} = \mdot(\rin)/\mdot_0$ (\code{user\_mdot\_in\_fraction}) that reaches the inner disc radius, and takes $\Mdot$ linear in $R$ between $\rin$ and $\Rsph$:
+\begin{equation}
+\mdot(x) = \mdot_0 \left[ f_{\rm in} + (1 - f_{\rm in})\,\frac{x - 1}{\xsp - 1} \right]
+\label{eq:mdot_setin}
+\end{equation}
+% code: mdot_acc_profile_scalar(), branch "set_mdot_in" (csrcs/disc_struct.c); README "Wind scenarios"
+for $1 \le x < \xsp$, with $\xsp = \Rsph/\rin$.
+$f_{\rm in}$ is free in the fits.
+% AUTHOR: motivation for the linear profile and for leaving f_in free (vs P07 eq. 23,
+%         which fixes it through eps_w)?
+
+We compare this model with three flow rules from the literature, selected in the code by \code{wind\_scenario} (Table~\ref{tab:presets}).
+In the profile of \citet[][hereafter P07]{Poutanen2007}, $\Mdot$ is linear in $u = R/\Rref$,
+\begin{equation}
+\mdot = \mdot_{\rm in} + (\mdot_0 - \mdot_{\rm in})\,\frac{u - 1}{u_{\rm sph} - 1}, \qquad u < u_{\rm sph},
+\label{eq:mdot_P07}
+\end{equation}
+% code: mdot_acc_profile_scalar(), branch "P07" (csrcs/disc_struct.c); README "Wind scenarios"
+with the inner rate set by the wind energy fraction $\epsilon_{\rm w}$ (P07, eq.~23),
+\begin{equation}
+\frac{\mdot_{\rm in}}{\mdot_0} = \frac{1 - a}{1 - a/\sqrt{2\mdot_0/5}},
+\label{eq:mdot_in_P07}
+\end{equation}
+% code: mdot_in_over_mdot0(), a_ew() (csrcs/disc_struct.c); README "Wind scenarios"
+where $a = \epsilon_{\rm w}(0.83 - 0.25\,\epsilon_{\rm w})$.
+The profile is evaluated at $\max(R, \rin)$ and is not allowed to become negative.
+The L99 preset is the P07 profile with $\epsilon_{\rm w} = 1$ \citep{Lipunova1999}.
+In the profile of \citet[][SS73]{Shakura1973},
+\begin{equation}
+\mdot = \mdot_0\,\frac{R}{\Rsph}, \qquad R < \Rsph .
+\label{eq:mdot_SS73}
+\end{equation}
+% code: mdot_acc_profile_scalar(), branch "SS73"; mdot_in_over_mdot0() gives x_launch/x_sp
+% AUTHOR: check that the P07 eq. 23 and the attribution of eq. (mdot_SS73) to SS73
+%         are as you want them cited.
+
+\begin{table*}
+\centering
+\caption{Flow rules (\code{wind\_scenario}). The presets of the literature fix the $\Mdot(R)$ profile, the $\Rsph$ rule and $\etaEdd$; $\Rtrap$ can be set in any of them.}
+\label{tab:presets}
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Preset & $\Mdot(R)$ & $\Rsph$ & $\etaEdd$ & $\Rtrap$ \\
+\midrule
+main (\code{set\_mdot\_in}) & Eq.~\eqref{eq:mdot_setin} & free & 1/12 & M26 \\
+P07 & Eq.~\eqref{eq:mdot_P07} & P07fit & 1/12 & M26 \\
+L99 & Eq.~\eqref{eq:mdot_P07}, $\epsilon_{\rm w}=1$ & P07fit & 1/12 & M26 \\
+SS73 & Eq.~\eqref{eq:mdot_SS73} & SS73, SS73\_eq71 & 1/12 & $\Rsph$ \\
+\bottomrule
+\end{tabular}
+% code: psrcs/flow_rules.py PAPER_PRESETS, resolve_flow_rules(); README table "Wind scenarios"
+% Rules named in the R_sph and R_trap columns: Sect. radii.
+\end{table*}
+
+\subsection{Mass loss}
+\label{sec:model:massloss}
+
+The wind carries away
+\begin{equation}
+\Mdot_{\rm w}(R) = \Mdot(R) - \Mdot(\rin),
+\label{eq:Mdotw}
+\end{equation}
+% code: mdot_wind_cumulative_scalar() (csrcs/wind_struct.c); README "Wind scenarios"
+the mass launched between $\rin$ and $R$.
+The rate of mass loss per unit area of each side of the disc at the launch radius $R_0$ is
+\begin{equation}
+\dot\Sigma_{\rm w}(R_0) = \frac{1}{4\pi R_0}\,\frac{{\rm d}\Mdot_{\rm w}}{{\rm d}R_0} .
+\label{eq:Sigmadotw}
+\end{equation}
+% code: make_dotSigma_table() (csrcs/wind_struct.c); README "Wind scenarios"
+For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph$.
+
+\subsection{Parameters}
+\label{sec:model:params}
+
+Table~\ref{tab:params} lists the parameters of the model.
+% OUTLINE: say which parameters are free in which fit (BH1/BH3/BH4/NS1 presets of
+%          ULX.conf), once the set of fits for the paper is fixed.
+
+\begin{table*}
+\centering
+\caption{Physical parameters. Default values and prior ranges are those of \code{ULX.conf}; free parameters have flat priors in the range given.}
+\label{tab:params}
+\small
+\begin{tabular}{@{}lllll@{}}
+\toprule
+Symbol & Code name & Meaning & Default & Prior \\
+\midrule
+$\log M/M_\odot$ & \code{log\_m\_bh} & mass of the accretor & 1.0 & (0, 4) \\
+$\log \mdot_0$ & \code{log\_mdot0} & outer accretion rate, units of $\MEdd$ & 2.0 & (0, 5) \\
+$f_{\rm in}$ & \code{user\_mdot\_in\_fraction} & $\mdot(\rin)/\mdot_0$, main model & 0.5 & (0, 1) \\
+$r_{\rm in,f}$ & \code{r\_in\_factor} & $\rin/\rg$ (BH), $\rmag/(x_{\rm m}\rg)$ (NS) & 6 & (1, 20) \\
+$\log x_{\rm m}$ & \code{log\_wind\_inner\_launch\_x} & NS: $\rmag$ in units of $r_{\rm in,f}\rg$; BH: 0 & 0 & (0, 4) \\
+$\log \rout/\rg$ & \code{log\_r\_out\_factor} & outer disc radius & 5.0 & (2, 10) \\
+$i$ & \code{incl\_deg} & inclination, degrees & 20 & (0, 88) \\
+$\epsilon_{\rm w}$ & \code{eps\_w} & fraction of the energy spent on launching the wind & 0.5 & ($10^{-4}$, 0.999) \\
+$\beta_{\rm w}$ & \code{beta\_w} & wind speed at infinity, units of $\vK(R_0)$ & 1.0 & (0.05, 3) \\
+$\omf$ & \code{omega\_frac} & $\cos\theta_{\rm c} - \cos\theta_{\rm d}$, solid-angle fraction of the wind & 0.7 & (0.1, 0.85) \\
+$\hd$ & \code{h\_disc} & disc surface $z/R$ & 0 & (0, 0.3) \\
+$\log\eta_{\rm magn}$ & \code{log\_magn\_eta} & NS: efficiency of the central emitter & 0 & ($-5$, 0) \\
+$\beta_{\rm t}$ & \code{beta\_torque\_in} & NS: torque at $\rmag$ & 1 & fixed \\
+$z/r$ & \code{z\_over\_r\_trap} & disc thickness in $\Rtrap$ & 0.5 & fixed \\
+\bottomrule
+\end{tabular}
+% code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters".
+% Discrete switches (not in the table): wind_scenario, rsp_rule, rtrap_rule,
+% disc_luminosity_mode (1+log for BH, NS), dip, wind_velocity_law (ballistic).
+\end{table*}

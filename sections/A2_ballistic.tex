@@ -1,0 +1,41 @@
+% Sources: old manuscript (SEA_spectrum.zip, main.tex, appendix "Ballistic streamlines at infinity")
+% Each step checked by Claude (2026-10-29).
+
+\section{Asymptotic direction of a ballistic streamline}
+\label{app:ballistic}
+
+A gas element is launched at the radius $R_0$ from a Keplerian orbit with no radial velocity and with the vertical velocity $\xi\vK$, where $\vK = \sqrt{GM/R_0}$.
+Its initial velocity is $\boldsymbol v = \vK\hat{\boldsymbol e}_\phi + \xi\vK\hat{\boldsymbol e}_z$, and its specific angular momentum is
+\begin{equation}
+\begin{split}
+\boldsymbol h &= R_0\hat{\boldsymbol e}_R \times \boldsymbol v = R_0\vK\left(\hat{\boldsymbol e}_z - \xi\hat{\boldsymbol e}_\phi\right), \\
+h^2 &= R_0^2\vK^2(1 + \xi^2) .
+\end{split}
+\label{eq:app_h}
+\end{equation}
+% source: old manuscript, appendix
+The motion is Keplerian in the plane of $\hat{\boldsymbol e}_R$ and $\boldsymbol v$.
+With the specific energy $\mathcal{E} = (\xi^2 - 1)\vK^2/2$, the eccentricity of the hyperbolic orbit is
+\begin{equation}
+e = \sqrt{1 + \frac{2\mathcal{E}h^2}{(GM)^2}} = \xi^2 .
+\label{eq:app_e}
+\end{equation}
+% source: old manuscript, appendix (e = xi^2); checked: 1 + (xi^2 - 1)(xi^2 + 1) = xi^4
+The launch point is the pericentre, because the velocity there is perpendicular to the radius vector.
+At infinity the true anomaly is therefore $\cos f_\infty = -1/e = -1/\xi^2$, and the direction of motion is
+\begin{equation}
+\hat{\boldsymbol r}_\infty = \cos f_\infty\,\hat{\boldsymbol e}_R + \sin f_\infty\,\hat{\boldsymbol e}_t ,
+\qquad
+\hat{\boldsymbol e}_t = \frac{\hat{\boldsymbol e}_\phi + \xi\hat{\boldsymbol e}_z}{\sqrt{1 + \xi^2}} ,
+\label{eq:app_rinf}
+\end{equation}
+% source: old manuscript, appendix
+with $\sin f_\infty = \sqrt{(\xi^2 - 1)(\xi^2 + 1)}/\xi^2$.
+Its vertical component is $\zeta/\xi$, where $\zeta = \sqrt{\xi^2 - 1}$, and its component in the plane of the disc is $1/\xi$.
+At large distances the trajectory thus approaches a straight line with
+\begin{equation}
+\frac{z}{R} \to \zeta ,
+\label{eq:app_asym}
+\end{equation}
+% source: old manuscript, appendix
+and the asymptotic speed is $\zeta\vK$.

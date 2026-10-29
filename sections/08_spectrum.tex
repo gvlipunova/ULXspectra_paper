@@ -1,10 +1,36 @@
 % Sources: README "Visibility and spectrum"
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Visibility and the observed spectrum}
 \label{sec:spectrum}
 
-% OUTLINE: Projected area of each surface ring by raycasting, occultation. code:
-%          projected_area_weights_surface_raycast() (csrcs/visibility.c).
-% OUTLINE: Isotropic-equivalent luminosity at inclination i: disc, wind, central
-%          emitter. code: isotropic_luminosity_disc_wind() (csrcs/wind_emission.c).
-% OUTLINE: Example spectra and their dependence on the main parameters (figure).
+The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere.
+For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
+The surface is axisymmetric, $z(R)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
+An element at azimuth $\phi$ contributes its area $R\,{\rm d}R\,{\rm d}\phi$ times the projection of its normal onto the line of sight,
+\begin{equation}
+\mu_{\rm proj} = \cos i - \frac{{\rm d}z}{{\rm d}R}\,\sin i\,\cos\phi ,
+\label{eq:muproj}
+\end{equation}
+% code: projected_area_weights_surface_raycast() (mu_proj) (csrcs/visibility.c)
+if it faces the observer ($\mu_{\rm proj} > 0$) and if the ray from it towards the observer is not blocked by the rest of the surface, including the disc plane beyond $\rout$.
+% code: projected_area_weights_surface_raycast(), is_occulted_by_surface() (csrcs/visibility.c); README "Visibility and spectrum"
+% AUTHOR: the observer sees one side; the factor 4 pi in eq. (Lnu) makes the spectrum
+%         isotropic-equivalent. Check the wording.
+
+Every ring radiates as a blackbody, and the isotropic-equivalent spectrum is
+\begin{equation}
+L_\nu(i) = 4\pi\sum_j B_\nu(T_j)\,A_{{\rm proj},j}(i) .
+\label{eq:Lnu}
+\end{equation}
+% code: isotropic_luminosity_disc_wind() (csrcs/wind_emission.c); README "Visibility and spectrum"
+The bolometric luminosities of the wind, the disc and the total follow from the same sum with $\sigma T_j^4/\pi$ in place of $B_\nu$.
+% code: README "Visibility and spectrum" (Lbol_total, Lbol_wind, Lbol_disc)
+For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one side of the ring, and the isotropic-equivalent luminosity is $L_{\rm iso} = 2\cos i\,L_{\rm bol}$.
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Observed flux"); follows from Eqs. (muproj), (Lnu) with dz/dR = 0
+% AUTHOR: blackbody without colour correction or Comptonization (see Discussion);
+%         say so here explicitly?
+
+% OUTLINE: example spectra and their dependence on the main parameters (mdot_0, f_in,
+%          i, r_out, beta_w), each component shown separately; figure from a new
+%          script in docs/scripts/ of the code repository.

@@ -1,11 +1,108 @@
 % Sources: README "Spherization radius", "Trapping radius"
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Spherization and trapping radii}
 \label{sec:radii}
 
-% OUTLINE: R_sph rules (P07fit, SS73, SS73_eq71, M26, Ledd, mdot0) and which preset
-%          uses which. code: rsp_over_rin().
-% OUTLINE: R_trap: Middleton+26 rule, R_trap = 2 (z/r) (mdot0/eta_edd) GM/c^2; R_trap
-%          = R_sph for the SS73 preset. code: rtrap_over_rin().
-% OUTLINE: Author to decide: which rules the paper presents as the model and which as
-%          variants.
+\subsection{Spherization radius}
+\label{sec:radii:sph}
+
+For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$.
+Otherwise $\Rsph$ follows from one of the rules in Table~\ref{tab:rsph}, and it is never below $\rin$.
+% code: rsp_over_rin() (csrcs/disc_struct.c); README "Spherization radius"
+
+\begin{table}
+\centering
+\caption{Rules for the spherization radius (\code{rsp\_rule}).}
+\label{tab:rsph}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Rule & $\Rsph$ \\
+\midrule
+P07fit & Eq.~\eqref{eq:rsph_P07} \\
+SS73 & $\Rref\,\mdot_0$ \\
+SS73\_eq71 & $(9/4)\,\Rref\,\mdot_0$ \\
+M26 & $1.5\,(\mdot_0/\etaEdd)\,\rg$ \\
+Ledd & Eq.~\eqref{eq:rsph_Ledd} \\
+mdot0 & $\mdot_0\,\rin$ \\
+\bottomrule
+\end{tabular}
+% code: rsp_over_rin() (csrcs/disc_struct.c); README table "Spherization radius"
+\end{table}
+
+P07 give a fit to their numerical solutions (P07, eq.~21),
+\begin{equation}
+\begin{split}
+\frac{\Rsph}{\Rref} = \mdot_0 \bigl[ & 1.34 - 0.4\,\epsilon_{\rm w} + 0.1\,\epsilon_{\rm w}^2 \\
+& - (1.1 - 0.7\,\epsilon_{\rm w})\,\mdot_0^{-2/3} \bigr].
+\end{split}
+\label{eq:rsph_P07}
+\end{equation}
+% code: rsp_over_rin(), rule "P07fit" (csrcs/disc_struct.c); README "Spherization radius"
+For the SS73 profile, the rule \code{SS73} places $\Rsph$ where $\mdot(\Rref) = 1$ in Eq.~\eqref{eq:mdot_SS73}, and \code{SS73\_eq71} takes eq.~(7.1) of \citet{Shakura1973} literally.
+The rule \code{M26} is $\Rsph = (3/8\pi)\,\kT\Mdot_0/c$ \citep{Middleton2026}.
+The rule \code{mdot0} sets $\Rsph = \mdot_0\,\rin$, so that it scales with the actual inner radius rather than with $\Rref$.
+% code: rsp_over_rin(), rules "SS73", "SS73_eq71", "M26", "mdot0"
+
+The rule \code{Ledd} follows \citet{Lipunova1999}: $\Rsph$ is the radius outside which the disc releases $\LEdd$.
+With the viscous torque of Sect.~\ref{sec:disc:torque} and $\Mdot = \Mdot_0$ outside $\Rsph$, the luminosity of both sides of the disc beyond $\Rsph$ is $\Fvis(\Rsph)\,\Omega_{\rm K}(\Rsph) + G M \Mdot_0/(2\Rsph)$, so the condition reads
+\begin{equation}
+\Fvis(\Rsph)\,\Omega_{\rm K}(\Rsph) + \frac{G M \Mdot_0}{2\Rsph} = \LEdd ,
+\label{eq:rsph_Ledd}
+\end{equation}
+% code: rsp_self_consistent_x(), rsp_self_consistent_func() (csrcs/disc_struct.c),
+%       which solve the same equation divided by Mdot_in G M / r_in, in t = sqrt(x_sph).
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Derivation of R_sp"; Rsp_reasoning.txt sects. 3-5),
+%       L_out = (GM)^2 [F_sp/h_sp^3 + Mdot_0/(2 h_sp^2)], the same expression.
+where $\Omega_{\rm K} = \sqrt{GM/R^3}$ and $\Fvis(\Rsph)$ is given by Eq.~\eqref{eq:Fvis_lin} with $F_{\rm in} = 0$.
+$\Fvis(\Rsph)$ depends on $\Rsph$ through the profile~\eqref{eq:mdot_setin}.
+With $t = (\Rsph/\rin)^{1/2}$ and $q = 1/f_{\rm in}$, Eq.~\eqref{eq:rsph_Ledd} becomes a quartic equation,
+\begin{equation}
+\begin{split}
+6\lambda t^4 + 6\lambda t^3 - (4 + 5q)\,t^2 - (5q - 2)\,t + 4q + 2 &= 0, \\
+\lambda = \frac{\LEdd\,\rin}{GM\Mdot(\rin)} = \frac{\etaEdd\,\rin}{f_{\rm in}\mdot_0\,\rg} & ,
+\end{split}
+\label{eq:rsph_quartic}
+\end{equation}
+% source: Rsp_reasoning.txt sect. 6 (in SEA_spectrum.zip), with f = F_in/(Mdot_in h_in) = 0 and x_w = 1;
+% checked numerically (Claude): equals -6 (t+1) t^3 [F_sph/(Mdot_in h_in t^3) + q/(2 t^2) - lambda]
+% code: rsp_self_consistent_x() solves the unexpanded form by bisection (csrcs/disc_struct.c)
+whose root $t \ge 1$ we find numerically.
+It depends on the actual inner radius and is implemented only for the main profile~\eqref{eq:mdot_setin}.
+If the disc is already below $\LEdd$ beyond $\rin$, $\Rsph = \rin$.
+% code: rsp_self_consistent_x(): returns x_launch if f(1) < 0; NaN for other profiles in rsp_over_rin()
+% AUTHOR: the code uses F_in = 0 in eq. (rsph_Ledd) also for a NS
+%         (RSP_SELF_CONSISTENT_F_IN = 0), while the disc torque has F_in = beta Mdot_in h_in.
+%         Intended? Then the text should say so.
+
+% AUTHOR: which R_sph rule(s) belong to the main model? The set_mdot_in fits use
+%         three: mdot0 (BH1, BH3, BH4, NS3: use_simple_rsp = 1), Ledd (BH1a, BH3a,
+%         BH4a, NS1a, NS6: use_simple_rsp = 2), and P07fit (NS1: default 0).
+%         ULX.conf still says "TODO decide use_simple_rsp". The text above presents
+%         all rules on equal footing until you decide.
+
+\subsection{Trapping radius}
+\label{sec:radii:trap}
+
+Inside the trapping radius, photons are advected with the flow and the disc effective temperature falls as $R^{-1/2}$ (Sect.~\ref{sec:disc:teff}).
+Following \citet{Middleton2026} we take
+\begin{equation}
+\Rtrap = 2\,\frac{z}{r}\,\frac{\mdot_0}{\etaEdd}\,\rg ,
+\label{eq:rtrap}
+\end{equation}
+% code: rtrap_over_rin(), rule "M26" (csrcs/disc_struct.c); README "Trapping radius"
+with the disc thickness $z/r = 0.5$, which gives $\Rtrap = 12\,\mdot_0\,\rg$ for $\etaEdd = 1/12$.
+For the SS73 preset we set $\Rtrap = \Rsph$ instead.
+SS73 have no advection, but inside $\Rsph$ their outflow also gives $\Teff \propto R^{-1/2}$.
+% code: rtrap_over_rin(), rule "rsp"; psrcs/flow_rules.py (SS73 default rtrap_rule = rsp)
+Indeed, with $\Mdot \propto R$ (Eq.~\ref{eq:mdot_SS73}) and $F_{\rm in} = 0$, Eq.~\eqref{eq:Fvis} gives $\Fvis = \Mdot_0\,(Rh - \rin h_{\rm in})/(3\Rsph)$, and far from $\rin$
+\begin{equation}
+\Qvis \approx \frac{GM\Mdot(R)}{8\pi R^3} \propto R^{-2} .
+\label{eq:Qvis_SS73}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, Sect. "Effective temperature distribution", eqs. Mdot_SS, F_SS);
+%         checked: int Mdot_0 (R/R_sph) dh = Mdot_0 R h/(3 R_sph)
+$\Rtrap$ is never below $\rin$; sub-Eddington rates usually give $\Rtrap \le \rin$, that is a standard disc without trapping.
+% code: rtrap_over_rin() (fmax with x_launch and 1); README "Trapping radius"
+% AUTHOR: z/r = 0.5 is the code default; is it fixed for the paper?

@@ -1,12 +1,47 @@
 % Sources: README "Central emitter (NS magnetosphere)"
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Central emitter: the NS magnetosphere}
 \label{sec:central}
 
-% OUTLINE: dip = 0 sphere of radius r_m; dip = 1 surface of the last closed dipole
-%          field line, z = w^(2/3) sqrt(1 - w^(2/3)). code:
-%          dipole_spherical_radius().
-% OUTLINE: Temperature along the field line, normalisation to L_central (magn_eta);
-%          dark when the budget is zero.
-% OUTLINE: Radial grid with x = 1 as a bin edge (C16). code: radial_grid_edges()
-%          (csrcs/wind_surface.c).
+For a NS, everything inside $\rmag$ is the central emitter.
+We consider two shapes of its surface, selected by the parameter \code{dip}.
+In the simpler one (\code{dip} = 0) it is a sphere of radius $\rmag$.
+In the other (\code{dip} = 1) it is the surface of the last closed dipole field line, $r = \rmag\sin^2\theta$ in spherical coordinates.
+With $\varpi = R/\rmag$, its height above the disc plane is
+\begin{equation}
+\frac{z}{\rmag} = \varpi^{2/3}\sqrt{1 - \varpi^{2/3}},
+\label{eq:dipole}
+\end{equation}
+% code: dipole_spherical_radius(), get_spherical_radius(), calc_z_disc() (csrcs/disc_struct.c); README "Central emitter"
+which reaches its maximum $z = 0.385\,\rmag$ at $\varpi = (2/3)^{3/2}$.
+% derived (Claude): max of s^2 sqrt(1 - s^2) at s^2 = 2/3, s = varpi^(1/3); README gives 0.385
+For both shapes the radial grid starts where the last closed field line meets the NS surface, at $\varpi_{\rm min} = (\RNS/\rmag)^{3/2}$.
+% code: apply_physical_radii() (x_min); README "Central emitter"
+
+The temperature of the central emitter continues inward from the disc temperature at $\rmag$.
+For \code{dip} = 0 it scales as $\varpi^{-1/2}$.
+For \code{dip} = 1 it scales as $x_{\rm dip}^{-5/8}$ along the field line, with $x_{\rm dip} = \varpi^{2/3}$, that is as $\varpi^{-5/12}$ \citep{LipunovaAbolmasov2027}:
+\begin{equation}
+\Teff(\varpi) = T_1 \times
+\begin{cases}
+\varpi^{-1/2}, & \text{\code{dip} = 0}, \\
+\varpi^{-5/12}, & \text{\code{dip} = 1},
+\end{cases}
+\qquad \varpi < 1 .
+\label{eq:Tcentral}
+\end{equation}
+% code: disc_Qvis_and_Teff(), branch xi < 1 (csrcs/disc_struct.c); README "Central emitter"
+Here $T_1$ is $\Teff$ of Eq.~\eqref{eq:Teff} at $\rin$.
+If $\Qvis(\rmag) = 0$ and there is no trapping, $T_1$ is taken at $49/36\,\rin$ instead, the hottest ring of a disc with a constant $\Mdot$ and zero torque at $\rin$.
+% code: disc_Qvis_and_Teff() (T1 fallback); README "Central emitter"
+% AUTHOR: physical motivation of the x^(-1/2) law for dip = 0?
+
+Only the shape of this profile matters.
+All the temperatures of the central emitter are multiplied by one factor $f_{\rm central}^{1/4}$, so that its luminosity from both sides equals $L_{\rm central}$ of Eq.~\eqref{eq:Lcentral}.
+For $L_{\rm central} = 0$ the central emitter is dark.
+% code: wind_temperature_correction_factor() (f_central_cor) (csrcs/wind_emission.c); README "Central emitter"
+
+The surface of the central emitter is steep near $\rmag$, so $\rmag$ is an edge of the radial grid and eight more edges at $\varpi = 1 - 10^{-1}, \dots, 1 - 10^{-4}$ resolve the steep wall there.
+% code: radial_grid_edges() (csrcs/wind_surface.c); README "Central emitter"; PLAN C16
+% OUTLINE: perhaps move the grid detail to Appendix (numerics).

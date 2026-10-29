@@ -24,6 +24,14 @@ Overleaf pulls and pushes commits).
 
 ## Status
 
-Skeleton: section structure and outlines (as `% OUTLINE:` comments) taken
-from README "Model Physics" of `ULXspectra` at commit `5f00569`. The journal
-class is not chosen yet (`article` for now).
+Two-column `article` (no journal chosen), summary at the top
+(`sections/00_summary.tex`).
+
+- Sects. 2-8 (model physics): first draft from README "Model Physics" of
+  `ULXspectra` at commit `5f00569`, equations checked against `csrcs/`.
+  Main model: `set_mdot_in`; P07, L99, SS73 presented as alternatives.
+  Open questions for the author are comments starting with `% AUTHOR:`
+  (`grep -n "AUTHOR:" sections/*.tex`).
+- Physics from the author's older draft (`SEA_spectrum.zip`, kept out of the
+  repository) merged where it agrees with the code; marked `% source: old manuscript`.
+- Other sections: outlines only (`% OUTLINE:`).

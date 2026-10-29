@@ -1,15 +1,137 @@
 % Sources: README "Wind: streamlines, density and photosphere"; docs/wind_velocity_laws.md
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Wind: streamlines, density and photosphere}
 \label{sec:wind}
 
-% OUTLINE: Straight streamlines; linear cos(theta_0) law between theta_c and theta_d.
-%          code: theta_of_launch_radius() (csrcs/wind_struct.c).
-% OUTLINE: Streamlines never cross: unique launch radius (C12, proof in
-%          find_launch_radius_for_point()).
-% OUTLINE: Density from mass conservation along streamtubes, rho = Sigmadot_w R_0/(v
-%          R |J|). code: rho_wind_streamtube_scalar().
-% OUTLINE: Speed along a streamline: ballistic (default), launch, P07, accelerating;
-%          comparison figure from docs/scripts/compare_wind_velocity_laws.py. code:
-%          v_wind_streamline().
-% OUTLINE: Photosphere z_ph(R): tau = 1 from above; outer wall.
+\subsection{Streamlines}
+\label{sec:wind:streamlines}
+
+The wind moves along straight streamlines launched from the disc surface at $(R_0, \hd R_0)$.
+The angle $\theta_0$ of a streamline to the axis depends on the launch radius through a law linear in $\cos\theta_0$:
+\begin{equation}
+\cos\theta_0 = \cos\theta_{\rm c} - (\cos\theta_{\rm c} - \cos\theta_{\rm d})\,\frac{x_0 - 1}{\xsp - 1},
+\label{eq:theta0}
+\end{equation}
+% code: theta_of_launch_radius(), wind_angular_bounds() (csrcs/wind_struct.c); README "Wind: streamlines"
+with $x_0 = R_0/\rin$ between 1 and $\xsp$.
+The outermost streamline, launched at $\Rsph$, runs along the disc surface, $\cos\theta_{\rm d} = \hd/\sqrt{1 + \hd^2}$.
+The innermost one, launched at $\rin$, bounds the funnel, $\cos\theta_{\rm c} = \omf + \cos\theta_{\rm d}$.
+% code: wind_angular_bounds() (csrcs/wind_struct.c)
+So $\omf$ is the fraction of the solid angle above the disc that the wind fills.
+For $\hd = 0$ and $\omf = 0.7$, $\theta_{\rm c} = 46^\circ$ and $\theta_{\rm d} = 90^\circ$.
+% source: docs/wind_column_angles.md (46 deg for omega_frac = 0.7)
+
+The law~\eqref{eq:theta0} distributes the solid angle of the wind among the streamlines in proportion to the mass they carry:
+\begin{equation}
+\frac{\cos\theta_{\rm c} - \cos\theta_0}{\cos\theta_{\rm c} - \cos\theta_{\rm d}} = \frac{\Mdot_{\rm w}(R_0)}{\Mdot_{\rm w}(\Rsph)} .
+\label{eq:theta0_massloss}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Mapping theta(r_0) from cumulative mass loss")
+For the profiles of Sect.~\ref{sec:model:mdot}, $\Mdot_{\rm w}$ is linear in $R_0$, and Eq.~\eqref{eq:theta0_massloss} turns into Eq.~\eqref{eq:theta0}, which is the form used in the code.
+% derived (Claude): Mdot_w(R_0) = Mdot(R_0) - Mdot(r_in) is linear in R_0 for eqs. (mdot_setin), (mdot_P07),
+%       (mdot_SS73); exception: P07 profile clipped at 0 near r_in when r_in,f < 6.
+% code: theta_of_launch_radius() uses u = (x_0 - 1)/(x_sph - 1) (csrcs/wind_struct.c)
+Each streamline thus carries the same mass-loss rate per unit solid angle.
+
+An estimate of $\theta_{\rm c}$ follows from the ballistic picture of P07 (their section~4.1).
+A gas element launched from a Keplerian orbit at $R_0$ with no radial velocity and with the vertical velocity $\xi\vK(R_0)$, $\xi \gtrsim 1$, has the specific energy $(\xi^2 - 1)\vK^2/2$.
+If it moves ballistically and conserves its angular momentum, it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/R = \zeta$ (Appendix~\ref{app:ballistic}).
+To emerge above the surface of a geometrically thick supercritical disc with $H/R \sim 0.6$, the outflow must have $\zeta \gtrsim H/R$.
+On the other hand, energy constraints make $\xi \gtrsim 1.5$--$2$ unlikely, which corresponds to $\zeta \lesssim 1.1$--$1.7$.
+If the innermost streamline follows the ballistic asymptote, $\cot\theta_{\rm c} = \zeta$, and for $\hd = 0$ the wind fills the fraction
+\begin{equation}
+\omf = \cos\theta_{\rm c} = \frac{\zeta}{\sqrt{1 + \zeta^2}} = \frac{\zeta}{\xi}
+\label{eq:omega_ballistic}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Ballistic trajectories of the wind cells")
+of the solid angle, that is $\omf \simeq 0.5$--$0.85$ for $\zeta \simeq 0.6$--$1.7$.
+% checked (Claude): 0.6/sqrt(1.36) = 0.51, 1.7/sqrt(3.89) = 0.86
+% AUTHOR: "energy constraints make xi > 1.5-2 unlikely": add the argument or a reference.
+We use this estimate only to motivate the range of $\omf$ in the fits, up to 0.85 (Table~\ref{tab:params}).
+In the model, $\omf$ and the wind speed $\beta_{\rm w}$ (Sect.~\ref{sec:wind:velocity}) are independent parameters, and the relation $\cot\theta_{\rm c} = \beta_{\rm w}$ is not imposed.
+% author's decision 2026-10-29; code: omega_frac and beta_w independent (ULX.conf priors (0.1, 0.85), (0.05, 3))
+
+The streamline from $x_0$ reaches the height
+\begin{equation}
+z(x; x_0) = \hd x_0 + (x - x_0)\cot\theta_0
+\label{eq:streamline}
+\end{equation}
+% code: streamline_z_of_x() (csrcs/wind_struct.c)
+at the cylindrical radius $x$ (heights in units of $\rin$).
+With the law~\eqref{eq:theta0}, $\cot\theta_0 \ge \cot\theta_{\rm d} = \hd$ and $\cot\theta_0$ falls with $x_0$, so that at fixed $x$
+\begin{equation}
+\frac{\partial z}{\partial x_0} = \hd - \cot\theta_0 + (x - x_0)\,\frac{{\rm d}\cot\theta_0}{{\rm d}x_0} \le 0 .
+\label{eq:dzdx0}
+\end{equation}
+% code: find_launch_radius_for_point() header comment (csrcs/wind_struct.c); PLAN C12
+Streamlines therefore never cross, and every point $(R, z)$ in the wind lies on exactly one streamline.
+Its launch radius is found by bisection.
+Points above the innermost streamline (the funnel) or below the outermost one have no wind.
+% code: find_launch_radius_for_point() (csrcs/wind_struct.c); README "Wind: streamlines"
+
+\subsection{Density}
+\label{sec:wind:density}
+
+Mass conservation along the streamtube between $R_0$ and $R_0 + {\rm d}R_0$ gives the density
+\begin{equation}
+\rho(R, z) = \frac{\dot\Sigma_{\rm w}(R_0)\,R_0}{v\,R\,|J|},
+\qquad
+J = -\sin\theta_0\,\frac{\partial z}{\partial x_0} \ge 0 ,
+\label{eq:rho}
+\end{equation}
+% code: rho_wind_streamtube_scalar() (csrcs/wind_struct.c); README "Wind: streamlines"; docs/wind_velocity_laws.md
+where $\dot\Sigma_{\rm w}$ is given by Eq.~\eqref{eq:Sigmadotw} and $v$ is the speed along the streamline.
+Explicitly, $J = \cos\theta_0 - \hd\sin\theta_0 + l\,{\rm d}\theta_0/{\rm d}x_0$, where $l = (x - x_0)/\sin\theta_0$ is the distance from the launch point in units of $\rin$.
+% code: rho_wind_streamtube_scalar() (jac) (csrcs/wind_struct.c)
+The meaning of $J$ is clearest for parallel streamlines from a flat disc ($\hd = 0$, $\theta_0$ the same for all $R_0$).
+Then $J = \cos\theta_0$ is the ratio of the width of the streamtube, ${\rm d}R_0\cos\theta_0$, to the width ${\rm d}R_0$ of the ring from which it is launched, and Eq.~\eqref{eq:rho} becomes $\rho = \dot\Sigma_{\rm w}R_0/(v R\cos\theta_0)$.
+% source: old manuscript (SEA_spectrum.zip, main.tex, "old Density in the wind", Delta = dr_0 cos theta_c);
+%         consistent with jac in rho_wind_streamtube_scalar() for h_disc = 0, dtheta/dx0 = 0
+
+\subsection{Speed along the streamlines}
+\label{sec:wind:velocity}
+
+In our default law the gas moves ballistically: it has the speed $\beta_{\rm w}\vK(R_0)$ at infinity, where $\vK(R_0) = \sqrt{GM/R_0}$, and conserves its angular momentum.
+Energy conservation then gives the poloidal speed
+\begin{equation}
+v_{\rm pol}^2 = GM\left(\frac{\beta_{\rm w}^2}{R_0} + \frac{2}{r} - \frac{R_0}{R^2}\right), \qquad r^2 = R^2 + z^2 .
+\label{eq:vballistic}
+\end{equation}
+% code: v_wind_streamline(), law "ballistic" (csrcs/wind_struct.c); README "Wind: streamlines"; docs/wind_velocity_laws.md; PLAN C11
+This is the ballistic picture of Sect.~\ref{sec:wind:streamlines}, with $\beta_{\rm w} = \zeta$.
+% source: docs/wind_velocity_laws.md "What Poutanen et al. (2007) assume"
+The gas leaves the disc at $\sqrt{\beta_{\rm w}^2 + 1}\,\vK(R_0) = \xi\vK(R_0)$ and slows down as it climbs out of the potential well.
+% checked (Claude): Eq. (vballistic) at R = r = R_0 gives v_pol^2 = (beta_w^2 + 1) G M/R_0
+The direction of the flow, however, is set by the straight streamlines of Eq.~\eqref{eq:streamline}, not by the ballistic trajectory.
+% code: v_wind_streamline() uses only the speed of the ballistic solution (csrcs/wind_struct.c)
+The speed is floored at $\beta_{\rm w}\vK(R_0)$, which is reached only by streamlines steeper than $45^\circ$ from the axis; the law~\eqref{eq:theta0} gives $45^\circ$--$89^\circ$ at the fits, so the floor is not active.
+% source: docs/wind_velocity_laws.md, notes on (c); AUTHOR: confirm the range of angles for the final fits.
+
+The code has three more laws, which we use for comparison:
+a constant speed $\beta_{\rm w}\vK(R_0)$;
+the mean wind speed of P07 (their eq.~27) at the local radius, $\beta_{\rm w}\sqrt{GM/\min(R, \Rsph)}$;
+and a speed rising from $0.1$ to $1$ times $\beta_{\rm w}\vK(R_0)$ along the streamline.
+% code: v_wind_streamline(), laws "launch", "P07", "accelerating"; docs/wind_velocity_laws.md table "The four laws"
+The P07 law was meant for the vertically averaged wind; applied along a streamline, it makes the speed fall as $\sqrt{R_0/R}$ out to $\Rsph$, which inflates the outer photosphere.
+% source: docs/wind_velocity_laws.md, findings 1
+The three other laws share the speed at infinity and give the same outer wind.
+At the best fits of NGC~7793 (made with the P07 law), replacing it with the ballistic law changes the spectrum by up to 0.29~dex, at the lowest energies.
+% numbers: docs/wind_velocity_laws.md, commit 8920be0 (C model, 13 fits; max |dlog nuLnu| = 0.29 for BH4a at 0.003 keV)
+% AUTHOR: keep this comparison here, or move it to the Discussion/Results after the refits?
+% OUTLINE: figure vwind_laws.png (docs/scripts/compare_wind_velocity_laws.py, commit 35a22c0).
+
+\subsection{Photosphere and outer wall}
+\label{sec:wind:photosphere}
+
+At each cylindrical radius $R$ we integrate the optical depth from above,
+\begin{equation}
+\tau(R, z) = \int_z^\infty \kT\,\rho(R, z')\,{\rm d}z',
+\label{eq:tau}
+\end{equation}
+% code: tau_perp_streamtube_at_x(), z_ph_streamtube() (csrcs/wind_struct.c); README "Wind: streamlines"
+and the photosphere is at the height $z_{\rm ph}(R)$ where $\tau = 1$.
+Rings with $R \ge \rin$ and $z_{\rm ph}$ above the disc surface are the wind photosphere; the other rings show the disc directly.
+The outer edge of the optically thick wind is a wall, where the photosphere drops from its top to the disc.
+The wall is part of the emitting surface, with the temperature of the last wind ring.
+% code: README "Wind: streamlines" (Outer wall); wind_model_api.c (wall in the surface curve)

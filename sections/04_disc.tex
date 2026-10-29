@@ -1,13 +1,112 @@
 % Sources: README "Viscous torque and disc temperature", "Luminosity budget"
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
 \section{Disc structure and luminosity budget}
 \label{sec:disc}
 
-% OUTLINE: Viscous torque: zero at r_in for BH; beta_torque_in Mdot(r_m) h(r_m) at
-%          r_m for NS (C10).
-% OUTLINE: Q_vis and T_eff; advective law sigma T_eff^4 = Q_vis(R_trap) (R_trap/R)^2
-%          inside R_trap. code: disc_Qvis_and_Teff().
-% OUTLINE: Luminosity budget: L_disc, L_central; disc_luminosity_mode 1+log (BH), NS.
-%          code: accretion_luminosity_split() (csrcs/wind_emission.c).
-% OUTLINE: Outer radius r_out free; disc beyond r_out hidden but sets T_w through
-%          x_eff (C13).
+\subsection{Viscous torque}
+\label{sec:disc:torque}
+
+Let $h = \sqrt{GMR}$ be the specific angular momentum of the Keplerian disc and $\Fvis > 0$ the viscous torque.
+If the matter lost to the wind at $R$ carries away the specific angular momentum $k_{\rm w}h(R)$, the conservation of angular momentum in a stationary disc reads
+\begin{equation}
+\frac{{\rm d}(\Mdot h)}{{\rm d}R} - \frac{{\rm d}\Fvis}{{\rm d}R} - k_{\rm w}\,h\,\frac{{\rm d}\Mdot}{{\rm d}R} = 0 .
+\label{eq:angmom}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, Sect. "Effective temperature distribution"),
+%         there written for F = -F_vis; code: disc_Fvis_point() (csrcs/disc_struct.c) assumes k_w = 1
+We take $k_{\rm w} = 1$, that is, the wind removes the Keplerian angular momentum of the radius where it is launched.
+Then the viscous torque obeys
+\begin{equation}
+\frac{{\rm d}\Fvis}{{\rm d}h} = \Mdot(R), \quad \Fvis(R) = F_{\rm in} + \int_{h(\rin)}^{h(R)} \!\Mdot\,{\rm d}h .
+\label{eq:Fvis}
+\end{equation}
+% code: disc_Fvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"; PLAN C10
+For a BH the torque vanishes at the inner radius, $F_{\rm in} = 0$.
+For a NS, the magnetosphere exerts a torque at $\rmag$,
+\begin{equation}
+F_{\rm in} = \beta_{\rm t}\,\Mdot(\rmag)\,h(\rmag),
+\label{eq:Fin_NS}
+\end{equation}
+% code: disc_Fvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
+with $\beta_{\rm t} = 1$.
+% AUTHOR: physical justification of beta_t = 1 (PLAN C10)?
+
+All the profiles of Sect.~\ref{sec:model:mdot} are linear in $R$ between $\rin$ and $\Rsph$, so the integral is analytic.
+With $s = \sqrt{\min(x, \xsp)}$ and $h_{\rm in} = h(\rin)$,
+\begin{multline}
+\Fvis = F_{\rm in} + \frac{h_{\rm in}(s - 1)}{3(s + 1)}\bigl[\Mdot(\rin)(2s + 1) \\
++ \Mdot(s^2\rin)(s + 2)\bigr]
++ \Mdot_0\,\bigl[h(R) - h(\Rsph)\bigr]\,\Theta(R - \Rsph),
+\label{eq:Fvis_lin}
+\end{multline}
+% code: disc_Fvis_point() (csrcs/disc_struct.c), closed form in its header comment
+where $\Theta$ is the Heaviside step function.
+$\Fvis$ and the disc temperature are continuous at $\Rsph$.
+
+Since the wind takes away angular momentum, less of it has to be transported by the viscous stress, and it is the stress that heats the disc.
+Outside $\Rsph$ the torque is lower than in a disc without outflow and with the same $\Mdot_0$ by $\int (\Mdot_0 - \Mdot)\,{\rm d}h$, taken from $\rin$ to $\Rsph$, so the outer disc is colder.
+% source: old manuscript (SEA_spectrum.zip, main.tex), paragraph "Worth noting that the presence of the wind makes the disc colder"
+% derived (Claude): the difference follows from eq. (Fvis) with F_in equal in both discs.
+% AUTHOR: the old manuscript marks the paragraph before this one "somehow wrong: see the
+%         figure" (Fvis_comp.png: SS73 torque vs. an advective disc with outflow). Is the
+%         statement above unaffected?
+The relative difference fades at $R \gg \Rsph$, where $\Fvis \approx \Mdot_0 h$ in both discs.
+% derived (Claude)
+% AUTHOR (minor): for P07 with r_in,f < 6 the profile can be clipped at 0 near r_in;
+%         the code ignores that non-linear piece (comment in disc_Fvis_point()).
+%         Mention or not?
+
+\subsection{Effective temperature}
+\label{sec:disc:teff}
+
+The viscous heating per unit area of one side of the disc is
+\begin{equation}
+\Qvis = \frac{3}{8\pi}\,\frac{\Fvis\,\Omega_{\rm K}}{R^2} .
+\label{eq:Qvis}
+\end{equation}
+% code: disc_Qvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
+Outside the trapping radius the disc radiates locally, $\sigma\Teff^4 = \Qvis$.
+Inside it, advection makes the radiated flux fall as $R^{-2}$, and we join the two continuously at $\Rtrap$:
+\begin{equation}
+\sigma\Teff^4 =
+\begin{cases}
+\Qvis(R), & R > \Rtrap, \\
+\Qvis(\Rtrap)\,(\Rtrap/R)^2, & \rin \le R \le \Rtrap .
+\end{cases}
+\label{eq:Teff}
+\end{equation}
+% code: disc_Qvis_and_Teff() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
+$\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
+% AUTHOR: physical argument for sigma T^4 ~ R^-2 inside R_trap (L_per ln R = const),
+%         with a reference?
+
+\subsection{Luminosity budget}
+\label{sec:disc:budget}
+
+The disc luminosity is the integral of the profile~\eqref{eq:Teff} over both sides of the disc from $\rin$ to $\rout$:
+\begin{multline}
+L_{\rm disc} = 4\pi\int_{\rin}^{\rout} \sigma\Teff^4\,R\,{\rm d}R
+= L_{\rm vis}(\Rtrap, \rout) \\
++ 4\pi\Rtrap^2\,\Qvis(\Rtrap)\,\ln\frac{\min(\Rtrap, \rout)}{\rin},
+\label{eq:Ldisc}
+\end{multline}
+% code: accretion_luminosity_split(), disc_L_out_above(), disc_advective_L_per_lnr() (csrcs/wind_emission.c, csrcs/disc_struct.c); README "Luminosity budget"
+where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis R\,{\rm d}R$ is the viscous release between $\Rtrap$ and $\rout$.
+For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
+When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
+% code: README "Luminosity budget", mode 1+log
+
+For a BH, nothing inside $\rin$ radiates.
+For a NS, the matter reaching $\rmag$ falls onto the star along the field lines and releases
+\begin{equation}
+L_{\rm central} = \eta_{\rm magn}\,G M\,\Mdot(\rmag)\left(\frac{1}{\RNS} - \frac{1}{\rmag}\right),
+\label{eq:Lcentral}
+\end{equation}
+% code: accretion_luminosity_split(), mode "NS" (csrcs/wind_emission.c); README "Luminosity budget"
+with the efficiency $\eta_{\rm magn} \le 1$, which covers losses such as outflows from the magnetosphere.
+The Keplerian kinetic energy of the matter at $\rmag$, about $GM\Mdot/(2\rmag)$, is not counted: for a slow rotator it would also be released inside, while near spin equilibrium it goes partly into the spin of the star.
+% code: comment at accretion_luminosity_split() (csrcs/wind_emission.c)
+% AUTHOR: check that this is how you want the omission justified.
+The total accretion luminosity is $L_{\rm acc} = L_{\rm disc} + L_{\rm central}$.
+% code: diagnostic Lbol_accr_teor

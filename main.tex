@@ -1,13 +1,14 @@
-% Journal class not chosen yet: article + natbib for now.
-\documentclass[11pt]{article}
+% Journal class not chosen yet: two-column article + natbib for now.
+\documentclass[10pt,twocolumn]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
+\usepackage{booktabs}
 \usepackage[authoryear,round]{natbib}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[margin=2cm,columnsep=0.7cm]{geometry}
 
 \graphicspath{{figures/}}
 
@@ -17,19 +18,52 @@
 \newcommand{\Rsph}{R_{\rm sph}}
 \newcommand{\Rtrap}{R_{\rm trap}}
 \newcommand{\rin}{r_{\rm in}}
+\newcommand{\rout}{r_{\rm out}}
+\newcommand{\rg}{r_{\rm g}}
+\newcommand{\rmag}{r_{\rm m}}
+\newcommand{\RNS}{R_{\rm NS}}
+\newcommand{\Rref}{R_{\rm ref}}
 \newcommand{\Teff}{T_{\rm eff}}
+\newcommand{\Tw}{T_{\rm w}}
+\newcommand{\LEdd}{L_{\rm Edd}}
+\newcommand{\MEdd}{\dot M_{\rm Edd}}
+\newcommand{\etaEdd}{\eta_{\rm Edd}}
+\newcommand{\kT}{\kappa_{\rm T}}
+\newcommand{\Fvis}{F_{\rm vis}}
+\newcommand{\Qvis}{Q_{\rm vis}}
+\newcommand{\xsp}{x_{\rm sph}}
+\newcommand{\xeff}{x_{\rm eff}}
+\newcommand{\taup}{\tau_\perp}
+\newcommand{\hd}{h_{\rm disc}}
+\newcommand{\omf}{\omega_{\rm frac}}
+\newcommand{\vK}{v_{\rm K}}
+\newcommand{\code}[1]{\texttt{#1}}
 
 \title{Spectra of ultraluminous X-ray sources from a supercritical disc with an optically thick wind}
 % Working title
-\author{Galina Lipunova \and Collaborators}
+\author{G.~Lipunova$^{1,2}$ \and C.~Pinto$^{3}$ \and P.~Abolmasov$^{4}$ \and V.~Ahlberg$^{4}$ \\[1ex]
+\parbox{0.9\textwidth}{\centering\small
+$^1$Dr.~Karl Remeis-Observatory and Erlangen Centre for Astroparticle Physics, Friedrich-Alexander-Universit\"at Erlangen-N\"urnberg, Sternwartstr.~7, 96049 Bamberg \\
+$^2$Max-Planck-Institut f\"ur Radioastronomie, Auf dem H\"ugel 69, 53121 Bonn \\
+$^3$AFFILIATION MISSING \\
+$^4$AFFILIATION MISSING}}
+% Authors and affiliations from the old manuscript (SEA_spectrum.zip, main.tex); there
+% institutes 3 and 4 are referenced but not listed. VERIFY: affiliations 3 and 4, author order.
 \date{Draft, \today}
 
-\begin{document}
-\maketitle
+\renewcommand{\abstractname}{Summary}
 
+\begin{document}
+
+\twocolumn[
+\begin{@twocolumnfalse}
+\maketitle
 \begin{abstract}
-% OUTLINE: model, fits, main result.
+\input{sections/00_summary}
 \end{abstract}
+\vspace{1em}
+\end{@twocolumnfalse}
+]
 
 \input{sections/01_introduction}
 \input{sections/02_model_overview}
@@ -46,6 +80,7 @@
 
 \appendix
 \input{sections/A1_numerics}
+\input{sections/A2_ballistic}
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

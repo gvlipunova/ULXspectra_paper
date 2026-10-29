@@ -11,3 +11,6 @@
 *.lof
 *.lot
 main.pdf
+
+# Old manuscript (author's archive, not for the repository)
+SEA_spectrum.zip
