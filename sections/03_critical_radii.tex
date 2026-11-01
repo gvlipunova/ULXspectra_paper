@@ -10,6 +10,9 @@
 For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$.
 Otherwise $\Rsph$ follows from one of the rules in Table~\ref{tab:rsph}, and it is never below $\rin$.
 % code: rsp_over_rin() (csrcs/disc_struct.c); README "Spherization radius"
+% code: the rule is rsp_rule, fixed by wind_scenario for P07/L99/SS73; for set_mdot_in with empty rsp_rule
+%       the legacy switch use_simple_rsp = 0/1/2 maps to P07fit/mdot0/Ledd (psrcs/flow_rules.py LEGACY_RSP_RULES).
+%       The text names the rules, never the integer (author 2026-11-01).
 
 \begin{table}
 \centering
@@ -77,8 +80,8 @@ If the disc is already below $\LEdd$ beyond $\rin$, $\Rsph = \rin$.
 %         Intended? Then the text should say so.
 
 % AUTHOR: which R_sph rule(s) belong to the main model? The set_mdot_in fits use
-%         three: mdot0 (BH1, BH3, BH4, NS3: use_simple_rsp = 1), Ledd (BH1a, BH3a,
-%         BH4a, NS1a, NS6: use_simple_rsp = 2), and P07fit (NS1: default 0).
+%         three: mdot0 (BH1, BH3, BH4, NS3), Ledd (BH1a, BH3a, BH4a, NS1a, NS6),
+%         and P07fit (NS1), set in ULX.conf through the legacy use_simple_rsp.
 %         ULX.conf still says "TODO decide use_simple_rsp". The text above presents
 %         all rules on equal footing until you decide.
 

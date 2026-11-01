@@ -61,12 +61,14 @@ The ray cast of the code is reproduced in the script; at the best-fit inclinatio
 We used the best fits of \srcHoIX, \srcNGCthirteen and \srcNGCfiftyfour with the preset BH3a over the full energy range, with $4\times10^4$ packets per run (Table~\ref{tab:mc_fits}).
 All three have $\theta_{\rm c} = 45.6^\circ$ ($\omf = 0.7$) and $\theta_{\rm d} = 90^\circ$, so that the edge of the funnel is at $i \approx 46^\circ$.
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo" (fits, packets, theta_c, theta_d)
-The preset BH3a is the main model (Sect.~\ref{sec:model}) for a BH with $\Rsph$ from the condition~\eqref{eq:rsph_Ledd}.
+The preset BH3a is the main model (Sect.~\ref{sec:model}) for a BH with the rule \code{Ledd} for $\Rsph$: the disc beyond $\Rsph$ releases $\LEdd$, Eq.~\eqref{eq:rsph_Ledd}.
 Its free parameters are $M$, $\mdot_0$, $f_{\rm in}$, $r_{\rm in,f}$, $\rout$, $i$, $\epsilon_{\rm w}$ and $\beta_{\rm w}$; $\omf = 0.7$ and $\hd = 0$ are fixed (Table~\ref{tab:params}).
 The full energy range means all the points of the observed SED.
-% code: ULX.conf [BH3a] (wind_scenario = set_mdot_in, use_simple_rsp = 2, free_params, dip = 0) and [DEFAULT]
-%       (omega_frac = 0.7, h_disc = 0); run tag "full": run_adaptive_fits.sh ... full "BH2 BH3a" --Emax 1e3 (README)
-% AUTHOR: check that the Ledd rule is use_simple_rsp = 2 (Sect. radii) and the meaning of "full".
+% code: ULX.conf [BH3a] (wind_scenario = set_mdot_in, free_params, dip = 0) and [DEFAULT]
+%       (omega_frac = 0.7, h_disc = 0); rsp_rule empty, so the legacy use_simple_rsp = 2 gives rsp_rule = Ledd
+%       (psrcs/flow_rules.py LEGACY_RSP_RULES {0: P07fit, 1: mdot0, 2: Ledd}; confirmed by the author 2026-11-01)
+%       run tag "full": run_adaptive_fits.sh ... full "BH2 BH3a" --Emax 1e3 (README)
+% AUTHOR: check the meaning of "full" (all SED points, --Emax 1e3 keV).
 
 \begin{table}
 \centering
