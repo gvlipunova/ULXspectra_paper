@@ -6,6 +6,7 @@
 \usepackage{amsmath,amssymb}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{xspace}
 \usepackage[authoryear,round]{natbib}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage[margin=2cm,columnsep=0.7cm]{geometry}
@@ -38,6 +39,12 @@
 \newcommand{\omf}{\omega_{\rm frac}}
 \newcommand{\vK}{v_{\rm K}}
 \newcommand{\code}[1]{\texttt{#1}}
+
+% Source names (the code calls them HolmIX, NGC1313B, NGC5408)
+\newcommand{\srcHoIX}{Holmberg~IX X-1\xspace}
+\newcommand{\srcNGCthirteen}{NGC1313B\xspace}
+% AUTHOR: full name of NGC1313B (decide later)
+\newcommand{\srcNGCfiftyfour}{NGC~5408 X-1\xspace}
 
 \title{Spectra of ultraluminous X-ray sources from a supercritical disc with an optically thick wind}
 % Working title
@@ -81,6 +88,7 @@ $^4$AFFILIATION MISSING}}
 \appendix
 \input{sections/A1_numerics}
 \input{sections/A2_ballistic}
+\input{sections/A3_monte_carlo}
 
 \bibliographystyle{plainnat}
 \bibliography{refs}

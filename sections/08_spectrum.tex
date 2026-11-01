@@ -28,6 +28,9 @@ The bolometric luminosities of the wind, the disc and the total follow from the 
 % code: README "Visibility and spectrum" (Lbol_total, Lbol_wind, Lbol_disc)
 For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one side of the ring, and the isotropic-equivalent luminosity is $L_{\rm iso} = 2\cos i\,L_{\rm bol}$.
 % source: old manuscript (SEA_spectrum.zip, main.tex, "Observed flux"); follows from Eqs. (muproj), (Lnu) with dz/dR = 0
+The ray cast treats the wind above the surface $\taup = 1$ as transparent and drops the light that the surface occults.
+Appendix~\ref{app:mc} tests both assumptions with a Monte Carlo of electron scattering through the wind: inside the funnel the ray cast gives $L_{\rm iso}$ too low by a factor of 1.5--2.4 with nearly the same spectral shape, and beyond its edge too high and too hard.
+% source: ULXspectra docs/green_surface_monte_carlo.md, "Conclusions" items 1-2; commit 4da7c04
 % AUTHOR: blackbody without colour correction or Comptonization (see Discussion);
 %         say so here explicitly?
 
