@@ -63,12 +63,12 @@ All three have $\theta_{\rm c} = 45.6^\circ$ ($\omf = 0.7$) and $\theta_{\rm d} 
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo" (fits, packets, theta_c, theta_d)
 The preset BH3a is the main model (Sect.~\ref{sec:model}) for a BH with the rule \code{Ledd} for $\Rsph$: the disc beyond $\Rsph$ releases $\LEdd$, Eq.~\eqref{eq:rsph_Ledd}.
 Its free parameters are $M$, $\mdot_0$, $f_{\rm in}$, $r_{\rm in,f}$, $\rout$, $i$, $\epsilon_{\rm w}$ and $\beta_{\rm w}$; $\omf = 0.7$ and $\hd = 0$ are fixed (Table~\ref{tab:params}).
-The full energy range means all the points of the observed SED.
+The full energy range means the whole SED from $10^{-4}$ to 100~keV, of which only 0.3--10~keV is constrained by X-ray data (Sect.~\ref{sec:fitting:data}).
 % code: ULX.conf [BH3a] (wind_scenario = set_mdot_in, free_params, dip = 0) and [DEFAULT]
 %       (omega_frac = 0.7, h_disc = 0); rsp_rule empty, so the legacy use_simple_rsp = 2 gives rsp_rule = Ledd
 %       (psrcs/flow_rules.py LEGACY_RSP_RULES {0: P07fit, 1: mdot0, 2: Ledd}; confirmed by the author 2026-11-01)
-%       run tag "full": run_adaptive_fits.sh ... full "BH2 BH3a" --Emax 1e3 (README)
-% AUTHOR: check the meaning of "full" (all SED points, --Emax 1e3 keV).
+%       run tag "full": run_adaptive_fits.sh ... full "BH2 BH3a" --Emax 1e3 (README);
+%       SED range: data/scripts/ISSI_ULX_make_SED_topsources.sh (author 2026-11-04)
 
 \begin{table}
 \centering

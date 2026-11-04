@@ -35,3 +35,14 @@ Two-column `article` (no journal chosen), summary at the top
 - Physics from the author's older draft (`SEA_spectrum.zip`, kept out of the
   repository) merged where it agrees with the code; marked `% source: old manuscript`.
 - Other sections: outlines only (`% OUTLINE:`).
+- Appendix C (Monte Carlo test, comparison with Ahlberg et al. 2026): preliminary,
+  from `docs/green_surface_monte_carlo.md` at commit `4da7c04`.
+
+### Plan
+
+- Sect. 9: "Where the SEDs come from". The SEDs are a SPEX model fitted to
+  0.3-10 keV and extrapolated to 1e-4-100 keV; compare fits to 0.3-10 keV with
+  the "full" fits, and say what each measures (reminder paragraph in place).
+- Ask the coauthors: real UV/optical and hard X-ray (NuSTAR) data for the
+  sources? Why `mbb` for the soft component?
+- Source names: NGC1313B ("NGC1313 BD") and NGC1313H ("NGC1313 HUL").
