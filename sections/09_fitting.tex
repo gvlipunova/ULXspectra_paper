@@ -10,6 +10,8 @@ The SEDs that we fit are not observed spectra but a model fitted to them.
 The X-ray spectrum of each source was fitted in SPEX over 0.3--10~keV only with an absorbed modified blackbody plus Comptonization, $\code{hot} \times (\code{mbb} + \code{comt})$, with the seed temperature of \code{comt} tied to the temperature of \code{mbb}.
 The absorbing column was then set to zero, and the unabsorbed model was evaluated from $10^{-4}$ to 100~keV.
 Below 0.3~keV and above 10~keV the SED is therefore the extrapolation of this model, and its slope there tells nothing about the disc.
+Its low-energy slope, ${\rm d}\log\nu L_\nu/{\rm d}\log E \to 1.75$, is the asymptote of the SPEX modified blackbody \citep{KaastraBarr1989}, whose photon spectrum is $N(E) \propto E^{1/4}/[{\rm e}^{x}({\rm e}^{x} - 1)]^{1/2}$ with $x = E/kT$ (see also Sect.~\ref{sec:disc:thermalization}).
+% source: ULXspectra-mc docs/thermalization_in_wind.md sect. 1 (commit 69b9de7); checked (Claude): x << 1 gives N ~ E^(-1/4), nuLnu ~ E^(7/4)
 % source: ../data/scripts/ISSI_ULX_make_SED_topsources.sh (SPEX: ign 0:0.3, ign 10:100; par 1 3 t0 c 1 2 t;
 %         par 1 1 fc v 0; plot rx 1e-4 1e2 -> SED_keV_ergps_*.txt); author 2026-11-04
 % AUTHOR: who made the SEDs and from which observations (instrument, ObsID); cite SPEX? (not in refs.bib)

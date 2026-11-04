@@ -1,0 +1,33 @@
+% Source: ULXspectra-mc docs/thermalization_in_wind.md, sect. 4 (branch mc-transfer-corrections, commit 69b9de7);
+%         Lipunova (1999), section "Envelope around a supercritical disk"
+
+\section{Thermalisation in the envelope of Lipunova (1999)}
+\label{app:envelope}
+
+\citet{Lipunova1999} considered a spherical isothermal envelope around a supercritical disc, with the temperature $T = 3.5\times10^4$~K for SS~433 and $n \propto r^{-2}$ outside the radius $R_{\rm s}$.
+The last-scattering radius $R_{\rm T}$ follows from
+\begin{equation}
+\tau_{\rm T}(R_{\rm T}) = \frac{\sigma_{\rm T} n_{\rm s} R_{\rm s}^2}{R_{\rm T}} = 1
+\label{eq:env_RT}
+\end{equation}
+% source: Lipunova (1999), eq. 28, as quoted in thermalization_in_wind.md sect. 4
+\citep[][eq.~28]{Lipunova1999}, and the optical spectrum is that of \citet{ZeldovichShakura1969},
+\begin{equation}
+F_\nu = \left(\frac{k_{\rm ff}}{4\sigma_{\rm T}^2 R_{\rm T}}\right)^{1/4} \pi B_\nu(T) ,
+\label{eq:env_Fnu}
+\end{equation}
+% source: Lipunova (1999), eq. 30, as quoted in thermalization_in_wind.md sect. 4
+with $k_{\rm ff} = 3.69\times10^8\,T^{-1/2}\nu^{-3}g\,(1 - {\rm e}^{-h\nu/kT})$~cm$^5$ \citep[][eq.~30]{Lipunova1999}.
+This holds when scattering dominates at $R_{\rm T}$, the condition stated there, and, implicitly, when the photons are made inside the envelope, that is when the thermalisation radius $r_*$ lies above its base $R_{\rm s}$.
+For $n \propto r^{-2}$, $\tau(r) = R_{\rm T}/r$, $n(r) = R_{\rm T}/(\sigma_{\rm T} r^2)$ and $\varepsilon(r) = k_{\rm ff}\,n/\sigma_{\rm T} = k_{\rm ff}R_{\rm T}/(\sigma_{\rm T}^2 r^2)$.
+The condition $\tau\sqrt{3\varepsilon} = 1$ (Eq.~\ref{eq:tau_therm}) then gives
+\begin{equation}
+r_*^2 = \frac{\sqrt{3k_{\rm ff}}\,R_{\rm T}^{3/2}}{\sigma_{\rm T}} .
+\label{eq:env_rstar}
+\end{equation}
+% source: thermalization_in_wind.md sect. 4; checked (Claude): (R_T/r) sqrt(3 k_ff R_T/(sigma_T^2 r^2)) = 1
+
+For the parameters of SS~433 in \citet{Lipunova1999}, $m = 10$, $\mdot = 1000$, $A_1A_2A_3 = 0.5\cdot0.87\cdot3$, $\lambda = 5500$~\AA{} and $T = 3.5\times10^4$~K, we find $k_{\rm ff} = 6.4\times10^{-39}$~cm$^5$, $R_{\rm T} = 6.4\times10^{11}$~cm (their eq.~29) and $R_{\rm s} = A_2\mdot R_{\rm o} = 7.7\times10^{10}$~cm, with $R_{\rm o} = 3R_{\rm g}$ and $R_{\rm g} = 2GM/c^2$.
+Equation~\eqref{eq:env_rstar} gives $r_* = 3.3\times10^{11}$~cm $\approx 0.5R_{\rm T}$, above $R_{\rm s}$, that is $\tau_* = R_{\rm T}/r_* \approx 2$, and Eq.~\eqref{eq:env_Fnu} gives $F_\nu/\pi B_\nu = 0.27$.
+% source: thermalization_in_wind.md sect. 4 table; checked (Claude): r_* = 3.27e11 cm, (k_ff/(4 sigma_T^2 R_T))^(1/4) = 0.274
+In the regime of that paper, the envelope thus thermalises optical photons at $\tau \approx 2$ inside it, and scattering above that layer modifies the spectrum: the modified blackbody there is correct.

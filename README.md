@@ -35,6 +35,9 @@ Two-column `article` (no journal chosen), summary at the top
 - Physics from the author's older draft (`SEA_spectrum.zip`, kept out of the
   repository) merged where it agrees with the code; marked `% source: old manuscript`.
 - Other sections: outlines only (`% OUTLINE:`).
+- Sect. 11.1 (thermalisation in the wind) and Appendix D (Lipunova 1999 envelope):
+  from `docs/thermalization_in_wind.md` of `ULXspectra-mc`, branch
+  `mc-transfer-corrections`, commit `69b9de7`.
 - Appendix C (Monte Carlo test, comparison with Ahlberg et al. 2026): preliminary,
   from `docs/green_surface_monte_carlo.md` at commit `4da7c04`.
 

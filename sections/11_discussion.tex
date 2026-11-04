@@ -12,3 +12,100 @@
 %          old manuscript "Wind power") vs eps_w (L_disc - L_disc,seen); diagnostic
 %          wind_energy_loss_through_green_surface() in psrcs/wind_emission.py (run_many.py),
 %          not part of the fitted model.
+
+\subsection{Does the wind emit a blackbody?}
+\label{sec:disc:thermalization}
+% Source: ULXspectra-mc docs/thermalization_in_wind.md (PLAN C21), branch mc-transfer-corrections,
+%         commit 69b9de7; estimate script docs/scripts/mc_table/thermalization.py
+
+The model gives each ring of the wind photosphere ($\taup = 1$) a blackbody at its temperature (Sect.~\ref{sec:spectrum}).
+The Monte Carlo transfer of Appendix~\ref{app:mc} scatters grey and coherently, without absorption or emission, so each emitter keeps its blackbody shape as well.
+A blackbody, or a modified blackbody, requires that the photons be made by absorption in the medium that emits them.
+Here we estimate whether the wind can do that.
+% source: thermalization_in_wind.md, sect. 1
+
+At each interaction a photon is absorbed with the probability
+\begin{equation}
+\varepsilon_\nu = \frac{\alpha_\nu^{\rm abs}}{\alpha_\nu^{\rm abs} + n_{\rm e}\sigma_{\rm T}} .
+\label{eq:eps_abs}
+\end{equation}
+% source: thermalization_in_wind.md, sect. 2; code: docs/scripts/mc_table/thermalization.py (eps)
+A photon that starts at the scattering optical depth $\tau$ random-walks out in about $\tau^2$ scatterings, and its chance of being absorbed on the way is about $\varepsilon_\nu\tau^2$.
+Absorption, and so thermal emission, is therefore likely deeper than the thermalisation depth
+\begin{equation}
+\tau_*(\nu) \approx \frac{1}{\sqrt{3\varepsilon_\nu}} ,
+\label{eq:tau_therm}
+\end{equation}
+% source: thermalization_in_wind.md, sect. 2; Zeldovich & Shakura (1969), Rybicki & Lightman (1979) as named there
+measured in scattering optical depth \citep{ZeldovichShakura1969, Shakura1973, RybickiLightman1979}.
+This is the depth that the medium must have.
+If the medium is deeper than $\tau_*$, photons are made near $\tau_*$ and scatter out, and the result is a modified blackbody at the temperature of that layer.
+If the whole column is shallower, $\tau_{\rm col} < \tau_*$, the medium is effectively optically thin: thick to scattering but thin to absorption.
+It absorbs a fraction $\varepsilon_\nu\tau_{\rm col}^2 \approx (\tau_{\rm col}/\tau_*)^2/3$ of the photons crossing it, and by Kirchhoff's law its own thermal emission is the same small fraction of a blackbody; the light that leaves it was made elsewhere and scattered.
+For example, $\taup = 3$ and $\tau_* = 100$ give $\varepsilon_\nu \approx 3\times10^{-5}$; a crossing takes about 9 scatterings, so a photon is absorbed with the probability of only about $3\times10^{-4}$.
+% source: thermalization_in_wind.md, sect. 2 (example)
+
+To estimate $\tau_*$ in the model's wind, we take free-free absorption only, in fully ionised hydrogen with the Gaunt factor of unity and the gas temperature equal to the temperature of the wind ring:
+\begin{equation}
+\alpha_\nu^{\rm ff} = 3.7\times10^{8}\,T^{-1/2}\,n_{\rm e}n_{\rm i}\,\nu^{-3}\left(1 - {\rm e}^{-h\nu/kT}\right)\ {\rm cm^{-1}}
+\label{eq:alpha_ff}
+\end{equation}
+% source: thermalization_in_wind.md, sect. 3; code: thermalization.py (a = 3.7e8 T^-0.5 ne^2 nu^-3 (1 - exp(-h nu/kT))), cgs
+(cgs units).
+We evaluate $\tau_*$ at the density of the photosphere and compare it with the whole vertical column of the wind, $\tau_{\perp,{\rm tot}}$, in BH3a fits of \srcHoIX and \srcNGCfiftyfour with $\omf = 0.7$ (Table~\ref{tab:therm}).
+In \srcNGCthirteen at $\omf = 0.7$ no wind rings radiate.
+% source: thermalization_in_wind.md, sect. 3 ("BH3a calibration fits at omega = 0.7": the BH3a full fits with omega_frac
+%         = 0.7, docs/scripts/mc_table/runs.txt); commit 69b9de7
+
+\begin{table}
+\centering
+\caption{Thermalisation depth $\tau_*$ (Eq.~\ref{eq:tau_therm}, free-free absorption), luminosity-weighted median over the wind rings, and the share of the wind light of \srcNGCfiftyfour that is thermalised. The whole vertical column is $\tau_{\perp,{\rm tot}} = 1.1$--$2.8$ in \srcHoIX and 1.4--33 in \srcNGCfiftyfour.}
+\label{tab:therm}
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+& \multicolumn{2}{c}{$\tau_*$} & thermalised \\
+$E$ [keV] & Ho IX X-1 & NGC 5408 X-1 & NGC 5408 X-1 \\
+\midrule
+0.01 & 3.1 & 2.0 & 0.95 \\
+0.1 & 47 & 23 & 0.23 \\
+0.3 & 230 & 89 & 0.01 \\
+1 & 1400 & 460 & 0 \\
+3 & 7200 & 2300 & 0 \\
+\bottomrule
+\end{tabular}
+% source: thermalization_in_wind.md, sect. 3 table; ULXspectra-mc commit 69b9de7
+\end{table}
+
+Above about 0.1--0.3~keV, $\tau_*$ far exceeds the column, so the wind cannot make X-ray photons.
+Its X-rays are disc photons, made where the disc is dense enough to thermalise them, and scattered by the wind.
+Scattering conserves the photon energy, so they keep the colour temperature of the disc under the wind; spread over the larger photosphere, they form a diluted blackbody, not a blackbody at the effective temperature of the wind.
+In the UV, near 0.01~keV, $\tau_* \approx 2$--$3$ is below the column of \srcNGCfiftyfour, the wind thermalises, and a modified blackbody at the gas temperature applies.
+% source: thermalization_in_wind.md, sect. 3
+
+These estimates are rough.
+Deeper in the column the density is higher, and $\tau_*$ is about 1.5 times lower (30 instead of 47 at 0.1~keV for \srcHoIX).
+Bound-free absorption by metals raises the opacity at 0.1--1~keV and lowers $\tau_*$ by a factor of 3--10, which does not change the conclusion above about 0.3~keV.
+Compton energy exchange is weak: $y = (4kT_{\rm e}/m_{\rm e}c^2)\,N \approx 0.07$ for $T_{\rm e} = 10^6$~K and $N = 100$ scatterings.
+Radiation trapped in the outflow ($\tau v/c > 1$) cools adiabatically, which shifts photon energies without thermalising them.
+Finally, the gas temperature of the wind is not known in the model.
+% source: thermalization_in_wind.md, sect. 3, caveats
+
+The same reasoning applies to the spherical envelope of \citet{Lipunova1999}, whose optical spectrum is a modified blackbody \citep{ZeldovichShakura1969}.
+For the parameters of SS~433 used there, optical photons thermalise at $\tau_* \approx 2$ inside the envelope (Appendix~\ref{app:envelope}), so the modified blackbody is correct there.
+From the optical at $3.5\times10^4$~K to 1~keV at $10^6$~K, however, the free-free coefficient decreases by a factor of about $2.5\times10^8$, and $\tau_* \propto (\alpha^{\rm ff}_\nu)^{-1/2}$ grows by about $1.6\times10^4$.
+Moreover, the wind of our model is a finite column, $\taup \approx 1$--$30$ above the disc, not an envelope with $n \propto r^{-2}$ reaching ever denser layers inwards.
+% source: thermalization_in_wind.md, sect. 4 (last paragraph): k_ff falls by ~4e-9, tau_* grows by ~1.6e4
+
+A physically consistent spectrum of the wind therefore changes regime with frequency.
+Where $\tau_*(\nu)$ is below the column of the wind, the wind thermalises and emits a modified blackbody at the gas temperature: the UV of ULX winds, as the optical of the envelope of SS~433.
+Where $\tau_*(\nu)$ exceeds the column, the emission of the wind is scattered disc light that keeps the colour temperature of the disc: the X-rays above about 0.3~keV.
+Such a spectrum needs the gas temperature of the wind.
+The slope of the SEDs below 0.3~keV (Sect.~\ref{sec:fitting:data}) is an extension of a phenomenological fit and does not constrain this.
+% source: thermalization_in_wind.md, sect. 5
+% OUTLINE (author's decision, PLAN C21): (a) keep the blackbody as a stated limitation;
+%          (b) wind rings as diluted blackbodies at the colour temperature of the disc light that feeds them;
+%          (c) local emission with a thermalisation depth per frequency (needs the gas temperature).
+% AUTHOR: the disc rings are also pure blackbodies (no colour correction; PLAN C21 quotes f_col ~ 1.6-2
+%         for X-ray discs) - discuss here as well?
