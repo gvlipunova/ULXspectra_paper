@@ -28,11 +28,61 @@ The bolometric luminosities of the wind, the disc and the total follow from the 
 % code: README "Visibility and spectrum" (Lbol_total, Lbol_wind, Lbol_disc)
 For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one side of the ring, and the isotropic-equivalent luminosity is $L_{\rm iso} = 2\cos i\,L_{\rm bol}$.
 % source: old manuscript (SEA_spectrum.zip, main.tex, "Observed flux"); follows from Eqs. (muproj), (Lnu) with dz/dR = 0
-The ray cast treats the wind above the surface $\taup = 1$ as transparent and drops the light that the surface occults.
-Appendix~\ref{app:mc} tests both assumptions with a Monte Carlo of electron scattering through the wind: inside the funnel the ray cast gives $L_{\rm iso}$ too low by a factor of 1.5--2.4 with nearly the same spectral shape, and beyond its edge too high and too hard.
-% source: ULXspectra docs/green_surface_monte_carlo.md, "Conclusions" items 1-2; commit 4da7c04
 % AUTHOR: blackbody without colour correction or Comptonization (see Discussion);
 %         say so here explicitly?
+% AUTHOR: on branch mc-transfer-corrections the wind rings are diluted blackbodies w B_nu(T_w,raw)
+%         (wind_spectrum = 1, README "Visibility and spectrum"), not blackbodies at T_w as written here.
+%         Update this section to that branch?
+
+\subsection{Transfer through the wind}
+\label{sec:spectrum:transfer}
+% Sources: ULXspectra-mc docs/transfer_correction_results.md (commit 2272e8a; state of the model 2f22b12,
+%          branch mc-transfer-corrections); README "Visibility and spectrum"; PLAN.md C18
+
+The ray cast alone treats the wind above the surface $\taup = 1$ as transparent, and the light that the surface occults is lost.
+A Monte Carlo of electron scattering through the wind shows that this makes $L_{\rm iso}$ too low inside the funnel, by a factor of 1.5--2.4, and too high and too hard beyond its edge, where the hot inner disc stays visible (Appendix~\ref{app:mc}).
+% source: ULXspectra docs/green_surface_monte_carlo.md, "Conclusions" items 1-2; commit 4da7c04
+We therefore correct the ray cast with a table of Monte Carlo runs (switch \code{mc\_transfer} = 1).
+Each emitting ring $j$ of the wind, the disc or, for a NS, the central emitter contributes at $\mu = \cos i$
+\begin{equation}
+L_j(\mu) = 4\sigma T_j^4\,A_{{\rm att},j}(\mu) + S_j\,h_j(\mu) .
+\label{eq:Lj_transfer}
+\end{equation}
+% code: csrcs/mc_transfer.c; README "Visibility and spectrum" (effective area A_att + S_j h_j/(4 sigma T^4));
+%       transfer_correction_results.md sect. 1
+Here $A_{{\rm att},j}$ is the projected area of the ring times ${\rm e}^{-\tau}$ along the ray to the observer through the wind of the model, averaged over 16 azimuths.
+For a NS the central body, the surface of the magnetosphere, is opaque: a ray that meets it adds nothing to $A_{{\rm att},j}$.
+% code: README "Visibility and spectrum" (16 azimuths, 40 log steps per ray; kappa rho from the tau_perp columns;
+%       NS central body opaque, one crossing per ring radius)
+The light that the ring does not send out directly,
+\begin{equation}
+\begin{split}
+S_j = {} & 2\sigma T_j^4\,2\pi R\,\Delta R\sqrt{1 + \left(\frac{{\rm d}z}{{\rm d}R}\right)^2} \\
+& - \int_0^1 4\sigma T_j^4\,A_{{\rm att},j}(\mu)\,{\rm d}\mu ,
+\end{split}
+\label{eq:Sj}
+\end{equation}
+% code: README "Visibility and spectrum" (S_j; 10 mu midpoints; traced on every 4th ring, interpolated in ln R)
+leaves with the angular profile $h_j(\mu)$, normalised to $\int_0^1 h_j\,{\rm d}\mu = 1$:
+\begin{equation}
+h_j(\mu) =
+\begin{cases}
+(1 - f_j)\,g_{\rm in}(u)/(1 - \cos\theta_{\rm c}), & \mu > \cos\theta_{\rm c}, \\
+f_j\,g_{\rm out}(v)/\cos\theta_{\rm c}, & \mu < \cos\theta_{\rm c},
+\end{cases}
+\label{eq:hj}
+\end{equation}
+% code: README "Visibility and spectrum" (h_j, u, v, f_j); csrcs/mc_transfer.c
+with $u = (1 - \mu)/(1 - \cos\theta_{\rm c})$ and $v = \mu/\cos\theta_{\rm c}$.
+The share $f_j$ of this light that leaves beyond $\theta_{\rm c}$ and the profiles $g_{\rm in}$ and $g_{\rm out}$ come from a table of 117 Monte Carlo runs (Appendix~\ref{app:mc:table}).
+They depend on the class of the ring (wind or disc, and its position $x/\xsp$; for a NS with the dipole surface, the position on the central emitter), on the optical depth $\tau_j$ of the ring towards the angle $\theta_{\rm c} + \min[10^\circ, (90^\circ - \theta_{\rm c})/2]$, and on $\theta_{\rm c}$.
+% code: README "Visibility and spectrum" (classes, tau_j direction, interpolation: ln f linear between theta_c nodes,
+%       profiles linear in cos theta_c, in u, v and ln tau); csrcs/mc_transfer_table.h
+Energy is conserved by construction, and the scattering is grey and coherent, so each ring keeps its spectral shape.
+% source: transfer_correction_results.md sect. 1
+Against Monte Carlo runs of best fits not used in the table, the corrected model gives $L_{\rm iso}$ within 6 per cent inside the funnel for the BH fits, and within $-22$ to $+23$ per cent beyond its edge (Appendix~\ref{app:mc:heldout}).
+% source: transfer_correction_results.md sect. 4: MC/C 0.94-1.03 inside, 0.78-1.23 beyond (BH, held out); commit 2272e8a
+% AUTHOR: are all the fits of the paper run with mc_transfer = 1 (README: default 1, "common to all presets")?
 
 % OUTLINE: example spectra and their dependence on the main parameters (mdot_0, f_in,
 %          i, r_out, beta_w), each component shown separately; figure from a new

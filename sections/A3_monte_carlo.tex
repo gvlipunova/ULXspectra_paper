@@ -4,7 +4,7 @@
 %       docs/scripts/funnel_beaming_mc.py (added in 4da7c04)
 % Preliminary results (requested by the author 2026-11-01). Nothing here goes beyond the doc.
 
-\section{Radiative transfer in the wind funnel: a Monte Carlo test}
+\section{Radiative transfer in the wind funnel: Monte Carlo}
 \label{app:mc}
 
 \subsection{What the ray cast assumes}
@@ -269,19 +269,135 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \subsection{Limits of the test}
 \label{app:mc:limits}
 
-These results are preliminary.
+These first results are preliminary.
 The scattering is grey: isotropic Thomson scattering, without the Rayleigh phase function, without Doppler shifts or bulk Comptonization by the outflow, and without thermal Comptonization.
 There is no absorption: a packet keeps the energy of the element that emitted it, and there is no thermalisation below the surface.
 The disc plane has the albedo of unity.
 The packets start on the surfaces of the model, so the test covers the transfer after emission, not where the light is emitted.
 With $4\times10^4$ packets per run, a few hundred packets fall into each bin at $i \ge 70^\circ$.
 % source: docs/green_surface_monte_carlo.md, "Limits of the Monte Carlo"
-Only the BH fits were tested.
-For a NS the Monte Carlo needs the disc surface ($\hd > 0$) and the magnetosphere as emitters and reflectors, the base of the funnel at the inner launch radius of the wind, and, for the central emitter up to about 30~keV, energy change in scattering.
-% source: docs/green_surface_monte_carlo.md, "Limits" (BH fits only) and "NS fits"
+Only the BH fits were tested here; the NS central emitter was added to the Monte Carlo later (Sect.~\ref{app:mc:heldout}).
+% source: docs/green_surface_monte_carlo.md, "Limits" (BH fits only); ULXspectra-mc commit ecdbb64 (NS central emitter)
 
-% OUTLINE: what follows for the fits is the author's decision (docs/green_surface_monte_carlo.md,
-%          "Possible next steps"; PLAN.md C18): inclination prior i < theta_c; energy conservation
-%          in the ray cast; attenuation exp(-tau_los) along the line of sight; MC-calibrated
-%          angular redistribution b(i; alpha, R) from the opaque cone + f_leak from the wind MC.
-% AUTHOR: state here which of these (if any) the paper adopts, or move to the Discussion.
+
+\subsection{The table of the transfer correction}
+\label{app:mc:table}
+% Source: ULXspectra-mc docs/transfer_correction_results.md (commit 2272e8a; state 2f22b12, branch
+%         mc-transfer-corrections), sects. 2, 3; README "Visibility and spectrum"
+
+The correction of Sect.~\ref{sec:spectrum:transfer} is calibrated with the same Monte Carlo, now with $10^5$ packets per run.
+For a NS the central emitter also emits packets, and its body reflects them diffusely with the albedo of unity, also in the throat of the dipole surface.
+% source: transfer_correction_results.md sect. 2 (albedo 1: author's decision 2026-11-06)
+The table holds 117 runs (Table~\ref{tab:mc_calib}).
+The rings are grouped into classes: wind or disc, each with $x/\xsp < 0.03$, 0.03--0.3 and $> 0.3$; and, for the dipole central emitter of a NS, $x < 0.01$ (the throat near the axis), 0.01--0.3 and $> 0.3$, with $x$ in units of $\rmag$.
+The central rings of the spherical emitter use the innermost disc class.
+The optical depth $\tau_j$ is binned at 0, 3, 6, 12, 25, 50 and 100.
+Of the table cells, 164 of 336 for the BH classes and 156 of 168 for the central ones receive no calibration packets and are filled from neighbouring cells or classes.
+% source: transfer_correction_results.md sects. 3, 6
+
+\begin{table*}
+\centering
+\caption{Monte Carlo runs in the table of the transfer correction.}
+\label{tab:mc_calib}
+\small
+\begin{tabular}{@{}p{0.62\textwidth}cl@{}}
+\toprule
+Set & Runs & Used for \\
+\midrule
+BH3a best fits of \srcHoIX, \srcNGCthirteen, \srcNGCfiftyfour; $\omf = 0.1$--$0.85$ ($\theta_{\rm c} = 31.8$--$84.3^\circ$, 8 nodes); $\log\mdot_0$ best and $\pm0.5$ & 72 & wind and disc classes \\
+BH0, BH1a, BH3a, BH4a best fits at other $\mdot_0$, $\beta_{\rm w}$, $f_{\rm in}$ (5 sources) & 14 & wind and disc classes \\
+NS best fits (NS1a, NS2, NS3a, NS4a, NS5, NS5a, NS6, NS7) of 9 sources, $\omf = 0.7$ & 31 & dipole central-emitter classes \\
+\bottomrule
+\end{tabular}
+% source: transfer_correction_results.md sect. 3 (5 sources: HolmIX, NGC1313B, NGC5408, NGC247SS, NGC6946;
+%         the dipole classes from the 10 dip = 1 runs among the 31); commit 2272e8a
+\end{table*}
+
+\subsection{Held-out checks of the correction}
+\label{app:mc:heldout}
+
+We checked the correction against Monte Carlo runs that are not in the table: 17 BH runs (best fits of 7 sources and 5 presets, three of them at other $\mdot_0$) and the 14 NS best fits of NGC~5408, NGC~300 and NGC~55.
+Tables~\ref{tab:mc_heldout_bh} and~\ref{tab:mc_heldout_ns} give the ratio of the Monte Carlo luminosity to that of the model, MC/model, so that a ratio above unity means that the model is too faint.
+The ranges are over the bins $\Delta\mu = 0.1$ with at least 200 Monte Carlo packets, inside the funnel and beyond $\theta_{\rm c}$, without the correction and with it.
+% source: transfer_correction_results.md sects. 2, 4, 5
+% AUTHOR: the other source names (M51ULS, M81ULS, NGC1313H, NGC247S, NGC247SS, NGC300, NGC55, NGC6946, NGC7793)
+%         are written as in the code; full names?
+
+For the BH fits the corrected model gives MC/model = 0.94--1.03 inside the funnel and 0.78--1.23 beyond $\theta_{\rm c}$; without the correction the ratios are 0.67--2.5 inside, mostly with the model too faint, and 0.31--7.7 beyond.
+In the bands 0.01--0.1, 0.1--1 and 1--10~keV the corrected ratios are 0.91--1.05 inside and 0.68--1.30 beyond; the worst case is NGC5408 BH1a at $i = 86^\circ$ in the 1--10~keV band.
+The energy that reaches observers, $\int L_{\rm iso}\,{\rm d}\mu$ relative to the emitted energy, is 0.982--1.001 of that of the Monte Carlo.
+A test of the packet counts over the 86 BH calibration runs, per run, inclination group and emitter temperature, finds 3.2 per cent of the cells inside the funnel and 21.2 per cent beyond $\theta_{\rm c}$ off by more than $\max(10\%, 2\sqrt{n})$.
+% source: transfer_correction_results.md sect. 4; commit 2272e8a
+% AUTHOR: "max(10%, 2 sqrt n)" mixes a fraction and a count (n packets); state the criterion precisely.
+
+For the NS fits with the dipole surface and a deep throat (NGC5408 NS5, NS5a and NS6), most of the light comes from the central emitter: in NGC5408 NS5a 99 per cent of the emission, and 61 per cent of that from the throat ($x < 0.01$, $T$ up to 174 times $T(\rmag)$).
+The walls of the throat face the axis, and the light reflected between them leaves near the axis.
+With the BH classes alone these fits were at 0.64--2.25 inside the funnel and 0.17--0.82 beyond; with the dipole classes they are at 0.98--1.05 inside and 0.80--1.63 beyond.
+The ten fits with the spherical emitter are at 0.95--1.00 inside and 0.66--1.48 beyond.
+The energy that reaches observers is 1.001--1.011 of the emitted energy in the five fits checked.
+% source: transfer_correction_results.md sect. 5; README "Visibility and spectrum" (summary of the NS check)
+
+The correction has the following limits.
+The BH table covers all the $\theta_{\rm c}$ nodes only for BH3a, the other BH presets at one node each, and BH2 was only checked, not calibrated; the NS central classes come from $\theta_{\rm c} = 45.6^\circ$ only.
+Beyond $\theta_{\rm c}$ the model with the dipole surface is too faint by up to a factor of 1.6 (2.2 in the 0.1--10~keV band), and for the BH fits the error is largest at $i \gtrsim 55^\circ$.
+Compton energy exchange and absorption in the wind and heating by the scattered light are left out both in the Monte Carlo and in the table, and the albedo of the NS body is unity by assumption.
+% source: transfer_correction_results.md sect. 6
+
+\begin{table*}
+\centering
+\caption{Held-out check of the transfer correction for BH fits: MC/model of the bolometric $L_{\rm iso}$ per $\mu$ bin, without $\to$ with the correction.}
+\label{tab:mc_heldout_bh}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Best fit (changed parameter) & $\theta_{\rm c}$ & inside the funnel & beyond $\theta_{\rm c}$ \\
+\midrule
+HolmIX BH3a ($\log\mdot_0 = 0.5$) & $45.6^\circ$ & 1.4--1.5 $\to$ 0.97--0.99 & 0.52--1.2 $\to$ 0.99--1.14 \\
+M51ULS BH4a & $83.0^\circ$ & 0.67--1.2 $\to$ 1.00--1.03 & -- \\
+M81ULS BH2 & $45.6^\circ$ & 2.4--2.5 $\to$ 0.99--1.00 & 0.47--1.1 $\to$ 0.93--1.04 \\
+NGC1313B BH3a ($\log\mdot_0 = 0.5$) & $45.6^\circ$ & 1.2--1.3 $\to$ 0.98 & 0.67--1.3 $\to$ 1.02--1.19 \\
+NGC1313H BH4a & $79.4^\circ$ & 0.99--1 $\to$ 0.99--1.01 & 0.98--1 $\to$ 1.03--1.04 \\
+NGC247S BH3a & $45.6^\circ$ & 1.1--1.2 $\to$ 0.95--0.96 & 0.78--1.7 $\to$ 0.97--1.19 \\
+NGC247SS BH0 & $45.6^\circ$ & 1.4--1.5 $\to$ 1.00--1.01 & 0.49--2 $\to$ 1.01--1.08 \\
+NGC300 BH2 & $45.6^\circ$ & 1.9--2.1 $\to$ 1.01 & 0.31--4.2 $\to$ 0.89--1.19 \\
+NGC300 BH3a & $45.6^\circ$ & 1.4--1.5 $\to$ 1.00 & 0.46--2 $\to$ 0.96--1.11 \\
+NGC5408 BH0 & $45.6^\circ$ & 1.4--1.5 $\to$ 0.98--0.99 & 0.42--0.93 $\to$ 0.79--1.14 \\
+NGC5408 BH1a & $45.6^\circ$ & 1.4--1.5 $\to$ 0.99 & 0.36--0.89 $\to$ 0.78--1.14 \\
+NGC5408 BH2 & $45.6^\circ$ & 2.3--2.4 $\to$ 0.99--1.00 & 0.45--0.75 $\to$ 0.98--1.10 \\
+NGC5408 BH3a ($\log\mdot_0 = 0.5$) & $45.6^\circ$ & 1.7--1.9 $\to$ 0.99--1.00 & 0.4--3.8 $\to$ 0.98--1.15 \\
+NGC5408 BH3a ($\log\mdot_0 = 0$) & $45.6^\circ$ & 1 $\to$ 1.00--1.01 & 0.99--1 $\to$ 0.99--1.04 \\
+NGC5408 BH3a ($\log\mdot_0 = 1.0$) & $45.6^\circ$ & 1.9--2.1 $\to$ 0.99--1.01 & 0.36--6.7 $\to$ 0.93--1.00 \\
+NGC6946 BH4a & $32.2^\circ$ & 1.5 $\to$ 0.94 & 0.64--1.4 $\to$ 0.97--1.11 \\
+NGC7793 BH4a & $32.2^\circ$ & 2 $\to$ 0.97 & 0.57--7.7 $\to$ 0.91--1.23 \\
+\bottomrule
+\end{tabular}
+% source: transfer_correction_results.md sect. 4 table; commit 2272e8a (ranges like "0.98-0.98" written as one value)
+\end{table*}
+
+\begin{table*}
+\centering
+\caption{Held-out check of the transfer correction for NS fits ($\theta_{\rm c} = 45.6^\circ$): MC/model of $L_{\rm iso}$ per $\mu$ bin, without $\to$ with the correction. \code{dip} = 1: dipole surface; 0: sphere.}
+\label{tab:mc_heldout_ns}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Best fit & \code{dip} & inside the funnel & beyond $\theta_{\rm c}$ \\
+\midrule
+NGC5408 NS5 & 1 & 3.13--9.46 $\to$ 0.98--1.05 & 1.11--2.32 $\to$ 0.80--1.09 \\
+NGC5408 NS5a & 1 & 4.00--9.15 $\to$ 1.01--1.03 & 0.58--372 $\to$ 1.19--1.63 \\
+NGC5408 NS6 & 1 & 3.80--8.64 $\to$ 0.99--1.04 & 0.62--225 $\to$ 1.21--1.58 \\
+NGC300 NS5a & 1 & 2.70--2.86 $\to$ 0.98--0.99 & 0.43--47.7 $\to$ 1.12--1.64 \\
+NGC300 NS1a & 0 & 1.47--1.70 $\to$ 0.98--1.00 & 0.46--2.72 $\to$ 0.83--1.06 \\
+NGC300 NS4a & 0 & 1.47--1.70 $\to$ 0.98--1.00 & 0.44--2.71 $\to$ 0.83--1.08 \\
+NGC300 NS7 & 0 & 1.53--1.75 $\to$ 0.96--0.99 & 0.41--3.19 $\to$ 0.89--1.08 \\
+NGC5408 NS1a & 0 & 1.02--1.03 $\to$ 0.99--1.00 & 1.01--1.04 $\to$ 0.99--1.02 \\
+NGC5408 NS2 & 0 & 2.66--2.69 $\to$ 0.99--1.02 & 0.70--3.09 $\to$ 0.80--1.36 \\
+NGC5408 NS3a & 0 & 1.00--1.02 $\to$ 0.99--1.00 & 0.98--1.04 $\to$ 0.98--1.03 \\
+NGC5408 NS4a & 0 & 1.02--1.03 $\to$ 0.99--1.00 & 1.01--1.06 $\to$ 0.98--1.02 \\
+NGC5408 NS7 & 0 & 1.67--1.85 $\to$ 0.98--1.00 & 0.14--42.3 $\to$ 0.66--1.30 \\
+NGC55 NS4a & 0 & 2.30--2.39 $\to$ 1.00 & 0.52--32.8 $\to$ 0.86--1.48 \\
+NGC55 NS7 & 0 & 1.23--1.39 $\to$ 0.95--0.96 & 0.54--1.39 $\to$ 0.79--1.11 \\
+\bottomrule
+\end{tabular}
+% source: transfer_correction_results.md sect. 5 table; README "Visibility and spectrum"; commit 2272e8a
+\end{table*}

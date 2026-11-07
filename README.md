@@ -38,6 +38,10 @@ Two-column `article` (no journal chosen), summary at the top
 - Sect. 11.1 (thermalisation in the wind) and Appendix D (Lipunova 1999 envelope):
   from `docs/thermalization_in_wind.md` of `ULXspectra-mc`, branch
   `mc-transfer-corrections`, commit `69b9de7`.
+- Sect. 8.1 (transfer correction, `mc_transfer = 1`) and Appendix C.6-C.7 (its
+  table and held-out checks): from `docs/transfer_correction_results.md` of
+  `ULXspectra-mc`, commit `2272e8a` (model state `2f22b12`). Update them
+  when that file's update log changes.
 - Appendix C (Monte Carlo test, comparison with Ahlberg et al. 2026): preliminary,
   from `docs/green_surface_monte_carlo.md` at commit `4da7c04`.
 
