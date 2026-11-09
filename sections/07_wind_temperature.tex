@@ -75,8 +75,11 @@ The temperatures~\eqref{eq:Tdisc} already exclude the energy that launches the w
 The disc rings that the optically thick wind does not cover keep their temperature~\eqref{eq:Tdisc}, also where they are seen through a transparent inner wind.
 % source: README "Wind temperature and energy budget" ("Energy budget", "Directly seen disc")
 % (Before 2026-11-03: L_wind = (1 - eps_w)(L_disc - L_disc,seen) with the analytic L_disc; CHANGELOG.)
-% NOTE: CHANGELOG 2026-11-03 says the sum includes rings beyond r_out; README (later) says r_in <= R < r_out,
-%       "a wind photosphere beyond r_out has no disc under it". Followed the README.
+The outer disc radius $\rout$ is set by the binary system and does not depend on the photosphere, whose extent depends on the mass loss in the wind.
+A photosphere that reaches beyond $\rout$ has no disc under it there, and a disc that reaches beyond the photosphere is seen directly.
+% source: the author 2026-11-09; code: csrcs/wind_emission.c (L_disc_under_wind: x_mid >= 1 and < x_out_disc,
+%         "r_out, the disc's outer edge in the binary (user, 2026-11-03)"), ULXspectra-mc f546151; README "Energy budget"
+%         (CHANGELOG 2026-11-03 "including rings beyond r_out" is superseded)
 The budget is global: one factor scales the raw temperatures of all wind rings,
 \begin{equation}
 \Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}, \qquad f_{\rm cor} = \frac{L_{\rm wind}}{L_{\rm wind,raw}} ,
@@ -102,5 +105,12 @@ If $L_{\rm wind} = 0$ ($\epsilon_{\rm w} = 1$, or no disc ring under the wind), 
 % code: flags wind_f_cor_above_one, wind_budget_fallback (diagnostics and MCMC blobs); README "Wind temperature and energy budget";
 %       CHANGELOG 2026-11-04 (cap removed), 2026-11-03 (dark wind instead of f_cor = 1)
 % AUTHOR: is a flagged model rejected in the fits, or kept? (Sect. fitting)
-% AUTHOR: PLAN C21 (2026-11-04): where eps_w >> tau_perp v_w/c (8 of 25 fits with eps_w free) eps_w acts as a free
-%         dimmer of the wind (f_cor <~ 0.05), "so eps_w is treated as phenomenological". Say this in the paper (here or Discussion)?
+
+The model does not determine the efficiency $\epsilon_{\rm w}$ with which the wind is launched.
+Energy conservation allows any value between 0 and 1; at $\epsilon_{\rm w} = 1$ all the energy released inside $\Rsph$ goes into the wind, and no photons are left from there.
+% source: the author 2026-11-09
+$\epsilon_{\rm w}$ is therefore a free parameter, and in the fits it acts mainly on the brightness of the wind: where $\epsilon_{\rm w}$ is much larger than the advection ratio $\taup v_{\rm w}/c$, it works as a free dimmer of the wind.
+% source: ULXspectra-mc PLAN.md C21 (check of eps_w against tau_perp v_w/c, 2026-11-04: 8 of 25 fits with eps_w free,
+%         f_cor <~ 0.05 there; "eps_w is treated as phenomenological"); fits from before the step at R_sph
+% AUTHOR: a lower bound on eps_w from the energy the wind carries out (kinetic + enthalpy flux through the photosphere,
+%         diagnostic wind_energy_loss_through_green_surface(), Discussion outline) - compare in the Discussion?
