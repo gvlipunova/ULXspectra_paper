@@ -326,9 +326,23 @@ The ranges are over the bins $\Delta\mu = 0.1$ with at least 200 Monte Carlo pac
 For the BH fits the corrected model gives MC/model = 0.94--1.03 inside the funnel and 0.78--1.23 beyond $\theta_{\rm c}$; without the correction the ratios are 0.67--2.5 inside, mostly with the model too faint, and 0.31--7.7 beyond.
 In the bands 0.01--0.1, 0.1--1 and 1--10~keV the corrected ratios are 0.91--1.05 inside and 0.68--1.30 beyond; the worst case is NGC5408 BH1a at $i = 86^\circ$ in the 1--10~keV band.
 The energy that reaches observers, $\int L_{\rm iso}\,{\rm d}\mu$ relative to the emitted energy, is 0.982--1.001 of that of the Monte Carlo.
-A test of the packet counts over the 86 BH calibration runs, per run, inclination group and emitter temperature, finds 3.2 per cent of the cells inside the funnel and 21.2 per cent beyond $\theta_{\rm c}$ off by more than $\max(10\%, 2\sqrt{n})$.
-% source: transfer_correction_results.md sect. 4; commit 2272e8a
-% AUTHOR: "max(10%, 2 sqrt n)" mixes a fraction and a count (n packets); state the criterion precisely.
+We also compared the packet counts of the 86 BH calibration runs with those the model predicts.
+A cell of this test is one run, one inclination group and one class of emitter temperature.
+Inside the funnel each of the 20 bins in $\mu$ is a group; beyond $\theta_{\rm c}$ neighbouring bins are merged until a group spans at least 0.15 in $\mu$.
+The temperature classes are bins of 0.25 in $\log T$ from 3.5 to 8.0.
+A packet keeps the temperature of the element that emitted it, so the test is free of spectral noise: the spectrum is $\sum_j n_j B_\nu(T_j)$.
+The model predicts $n_{\rm pred} = N L_{\rm cell}/L_{\rm tot}$ packets in a cell, where $L_{\rm cell}$ is the model luminosity into the cell, the direct escape plus $S_j h_j(\mu)$ summed over the emitting elements and integrated over the $\mu$ bins of the group, $L_{\rm tot}$ is the total luminosity of the run, and $N = 10^5$ is the number of packets in the run.
+A cell with $n_{\rm pred} \ge 10$ is counted as off when
+\begin{equation}
+|n_{\rm MC} - n_{\rm pred}| > \max\left(0.1\,n_{\rm pred},\ 2\sqrt{n_{\rm pred}}\right) ,
+\label{eq:mc_count_test}
+\end{equation}
+% code: ULXspectra-mc docs/scripts/mc_table/evaluate_counts.py (line 41, "bad = use & ..."), commit 8f2faa3;
+%       definitions of cells, groups and n_pred as given by the author 2026-11-09
+where $n_{\rm MC}$ is the number of Monte Carlo packets in the cell.
+The second term is twice the Poisson noise of the expected count; the first is larger when $n_{\rm pred} > 400$.
+Pooled over all runs, that is, the off cells of all runs divided by all tested cells of the region, 3.2 per cent of the cells inside the funnel and 21.2 per cent beyond $\theta_{\rm c}$ are off.
+% source: transfer_correction_results.md sect. 4; commit 2272e8a; pooling: evaluate_counts.py (tally) and the author 2026-11-09
 
 For the NS fits with the dipole surface and a deep throat (NGC5408 NS5, NS5a and NS6), most of the light comes from the central emitter: in NGC5408 NS5a 99 per cent of the emission, and 61 per cent of that from the throat ($x < 0.01$, $T$ up to 174 times $T(\rmag)$).
 The walls of the throat face the axis, and the light reflected between them leaves near the axis.
