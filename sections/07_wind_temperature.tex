@@ -1,5 +1,6 @@
 % Sources: README "Wind temperature and energy budget"; docs/wind_column_angles.md
-% Code: ULXspectra, branch fix-results-integrity, commit 5f00569
+% Code: ULXspectra, branch fix-results-integrity, commit 5f00569;
+%       energy budget (Sect. wtemp:budget) and T_disc: ULXspectra-mc, branch mc-transfer-corrections, commit f546151
 
 \section{Wind temperature and energy budget}
 \label{sec:wtemp}
@@ -10,11 +11,11 @@
 Photons released by the disc are carried outwards by the wind before they diffuse out of it (P07).
 The photosphere above $R$ therefore shows the disc temperature of a smaller radius:
 \begin{equation}
-T_{\rm w,raw}(R) = \Teff(\xeff\,\rin), \qquad \xeff = \frac{x}{1 + \taup v_{\rm w}/c} ,
+T_{\rm w,raw}(R) = T_{\rm disc}(\xeff\,\rin), \qquad \xeff = \frac{x}{1 + \taup v_{\rm w}/c} ,
 \label{eq:Twraw}
 \end{equation}
 % code: wind_temperature_profile_array() (csrcs/wind_surface.c); README "Wind temperature"
-where $\Teff$ is the disc profile~\eqref{eq:Teff}, defined also beyond $\rout$, so that a hidden outer disc still sets the wind temperature.
+where $T_{\rm disc}$ is the disc profile~\eqref{eq:Tdisc}, defined also beyond $\rout$, so that a hidden outer disc still sets the wind temperature.
 $\xeff$ is never below $1$ or below the radius of the hottest disc ring.
 % code: wind_temperature_profile_array() (x_eff_min = max(x_launch, x_Tmax)); README "Wind temperature"
 Here $\taup$ is the vertical optical depth of the wind at $R$ and $v_{\rm w}$ its mean speed, so that $\taup v_{\rm w}/c$ is the ratio of the time of photon diffusion to the time in which the wind shifts them, $t_{\rm dif}/t_{\rm wind}$, for photons moving out of the disc in the vertical direction.
@@ -62,19 +63,26 @@ Earlier versions of the code assigned all the wind at $R$ the angle $\theta_{\rm
 \subsection{Energy budget}
 \label{sec:wtemp:budget}
 
-The wind radiates what the disc releases but does not show directly, minus the fraction $\epsilon_{\rm w}$ spent on launching the wind:
+The wind radiates what the disc under its photosphere radiates:
 \begin{equation}
-L_{\rm wind} = (1 - \epsilon_{\rm w})\,(L_{\rm disc} - L_{\rm disc,seen}) .
+L_{\rm wind} = L_{\rm disc,hidden} = 2\sum_{\rm hidden} \sigma T_{\rm disc}^4\,{\rm d}S_{\rm disc} ,
 \label{eq:Lwind}
 \end{equation}
-% code: wind_temperature_correction_factor() (available_for_wind) (csrcs/wind_emission.c); README "Wind temperature"
-Here $L_{\rm disc}$ is given by Eq.~\eqref{eq:Ldisc} and $L_{\rm disc,seen}$ is the luminosity of the disc rings with $\rin \le R < \rout$ that the optically thick wind does not cover; these keep their temperature~\eqref{eq:Teff}, also where they are seen through a transparent inner wind.
-The raw wind temperatures are scaled by one factor,
+% code: ULXspectra-mc f546151, bolometric_wind_power_from_surface() (L_disc_under_wind),
+%       wind_temperature_correction_factor() (csrcs/wind_emission.c); README "Wind temperature and energy budget"
+where the sum runs over the disc rings with $\rin \le R < \rout$ under the wind photosphere, on the same grid as the rest of the surface.
+The temperatures~\eqref{eq:Tdisc} already exclude the energy that launches the wind, so $L_{\rm wind}$ is $(1 - \epsilon_{\rm w})$ of the release under the wind inside $\Rsph$ plus all of it beyond.
+The disc rings that the optically thick wind does not cover keep their temperature~\eqref{eq:Tdisc}, also where they are seen through a transparent inner wind.
+% source: README "Wind temperature and energy budget" ("Energy budget", "Directly seen disc")
+% (Before 2026-11-03: L_wind = (1 - eps_w)(L_disc - L_disc,seen) with the analytic L_disc; CHANGELOG.)
+% NOTE: CHANGELOG 2026-11-03 says the sum includes rings beyond r_out; README (later) says r_in <= R < r_out,
+%       "a wind photosphere beyond r_out has no disc under it". Followed the README.
+The budget is global: one factor scales the raw temperatures of all wind rings,
 \begin{equation}
 \Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}, \qquad f_{\rm cor} = \frac{L_{\rm wind}}{L_{\rm wind,raw}} ,
 \label{eq:fcor}
 \end{equation}
-% code: wind_temperature_correction_factor() (f_cor) (csrcs/wind_emission.c); README "Wind temperature"
+% code: wind_temperature_correction_factor() (f_cor) (csrcs/wind_emission.c); README "Wind temperature and energy budget"
 where $L_{\rm wind,raw}$ is the luminosity of both sides of the wind photosphere at the temperatures~\eqref{eq:Twraw},
 \begin{equation}
 L_{\rm wind,raw} = 2\int \sigma T_{\rm w,raw}^4\,2\pi R\,\sqrt{1 + \left(\frac{{\rm d}z_{\rm ph}}{{\rm d}R}\right)^2}\,{\rm d}R .
@@ -84,6 +92,15 @@ L_{\rm wind,raw} = 2\int \sigma T_{\rm w,raw}^4\,2\pi R\,\sqrt{1 + \left(\frac{{
 % code: dS_curve_one_side (csrcs/wind_surface.c), bolometric_wind_power_from_surface() (csrcs/wind_emission.c)
 The integral runs along the photosphere including the outer wall, where it becomes $2\pi R_{\rm wall}\,{\rm d}z$.
 % code: wind_model_api.c (include_outer_vertical_wall = 0: the wall is part of the surface curve)
-If $L_{\rm wind} \le 0$, we keep $f_{\rm cor} = 1$ and flag the model.
-% code: wind_temperature_correction_factor() (wind_budget_fallback)
+$\Tw$ is the temperature of a blackbody with the energy of the wind ring; the bolometric luminosities and the transfer correction (Sect.~\ref{sec:spectrum:transfer}) use it, while the spectrum of the wind ring is a diluted blackbody at $T_{\rm w,raw}$ (Sect.~\ref{sec:spectrum}).
+% source: README "Wind temperature and energy budget" ("Energies (L_bol, the transfer correction) use T_w in both cases")
+Since the disc temperature steps at $\Rsph$, the wind temperature steps where $\xeff = \xsp$, that is at $\Rsph(1 + \taup v_{\rm w}/c)$, which is 1.2--2.2~$\Rsph$ at the old best fits.
+% source: README "Wind temperature and energy budget" ("Where eps_w is taken"); ULXspectra-mc f546151
+$f_{\rm cor}$ is not capped.
+A value $f_{\rm cor} > 1$ means that the wind radiates more than its surface would at $T_{\rm w,raw}$; it is allowed and the model is flagged.
+If $L_{\rm wind} = 0$ ($\epsilon_{\rm w} = 1$, or no disc ring under the wind), the wind is dark, $f_{\rm cor} = 0$, and the model is flagged as well.
+% code: flags wind_f_cor_above_one, wind_budget_fallback (diagnostics and MCMC blobs); README "Wind temperature and energy budget";
+%       CHANGELOG 2026-11-04 (cap removed), 2026-11-03 (dark wind instead of f_cor = 1)
 % AUTHOR: is a flagged model rejected in the fits, or kept? (Sect. fitting)
+% AUTHOR: PLAN C21 (2026-11-04): where eps_w >> tau_perp v_w/c (8 of 25 fits with eps_w free) eps_w acts as a free
+%         dimmer of the wind (f_cor <~ 0.05), "so eps_w is treated as phenomenological". Say this in the paper (here or Discussion)?

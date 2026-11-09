@@ -18,10 +18,10 @@
 % Source: ULXspectra-mc docs/thermalization_in_wind.md (PLAN C21), branch mc-transfer-corrections,
 %         commit 69b9de7; estimate script docs/scripts/mc_table/thermalization.py
 
-The model gives each ring of the wind photosphere ($\taup = 1$) a blackbody at its temperature (Sect.~\ref{sec:spectrum}).
-The Monte Carlo transfer of Appendix~\ref{app:mc} scatters grey and coherently, without absorption or emission, so each emitter keeps its blackbody shape as well.
-A blackbody, or a modified blackbody, requires that the photons be made by absorption in the medium that emits them.
-Here we estimate whether the wind can do that.
+The model gives each disc ring a blackbody and each ring of the wind photosphere ($\taup = 1$) a diluted blackbody at the colour temperature of the disc that feeds it (Sect.~\ref{sec:spectrum}).
+The Monte Carlo transfer of Appendix~\ref{app:mc} scatters grey and coherently, without absorption or emission, so each emitter keeps its spectral shape as well.
+A blackbody, or a modified blackbody, at the temperature of the wind would require that the photons be made by absorption in the wind itself.
+Here we estimate whether the wind can do that; the result is the reason for the dilution.
 % source: thermalization_in_wind.md, sect. 1
 
 At each interaction a photon is absorbed with the probability
@@ -101,11 +101,11 @@ Moreover, the wind of our model is a finite column, $\taup \approx 1$--$30$ abov
 A physically consistent spectrum of the wind therefore changes regime with frequency.
 Where $\tau_*(\nu)$ is below the column of the wind, the wind thermalises and emits a modified blackbody at the gas temperature: the UV of ULX winds, as the optical of the envelope of SS~433.
 Where $\tau_*(\nu)$ exceeds the column, the emission of the wind is scattered disc light that keeps the colour temperature of the disc: the X-rays above about 0.3~keV.
-Such a spectrum needs the gas temperature of the wind.
+The model takes the second regime for the whole spectrum of the wind (Eq.~\ref{eq:Inu_wind}), since the fits are made to the X-rays.
+% source: README "Wind spectrum"; PLAN C21 (author's decision 2026-11-04: option (b), diluted wind, wind_spectrum = 1)
+In the UV this is not correct: there a blackbody at $\Tw$ would be the better description.
+A spectrum that switches regime with frequency needs the gas temperature of the wind, which the model does not have.
 The slope of the SEDs below 0.3~keV (Sect.~\ref{sec:fitting:data}) is an extension of a phenomenological fit and does not constrain this.
-% source: thermalization_in_wind.md, sect. 5
-% OUTLINE (author's decision, PLAN C21): (a) keep the blackbody as a stated limitation;
-%          (b) wind rings as diluted blackbodies at the colour temperature of the disc light that feeds them;
-%          (c) local emission with a thermalisation depth per frequency (needs the gas temperature).
+% source: thermalization_in_wind.md, sect. 5; README "Wind spectrum" (limitations)
 % AUTHOR: the disc rings are also pure blackbodies (no colour correction; PLAN C21 quotes f_col ~ 1.6-2
 %         for X-ray discs) - discuss here as well?

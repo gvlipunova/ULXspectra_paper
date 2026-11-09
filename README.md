@@ -42,6 +42,11 @@ Two-column `article` (no journal chosen), summary at the top
   table and held-out checks): from `docs/transfer_correction_results.md` of
   `ULXspectra-mc`, commit `2272e8a` (model state `2f22b12`). Update them
   when that file's update log changes.
+- Disc temperature step at R_sph (Sect. 4, eq:Tdisc), wind energy budget
+  (Sect. 7.2) and diluted wind spectrum (Sect. 8, eq:Inu_wind; Sect. 11.1):
+  `ULXspectra-mc`, branch `mc-transfer-corrections`, commit `f546151`
+  (`eps_w_launch_only = 1`, `wind_spectrum = 1`; author 2026-11-09). The rest of
+  Sects. 2-8 still follows `fix-results-integrity`.
 - Appendix C (Monte Carlo test, comparison with Ahlberg et al. 2026): preliminary,
   from `docs/green_surface_monte_carlo.md` at commit `4da7c04`.
 

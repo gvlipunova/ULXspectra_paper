@@ -81,6 +81,26 @@ $\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
 % AUTHOR: physical argument for sigma T^4 ~ R^-2 inside R_trap (L_per ln R = const),
 %         with a reference?
 
+The wind is launched from the disc between $\rin$ and $\Rsph$, and the share $\epsilon_{\rm w}$ of the energy released there goes into launching it.
+Only inside $\Rsph$ does the disc spend energy on the wind.
+The disc thermalises, so what remains is radiated as a blackbody at
+\begin{equation}
+T_{\rm disc} =
+\begin{cases}
+(1 - \epsilon_{\rm w})^{1/4}\,\Teff, & \rin \le R < \Rsph, \\
+\Teff, & R \ge \Rsph .
+\end{cases}
+\label{eq:Tdisc}
+\end{equation}
+% code: ULXspectra-mc (branch mc-transfer-corrections, commit f546151), switch eps_w_launch_only = 1 (default);
+%       README "Wind temperature and energy budget" ("Where eps_w is taken"); CHANGELOG 2026-11-04; PLAN C21
+% reason: the author, 2026-11-09 ("only inside this radius the disc has to spend energy on launching the wind")
+This holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
+The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset) the disc inside $\Rsph$ is dark.
+% source: README "Wind temperature and energy budget"
+% (Earlier code versions, eps_w_launch_only = 0: the disc keeps T_eff everywhere and eps_w is taken from the whole
+%  disc under the wind photosphere; CHANGELOG 2026-11-04.)
+
 \subsection{Luminosity budget}
 \label{sec:disc:budget}
 
@@ -96,6 +116,8 @@ where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis R\,{\rm d}R$ is the viscous r
 For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
 When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
 % code: README "Luminosity budget", mode 1+log
+Of $L_{\rm disc}$, the share $\epsilon_{\rm w}$ of the release inside $\Rsph$ launches the wind; the rest is radiated at the temperatures~\eqref{eq:Tdisc}, partly by the disc seen directly and partly through the wind (Sect.~\ref{sec:wtemp:budget}).
+% derived from Eq. (Tdisc); README "Wind temperature and energy budget"
 
 For a BH, nothing inside $\rin$ radiates.
 For a NS, the matter reaching $\rmag$ falls onto the star along the field lines and releases
