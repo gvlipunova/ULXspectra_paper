@@ -11,18 +11,36 @@
 
 \subsection{Is the energy of the wind consistent?}
 \label{sec:disc:epsw}
-% Reminder paragraph (author 2026-11-10); results pending.
+% Reminder paragraph (author 2026-11-10); source: ULXspectra-mc PLAN C22, README "Energy the wind needs",
+% branch mc-transfer-corrections, commit e294301 (terms: 9813e43)
 
-The launching efficiency $\epsilon_{\rm w}$ is a free parameter that the model does not determine (Sect.~\ref{sec:wtemp:budget}).
-Energy conservation, however, gives it a lower bound: the energy taken from the disc inside $\Rsph$ must be at least the energy the wind carries out through its photosphere.
-% source: discussion with the author 2026-11-09/10 (Claude's suggestion, accepted as a check)
-The code computes this energy flux, kinetic plus thermal, $\dot E_{\rm wind} = \oint (\rho v^2/2 + u_{\rm th})\,\boldsymbol{v}\cdot{\rm d}\boldsymbol{S}$, as a diagnostic outside the fitted model.
-% code: wind_energy_loss_through_green_surface() (psrcs/wind_emission.py), u_th = thermal_factor rho k T/(mu m_p);
-%       Python only (Edot_wind, CHANGELOG); old manuscript "Wind power"
-We will compare $\dot E_{\rm wind}$ with $\epsilon_{\rm w}$ times the energy released inside $\Rsph$ at the best fits, to see whether the fitted $\epsilon_{\rm w}$ can drive the winds the fits assume.
-% OUTLINE: table of eps_w L(<R_sph) vs Edot_wind at the best fits, once the diagnostics are run.
-% AUTHOR: the diagnostic counts kinetic and thermal energy at the photosphere; the work against gravity to lift the
-%         gas from the launch radius (about G M / 2R per unit mass for Keplerian gas) is not in it. Include it?
+The wind toll $\epsilon_{\rm w}$ is a free parameter that the model does not determine (Sect.~\ref{sec:wtemp:budget}).
+The toll takes $\epsilon_{\rm w}L_{\rm sph}$ from the disc, with $L_{\rm sph} = 4\pi\int\sigma\Teff^4 R\,{\rm d}R$ over $\rin \le R < \min(\Rsph, \rout)$, but in the \code{set\_mdot\_in} presets nothing ties this energy to the wind that is launched: $\Mdot_{\rm w}$ (through $f_{\rm in}$), $\beta_{\rm w}$ and $\epsilon_{\rm w}$ are independent.
+% source: README "Energy the wind needs"; PLAN C22
+Energy conservation gives no upper limit on the toll below unity, but it gives a lower one: the toll must cover the energy the wind needs.
+As a diagnostic, not a constraint of the fits, the code computes two lower limits on this need, both for the gas that crosses the wind photosphere.
+The first is the kinetic and enthalpy flux through the photosphere,
+\begin{equation}
+\dot E_{\rm wind} = \oint \left(\frac{\rho v^2}{2} + \frac{5}{2}\frac{\rho kT}{m_{\rm p}}\right)\boldsymbol{v}\cdot{\rm d}\boldsymbol{S} ,
+\label{eq:Edot_wind}
+\end{equation}
+% code: wind_energy_loss_through_green_surface() (psrcs/wind_emission.py; enthalpy 2.5 rho k T/m_p); README "Energy the wind needs"
+so that $\epsilon_{\rm w} \ge \dot E_{\rm wind}/L_{\rm sph}$.
+The second adds the work $E_{\rm lift}$ to bring the gas from a Keplerian orbit at its launch radius $R_0$ to its point $(R, z)$ on the photosphere with its angular momentum kept,
+\begin{equation}
+GM\left[\frac{1}{2R_0} + \frac{R_0}{2R^2} - \frac{1}{\sqrt{R^2 + z^2}}\right]
+\label{eq:Elift}
+\end{equation}
+% code: wind_energy_demand() (psrcs/wind_emission.py); README "Energy the wind needs"; PLAN C22
+per unit mass, so that $\epsilon_{\rm w} \ge (\dot E_{\rm wind} + E_{\rm lift})/L_{\rm sph}$.
+Nothing is counted beyond the photosphere, so both are lower limits for a wind that escapes.
+% source: PLAN C22
+At the earlier best fits, made before the wind toll was restricted to $R < \Rsph$, the second limit often exceeds the fitted toll: in large winds the lift alone takes 0.65--1 of $L_{\rm sph}$, so $\epsilon_{\rm w} \approx 0.7$--1 would be needed.
+% source: PLAN C22 / README: 182 full best fits (summaries/wind_energy_check_full.tsv), 69 clean; eps_w free: 6 of 25
+%         fail (1), 13 fail (2); eps_w = 0.5 fixed: 3 and 30 of 44; commit e294301
+We will repeat the check at the new fits.
+% OUTLINE: table of eps_w vs the two limits at the refits (docs/scripts/wind_energy_check.py).
+% AUTHOR (PLAN C22, open): which limit does the paper quote, the flux test or flux + lift?
 
 \subsection{Does the wind emit a blackbody?}
 \label{sec:disc:thermalization}

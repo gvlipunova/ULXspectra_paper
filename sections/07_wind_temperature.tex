@@ -71,7 +71,7 @@ L_{\rm wind} = L_{\rm disc,hidden} = 2\sum_{\rm hidden} \sigma T_{\rm disc}^4\,{
 % code: ULXspectra-mc f546151, bolometric_wind_power_from_surface() (L_disc_under_wind),
 %       wind_temperature_correction_factor() (csrcs/wind_emission.c); README "Wind temperature and energy budget"
 where the sum runs over the disc rings with $\rin \le R < \rout$ under the wind photosphere, on the same grid as the rest of the surface.
-The temperatures~\eqref{eq:Tdisc} already exclude the energy that launches the wind, so $L_{\rm wind}$ is $(1 - \epsilon_{\rm w})$ of the release under the wind inside $\Rsph$ plus all of it beyond.
+The temperatures~\eqref{eq:Tdisc} already exclude the wind toll, so $L_{\rm wind}$ is $(1 - \epsilon_{\rm w})$ of the release under the wind inside $\Rsph$ plus all of it beyond.
 The disc rings that the optically thick wind does not cover keep their temperature~\eqref{eq:Tdisc}, also where they are seen through a transparent inner wind.
 % source: README "Wind temperature and energy budget" ("Energy budget", "Directly seen disc")
 % (Before 2026-11-03: L_wind = (1 - eps_w)(L_disc - L_disc,seen) with the analytic L_disc; CHANGELOG.)
@@ -106,10 +106,11 @@ If $L_{\rm wind} = 0$ ($\epsilon_{\rm w} = 1$, or no disc ring under the wind), 
 %       CHANGELOG 2026-11-04 (cap removed), 2026-11-03 (dark wind instead of f_cor = 1)
 % AUTHOR: is a flagged model rejected in the fits, or kept? (Sect. fitting)
 
-The model does not determine the efficiency $\epsilon_{\rm w}$ with which the wind is launched.
-Energy conservation allows any value between 0 and 1; at $\epsilon_{\rm w} = 1$ all the energy released inside $\Rsph$ goes into the wind, and no photons are left from there.
+The model does not determine the wind toll $\epsilon_{\rm w}$.
+Energy conservation allows any value between 0 and 1; at $\epsilon_{\rm w} = 1$ the whole release inside $\Rsph$ is paid as the toll, and no photons are left from there.
 % source: the author 2026-11-09
 $\epsilon_{\rm w}$ is therefore a free parameter, and in the fits it acts mainly on the brightness of the wind: where $\epsilon_{\rm w}$ is much larger than the advection ratio $\taup v_{\rm w}/c$, it works as a free dimmer of the wind.
+A lower bound on the toll from the energy the wind needs is discussed in Sect.~\ref{sec:disc:epsw}.
 % source: ULXspectra-mc PLAN.md C21 (check of eps_w against tau_perp v_w/c, 2026-11-04: 8 of 25 fits with eps_w free,
 %         f_cor <~ 0.05 there; "eps_w is treated as phenomenological"); fits from before the step at R_sph
 % AUTHOR: a lower bound on eps_w from the energy the wind carries out (kinetic + enthalpy flux through the photosphere,

@@ -23,14 +23,17 @@ The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, an
 The wind rings do not.
 Above about 0.3~keV the wind is far too thin to absorb photons and emit them again (Sect.~\ref{sec:disc:thermalization}).
 It scatters the disc photons without changing their frequency, so they keep the colour temperature $T_{\rm w,raw}$ of the disc that made them (Eq.~\ref{eq:Twraw}) and are spread over the larger photosphere.
-Each wind ring is therefore a diluted blackbody,
+Each wind ring is therefore a diluted blackbody, with the dilution factor $w$,
 \begin{equation}
 I_\nu = w\,B_\nu(T_{\rm w,raw}), \qquad w = f_{\rm cor} = \frac{L_{\rm disc,hidden}}{L_{\rm wind,raw}} ,
 \label{eq:Inu_wind}
 \end{equation}
 % code: ULXspectra-mc f546151, csrcs/wind_emission.c (wind_spectrum == 1: f_cor * B_nu(T_j/f_T_cor), f_T_cor = f_cor^(1/4));
 %       README "Wind temperature and energy budget" ("Wind spectrum"), "Visibility and spectrum"; PLAN C21
-which carries the same energy as a blackbody at $\Tw$ (Eq.~\ref{eq:fcor}).
+which carries the same energy as a blackbody at $\Tw = w^{1/4}\,T_{\rm w,raw}$ (Eq.~\ref{eq:fcor}).
+Dilution has here its usual meaning: radiation that is already made is spread more thinly and keeps its shape, as in the diluted blackbody of colour-corrected discs.
+It is a separate step from the wind toll (Sect.~\ref{sec:disc:teff}), which sets how much the disc radiates at all and applies with either wind spectrum.
+% source: PLAN C21, user decision 2026-11-10 (two steps: wind toll = production; dilution = in the wind); README "Terms"
 The isotropic-equivalent spectrum is
 \begin{equation}
 L_\nu(i) = 4\pi\sum_j I_{\nu,j}\,A_{{\rm proj},j}(i) ,
@@ -48,7 +51,7 @@ For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one 
 The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = w^{-1/4}\,\Tw$, and its Rayleigh--Jeans tail is fainter by the factor $w^{3/4}$.
 At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
 % source: ULXspectra-mc PLAN.md C21 (fits from before the temperature step at R_sph, eq. Tdisc); README "Wind spectrum"; commit f546151
-The blackbody at $\Tw$ is the limit of full thermalisation in the wind; it was the rule of earlier code versions and is kept as an alternative (\code{wind\_spectrum} = 0).
+The alternative is a wind that thermalises the photons again: a blackbody at $\Tw$, cooler and with more photons than the disc made; it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
 % code: wind_spectrum switch (default 1), CHANGELOG 2026-11-04
 Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $w > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $w > 1$ (1.03).
 % source: CHANGELOG 2026-11-04 ("f_cor > 1 only at NGC300 BH3a (1.03)"); README "Wind spectrum"

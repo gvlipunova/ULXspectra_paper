@@ -81,9 +81,10 @@ $\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
 % AUTHOR: physical argument for sigma T^4 ~ R^-2 inside R_trap (L_per ln R = const),
 %         with a reference?
 
-The wind is launched from the disc between $\rin$ and $\Rsph$, and the share $\epsilon_{\rm w}$ of the energy released there goes into launching it.
-Only inside $\Rsph$ does the disc spend energy on the wind.
-The disc thermalises, so what remains is radiated as a blackbody at
+The wind is launched from the disc between $\rin$ and $\Rsph$, and there the disc gives the fraction $\epsilon_{\rm w}$ of the energy it releases to the wind.
+We call this the wind toll.
+Only inside $\Rsph$ does the disc pay it.
+The disc thermalises, so what remains is radiated as a true blackbody at
 \begin{equation}
 T_{\rm disc} =
 \begin{cases}
@@ -95,8 +96,12 @@ T_{\rm disc} =
 % code: ULXspectra-mc (branch mc-transfer-corrections, commit f546151), switch eps_w_launch_only = 1 (default);
 %       README "Wind temperature and energy budget" ("Where eps_w is taken"); CHANGELOG 2026-11-04; PLAN C21
 % reason: the author, 2026-11-09 ("only inside this radius the disc has to spend energy on launching the wind")
+% term "wind toll": the author 2026-11-10 (PLAN C21, README "Terms"); replaces "eps_w loss", "launch loss",
+%       "energy given to the wind". Never "diluted" for the toll.
 This holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
 The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset) the disc inside $\Rsph$ is dark.
+The wind toll is paid in the disc, before its photons are made, and it applies whatever the wind then does to them (Sect.~\ref{sec:spectrum}).
+% source: PLAN C21 (two steps), README "Terms"
 % source: README "Wind temperature and energy budget"
 % (Earlier code versions, eps_w_launch_only = 0: the disc keeps T_eff everywhere and eps_w is taken from the whole
 %  disc under the wind photosphere; CHANGELOG 2026-11-04.)
@@ -116,7 +121,7 @@ where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis R\,{\rm d}R$ is the viscous r
 For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
 When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
 % code: README "Luminosity budget", mode 1+log
-Of $L_{\rm disc}$, the share $\epsilon_{\rm w}$ of the release inside $\Rsph$ launches the wind; the rest is radiated at the temperatures~\eqref{eq:Tdisc}, partly by the disc seen directly and partly through the wind (Sect.~\ref{sec:wtemp:budget}).
+Of $L_{\rm disc}$, the wind toll, the fraction $\epsilon_{\rm w}$ of the release inside $\Rsph$, launches the wind; the rest is radiated at the temperatures~\eqref{eq:Tdisc}, partly by the disc seen directly and partly through the wind (Sect.~\ref{sec:wtemp:budget}).
 % derived from Eq. (Tdisc); README "Wind temperature and energy budget"
 
 For a BH, nothing inside $\rin$ radiates.
