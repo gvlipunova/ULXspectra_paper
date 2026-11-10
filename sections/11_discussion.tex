@@ -8,10 +8,21 @@
 %          (Sect. sec:spectrum:transfer, mc_transfer = 1); checks and limits in Appendix app:mc
 %          (largest errors beyond theta_c: BH up to -22/+23%, NS dipole model faint by up to x1.6).
 % OUTLINE: Limits of the fixed choices (velocity law, R_sph and R_trap rules).
-% OUTLINE: Energy carried by the wind through the photosphere (kinetic + enthalpy flux,
-%          old manuscript "Wind power") vs eps_w (L_disc - L_disc,seen); diagnostic
-%          wind_energy_loss_through_green_surface() in psrcs/wind_emission.py (run_many.py),
-%          not part of the fitted model.
+
+\subsection{Is the energy of the wind consistent?}
+\label{sec:disc:epsw}
+% Reminder paragraph (author 2026-11-10); results pending.
+
+The launching efficiency $\epsilon_{\rm w}$ is a free parameter that the model does not determine (Sect.~\ref{sec:wtemp:budget}).
+Energy conservation, however, gives it a lower bound: the energy taken from the disc inside $\Rsph$ must be at least the energy the wind carries out through its photosphere.
+% source: discussion with the author 2026-11-09/10 (Claude's suggestion, accepted as a check)
+The code computes this energy flux, kinetic plus thermal, $\dot E_{\rm wind} = \oint (\rho v^2/2 + u_{\rm th})\,\boldsymbol{v}\cdot{\rm d}\boldsymbol{S}$, as a diagnostic outside the fitted model.
+% code: wind_energy_loss_through_green_surface() (psrcs/wind_emission.py), u_th = thermal_factor rho k T/(mu m_p);
+%       Python only (Edot_wind, CHANGELOG); old manuscript "Wind power"
+We will compare $\dot E_{\rm wind}$ with $\epsilon_{\rm w}$ times the energy released inside $\Rsph$ at the best fits, to see whether the fitted $\epsilon_{\rm w}$ can drive the winds the fits assume.
+% OUTLINE: table of eps_w L(<R_sph) vs Edot_wind at the best fits, once the diagnostics are run.
+% AUTHOR: the diagnostic counts kinetic and thermal energy at the photosphere; the work against gravity to lift the
+%         gas from the launch radius (about G M / 2R per unit mass for Keplerian gas) is not in it. Include it?
 
 \subsection{Does the wind emit a blackbody?}
 \label{sec:disc:thermalization}
