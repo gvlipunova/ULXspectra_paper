@@ -50,19 +50,13 @@ The outer accretion rate is $\mdot_0$.
 %         r_in = 6 r_g)? The sources only say "as in P07 and L99".
 
 Radii are measured in $\rg = GM/c^2$, and in the code in units of the inner disc radius, $x = R/\rin$.
-For a BH, $\rin = r_{\rm in,f}\,\rg$, where $r_{\rm in,f}$ (\code{r\_in\_factor}) is a free parameter.
-For a NS, the inner disc radius is the magnetospheric radius,
-\begin{equation}
-\rin = \rmag = x_{\rm m}\, r_{\rm in,f}\, \rg ,
-\label{eq:rm}
-\end{equation}
-% code: apply_physical_radii() (csrcs/disc_struct.c); README "Units and radii"
-where $x_{\rm m}$ is \code{wind\_inner\_launch\_x}; only the product of the two factors matters.
+The inner disc radius is $\rin = r_{\rm in,f}\,\rg$.
+For a NS it is the magnetospheric radius, $\rin = \rmag$, and the fitted quantity is $\log(\rmag/\rg)$.
+% code: apply_physical_radii() (csrcs/disc_struct.c): for a NS only r_m/r_g = wind_inner_launch_x * r_in_factor enters
+%       the model (then x_launch = 1); README "Units and radii"; ULXspectra-mc PLAN C23 (author 2026-11-13: r_in,f = r_in/r_g
+%       for BH and NS, quote log(r_m/r_g), no x_m in the text). After the refits the code gets one parameter log_r_m.
 The prior rejects $\rmag \le \RNS = 10$~km.
 In both cases the wind is launched from $\rin$ outwards.
-% AUTHOR: the code names (wind_inner_launch_x, r_in_factor) are historical; is the
-%         paper notation r_in,f and x_m fine, or would you parametrise the NS by r_m
-%         directly?
 
 The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Sect.~\ref{sec:model:mdot}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
 The actual inner disc radius only truncates them.
@@ -157,20 +151,26 @@ For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph
 
 Table~\ref{tab:params} lists the parameters of the model.
 The fits use the presets of \code{ULX.conf} in Table~\ref{tab:fitpresets}, which relates each of them to the flow rules of Table~\ref{tab:presets} and to the $\Rsph$ rules of Sect.~\ref{sec:radii}.
-Parameters that a preset does not free keep the defaults of Table~\ref{tab:params}; for a NS, $M = 1.4\,M_\odot$ and $r_{\rm in,f} = 4.5$ unless free.
-% source: ULX.conf.example (ULXspectra commit 86ccca0), presets identical to the working ULX.conf (git-ignored, 2026-09-07;
-%         only [DEFAULT] KEV_max differs, 100 vs 1, overridden by --Emax in the fits), [BH0]-[NS7]; log_m_bh = 0.14612803
+Parameters that a preset does not free keep the defaults of Table~\ref{tab:params}; for a NS, $M = 1.4\,M_\odot$, and $\log(\rmag/\rg)$ has a flat prior over (0.65, 4.65).
+% source: ULX.conf.example (ULXspectra-mc commit 7ba8568; the working ULX.conf, git-ignored, has the same presets;
+%         only [DEFAULT] KEV_max differs, 100 vs 1, overridden by --Emax in the fits); log_m_bh = 0.14612803;
+%         README "Model Presets" (NS table and the note below it); PLAN C23
 Except for BH0, BH2 and NS2, all presets use the $\Mdot(R)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
 The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
+The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r, fitted to 0.3--10~keV with the transfer correction (Sect.~\ref{sec:spectrum:transfer}).
+% source: PLAN C23 (NS refits, run tag mc_0p3-10keV, start_refits_ns.sh; after the BH refits, from about 2026-11-15)
+Earlier fits used the presets NS4, NS4a, NS5, NS5a, NS6 and NS7, which leave both \code{r\_in\_factor} and \code{wind\_inner\_launch\_x} free.
+Only their product $\rmag/\rg$ enters the model, so one direction of the parameter space is flat, and the implied prior on $\log(\rmag/\rg)$ rises over 0--1.3 (cut at $\RNS$, 0.68), is flat over 1.3--4.0 and falls over 4.0--5.3.
+It biases $\rmag$ only where the posterior reaches $\rmag \lesssim 20\,\rg$ or $\gtrsim 10^4\,\rg$.
+The presets with the suffix ``r'' fix \code{r\_in\_factor} = 4.5, as NS1--NS3 do: the model is the same, and the prior on $\log(\rmag/\rg)$ is flat.
+% source: PLAN C23; README "Model Presets" (note below the NS table); author 2026-11-13
 % code: psrcs/flow_rules.py resolve_flow_rules(): P07 -> P07fit, SS73 -> SS73 (first allowed rule); set_mdot_in with
 %       empty rsp_rule -> LEGACY_RSP_RULES[use_simple_rsp] {0: P07fit, 1: mdot0, 2: Ledd}, [DEFAULT] use_simple_rsp = 0
-% OUTLINE: say which presets the paper's fits use, once the set of fits is fixed.
-% AUTHOR: NS4-NS7 free both r_in,f and x_m, but only their product r_m matters (Eq. rm): one of them is unconstrained.
-%         Intended?
+% OUTLINE: say which BH presets the paper's fits use, once the set of BH refits is fixed.
 
 \begin{table*}
 \centering
-\caption{Fitting presets of \code{ULX.conf}. The $\Mdot(R)$ profile and the $\Rsph$ rule are those of Sects.~\ref{sec:model:mdot} and~\ref{sec:radii:sph}; ``main'' is Eq.~\eqref{eq:mdot_setin}. Parameters not listed as free take the values of Table~\ref{tab:params} or of the last column.}
+\caption{Fitting presets of \code{ULX.conf}. The $\Mdot(R)$ profile and the $\Rsph$ rule are those of Sects.~\ref{sec:model:mdot} and~\ref{sec:radii:sph}; ``main'' is Eq.~\eqref{eq:mdot_setin}. Parameters not listed as free take the values of Table~\ref{tab:params} or of the last column. For a NS, $\rmag/\rg = \code{wind\_inner\_launch\_x}\cdot\code{r\_in\_factor}$ with \code{r\_in\_factor} = 4.5.}
 \label{tab:fitpresets}
 \footnotesize
 \begin{tabular}{@{}llllll@{}}
@@ -186,20 +186,21 @@ BH3a & BH & main & Ledd & as BH3 & \\
 BH4 & BH & main & mdot0 & BH1 $+$ $\beta_{\rm w}$, $\omf$ & \\
 BH4a & BH & main & Ledd & as BH4 & \\
 \midrule
-NS1 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $i$, $x_{\rm m}$, $\rout$ & spherical emitter \\
+NS1 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $i$, $\rmag$, $\rout$ & spherical emitter \\
 NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
-NS2 & NS & SS73 & SS73 & $\mdot_0$, $i$, $x_{\rm m}$, $\rout$ & spherical emitter \\
-NS3 & NS & main & mdot0 & $\mdot_0$, $i$, $x_{\rm m}$, $\rout$ & $f_{\rm in} = 1$ (no wind); spherical emitter \\
+NS2 & NS & SS73 & SS73 & $\mdot_0$, $i$, $\rmag$, $\rout$ & spherical emitter \\
+NS3 & NS & main & mdot0 & $\mdot_0$, $i$, $\rmag$, $\rout$ & $f_{\rm in} = 1$ (no wind); spherical emitter \\
 NS3a & NS & main & Ledd & as NS3 & as NS3 \\
-NS4 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $r_{\rm in,f}$, $x_{\rm m}$, $\rout$ & $i = 0$; spherical emitter \\
-NS4a & NS & main & Ledd & as NS4 & as NS4 \\
-NS5 & NS & main & P07fit & NS4 $+$ $i$ & dipole emitter \\
-NS5a & NS & main & Ledd & as NS5 & dipole emitter \\
-NS6 & NS & main & Ledd & NS5 $+$ $\eta_{\rm magn}$ & dipole emitter \\
-NS7 & NS & main & Ledd & NS5 $+$ $\eta_{\rm magn}$ & spherical emitter \\
+NS4ar & NS & main & Ledd & $\mdot_0$, $f_{\rm in}$, $\rmag$, $\rout$ & $i = 0$; spherical emitter \\
+NS5r & NS & main & P07fit & NS4ar $+$ $i$ & dipole emitter \\
+NS5ar & NS & main & Ledd & as NS5r & dipole emitter \\
+NS6r & NS & main & Ledd & NS5r $+$ $\eta_{\rm magn}$ & dipole emitter \\
+NS7r & NS & main & Ledd & NS5r $+$ $\eta_{\rm magn}$ & spherical emitter \\
 \bottomrule
 \end{tabular}
-% source: ULX.conf [BH0]-[NS7] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction);
+% source: ULX.conf.example [BH0]-[NS7r] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction),
+%         ULXspectra-mc 7ba8568; README "Model Presets". NS: r_m = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 fixed;
+%         NS4, NS4a, NS5, NS5a, NS6, NS7 (r_in_factor also free) left out: superseded (PLAN C23), see text.
 %         R_sph rule resolved by psrcs/flow_rules.py (fix-results-integrity ea6090e). Spherical/dipole emitter: dip = 0/1 (Sect. central).
 %         No preset uses the L99 scenario.
 \end{table*}
@@ -216,8 +217,8 @@ Symbol & Code name & Meaning & Default & Prior \\
 $\log M/M_\odot$ & \code{log\_m\_bh} & mass of the accretor & 1.0 & (0, 4) \\
 $\log \mdot_0$ & \code{log\_mdot0} & outer accretion rate, units of $\MEdd$ & 2.0 & (0, 5) \\
 $f_{\rm in}$ & \code{user\_mdot\_in\_fraction} & $\mdot(\rin)/\mdot_0$, main model & 0.5 & (0, 1) \\
-$r_{\rm in,f}$ & \code{r\_in\_factor} & $\rin/\rg$ (BH), $\rmag/(x_{\rm m}\rg)$ (NS) & 6 & (1, 20) \\
-$\log x_{\rm m}$ & \code{log\_wind\_inner\_launch\_x} & NS: $\rmag$ in units of $r_{\rm in,f}\rg$; BH: 0 & 0 & (0, 4) \\
+$r_{\rm in,f}$ & \code{r\_in\_factor} & BH: $\rin/\rg$ & 6 & (1, 20) \\
+$\log(\rmag/\rg)$ & \code{log\_wind\_inner\_launch\_x} & NS: $\rmag/\rg = \code{wind\_inner\_launch\_x}\cdot4.5$ & 1.65 & (0.65, 4.65) \\
 $\log \rout/\rg$ & \code{log\_r\_out\_factor} & outer disc radius & 5.0 & (2, 10) \\
 $i$ & \code{incl\_deg} & inclination, degrees & 20 & (0, 88) \\
 $\epsilon_{\rm w}$ & \code{eps\_w} & fraction of the energy spent on launching the wind & 0.5 & ($10^{-4}$, 0.999) \\
@@ -230,6 +231,8 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in $\Rtrap$ & 0.5 & fixed \\
 \bottomrule
 \end{tabular}
 % code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters".
+% NS radius row: r_m/r_g = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 in all NS presets used (PLAN C23);
+%   default 1.65 = the NS presets' log_wind_inner_launch_x = 1 plus log 4.5; prior = log 4.5 + (0, 4).
 % Discrete switches (not in the table): wind_scenario, rsp_rule, rtrap_rule,
 % disc_luminosity_mode (1+log for BH, NS), dip, wind_velocity_law (ballistic).
 \end{table*}
