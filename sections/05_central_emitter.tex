@@ -8,7 +8,7 @@ For a NS, everything inside $\rmag$ is the central emitter.
 We consider two shapes of its surface, selected by the parameter \code{dip}.
 In the simpler one (\code{dip} = 0) it is a sphere of radius $\rmag$.
 In the other (\code{dip} = 1) it is the surface of the last closed dipole field line, $r = \rmag\sin^2\theta$ in spherical coordinates.
-With $\varpi = R/\rmag$, its height above the disc plane is
+With $\varpi = R/\rmag$, which for a NS is the code coordinate $x$ (Sect.~\ref{sec:model:units}), its height above the disc plane is
 \begin{equation}
 \frac{z}{\rmag} = \varpi^{2/3}\sqrt{1 - \varpi^{2/3}},
 \label{eq:dipole}
@@ -42,6 +42,7 @@ All the temperatures of the central emitter are multiplied by one factor $f_{\rm
 For $L_{\rm central} = 0$ the central emitter is dark.
 % code: wind_temperature_correction_factor() (f_central_cor) (csrcs/wind_emission.c); README "Central emitter"
 
-The surface of the central emitter is steep near $\rmag$, so $\rmag$ is an edge of the radial grid and eight more edges at $\varpi = 1 - 10^{-1}, \dots, 1 - 10^{-4}$ resolve the steep wall there.
+The surface of the central emitter meets the disc plane vertically at $\rmag$, so $\rmag$ is an edge of the radial grid, and eight more edges at $\varpi = 1 - 10^{-1}, \dots, 1 - 10^{-4}$ resolve the steep wall there.
+The bins are shared between $[\varpi_{\rm min}, 1]$ and $[1, x_{\rm max}]$ in proportion to the number of decades in each.
 % code: radial_grid_edges() (csrcs/wind_surface.c); README "Central emitter"; PLAN C16
 % OUTLINE: perhaps move the grid detail to Appendix (numerics).

@@ -56,7 +56,15 @@ For a NS it is the magnetospheric radius, $\rin = \rmag$, and the fitted quantit
 %       the model (then x_launch = 1); README "Units and radii"; ULXspectra-mc PLAN C23 (author 2026-11-13: r_in,f = r_in/r_g
 %       for BH and NS, quote log(r_m/r_g), no x_m in the text). After the refits the code gets one parameter log_r_m.
 The prior rejects $\rmag \le \RNS = 10$~km.
-In both cases the wind is launched from $\rin$ outwards.
+The disc, the launch of the wind, $\Mdot(R)$, $\Rsph$ and the wind photosphere all start at $x = 1$.
+For a BH the radial grid starts there too, and nothing lies inside.
+For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and the part $x < 1$ is the central emitter, the surface of the magnetosphere (Sect.~\ref{sec:central}).
+% code: apply_physical_radii() (csrcs/disc_struct.c:659; x = R/r_m after it, r_in_factor holds r_m/r_g,
+%       wind_inner_launch_x = 1); radial_grid_edges() (csrcs/wind_surface.c:84); code session 2026-11-13
+% NOTE for reading numbers: for a NS the radii in model_energy_report.txt and the diagnostics (x_ph_in, x_ph_out,
+%       x_wind_in, x_wind_out, x_rsp) are converted back by r_unit_ratio (csrcs/wind_model_api.c:420), so they are in
+%       units of r_in_factor*r_g = 4.5 r_g (NS1-NS3 and the r presets), neither R/r_m nor R/r_g.
+%       R/r_g = 4.5 x; R/r_m = x / wind_inner_launch_x. (BH: units of r_in, unchanged.)
 
 The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Sect.~\ref{sec:model:mdot}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
 The actual inner disc radius only truncates them.
