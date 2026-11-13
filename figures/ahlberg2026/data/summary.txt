@@ -1,0 +1,53 @@
+# 1. Repo opaque-cone MC (Lambertian) vs Ahlberg+ Fig. 2 (top row, Lambertian), their 500 mu-bins
+# mean over whole bins with mu >= cos(alpha); outside: median of the ratio over bins 0.05 < mu < cos(alpha) - 0.01
+# shift: their curve vs ours moved by k bins toward the axis (np.roll(ours, k)); rms of ln(ours/theirs), bins with > 50 photons
+alpha= 5 R=1e3: best shift +1 (rms -2:0.121 -1:0.087 +0:0.078 +1:0.070 +2:0.072)
+   inside (bins 1): theirs  35.36  cone MC  35.96 (ratio 1.017)  shifted by 1:  35.28 (ratio 0.998);  outside median ratio 1.010
+alpha=10 R=1e3: best shift +1 (rms -2:0.124 -1:0.103 +0:0.086 +1:0.074 +2:0.082)
+   inside (bins 7): theirs  20.00  cone MC  20.28 (ratio 1.014)  shifted by 1:  20.01 (ratio 1.000);  outside median ratio 1.013
+alpha=15 R=1e3: best shift +1 (rms -2:0.122 -1:0.103 +0:0.091 +1:0.081 +2:0.088)
+   inside (bins 17): theirs  13.58  cone MC  13.86 (ratio 1.021)  shifted by 1:  13.56 (ratio 0.999);  outside median ratio 1.014
+alpha=20 R=1e3: best shift +1 (rms -2:0.124 -1:0.105 +0:0.093 +1:0.081 +2:0.088)
+   inside (bins 30): theirs  10.08  cone MC  10.18 (ratio 1.010)  shifted by 1:  10.07 (ratio 0.999);  outside median ratio 1.017
+alpha=25 R=1e3: best shift +1 (rms -2:0.133 -1:0.110 +0:0.101 +1:0.088 +2:0.098)
+   inside (bins 46): theirs   7.77  cone MC   7.82 (ratio 1.006)  shifted by 1:   7.79 (ratio 1.003);  outside median ratio 1.007
+alpha=25 R=1e1: best shift +1 (rms -2:0.076 -1:0.072 +0:0.072 +1:0.068 +2:0.070)
+   inside (bins 46): theirs   4.13  cone MC   4.13 (ratio 1.001)  shifted by 1:   4.13 (ratio 1.000);  outside median ratio 1.003
+alpha=25 R=1e2: best shift +1 (rms -2:0.095 -1:0.084 +0:0.079 +1:0.077 +2:0.077)
+   inside (bins 46): theirs   6.25  cone MC   6.25 (ratio 1.001)  shifted by 1:   6.24 (ratio 0.998);  outside median ratio 1.013
+alpha=25 R=1e4: best shift +1 (rms -2:0.190 -1:0.152 +0:0.116 +1:0.087 +2:0.114)
+   inside (bins 46): theirs   8.79  cone MC   8.84 (ratio 1.005)  shifted by 1:   8.82 (ratio 1.003);  outside median ratio 1.003
+alpha=25 R=1e5: best shift +1 (rms -2:0.274 -1:0.215 +0:0.152 +1:0.094 +2:0.153)
+   inside (bins 46): theirs   9.45  cone MC   9.50 (ratio 1.006)  shifted by 1:   9.47 (ratio 1.002);  outside median ratio 0.990
+# 2. Their own Lambertian / Chandrasekhar ratio of the mean boost at i <= alpha, Fig. 2a (R = 1e3)
+alpha=10: B_L/B_Ch = 0.943
+alpha=15: B_L/B_Ch = 0.945
+alpha=20: B_L/B_Ch = 0.952
+alpha=25: B_L/B_Ch = 0.961
+# 3. Cone MC (Lambertian) mean boost / Ahlberg+ Fig. 4a (Chandrasekhar); rows alpha, columns R
+R: 10 93.13 1084 1e+04 1e+05
+alpha=10: 0.963 0.941 0.953 0.954 0.953
+alpha=15: 0.981 0.942 0.955 0.956 0.966
+alpha=20: 0.990 0.955 0.949 0.964 0.968
+alpha=25: 0.992 0.951 0.978 0.973 0.977
+alpha=30: 0.997 0.980 0.974 0.993 0.981
+alpha=35: 1.011 0.980 0.976 0.993 0.984
+alpha=40: 0.963 0.965 1.006 0.993 1.011
+alpha=45: 0.997 0.986 0.989 1.013 1.024
+# 4. Mean boost at i < theta_c: C model (mc_transfer = 1, 0) and MC through the wind
+BH3a,w=0.85        theta_c  31.8: C1 4.48  MC 4.55  C0 1.26  B_max 6.67  share MC 0.682  int B1 dmu 0.982  int B0 dmu 0.347
+BH3a,w=0.7         theta_c  45.6: C1 2.95  MC 3.02  C0 1.43  B_max 3.33  share MC 0.906  int B1 dmu 0.991  int B0 dmu 0.606
+BH2,w=0.7          theta_c  45.6: C1 3.11  MC 3.15  C0 1.27  B_max 3.33  share MC 0.944  int B1 dmu 0.992  int B0 dmu 0.466
+BH4a,w=0.513       theta_c  59.2: C1 1.97  MC 2.01  C0 1.40  B_max 2.05  share MC 0.978  int B1 dmu 0.989  int B0 dmu 0.800
+BH3a,w=0.5         theta_c  60.0: C1 1.93  MC 1.96  C0 1.40  B_max 2.00  share MC 0.980  int B1 dmu 0.992  int B0 dmu 0.821
+BH3a,w=0.3         theta_c  72.5: C1 1.41  MC 1.42  C0 1.27  B_max 1.43  share MC 0.997  int B1 dmu 0.993  int B0 dmu 0.937
+BH3a,w=0.1         theta_c  84.3: C1 1.10  MC 1.11  C0 1.09  B_max 1.11  share MC 1.000  int B1 dmu 0.993  int B0 dmu 0.988
+# 5. Ahlberg+ Fig. 4a at alpha = 31.25, 32.5, 45 deg
+alpha=31.25: R=10: 3.74, R=93.13: 5.02, R=1084: 5.87, R=1e+04: 6.30, R=1e+05: 6.52
+alpha=32.50: R=10: 3.53, R=93.13: 4.81, R=1084: 5.66, R=1e+04: 5.87, R=1e+05: 6.09
+alpha=45.00: R=10: 2.67, R=93.13: 3.10, R=1084: 3.31, R=1e+04: 3.31, R=1e+05: 3.31
+# 6. Shape: B(alpha - 1 deg)/B(~0) and B(alpha + 10 deg)/B(~0)
+Ahlberg+ Fig. 2a Ch, alpha=20, R=1e3: 0.926  0.092
+Ahlberg+ Fig. 2a Ch, alpha=25, R=1e3: 0.895  0.075
+C mc_transfer=1 BH3a,w=0.85, theta_c=31.8: 0.788  0.123
+C mc_transfer=1 BH3a,w=0.7, theta_c=45.6: 0.617  0.048
