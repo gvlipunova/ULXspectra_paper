@@ -158,7 +158,8 @@ For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph
 Table~\ref{tab:params} lists the parameters of the model.
 The fits use the presets of \code{ULX.conf} in Table~\ref{tab:fitpresets}, which relates each of them to the flow rules of Table~\ref{tab:presets} and to the $\Rsph$ rules of Sect.~\ref{sec:radii}.
 Parameters that a preset does not free keep the defaults of Table~\ref{tab:params}; for a NS, $M = 1.4\,M_\odot$ and $r_{\rm in,f} = 4.5$ unless free.
-% source: ULX.conf (git-ignored, shared by both worktrees; file dated 2026-09-07), [BH0]-[NS7]; log_m_bh = 0.14612803
+% source: ULX.conf.example (ULXspectra commit 86ccca0), presets identical to the working ULX.conf (git-ignored, 2026-09-07;
+%         only [DEFAULT] KEV_max differs, 100 vs 1, overridden by --Emax in the fits), [BH0]-[NS7]; log_m_bh = 0.14612803
 Except for BH0, BH2 and NS2, all presets use the $\Mdot(R)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
 The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
 % code: psrcs/flow_rules.py resolve_flow_rules(): P07 -> P07fit, SS73 -> SS73 (first allowed rule); set_mdot_in with

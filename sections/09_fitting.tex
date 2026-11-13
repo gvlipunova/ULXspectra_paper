@@ -3,6 +3,52 @@
 \section{Fitting method}
 \label{sec:fitting}
 
+\subsection{The sources}
+\label{sec:fitting:sources}
+% Source: literature table from an ADS search (papers after 2014) made in another session, passed by the author
+%         2026-11-13; bibcodes in refs.bib (all VERIFY)
+
+The sample consists of the 14 ULXs of Table~\ref{tab:sources}, named in the text and the tables by their code names.
+In four of them pulsations have been detected, so the accretor is a NS.
+For the others no pulsations are known; we call them BH candidates where the cited works interpret their spectral and timing properties as super-Eddington accretion onto a BH, and NS candidates where the cited works favour a NS.
+Neither kind is a confirmed identification.
+% AUTHOR: the code names come from the SED files (SED_keV_ergps_<name>.txt); the SED script
+%         (../data/scripts/ISSI_ULX_make_SED_topsources.sh) labels NGC1313B, NGC1313H, NGC5408, NGC247S, NGC247SS as
+%         "NGC1313 BD", "NGC1313 HUL", "NGC5408 SUL", "NGC247 SUL", "NGC247 SSUL". If these are spectral regimes
+%         (broadened disc, hard/soft/supersoft ultraluminous; Claude's reading), the suffixes name states, not sources:
+%         NGC1313B and NGC1313H may both be NGC 1313 X-1 (then NGC1313H is not the pulsar X-2), and NGC247S/SS the
+%         same source in two states. "ULS" in M51ULS, M81ULS, M101ULS may mean ultraluminous supersoft sources, which
+%         would not be M51 ULX-7 (a hard PULX) or M81 X-6. Identifications marked "?" in the table: please confirm.
+
+\begin{table*}
+\centering
+\caption{The sources. PULX: pulsating ULX. ``?'': identification of the code name not confirmed.}
+\label{tab:sources}
+\footnotesize
+\begin{tabular}{@{}lp{0.17\textwidth}p{0.1\textwidth}p{0.33\textwidth}p{0.2\textwidth}@{}}
+\toprule
+Code name & Identification & Type & Evidence & References \\
+\midrule
+HolmII & Holmberg~II X-1 & BH candidate & no pulsations; spectra consistent with super-Eddington accretion onto a BH; NS not excluded & \citealt{Barra2024, ReyeroSerantes2024} \\
+HolmIX & Holmberg~IX X-1 & BH candidate & no pulsations; a new spectral state; treated as a BH ULX & \citealt{Walton2025} \\
+M101ULS & M101 ULX-1 & BH candidate & BH mass ${\sim}20\,M_\odot$ from spectral scaling; no pulsations & \citealt{Titarchuk2016} \\
+M51ULS & M51 ULX-7? & NS (PULX) & $P_{\rm spin} = 2.8$~s, $P_{\rm orb} = 2$~d & \citealt{RodriguezCastillo2020} \\
+M81ULS & M81 X-6? & NS candidate & spectral and timing analysis favours a NS; no pulsations & \citealt{Amato2023} \\
+NGC1313B & NGC~1313 X-1? & BH candidate & no pulsations; classified as a BH ULX & \citealt{Majumder2023, Majumder2025} \\
+NGC1313H & NGC~1313 X-2? & NS (PULX) & $P_{\rm spin} \approx 1.5$~s & \citealt{Sathyaprakash2019} \\
+NGC247S & NGC~247 ULX-1 & NS candidate & supersoft ULX; NS favoured by several groups & \citealt{Pinto2021, Zhou2023} \\
+NGC247SS & NGC~247 ULX-1? & NS candidate & the same source as NGC247S in its supersoft state; no paper on a second ULX in NGC~247 & \citealt{DAi2021, Alston2021} \\
+NGC300 & NGC~300 ULX-1 (SN~2010da) & NS (PULX) & $P_{\rm spin} = 31.6$~s, rapid spin-up & \citealt{Carpano2018} \\
+NGC5408 & NGC~5408 X-1 & BH candidate & QPOs, spectral behaviour of a BH ULX; no pulsations & \citealt{Majumder2023} \\
+NGC55 & NGC~55 ULX-1 & BH candidate & classified as a BH ULX in long-term spectral studies; no confirmed pulsations & \citealt{Majumder2025, Jithesh2022} \\
+NGC6946 & NGC~6946 X-1 & BH candidate & two-temperature disc spectra; classified as a BH ULX & \citealt{Ghosh2023, Majumder2023} \\
+NGC7793 & NGC~7793 P13 & NS (PULX) & $P_{\rm spin} = 0.42$~s & \citealt{Furst2016, Israel2017} \\
+\bottomrule
+\end{tabular}
+% source: as above (author 2026-11-13). Left out of the evidence column: "He donor star" for NGC 247 ULX-1 (not
+%         checked; the other session's own note says its NGC 55 pulsation claim was not found in ADS).
+\end{table*}
+
 \subsection{Where the SEDs come from}
 \label{sec:fitting:data}
 
