@@ -15,7 +15,7 @@
 % branch mc-transfer-corrections, commit e294301 (terms: 9813e43)
 
 The wind toll $\epsilon_{\rm w}$ is a free parameter that the model does not determine (Sect.~\ref{sec:wtemp:budget}).
-The toll takes $\epsilon_{\rm w}L_{\rm sph}$ from the disc, with $L_{\rm sph} = 4\pi\int\sigma\Teff^4 R\,{\rm d}R$ over $\rin \le R < \min(\Rsph, \rout)$, but in the \code{set\_mdot\_in} presets nothing ties this energy to the wind that is launched: $\Mdot_{\rm w}$ (through $f_{\rm in}$), $\beta_{\rm w}$ and $\epsilon_{\rm w}$ are independent.
+The toll takes $\epsilon_{\rm w}L_{\rm sph}$ from the disc, with $L_{\rm sph}$ of Eq.~\eqref{eq:Ldisc_rad}, but in the \code{set\_mdot\_in} presets nothing ties this energy to the wind that is launched: $\Mdot_{\rm w}$ (through $f_{\rm in}$), $\beta_{\rm w}$ and $\epsilon_{\rm w}$ are independent.
 % source: README "Energy the wind needs"; PLAN C22
 Energy conservation gives no upper limit on the toll below unity, but it gives a lower one: the toll must cover the energy the wind needs.
 As a diagnostic, not a constraint of the fits, the code computes two lower limits on this need, both for the gas that crosses the wind photosphere.

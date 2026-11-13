@@ -16,7 +16,7 @@ Otherwise $\Rsph$ follows from one of the rules in Table~\ref{tab:rsph}, and it 
 
 \begin{table}
 \centering
-\caption{Rules for the spherization radius (\code{rsp\_rule}) \textbf{with $\Rref = 6 \Rg$.}}
+\caption{Rules for the spherization radius (\code{rsp\_rule}), with $\Rref = 6\,\rg$.}
 \label{tab:rsph}
 \small
 \begin{tabular}{@{}ll@{}}
@@ -24,7 +24,7 @@ Otherwise $\Rsph$ follows from one of the rules in Table~\ref{tab:rsph}, and it 
 Rule & $\Rsph$ \\
 \midrule
 P07fit & Eq.~\eqref{eq:rsph_P07} \\
-SS73 & $6\,\Rref\,\mdot_0$ \\
+SS73 & $\Rref\,\mdot_0 = 6\,\mdot_0\,\rg$ \\
 SS73\_eq71 & $(9/4)\,\Rref\,\mdot_0$ \\
 M26 & $1.5\,(\mdot_0/\etaEdd)\,\rg$ \\
 Ledd & Eq.~\eqref{eq:rsph_Ledd} \\
@@ -88,7 +88,7 @@ If the disc is already below $\LEdd$ beyond $\rin$, $\Rsph = \rin$.
 \subsection{Trapping radius}
 \label{sec:radii:trap}
 
-We assume that inside the trapping radius, photons are advected with the flow and the disc effective temperature falls as $R^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
+We assume that inside the trapping radius, photons are advected with the flow and the temperature $\Tvis$ of Eq.~\eqref{eq:Teff} falls as $R^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
 Following \citet{Middleton2026} we take
 \begin{equation}
 \Rtrap = 2\,\frac{z}{R}\,\frac{\mdot_0}{\etaEdd}\,\rg ,
@@ -97,7 +97,7 @@ Following \citet{Middleton2026} we take
 % code: rtrap_over_rin(), rule "M26" (csrcs/disc_struct.c); README "Trapping radius"
 with the disc thickness $z/R = 0.5$, which gives $\Rtrap = 12\,\mdot_0\,\rg$ for $\etaEdd = 1/12$.
 For the SS73 preset we set $\Rtrap = \Rsph$ instead.
-SS73 have no advection, but inside $\Rsph$, the presence of the  outflow also ensures that $\Teff \propto R^{-1/2}$.
+SS73 have no advection, but inside $\Rsph$, the presence of the outflow also ensures that $\Tvis \propto R^{-1/2}$.
 % code: rtrap_over_rin(), rule "rsp"; psrcs/flow_rules.py (SS73 default rtrap_rule = rsp)
 Indeed, with $\Mdot \propto R$ (Eq.~\ref{eq:mdot_SS73}) and $F_{\rm in} = 0$, Eq.~\eqref{eq:Fvis} gives $\Fvis = \Mdot_0\,(Rh - \rin h_{\rm in})/(3\Rsph)$, and far from $\rin$
 \begin{equation}
@@ -106,6 +106,8 @@ Indeed, with $\Mdot \propto R$ (Eq.~\ref{eq:mdot_SS73}) and $F_{\rm in} = 0$, Eq
 \end{equation}
 % source: old manuscript (SEA_spectrum.zip, main.tex, Sect. "Effective temperature distribution", eqs. Mdot_SS, F_SS);
 %         checked: int Mdot_0 (R/R_sph) dh = Mdot_0 R h/(3 R_sph)
-\textbf{$\Rtrap$ is never below $\rin$ - what is meant? is it restricted in the code? - check}; sub-Eddington rates usually give $\Rtrap \le \rin$, that is a standard disc without trapping.
+If Eq.~\eqref{eq:rtrap} gives $\Rtrap < \rin$, the code sets $\Rtrap = \rin$, and the whole disc follows the standard profile without trapping, $\sigma\Tvis^4 = \Qvis$ (Eq.~\ref{eq:Teff}).
+For $z/R = 0.5$ and $\etaEdd = 1/12$ this happens at $\mdot_0 < r_{\rm in,f}/12$, for example at $\mdot_0 < 0.5$ for $\rin = 6\,\rg$.
+% derived: 12 mdot0 R_g < r_in,f R_g; author's question 2026-11-13
 % code: rtrap_over_rin() (fmax with x_launch and 1); README "Trapping radius"
 % AUTHOR: z/r = 0.5 is the code default; is it fixed for the paper?

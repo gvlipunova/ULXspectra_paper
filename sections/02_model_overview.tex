@@ -67,11 +67,17 @@ For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and t
 %       R/r_g = 4.5 x; R/r_m = x / wind_inner_launch_x. (BH: units of r_in, unchanged.)
 
 The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Sect.~\ref{sec:model:mdot}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
-The actual inner disc radius only truncates them \textbf{for NS models? check.}.
+The disc starts at $\rin$ for a BH and for a NS alike.
+Where $\rin > \Rref$, which is always the case for a NS and for a BH with $r_{\rm in,f} > 6$, the actual inner disc radius truncates these profiles.
+For a BH with $r_{\rm in,f} < 6$ the P07 profile continues linearly inwards of $\Rref$ and is clipped at zero (Sect.~\ref{sec:model:mdot}), and the SS73 profile, $\mdot_0 R/\Rsph$, continues down to $\rin$.
+% code: mdot_acc_profile_scalar() (csrcs/disc_struct.c: u = max(x, x_launch) r_in_factor/R_IN_REF_FACTOR, fmax(..., 0)
+%       for P07; mdot0 x/x_sp for SS73), the same for BH and NS; author's question 2026-11-13
 % code: R_IN_REF_FACTOR (csrcs); README "Units and radii"
 
 The outer disc radius $\rout$ is free.
-\textbf{It cannot be less than 0.1 Rsun - check.}
+Models with $\rout \le \rin$ or $\rout < 0.1\,R_\odot$, smaller than the binary allows, are rejected.
+% code: apply_physical_radii() (csrcs/disc_struct.c: x_out_disc > 1, else -3; r_out >= r_out_min_rsun R_sun, else -4);
+%       r_out_min_rsun = 0.1 fixed (README "Model Presets": common to all presets); author's question 2026-11-13
 Only the disc inside $\rout$ emits and counts in the disc luminosity.
 If $\rout$ lies inside the outer wall of the wind (Sect.~\ref{sec:wind:photosphere}), the disc there is hidden but still sets the wind temperature (Sect.~\ref{sec:wtemp}); beyond the wall the outer disc is seen directly.
 The radial grid extends to $\max(10^4\mdot_0\,\rin, \rout)$; the rings beyond $\rout$ do not emit but can occult.
@@ -137,7 +143,6 @@ SS73 & Eq.~\eqref{eq:mdot_SS73} & SS73, SS73\_eq71 & 1/12 & $\Rsph$ \\
 % Rules named in the R_sph and R_trap columns: Sect. radii.
 \end{table*}
 
-\textbf{Change notation in the text: $r_{in}$ to $R_{in}$. also for $r_m$, $r_{out}$ and $r_g$.} 
 
 \subsection{Mass loss}
 \label{sec:model:massloss}
@@ -168,8 +173,7 @@ Parameters that a preset does not free keep the defaults of Table~\ref{tab:param
 %         README "Model Presets" (NS table and the note below it); PLAN C23
 Except for BH0, BH2 and NS2, all presets use the $\Mdot(R)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
 The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
-The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r, 
-\textbf{fitted to 0.3--10~keV with the transfer correction - remove, as this information is not  relevant for disc and wind structure }(Sect.~\ref{sec:spectrum:transfer}).
+The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r.
 % source: PLAN C23 (NS refits, run tag mc_0p3-10keV, start_refits_ns.sh; after the BH refits, from about 2026-11-15)
 Earlier fits used the presets NS4, NS4a, NS5, NS5a, NS6 and NS7, which leave both \code{r\_in\_factor} and \code{wind\_inner\_launch\_x} free.
 Only their product $\rmag/\rg$ enters the model, so one direction of the parameter space is flat, and the implied prior on $\log(\rmag/\rg)$ rises over 0--1.3 (cut at $\RNS$, 0.68), is flat over 1.3--4.0 and falls over 4.0--5.3.
@@ -239,10 +243,12 @@ $\omf$ & \code{omega\_frac} & $\cos\theta_{\rm c} - \cos\theta_{\rm d}$, solid-a
 $\hd$ & \code{h\_disc} & disc surface $z/R$ & 0 & (0, 0.3) \\
 $\log\eta_{\rm magn}$ & \code{log\_magn\_eta} & NS: efficiency of the central emitter & 0 & ($-5$, 0) \\
 $\beta_{\rm t}$ & \code{beta\_torque\_in} & NS: torque at $\rmag$ & 1 & fixed \\
-$z/r$ & \code{z\_over\_r\_trap} & disc thickness in $\Rtrap$,\textbf{ defines  $\Rtrap$ - check \& mention here}& 0.5 & fixed \\
+$z/R$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $\Rtrap$ & 0.5 & fixed \\
 \bottomrule
 \end{tabular}
 % code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters".
+% z_over_r_trap: rtrap_over_rin(), rule M26 (csrcs/disc_struct.c). beta_torque_in = 1 (model_params.py default) is set by no
+%   preset, so it is 1 in all NS fits.
 % NS radius row: r_m/r_g = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 in all NS presets used (PLAN C23);
 %   default 1.65 = the NS presets' log_wind_inner_launch_x = 1 plus log 4.5; prior = log 4.5 + (0, 4).
 % Discrete switches (not in the table): wind_scenario, rsp_rule, rtrap_rule,

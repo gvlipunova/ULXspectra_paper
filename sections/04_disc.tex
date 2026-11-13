@@ -29,7 +29,8 @@ F_{\rm in} = \beta_{\rm t}\,\Mdot(\rmag)\,h(\rmag),
 \label{eq:Fin_NS}
 \end{equation}
 % code: disc_Fvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
-with \textbf{$\beta_{\rm t} = 1$ - is it a default value for all NS models? - check}.
+with $\beta_{\rm t} = 1$ in all NS models.
+% code: beta_torque_in default 1 (psrcs/model_params.py, config_loader.py), set by no preset in ULX.conf.example (7ba8568)
 % AUTHOR: physical justification of beta_t = 1 (PLAN C10)?
 
 All the accretion-rate profiles of Sect.~\ref{sec:model:mdot} are linear in $R$ between $\rin$ and $\Rsph$, so the integral is analytic.
@@ -68,10 +69,11 @@ The viscous heating per unit area of one side of the disc is
 This is a usual expression for viscous disc, formulated in terms of the viscous torque, instead of the accretion rate.  
 % code: disc_Qvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
 
-Outside the trapping radius the disc radiates locally, $\sigma\Teff^4 = \Qvis$.
-Inside it, advection makes the radiated flux fall as $R^{-2}$, and we join the two continuously at $\Rtrap$:
+We describe the energy that the disc releases per unit area of one side by the temperature $\Tvis$.
+Outside the trapping radius the disc releases it locally, $\sigma\Tvis^4 = \Qvis$.
+Inside it, advection makes the released flux fall as $R^{-2}$, and we join the two continuously at $\Rtrap$:
 \begin{equation}
-\sigma\Teff^4 =
+\sigma\Tvis^4 =
 \begin{cases}
 \Qvis(R), & R > \Rtrap, \\
 \Qvis(\Rtrap)\,(\Rtrap/R)^2, & \rin \le R \le \Rtrap .
@@ -80,6 +82,8 @@ Inside it, advection makes the radiated flux fall as $R^{-2}$, and we join the t
 \end{equation}
 % code: disc_Qvis_and_Teff() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
 $\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
+$\Tvis$ does not include the wind toll; the disc radiates at the temperature~\eqref{eq:Tdisc} below.
+% symbol T_vis as in README "Wind temperature and energy budget" (T_disk = (1 - eps_w)^(1/4) T_vis); author 2026-11-13
 % AUTHOR: physical argument for sigma T^4 ~ R^-2 inside R_trap (L_per ln R = const),
 %         with a reference?
 
@@ -90,8 +94,8 @@ The disc thermalises, so what remains is radiated as a true blackbody at
 \begin{equation}
 T_{\rm disc} =
 \begin{cases}
-(1 - \epsilon_{\rm w})^{1/4}\,\Teff, & \rin \le R < \Rsph, \\
-\Teff, & R \ge \Rsph .
+(1 - \epsilon_{\rm w})^{1/4}\,\Tvis, & \rin \le R < \Rsph, \\
+\Tvis, & R \ge \Rsph .
 \end{cases}
 \label{eq:Tdisc}
 \end{equation}
@@ -100,7 +104,7 @@ T_{\rm disc} =
 % reason: the author, 2026-11-09 ("only inside this radius the disc has to spend energy on launching the wind")
 % term "wind toll": the author 2026-11-10 (PLAN C21, README "Terms"); replaces "eps_w loss", "launch loss",
 %       "energy given to the wind". Never "diluted" for the toll.
-This \textbf{non-continuous} relation holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
+This discontinuous relation holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
 The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset, \textbf{this was implicitely ignored by L99 - check}) the disc inside $\Rsph$ is dark.
 The wind toll is paid in the disc, before its photons are made, and it applies whatever the wind then does to them (Sect.~\ref{sec:spectrum}).
 % source: PLAN C21 (two steps), README "Terms"
@@ -111,9 +115,9 @@ The wind toll is paid in the disc, before its photons are made, and it applies w
 \subsection{Luminosity budget}
 \label{sec:disc:budget}
 
-The disc luminosity is the integral of the profile~\eqref{eq:Teff} over both sides of the disc from $\rin$ to $\rout$:
+The luminosity released by the disc is the integral of the profile~\eqref{eq:Teff} over both sides of the disc from $\rin$ to $\rout$:
 \begin{multline}
-L_{\rm disc} = 4\pi\int_{\rin}^{\rout} \sigma\Teff^4\,R\,{\rm d}R
+L_{\rm disc} = 4\pi\int_{\rin}^{\rout} \sigma\Tvis^4\,R\,{\rm d}R
 = L_{\rm vis}(\Rtrap, \rout) \\
 + 4\pi\Rtrap^2\,\Qvis(\Rtrap)\,\ln\frac{\min(\Rtrap, \rout)}{\rin},
 \label{eq:Ldisc}
@@ -123,7 +127,18 @@ where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis R\,{\rm d}R$ is the viscous r
 For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
 When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
 % code: README "Luminosity budget", mode 1+log
-Of $L_{\rm disc}$, the wind toll, the fraction $\epsilon_{\rm w}$ of the release inside $\Rsph$, launches the wind; the rest is radiated at the temperatures~\eqref{eq:Tdisc}, partly by the disc seen directly and partly through the wind (Sect.~\ref{sec:wtemp:budget}).
+Of $L_{\rm disc}$, the wind toll takes the fraction $\epsilon_{\rm w}$ of the release inside $\Rsph$, and the disc radiates
+\begin{equation}
+\begin{split}
+L_{\rm disc,rad} &= L_{\rm disc} - \epsilon_{\rm w}L_{\rm sph}, \\
+L_{\rm sph} &= 4\pi\int_{\rin}^{\min(\Rsph, \rout)} \sigma\Tvis^4\,R\,{\rm d}R ,
+\end{split}
+\label{eq:Ldisc_rad}
+\end{equation}
+% derived from Eq. (Tdisc); L_sp as in README "Energy the wind needs" (ULXspectra-mc, PLAN C22)
+at the temperatures~\eqref{eq:Tdisc}, partly by the disc seen directly and partly through the wind (Sect.~\ref{sec:wtemp:budget}).
+% code: the radiated luminosities come from the surface sums (bolometric_wind_power_from_surface(), csrcs/wind_emission.c);
+%       L_disc of eq. (Ldisc) only enters the diagnostic Lbol_accr_teor (accretion_luminosity_split(), wind_emission.c:826)
 % derived from Eq. (Tdisc); README "Wind temperature and energy budget"
 
 For a BH, nothing inside $\rin$ radiates.
@@ -137,5 +152,5 @@ with the efficiency $\eta_{\rm magn} \le 1$, which covers losses such as outflow
 The Keplerian kinetic energy of the matter at $\rmag$, about $GM\Mdot/(2\rmag)$, is not counted: for a slow rotator it would also be released inside, while near spin equilibrium it goes partly into the spin of the star.
 % code: comment at accretion_luminosity_split() (csrcs/wind_emission.c)
 % AUTHOR: check that this is how you want the omission justified.
-The total accretion luminosity is $L_{\rm acc} = L_{\rm disc} + L_{\rm central}$.
+The total accretion luminosity is $L_{\rm acc} = L_{\rm disc} + L_{\rm central}$, the energy released before the wind toll.
 % code: diagnostic Lbol_accr_teor

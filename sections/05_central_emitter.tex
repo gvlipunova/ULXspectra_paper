@@ -23,7 +23,7 @@ The temperature of the central emitter continues inward from the disc temperatur
 For \code{dip} = 0 it scales as $\varpi^{-1/2}$.
 For \code{dip} = 1 it scales as $x_{\rm dip}^{-5/8}$ along the field line, with $x_{\rm dip} = \varpi^{2/3}$, that is as $\varpi^{-5/12}$ \citep{LipunovaAbolmasov2027}:
 \begin{equation}
-\Teff(\varpi) = T_1 \times
+T(\varpi) = T_1 \times
 \begin{cases}
 \varpi^{-1/2}, & \text{\code{dip} = 0}, \\
 \varpi^{-5/12}, & \text{\code{dip} = 1},
@@ -32,7 +32,7 @@ For \code{dip} = 1 it scales as $x_{\rm dip}^{-5/8}$ along the field line, with 
 \label{eq:Tcentral}
 \end{equation}
 % code: disc_Qvis_and_Teff(), branch xi < 1 (csrcs/disc_struct.c); README "Central emitter"
-Here $T_1$ is $\Teff$ of Eq.~\eqref{eq:Teff} at $\rin$.
+Here $T_1$ is $\Tvis$ of Eq.~\eqref{eq:Teff} at $\rin$.
 If $\Qvis(\rmag) = 0$ and there is no trapping, $T_1$ is taken at $49/36\,\rin$ instead, the hottest ring of a disc with a constant $\Mdot$ and zero torque at $\rin$.
 % code: disc_Qvis_and_Teff() (T1 fallback); README "Central emitter"
 % AUTHOR: physical motivation of the x^(-1/2) law for dip = 0?
