@@ -67,10 +67,11 @@ For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and t
 %       R/r_g = 4.5 x; R/r_m = x / wind_inner_launch_x. (BH: units of r_in, unchanged.)
 
 The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Sect.~\ref{sec:model:mdot}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
-The actual inner disc radius only truncates them.
+The actual inner disc radius only truncates them \textbf{for NS models? check.}.
 % code: R_IN_REF_FACTOR (csrcs); README "Units and radii"
 
 The outer disc radius $\rout$ is free.
+\textbf{It cannot be less than 0.1 Rsun - check.}
 Only the disc inside $\rout$ emits and counts in the disc luminosity.
 If $\rout$ lies inside the outer wall of the wind (Sect.~\ref{sec:wind:photosphere}), the disc there is hidden but still sets the wind temperature (Sect.~\ref{sec:wtemp}); beyond the wall the outer disc is seen directly.
 The radial grid extends to $\max(10^4\mdot_0\,\rin, \rout)$; the rings beyond $\rout$ do not emit but can occult.
@@ -93,7 +94,7 @@ $f_{\rm in}$ is free in the fits.
 %         which fixes it through eps_w)?
 
 We compare this model with three flow rules from the literature, selected in the code by \code{wind\_scenario} (Table~\ref{tab:presets}).
-In the profile of \citet[][hereafter P07]{Poutanen2007}, $\Mdot$ is linear in $u = R/\Rref$,
+In the profile of \citet[][hereafter P07]{Poutanen2007}, $\Mdot$ is linear in $u = R/\Rref$, with $\Rref = 6\,\rg$,
 \begin{equation}
 \mdot = \mdot_{\rm in} + (\mdot_0 - \mdot_{\rm in})\,\frac{u - 1}{u_{\rm sph} - 1}, \qquad u < u_{\rm sph},
 \label{eq:mdot_P07}
@@ -136,6 +137,8 @@ SS73 & Eq.~\eqref{eq:mdot_SS73} & SS73, SS73\_eq71 & 1/12 & $\Rsph$ \\
 % Rules named in the R_sph and R_trap columns: Sect. radii.
 \end{table*}
 
+\textbf{Change notation in the text: $r_{in}$ to $R_{in}$. also for $r_m$, $r_{out}$ and $r_g$.} 
+
 \subsection{Mass loss}
 \label{sec:model:massloss}
 
@@ -165,7 +168,8 @@ Parameters that a preset does not free keep the defaults of Table~\ref{tab:param
 %         README "Model Presets" (NS table and the note below it); PLAN C23
 Except for BH0, BH2 and NS2, all presets use the $\Mdot(R)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
 The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
-The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r, fitted to 0.3--10~keV with the transfer correction (Sect.~\ref{sec:spectrum:transfer}).
+The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r, 
+\textbf{fitted to 0.3--10~keV with the transfer correction - remove, as this information is not  relevant for disc and wind structure }(Sect.~\ref{sec:spectrum:transfer}).
 % source: PLAN C23 (NS refits, run tag mc_0p3-10keV, start_refits_ns.sh; after the BH refits, from about 2026-11-15)
 Earlier fits used the presets NS4, NS4a, NS5, NS5a, NS6 and NS7, which leave both \code{r\_in\_factor} and \code{wind\_inner\_launch\_x} free.
 Only their product $\rmag/\rg$ enters the model, so one direction of the parameter space is flat, and the implied prior on $\log(\rmag/\rg)$ rises over 0--1.3 (cut at $\RNS$, 0.68), is flat over 1.3--4.0 and falls over 4.0--5.3.
@@ -235,7 +239,7 @@ $\omf$ & \code{omega\_frac} & $\cos\theta_{\rm c} - \cos\theta_{\rm d}$, solid-a
 $\hd$ & \code{h\_disc} & disc surface $z/R$ & 0 & (0, 0.3) \\
 $\log\eta_{\rm magn}$ & \code{log\_magn\_eta} & NS: efficiency of the central emitter & 0 & ($-5$, 0) \\
 $\beta_{\rm t}$ & \code{beta\_torque\_in} & NS: torque at $\rmag$ & 1 & fixed \\
-$z/r$ & \code{z\_over\_r\_trap} & disc thickness in $\Rtrap$ & 0.5 & fixed \\
+$z/r$ & \code{z\_over\_r\_trap} & disc thickness in $\Rtrap$,\textbf{ defines  $\Rtrap$ - check \& mention here}& 0.5 & fixed \\
 \bottomrule
 \end{tabular}
 % code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters".

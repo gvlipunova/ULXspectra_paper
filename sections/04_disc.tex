@@ -29,10 +29,10 @@ F_{\rm in} = \beta_{\rm t}\,\Mdot(\rmag)\,h(\rmag),
 \label{eq:Fin_NS}
 \end{equation}
 % code: disc_Fvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
-with $\beta_{\rm t} = 1$.
+with \textbf{$\beta_{\rm t} = 1$ - is it a default value for all NS models? - check}.
 % AUTHOR: physical justification of beta_t = 1 (PLAN C10)?
 
-All the profiles of Sect.~\ref{sec:model:mdot} are linear in $R$ between $\rin$ and $\Rsph$, so the integral is analytic.
+All the accretion-rate profiles of Sect.~\ref{sec:model:mdot} are linear in $R$ between $\rin$ and $\Rsph$, so the integral is analytic.
 With $s = \sqrt{\min(x, \xsp)}$ and $h_{\rm in} = h(\rin)$,
 \begin{multline}
 \Fvis = F_{\rm in} + \frac{h_{\rm in}(s - 1)}{3(s + 1)}\bigl[\Mdot(\rin)(2s + 1) \\
@@ -65,7 +65,9 @@ The viscous heating per unit area of one side of the disc is
 \Qvis = \frac{3}{8\pi}\,\frac{\Fvis\,\Omega_{\rm K}}{R^2} .
 \label{eq:Qvis}
 \end{equation}
+This is a usual expression for viscous disc, formulated in terms of the viscous torque, instead of the accretion rate.  
 % code: disc_Qvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
+
 Outside the trapping radius the disc radiates locally, $\sigma\Teff^4 = \Qvis$.
 Inside it, advection makes the radiated flux fall as $R^{-2}$, and we join the two continuously at $\Rtrap$:
 \begin{equation}
@@ -82,7 +84,7 @@ $\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
 %         with a reference?
 
 The wind is launched from the disc between $\rin$ and $\Rsph$, and there the disc gives the fraction $\epsilon_{\rm w}$ of the energy it releases to the wind.
-We call this the wind toll.
+We call this the `wind toll'.
 Only inside $\Rsph$ does the disc pay it.
 The disc thermalises, so what remains is radiated as a true blackbody at
 \begin{equation}
@@ -98,8 +100,8 @@ T_{\rm disc} =
 % reason: the author, 2026-11-09 ("only inside this radius the disc has to spend energy on launching the wind")
 % term "wind toll": the author 2026-11-10 (PLAN C21, README "Terms"); replaces "eps_w loss", "launch loss",
 %       "energy given to the wind". Never "diluted" for the toll.
-This holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
-The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset) the disc inside $\Rsph$ is dark.
+This \textbf{non-continuous} relation holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
+The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset, \textbf{this was implicitely ignored by L99 - check}) the disc inside $\Rsph$ is dark.
 The wind toll is paid in the disc, before its photons are made, and it applies whatever the wind then does to them (Sect.~\ref{sec:spectrum}).
 % source: PLAN C21 (two steps), README "Terms"
 % source: README "Wind temperature and energy budget"
