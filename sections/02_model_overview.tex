@@ -156,8 +156,52 @@ For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph
 \label{sec:model:params}
 
 Table~\ref{tab:params} lists the parameters of the model.
-% OUTLINE: say which parameters are free in which fit (BH1/BH3/BH4/NS1 presets of
-%          ULX.conf), once the set of fits for the paper is fixed.
+The fits use the presets of \code{ULX.conf} in Table~\ref{tab:fitpresets}, which relates each of them to the flow rules of Table~\ref{tab:presets} and to the $\Rsph$ rules of Sect.~\ref{sec:radii}.
+Parameters that a preset does not free keep the defaults of Table~\ref{tab:params}; for a NS, $M = 1.4\,M_\odot$ and $r_{\rm in,f} = 4.5$ unless free.
+% source: ULX.conf (git-ignored, shared by both worktrees; file dated 2026-09-07), [BH0]-[NS7]; log_m_bh = 0.14612803
+Except for BH0, BH2 and NS2, all presets use the $\Mdot(R)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
+The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
+% code: psrcs/flow_rules.py resolve_flow_rules(): P07 -> P07fit, SS73 -> SS73 (first allowed rule); set_mdot_in with
+%       empty rsp_rule -> LEGACY_RSP_RULES[use_simple_rsp] {0: P07fit, 1: mdot0, 2: Ledd}, [DEFAULT] use_simple_rsp = 0
+% OUTLINE: say which presets the paper's fits use, once the set of fits is fixed.
+% AUTHOR: NS4-NS7 free both r_in,f and x_m, but only their product r_m matters (Eq. rm): one of them is unconstrained.
+%         Intended?
+
+\begin{table*}
+\centering
+\caption{Fitting presets of \code{ULX.conf}. The $\Mdot(R)$ profile and the $\Rsph$ rule are those of Sects.~\ref{sec:model:mdot} and~\ref{sec:radii:sph}; ``main'' is Eq.~\eqref{eq:mdot_setin}. Parameters not listed as free take the values of Table~\ref{tab:params} or of the last column.}
+\label{tab:fitpresets}
+\footnotesize
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Preset & Accretor & $\Mdot(R)$ & $\Rsph$ rule & Free parameters & Other settings \\
+\midrule
+BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
+BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
+BH1a & BH & main & Ledd & as BH1 & \\
+BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
+BH3 & BH & main & mdot0 & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & \\
+BH3a & BH & main & Ledd & as BH3 & \\
+BH4 & BH & main & mdot0 & BH1 $+$ $\beta_{\rm w}$, $\omf$ & \\
+BH4a & BH & main & Ledd & as BH4 & \\
+\midrule
+NS1 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $i$, $x_{\rm m}$, $\rout$ & spherical emitter \\
+NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
+NS2 & NS & SS73 & SS73 & $\mdot_0$, $i$, $x_{\rm m}$, $\rout$ & spherical emitter \\
+NS3 & NS & main & mdot0 & $\mdot_0$, $i$, $x_{\rm m}$, $\rout$ & $f_{\rm in} = 1$ (no wind); spherical emitter \\
+NS3a & NS & main & Ledd & as NS3 & as NS3 \\
+NS4 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $r_{\rm in,f}$, $x_{\rm m}$, $\rout$ & $i = 0$; spherical emitter \\
+NS4a & NS & main & Ledd & as NS4 & as NS4 \\
+NS5 & NS & main & P07fit & NS4 $+$ $i$ & dipole emitter \\
+NS5a & NS & main & Ledd & as NS5 & dipole emitter \\
+NS6 & NS & main & Ledd & NS5 $+$ $\eta_{\rm magn}$ & dipole emitter \\
+NS7 & NS & main & Ledd & NS5 $+$ $\eta_{\rm magn}$ & spherical emitter \\
+\bottomrule
+\end{tabular}
+% source: ULX.conf [BH0]-[NS7] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction);
+%         R_sph rule resolved by psrcs/flow_rules.py (fix-results-integrity ea6090e). Spherical/dipole emitter: dip = 0/1 (Sect. central).
+%         No preset uses the L99 scenario.
+\end{table*}
 
 \begin{table*}
 \centering
