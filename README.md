@@ -47,6 +47,10 @@ Two-column `article` (no journal chosen), summary at the top
   `ULXspectra-mc`, branch `mc-transfer-corrections`, commit `f546151`
   (`eps_w_launch_only = 1`, `wind_spectrum = 1`; author 2026-11-09). The rest of
   Sects. 2-8 still follows `fix-results-integrity`.
+- Appendix C.10 (MC check of the best refits, tab:mc_bestfits): `ULXspectra-mc`
+  docs/transfer_correction_results.md sect. 6 and summaries/mc_check_best_refits.tsv
+  (commit a6a2e05). NGC247S: use BH3a, not BH4a. Take chi2 from the summaries
+  tables, not from the `chi2=` header of best_params.txt (PLAN C24).
 - Appendix C (Monte Carlo test, comparison with Ahlberg et al. 2026): preliminary,
   from `docs/green_surface_monte_carlo.md` at commit `4da7c04`.
 

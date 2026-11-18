@@ -489,3 +489,59 @@ Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository (c
 \label{fig:mc_transfer_ahlberg}
 % figure: figures/ahlberg_published_vs_mc_transfer.png, script figures/ahlberg2026/plot_ahlberg_comparison.py; code commit 2272e8a
 \end{figure*}
+
+\subsection{Monte Carlo check of the best fits}
+\label{app:mc:bestfits}
+% Source: ULXspectra-mc docs/transfer_correction_results.md sect. 6 and summaries/mc_check_best_refits.tsv
+%         (branch mc-transfer-corrections, commit a6a2e05, doc as of b551655); fits with the correction, 0.3-10 keV,
+%         model state 2f22b12; script docs/scripts/mc_table/check_best_fits.py; spectra summaries/best_refit_spectra/
+% chi2: from the summaries tables (recomputed from best_fit_spectrum.txt), not from the chi2= header of
+%       best_params.txt, which is wrong in fits made before 2026-11-18 (PLAN C24)
+
+We checked the best fits made with the correction by one Monte Carlo run each, at the inclination of the fit.
+The 28 fits are, for each source, the best fit overall, the best BH fit and the best NS fit, and the second best fit of NGC247S (see below); none of them is in the table of the correction.
+Each run has $10^5$ packets, and we compare the packets that leave within $\cos i \pm 0.05$ with the model averaged over the same range of $\mu$, at the energies of the fitted data.
+We also compute $\chi^2$ of the data, with $\sigma = 0.08$~dex as in the fits, against the best-fit model and against the best-fit model times the ratio MC/model, that is, how well the same parameters fit if the spectrum is that of the Monte Carlo.
+Table~\ref{tab:mc_bestfits} gives the best fit of each source.
+% source: transfer_correction_results.md sect. 6 (introduction)
+
+\begin{table*}
+\centering
+\caption{Monte Carlo check of the best fit of each source, at its inclination $i$. $L_{\rm iso}$: MC/model without and with the correction; $\nu L_\nu$: range of MC/model at the energies of the data; $\chi^2$ of the data against the best-fit model and against the Monte Carlo spectrum (in brackets, the part of it due to the Monte Carlo noise where it exceeds unity).}
+\label{tab:mc_bestfits}
+\small
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+Best fit & $i$ ($\theta_{\rm c}$) & $L_{\rm iso}$ MC/model, off $\to$ on & $\nu L_\nu$ MC/model & $\chi^2$, fit $\to$ MC \\
+\midrule
+HolmIX BH2 & $8.5^\circ$ ($45.6^\circ$) & 1.93 $\to$ 1.00 & 0.99--1.01 & 1.89 $\to$ 1.75 \\
+NGC1313B NS5r & $35.5^\circ$ ($45.6^\circ$) & 2.50 $\to$ 0.94 & 0.92--1.09 & 1.98 $\to$ 4.71 \\
+NGC1313H NS5r & $26.0^\circ$ ($45.6^\circ$) & 3.35 $\to$ 0.90 & 0.80--1.05 & 1.76 $\to$ 12.1 \\
+NGC55 BH0 & $39.0^\circ$ ($45.6^\circ$) & 1.47 $\to$ 1.00 & 1.00--1.02 & 1.77 $\to$ 2.13 \\
+NGC7793 NS7r & $20.7^\circ$ ($45.6^\circ$) & 2.21 $\to$ 0.95 & 0.94--1.00 & 0.51 $\to$ 2.38 \\
+HolmII BH0 & $46.8^\circ$ ($45.6^\circ$) & 0.99 $\to$ 0.99 & 0.95--1.04 & 0.13 $\to$ 1.54 \\
+NGC247SS BH3a & $47.1^\circ$ ($45.6^\circ$) & 1.00 $\to$ 0.95 & 0.92--1.67 & 355 $\to$ 432 (2.0) \\
+NGC5408 BH0 & $51.3^\circ$ ($45.6^\circ$) & 0.59 $\to$ 1.08 & 1.03--1.22 & 3.17 $\to$ 24.8 \\
+M81ULS BH3a & $51.7^\circ$ ($45.6^\circ$) & 0.87 $\to$ 0.99 & 0.97--1.44 & 0.32 $\to$ 9.6 (4.0) \\
+NGC6946 BH0 & $52.7^\circ$ ($45.6^\circ$) & 0.64 $\to$ 1.09 & 1.05--1.15 & 5.73 $\to$ 16.3 \\
+NGC300 BH2 & $62.3^\circ$ ($45.6^\circ$) & 0.55 $\to$ 1.10 & 1.03--1.16 & 0.11 $\to$ 10.2 \\
+M51ULS NS6r & $65.9^\circ$ ($45.6^\circ$) & 1.45 $\to$ 1.05 & 0.73--1.23 & 172 $\to$ 114 (4.4) \\
+M101ULS BH4a & $84.6^\circ$ ($84.3^\circ$) & 0.35 $\to$ 0.92 & 0.77--1.02 & 3.95 $\to$ 13.1 (3.0) \\
+NGC247S BH4a & $86.1^\circ$ ($62.2^\circ$) & 0.66 $\to$ 1.74 & 1.53--3.29 & 0.11 $\to$ 589 (7.8) \\
+NGC247S BH3a (2nd best) & $54.4^\circ$ ($45.6^\circ$) & 0.83 $\to$ 1.08 & 0.99--1.11 & 0.13 $\to$ 5.45 (1.3) \\
+\bottomrule
+\end{tabular}
+% source: transfer_correction_results.md sect. 6, table "Best fit per source"; summaries/mc_check_best_refits.tsv
+%         (Liso_off, Liso_on, ratio_min, ratio_max, chi2_fit, chi2_mc, chi2_noise); commit a6a2e05
+\end{table*}
+
+With the correction, the model agrees with the Monte Carlo to within 10 per cent in $L_{\rm iso}$ inside the funnel: MC/model is 0.90--1.04 for the 15 of the 28 fits seen at $i < \theta_{\rm c}$, against 1.21--3.52 without the correction.
+In the band of the data, MC/model is 0.73--1.19 there; the low values are at the hard end of the band (HolmII NS6r 0.73, NGC1313H NS5r 0.80), where the model is too hard by up to a factor of 1.4.
+For the eight BH fits at $i = 47^\circ$--$62^\circ$, just beyond $\theta_{\rm c}$, $L_{\rm iso}$ MC/model is 0.95--1.22, mostly with the model too faint, and more so at the hard end of the band (up to 1.93 for M51ULS BH0).
+The $\chi^2$ of these fits rises from 0.1--6 to 1.5--25 for 15--30 data points when the Monte Carlo spectrum replaces the model, so the fits stay acceptable at $\sigma = 0.08$~dex, but their parameters would move somewhat.
+For the NS fits with the dipole surface beyond $\theta_{\rm c}$, $L_{\rm iso}$ MC/model is 0.98--1.51, as in Sect.~\ref{app:mc:heldout}.
+% source: transfer_correction_results.md sect. 6, bullets 1, 2, 4; tsv (M101ULS NS6r 1.51 inside the funnel has MC noise 0.16)
+
+The best fit of NGC247S, BH4a at $i = 86^\circ$, $24^\circ$ beyond $\theta_{\rm c}$, is not confirmed: there the corrected model is too faint by a factor of 1.7 in $L_{\rm iso}$ and 1.5--3.3 in the band, and the same parameters give $\chi^2 = 589$ against the Monte Carlo spectrum (without the correction the model is too bright there, MC/model = 0.66).
+For NGC247S we therefore use its second best fit, BH3a ($\chi^2 = 0.133$, $i = 54^\circ$), which passes: $\chi^2$ rises from 0.13 to 5.45.
+% source: transfer_correction_results.md sect. 6, bullet 3; author 2026-11-18 ("Use NGC247S BH3a instead")
