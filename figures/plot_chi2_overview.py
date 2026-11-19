@@ -45,6 +45,9 @@ LABEL = {"log_m_bh": r"\log M", "log_mdot0": r"\log\dot m_0", "eps_w": r"\epsilo
          "incl_deg": "i", "omega_frac": r"\Omega_{\rm w}/4\pi", "r_in_factor": r"R_{\rm in}/R_{\rm g}",
          "log_r_out_factor": r"\log R_{\rm out}/R_{\rm g}", "log_wind_inner_launch_x": r"\log R_{\rm m}/R_{\rm g}",
          "user_mdot_in_fraction": r"\dot m_{\rm in}/\dot m_0", "log_magn_eta": r"\log\eta_{\rm magn}"}
+# Defaults set by the author (2026-11-19) where the starting values of ULX.conf.example are arbitrary
+# (BH0 log_mdot0 = -1, NS presets user_mdot_in_fraction = 0.001): mdot0 = 10, mdot_in/mdot0 = 0.5, for all presets.
+DEFAULT_AUTHOR = {"log_mdot0": 1.0, "user_mdot_in_fraction": 0.5}
 CONF = configparser.ConfigParser(inline_comment_prefixes="#")
 CONF.read(B + "/ULX.conf.example")
 
@@ -54,6 +57,7 @@ def farthest(preset, p):
     sec = CONF[preset]
     free = [x.strip() for x in sec["free_params"].split(",")]
     d = {k: float(sec[k]) for k in free}
+    d.update({k: v for k, v in DEFAULT_AUTHOR.items() if k in d})
     k = max(free, key=lambda k: abs(p[k] - d[k]) / (PRIOR[k][1] - PRIOR[k][0]))
     v, v0 = p[k], d[k]
     if k == "log_wind_inner_launch_x":   # shown as log R_m/R_g = log 4.5 + log x

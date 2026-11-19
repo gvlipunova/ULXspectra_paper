@@ -49,13 +49,17 @@ The outer accretion rate is $\mdot_0$.
 % AUTHOR: one sentence on why 1/12 (e.g. efficiency of a Newtonian disc with
 %         r_in = 6 r_g)? The sources only say "as in P07 and L99".
 
-Radii are measured in $\rg = GM/c^2$, and in the code in units of the inner disc radius, $x = R/\rin$.
+All radii are cylindrical radii $R$, measured from the axis of the disc.
+They are given in $\rg = GM/c^2$, and in the code in units of the inner disc radius, $x = R/\rin$.
+% source: calculation session 2026-11-19 (r_m = r_in_disc, the photosphere radii, R_sp and r_out are cylindrical, x = R/r_in_disc)
 The inner disc radius is $\rin = r_{\rm in,f}\,\rg$.
 For a NS it is the magnetospheric radius, $\rin = \rmag$, and the fitted quantity is $\log(\rmag/\rg)$.
 % code: apply_physical_radii() (csrcs/disc_struct.c): for a NS only r_m/r_g = wind_inner_launch_x * r_in_factor enters
 %       the model (then x_launch = 1); README "Units and radii"; ULXspectra-mc PLAN C23 (author 2026-11-13: r_in,f = r_in/r_g
 %       for BH and NS, quote log(r_m/r_g), no x_m in the text). After the refits the code gets one parameter log_r_m.
-The prior rejects $\rmag \le \RNS = 10$~km.
+The radius of the NS is fixed at $\RNS = 10$~km in all fits, and the prior rejects $\rmag \le \RNS$.
+Since $\rmag$ is fitted, the same $x$ means a different $R$ in different NS fits.
+% source: calculation session 2026-11-19
 The disc, the launch of the wind, $\Mdot(R)$, $\Rsph$ and the wind photosphere all start at $x = 1$.
 For a BH the radial grid starts there too, and nothing lies inside.
 For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and the part $x < 1$ is the central emitter, the surface of the magnetosphere (Sect.~\ref{sec:central}).
