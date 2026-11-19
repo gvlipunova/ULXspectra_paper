@@ -14,7 +14,8 @@ here: file, script, code commit, and the section that uses it.
 | `ahlberg_published_vs_cone_mc.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/funnel_beaming_mc.py`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_published) |
 | `ahlberg_published_vs_mc_transfer.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/mc_green_surface.py` and the C model) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:mc_transfer_ahlberg) |
 | `HolmIX_mc_vs_nomc.png` | `docs/scripts/plot_mc_vs_nomc.py` | `b551655` (branch `mc-transfer-corrections`) | Sect. Results (fig:holmix_mcnomc) |
-| `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `bf192da` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:best_fits_mc) |
+| `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `e597ba3` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:best_fits_mc) |
+| `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository

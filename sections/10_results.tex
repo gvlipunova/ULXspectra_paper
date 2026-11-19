@@ -11,6 +11,28 @@
 % OUTLINE: Parameter constraints; which band constrains which parameter (r_out and
 %          beta_w from optical/UV).
 
+\subsection{Which family fits each source}
+\label{sec:results:overview}
+
+Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the best NS fit with the nature of the source given in the literature (Table~\ref{tab:sources}).
+% OUTLINE (author): what the figure shows: which family fits better, and whether this agrees with the identification.
+% derived (Claude) from the figure: the better family agrees with Table tab:sources for HolmII, HolmIX, M101ULS, M51ULS,
+%         NGC1313H, NGC5408, NGC55, NGC6946, NGC7793; it disagrees for M81ULS, NGC247S, NGC247SS (BH fits better, NS
+%         candidates), NGC1313B (NS fits better, BH candidate); NGC300 (PULX): both fit, BH slightly better
+% AUTHOR: interpretation to be written by the author.
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.8\textwidth]{chi2_overview.pdf}
+\caption{Reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction).
+The row colour gives the type of the source in Table~\ref{tab:sources}: grey for a BH candidate, orange for a pulsating ULX or a NS candidate.
+On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination.
+For NGC247S the BH fit is BH3a (App.~\ref{app:mc:bestfits}).}
+\label{fig:chi2_overview}
+\end{figure*}
+% figure: this repository, figures/plot_chi2_overview.py (layout: the author's sketch 2026-11-19), data ULXspectra-mc
+%         summaries/best_refit_per_source.tsv and refits_summary.tsv (e597ba3); reduced chi2 = chi2/(n - n_params)
+
 \subsection{Physical parameters of the best fits}
 \label{sec:results:params}
 
