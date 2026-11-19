@@ -254,6 +254,8 @@ $z/R$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 %   log_mdot0 = 1 in all presets, prior (-2, 5) as in psrcs/config_loader.py (the "(0, 5)" comment was stale).
 %   The refits of 2026-11-09 to 11-17 started from log_mdot0 = -1 (BH0), 1 (NS1/NS1a), 2 (others), f_in = 0.001 (NS5-NS7 family);
 %   a converged posterior does not depend on the start (calculation session 2026-11-19).
+%   The author's ULX.conf uses the same starting values (a40ceec, README "Model Presets"); frozen values unchanged:
+%   f_in = 1 in NS3/NS3a, i = 0 in NS4/NS4a/NS4ar.
 % z_over_r_trap: rtrap_over_rin(), rule M26 (csrcs/disc_struct.c). beta_torque_in = 1 (model_params.py default) is set by no
 %   preset, so it is 1 in all NS fits.
 % NS radius row: r_m/r_g = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 in all NS presets used (PLAN C23);
