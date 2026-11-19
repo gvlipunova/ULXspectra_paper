@@ -51,6 +51,7 @@ For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one 
 The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = w^{-1/4}\,\Tw$, and its Rayleigh--Jeans tail is fainter by the factor $w^{3/4}$.
 At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
 % source: ULXspectra-mc PLAN.md C21 (fits from before the temperature step at R_sph, eq. Tdisc); README "Wind spectrum"; commit f546151
+
 The alternative is a wind that thermalises the photons again: a blackbody at $\Tw$, cooler and with more photons than the disc made; it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
 % code: wind_spectrum switch (default 1), CHANGELOG 2026-11-04
 Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $w > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $w > 1$ (1.03).

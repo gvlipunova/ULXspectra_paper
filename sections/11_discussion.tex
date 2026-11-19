@@ -119,10 +119,10 @@ $E$ [keV] & Ho IX X-1 & NGC 5408 X-1 & NGC 5408 X-1 \\
 % source: thermalization_in_wind.md, sect. 3 table; ULXspectra-mc commit 69b9de7
 \end{table}
 
-Above about 0.1--0.3~keV, $\tau_*$ far exceeds the column, so the wind cannot make X-ray photons.
+\textbf{Above about 0.1--0.3~keV, $\tau_*$ far exceeds the column, so the wind cannot make X-ray photons.}
 Its X-rays are disc photons, made where the disc is dense enough to thermalise them, and scattered by the wind.
 Scattering conserves the photon energy, so they keep the colour temperature of the disc under the wind; spread over the larger photosphere, they form a diluted blackbody, not a blackbody at the effective temperature of the wind.
-In the UV, near 0.01~keV, $\tau_* \approx 2$--$3$ is below the column of \srcNGCfiftyfour, the wind thermalises, and a modified blackbody at the gas temperature applies.
+\textbf{In the UV, near 0.01~keV}, $\tau_* \approx 2$--$3$ is below the column of \srcNGCfiftyfour, \textbf{the wind thermalises}, and a modified blackbody at the gas temperature applies.
 % source: thermalization_in_wind.md, sect. 3
 
 These estimates are rough.
@@ -139,13 +139,14 @@ From the optical at $3.5\times10^4$~K to 1~keV at $10^6$~K, however, the free-fr
 Moreover, the wind of our model is a finite column, $\taup \approx 1$--$30$ above the disc, not an envelope with $n \propto r^{-2}$ reaching ever denser layers inwards.
 % source: thermalization_in_wind.md, sect. 4 (last paragraph): k_ff falls by ~4e-9, tau_* grows by ~1.6e4
 
-A physically consistent spectrum of the wind therefore changes regime with frequency.
+\textbf{A physically consistent spectrum of the wind therefore changes regime with frequency.}
 Where $\tau_*(\nu)$ is below the column of the wind, the wind thermalises and emits a modified blackbody at the gas temperature: the UV of ULX winds, as the optical of the envelope of SS~433.
 Where $\tau_*(\nu)$ exceeds the column, the emission of the wind is scattered disc light that keeps the colour temperature of the disc: the X-rays above about 0.3~keV.
-The model takes the second regime for the whole spectrum of the wind (Eq.~\ref{eq:Inu_wind}), since the fits are made to the X-rays.
+\textbf{The model takes the second regime for the whole spectrum of the wind }(Eq.~\ref{eq:Inu_wind}),\textbf{ since the fits are made to the X-rays.}
 % source: README "Wind spectrum"; PLAN C21 (author's decision 2026-11-04: option (b), diluted wind, wind_spectrum = 1)
 In the UV this is not correct: there a blackbody at $\Tw$ would be the better description.
 A spectrum that switches regime with frequency needs the gas temperature of the wind, which the model does not have.
+
 The slope of the SEDs below 0.3~keV (Sect.~\ref{sec:fitting:data}) is an extension of a phenomenological fit and does not constrain this.
 % source: thermalization_in_wind.md, sect. 5; README "Wind spectrum" (limitations)
 % AUTHOR: the disc rings are also pure blackbodies (no colour correction; PLAN C21 quotes f_col ~ 1.6-2

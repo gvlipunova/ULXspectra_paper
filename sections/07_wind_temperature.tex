@@ -80,7 +80,8 @@ A photosphere that reaches beyond $\rout$ has no disc under it there, and a disc
 % source: the author 2026-11-09; code: csrcs/wind_emission.c (L_disc_under_wind: x_mid >= 1 and < x_out_disc,
 %         "r_out, the disc's outer edge in the binary (user, 2026-11-03)"), ULXspectra-mc f546151; README "Energy budget"
 %         (CHANGELOG 2026-11-03 "including rings beyond r_out" is superseded)
-The budget is global: one factor scales the raw temperatures of all wind rings,
+
+A simplified approach for wind emission, which we take, assumes that the budget is global: one factor scales the raw temperatures of all wind rings,
 \begin{equation}
 \Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}, \qquad f_{\rm cor} = \frac{L_{\rm wind}}{L_{\rm wind,raw}} ,
 \label{eq:fcor}
