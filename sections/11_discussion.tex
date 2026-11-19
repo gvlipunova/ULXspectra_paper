@@ -38,9 +38,13 @@ Nothing is counted beyond the photosphere, so both are lower limits for a wind t
 At the earlier best fits, made before the wind toll was restricted to $R < \Rsph$, the second limit often exceeds the fitted toll: in large winds the lift alone takes 0.65--1 of $L_{\rm sph}$, so $\epsilon_{\rm w} \approx 0.7$--1 would be needed.
 % source: PLAN C22 / README: 182 full best fits (summaries/wind_energy_check_full.tsv), 69 clean; eps_w free: 6 of 25
 %         fail (1), 13 fail (2); eps_w = 0.5 fixed: 3 and 30 of 44; commit e294301
-We will repeat the check at the new fits.
-% OUTLINE: table of eps_w vs the two limits at the refits (docs/scripts/wind_energy_check.py).
-% AUTHOR (PLAN C22, open): which limit does the paper quote, the flux test or flux + lift?
+We take the first limit as the firm one and the second as the likely need of the wind.
+% decided: the author 2026-11-19 (PLAN C22, ULXspectra-mc 52caec5): the paper quotes both
+At the refits with the transfer correction, 76 of the 99 clean fits pass the first limit and 45 pass the second.
+% source: ULXspectra-mc summaries/wind_energy_check_refits.tsv, PLAN C22 (52caec5)
+The fits are not constrained by either: $\epsilon_{\rm w}$ is as fitted, free in BH0, BH2 and BH3a and fixed at 0.5 in BH1a, BH4a and the NS presets.
+% source: calculation session 2026-11-19; a fit constraint eps_w >= need is planned (PLAN C25)
+% OUTLINE: table of eps_w vs the two limits at the best fits (docs/scripts/wind_energy_check.py).
 
 \subsection{Does the wind emit a blackbody?}
 \label{sec:disc:thermalization}
