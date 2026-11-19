@@ -345,13 +345,13 @@ The result is summarised in Sect.~\ref{sec:disc:funnel}.
 Their walls re-emit as Lambertian surfaces or reflect as an electron-scattering atmosphere; the two differ in the boost by at most 6\%.
 % source: Ahlberg et al. 2026 (arXiv:2610.23089v1), Sect. 3.3 and Fig. 5 ("remains <~6% across the whole parameter space"); checked in the PDF 2026-11-10
 They define the boost of the apparent luminosity $B(i)$ by $L_{\rm app}(i) = B(i) \int F\,{\rm d}\Omega$.
-Averaged over $i \le \alpha$, where $\alpha$ is the half-opening angle of the funnel, its geometric limit is (their Eq.~7)
+Averaged over $i \le \alpha$, where $\alpha$ is the half-opening angle of the funnel, its geometric limit is (their equation~7)
 \begin{equation}
 B_{\rm max} = \frac{1}{1 - \cos\alpha} ,
 \label{eq:mc_Bmax}
 \end{equation}
 % source: Ahlberg et al. 2026 (arXiv:2610.23089v1), Eq. (7); checked in the PDF 2026-11-10
-and the mean boost inside the funnel is approximated to about 10\% by (their Eq.~15)
+and the mean boost inside the funnel is approximated to about 10\% by (their equation~15)
 \begin{equation}
 \frac{\ln B}{\ln B_{\rm max}} \approx \exp\left(1.14\,\frac{\ln\sin\alpha}{\ln R}\right) ,
 \label{eq:mc_AhlbergB}
@@ -372,12 +372,12 @@ We  compared this Monte Carlo, $2\times10^5$ packets per point, with the publish
 %         Code: ULXspectra branch mc-transfer-corrections, commit 2272e8a (docs/scripts/funnel_beaming_mc.py)
 Their $B(i)$ is tallied in 500 bins of equal solid angle, $\Delta\mu = 0.002$.
 % source: Ahlberg et al. 2026, Sect. 3.1 ("tallied them into 500 inclination bins of equal solid angle")
-For Lambertian walls (their Fig.~2: $\alpha = 5^\circ$--$25^\circ$ at $R = 10^3$, and $\alpha = 25^\circ$ at $R = 10$--$10^5$), our mean boost over their bins at $i \le \alpha$ is 1.001--1.021 of theirs, and outside the funnel the median ratio of $B(i)$ over their bins is 0.990--1.017.
+For Lambertian walls (their figure~2: $\alpha = 5^\circ$--$25^\circ$ at $R = 10^3$, and $\alpha = 25^\circ$ at $R = 10$--$10^5$), our mean boost over their bins at $i \le \alpha$ is 1.001--1.021 of theirs, and outside the funnel the median ratio of $B(i)$ over their bins is 0.990--1.017.
 In all ten cases their curves match ours best if ours are moved by one bin towards the axis; with this shift the mean boosts at $i \le \alpha$ agree within 0.3\%.
 % source: figures/ahlberg2026/data/summary.txt, items 1 (ratios 1.001-1.021 unshifted, 0.998-1.003 shifted; outside 0.990-1.017;
 %         best shift +1 bin for all ten curves); commit 2272e8a
-Their Fig.~4a gives the mean boost for the electron-scattering walls on a grid $\alpha = 6.25^\circ$--$45^\circ$, $R = 10$--$10^5$; our Lambertian mean boost is 0.94--1.02 of it at $\alpha = 10^\circ$--$45^\circ$ (Fig.~\ref{fig:funnel_published}c).
-The difference is that of the wall law: in their Fig.~2a ($R = 10^3$) the Lambertian mean boost is 0.943--0.961 of the electron-scattering one for $\alpha = 10^\circ$--$25^\circ$.
+Their figure~4a gives the mean boost for the electron-scattering walls on a grid $\alpha = 6.25^\circ$--$45^\circ$, $R = 10$--$10^5$; our Lambertian mean boost is 0.94--1.02 of it at $\alpha = 10^\circ$--$45^\circ$ (Fig.~\ref{fig:funnel_published}c).
+The difference is that of the wall law: in their figure~2a ($R = 10^3$) the Lambertian mean boost is 0.943--0.961 of the electron-scattering one for $\alpha = 10^\circ$--$25^\circ$.
 % source: figures/ahlberg2026/data/summary.txt, items 2 and 3; commit 2272e8a
 
 
@@ -385,7 +385,7 @@ For the setting with $4\times10^4$ packets per point, we checked the boost insid
 % source: funnel_beaming_mc.py docstring and cone_mc(alpha, R, n=40000) for the validation; commit 4da7c04
 The mean boost in the funnel agrees with their Eq.~\eqref{eq:mc_AhlbergB} within 1--13\% (Fig.~\ref{fig:funnel_validation}); Eq.~\eqref{eq:mc_AhlbergB} lies above our points at small $R$ and below them at large $R$, as \citet{Ahlberg2026} note.
 % source (sentence above): docs/green_surface_monte_carlo.md, "Our opaque-cone MC vs Ahlberg et al."; commit 4da7c04
-For the narrow and long funnel $\alpha = 10^\circ$, $R = 10^5$, their Fig.~4 gives $B/B_{\rm max} = 0.50$ (panel b) and 0.52 (panel a), and our Monte Carlo 0.50; the ``about 40\%'' in their text does not match their figure.
+For the narrow and long funnel $\alpha = 10^\circ$, $R = 10^5$, their figure~4 gives $B/B_{\rm max} = 0.50$ (panel b) and 0.52 (panel a), and our Monte Carlo 0.50; the ``about 40\%'' in their text does not match their figure.
 % source: figures/ahlberg2026/data/ahlberg_fig4.npz (frac[alpha=10, logR=5] = 49.7; B = 34.28, B_max = 65.82);
 %         cone MC: 0.953 x 34.28 / 65.82 = 0.496 (summary.txt item 3); their text: Sect. 3.1, "only about 40% of B_max = 65.8 even at R = 10^5".
 %         Note: panel (a)/B_max of their Fig. 4 is 1-6\% above panel (b), more at small alpha.
@@ -394,8 +394,8 @@ For the narrow and long funnel $\alpha = 10^\circ$, $R = 10^5$, their Fig.~4 giv
 \centering
 \includegraphics[width=\textwidth]{ahlberg_published_vs_cone_mc.png}
 \caption{Our Monte Carlo of the opaque conical funnel against the published results of \citet{Ahlberg2026}.
-(a), (b): $B(i)$ for Lambertian walls; steps: their Fig.~2a ($R = 10^3$) and Fig.~2b ($\alpha = 25^\circ$), read from the figure, in their 500 bins of equal solid angle; dots: our Monte Carlo in bins of $1^\circ$.
-(c): our mean boost at $i \le \alpha$ (Lambertian walls) divided by that of their Fig.~4a (electron-scattering walls), for five $R$; diamonds: the same ratio between their own Lambertian and electron-scattering curves of Fig.~2a.
+(a), (b): $B(i)$ for Lambertian walls; steps: their figure~2a ($R = 10^3$) and figure~2b ($\alpha = 25^\circ$), read from the figure, in their 500 bins of equal solid angle; dots: our Monte Carlo in bins of $1^\circ$.
+(c): our mean boost at $i \le \alpha$ (Lambertian walls) divided by that of their figure~4a (electron-scattering walls), for five $R$; diamonds: the same ratio between their own Lambertian and electron-scattering curves of figure~2a.
 Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository, which runs \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 2272e8a).}
 \label{fig:funnel_published}
 % figure: figures/ahlberg_published_vs_cone_mc.png, script figures/ahlberg2026/plot_ahlberg_comparison.py; code commit 2272e8a
@@ -405,7 +405,7 @@ Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository, w
 \centering
 \includegraphics[width=\columnwidth]{funnel_beaming_validation.png}
 \caption{Mean boost inside an opaque conical funnel, $B/B_{\rm max}$, against the distance $R$ of the funnel edge in units of the base radius, for $\alpha = 10^\circ$, $25^\circ$ and $45.6^\circ$.
-Lines: Eq.~\eqref{eq:mc_AhlbergB} \citep[Eq.~15 of][]{Ahlberg2026}; dots: our Monte Carlo in their setup; star: the value quoted by \citet{Ahlberg2026} for $\alpha = 10^\circ$, $R = 10^5$.
+Lines: Eq.~\eqref{eq:mc_AhlbergB} \citep[equation~15 of][]{Ahlberg2026}; dots: our Monte Carlo in their setup; star: the value quoted by \citet{Ahlberg2026} for $\alpha = 10^\circ$, $R = 10^5$.
 Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \label{fig:funnel_validation}
 % figure: ULXspectra docs/figures/funnel_beaming_validation.png, commit 4da7c04
@@ -413,12 +413,12 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 
 \paragraph{The wind against the opaque funnel.}
 The scattering case of Sect.~\ref{app:mc:method} (wind funnel) agrees with the opaque cone ion the average (see Table~\ref{tab:mc_funnel}).
-At the edge of their grid, $\alpha = 45^\circ$ and $R \approx 10^2$--$10^4$, their Fig.~4a gives $B = 3.10$--$3.31$ ($B_{\rm max} = 3.41$); for $\alpha = \theta_{\rm c} = 45.6^\circ$ ($B_{\rm max} = 3.33$) our wind gives 2.92--3.05, with 88--92\% of the light escaping inside the funnel.
+At the edge of their grid, $\alpha = 45^\circ$ and $R \approx 10^2$--$10^4$, their figure~4a gives $B = 3.10$--$3.31$ ($B_{\rm max} = 3.41$); for $\alpha = \theta_{\rm c} = 45.6^\circ$ ($B_{\rm max} = 3.33$) our wind gives 2.92--3.05, with 88--92\% of the light escaping inside the funnel.
 % source: their Fig. 4a, figures/ahlberg2026/data/summary.txt item 5 (alpha = 45: R = 93.1: 3.10, 1084 and 1e4: 3.31)
 Our values are 0.88--0.98 of theirs, although the walls of our wind funnel are semi-transparent (2--32 scatterings in the median, Table~\ref{tab:mc_fits}) and our emitting source, the disc under the wind or the wind photosphere, is extended rather than a point.
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC" table and paragraph; commit 4da7c04 (our 2.92-3.05; 2.92/3.31 = 0.88, 3.05/3.10 = 0.98)
 
-\begin{table}
+\begin{table*}
 \centering
 \caption{Collimation by the funnel, $\alpha = \theta_{\rm c} = 45.6^\circ$: share of the light escaping at $i < \theta_{\rm c}$ and the mean boost $B$ there.}
 \label{tab:mc_funnel}
@@ -427,7 +427,7 @@ Our values are 0.88--0.98 of theirs, although the walls of our wind funnel are s
 \toprule
 & share at $i < \theta_{\rm c}$ & $B$ \\
 \midrule
-\citet{Ahlberg2026}, Fig.~4a, $\alpha = 45^\circ$, $R \approx 10^2$--$10^4$ & -- & 3.10--3.31 \\
+\citet{Ahlberg2026}, figure~4a, $\alpha = 45^\circ$, $R \approx 10^2$--$10^4$ & -- & 3.10--3.31 \\
 \srcHoIX, scattering & 0.91 & 3.04 \\
 \srcNGCthirteen, scattering & 0.88 & 2.92 \\
 \srcNGCfiftyfour, scattering & 0.92 & 3.05 \\
@@ -437,7 +437,7 @@ reflection (all three) & 0.54--0.79 & 1.8--2.6 \\
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC (scatter mode, 2026-10-31)"; commit 4da7c04
 % first row: Ahlberg et al. 2026 Fig. 4a read from the PDF, figures/ahlberg2026/data/summary.txt item 5 (R = 93.1, 1084, 1e4);
 %            replaces the values of Eq. (mc_AhlbergB) (3.02-3.17) of the earlier version
-\end{table}
+\end{table*}
 
 The angular distributions differ more than the average values (see Fig.~\ref{fig:funnel_wind}).
 Inside the funnel, $B(i) = L_{\rm iso}(i)/L_{\rm total}$ of the wind is steeper than that of the opaque cone: 3.6--3.8 near the axis (cone 3.3--3.5) and 2.2--2.5 just inside the edge (cone 2.9).
@@ -486,7 +486,7 @@ NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab
 
 The mean boost at $i < \theta_{\rm c}$ is $\bar B = 4.48$ at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$ with the correction, 4.55 and 3.02--3.15 in the Monte Carlo, and 1.26 and 1.27--1.43 without the correction.
 % source: summary.txt item 4 (BH3a w = 0.85; BH3a and BH2 at w = 0.7); commit 2272e8a
-Their Fig.~4a gives 3.74, 5.02, 5.87, 6.30 and 6.52 at $\alpha = 31.25^\circ$ and 2.67, 3.10, 3.31, 3.31 and 3.31 at $\alpha = 45^\circ$, for $R = 10$, $93$, $1.1\times10^3$, $10^4$ and $10^5$.
+Their figure~4a gives 3.74, 5.02, 5.87, 6.30 and 6.52 at $\alpha = 31.25^\circ$ and 2.67, 3.10, 3.31, 3.31 and 3.31 at $\alpha = 45^\circ$, for $R = 10$, $93$, $1.1\times10^3$, $10^4$ and $10^5$.
 % source: summary.txt item 5 (their grid: R = 10, 93.1, 1084, 1e4, 1e5)
 Our $\bar B$ lies between their values for $R = 10$ and $R \approx 10^2$.
 For $\theta_{\rm c} = 59.2^\circ$--$84.3^\circ$, beyond their grid, the corrected model gives $\bar B = 1.97$, 1.93, 1.41 and 1.10, the Monte Carlo 2.01, 1.96, 1.42 and 1.11, and Eq.~\eqref{eq:mc_Bmax} 2.05, 2.00, 1.43 and 1.11.
@@ -495,7 +495,7 @@ The energy that reaches observers, $\int_0^1 B\,{\rm d}\mu$, is 0.982--0.993 wit
 % source: summary.txt item 4 (int B1 dmu, int B0 dmu)
 
 The angular distribution inside the funnel is steeper than theirs.
-Near the edge of the funnel, $B(\theta_{\rm c} - 1^\circ)$ is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of $B$ near the axis, whereas in their Fig.~2a ($R = 10^3$, electron-scattering walls) the ratio is 0.93 for $\alpha = 20^\circ$ and 0.90 for $\alpha = 25^\circ$.
+Near the edge of the funnel, $B(\theta_{\rm c} - 1^\circ)$ is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of $B$ near the axis, whereas in their figure~2a ($R = 10^3$, electron-scattering walls) the ratio is 0.93 for $\alpha = 20^\circ$ and 0.90 for $\alpha = 25^\circ$.
 At $10^\circ$ beyond the edge, the ratio is 0.12 and 0.048 for us and 0.092 and 0.075 for them.
 % source: summary.txt item 6 (ours: B at i = 5 deg as "near the axis"; theirs: B at i = 1 deg); commit 2272e8a
 Their results stop at $\alpha = 25^\circ$ for $B(i)$ and at $\alpha = 45^\circ$ for $\bar B$; the comparison at $\theta_{\rm c} \ge 31.8^\circ$ is therefore only of $\bar B$.

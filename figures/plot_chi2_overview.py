@@ -18,6 +18,7 @@ import csv, sys, configparser
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams.update({"font.size": 9, "axes.titlesize": 9, "axes.labelsize": 9, "xtick.labelsize": 8.5, "ytick.labelsize": 8.5, "legend.fontsize": 8})  # sized for the page (text 10 pt)
 from matplotlib.patches import Rectangle
 
 B = sys.argv[1] if len(sys.argv) > 1 else "/aux/muses01b/glipunova/rabota/ULX_spectra/mcmcfit/ULXspectra-mc"
@@ -83,8 +84,8 @@ def note(r):
 
 
 n = len(SOURCES)
-fig, ax = plt.subplots(figsize=(8.4, 0.42 * n + 1.0))
-X0, X1, XN = 2e-3, 1e2, 3e4
+fig, ax = plt.subplots(figsize=(6.5, 0.36 * n + 1.0))
+X0, X1, XN = 2e-3, 1e2, 2e6
 for k, (src, ns) in enumerate(SOURCES):
     y = n - 1 - k
     ax.add_patch(Rectangle((X0, y - 0.4), XN - X0, 0.8, color=ORANGE if ns else GREY, alpha=0.18, lw=0))
@@ -102,6 +103,6 @@ ax.plot([], [], "s", mfc="k", mec="k", label="best BH fit")
 ax.plot([], [], "s", mfc=ORANGE, mec="k", label="best NS fit")
 ax.add_patch(Rectangle((0, 0), 0, 0, color=GREY, alpha=0.3, label="BH candidate (Table 5)"))
 ax.add_patch(Rectangle((0, 0), 0, 0, color=ORANGE, alpha=0.3, label="NS or NS candidate (Table 5)"))
-ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=4, fontsize=7.5, frameon=False)
+ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize=8, frameon=False)
 fig.savefig(OUT, bbox_inches="tight")
 print(OUT)

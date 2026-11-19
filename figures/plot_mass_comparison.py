@@ -12,6 +12,7 @@ import sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+plt.rcParams.update({"font.size": 9, "axes.titlesize": 9, "axes.labelsize": 9, "xtick.labelsize": 8.5, "ytick.labelsize": 8.5, "legend.fontsize": 8})  # sized for the page (text 10 pt)
 from matplotlib.patches import Rectangle
 
 B = sys.argv[1] if len(sys.argv) > 1 else "/aux/muses01b/glipunova/rabota/ULX_spectra/mcmcfit/ULXspectra-mc"
@@ -55,7 +56,7 @@ def mass_interval(path):
 
 srcs = sorted({p[0] for p in PUB}, key=[p[0] for p in PUB].index)
 col = {s: plt.cm.tab10(i % 10) for i, s in enumerate(srcs)}
-fig, ax = plt.subplots(figsize=(7, 6))
+fig, ax = plt.subplots(figsize=(3.4, 3.3))
 ys = []
 labelled = set()
 for src, lo, hi, kind, tag in PUB:
