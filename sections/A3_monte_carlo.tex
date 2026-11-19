@@ -337,7 +337,7 @@ NGC55 NS7 & 0 & 1.23--1.39 $\to$ 0.95--0.96 & 0.54--1.39 $\to$ 0.79--1.11 \\
 % Merged 2026-11-19 (author): former subsections "Collimation by the funnel: comparison with Ahlberg et al." and
 % "The corrected model against the funnel of Ahlberg et al."; result summarised in Sect. sec:disc:funnel.
 
-We test the collimation of the light by the funnel in three steps against \citet{Ahlberg2026}: our Monte Carlo of their opaque funnel against their results, which checks the Monte Carlo; the Monte Carlo through the wind of the model against the opaque funnel, which shows what the semi-transparent walls and the extended source change; and the model with the transfer correction against both.
+We test the collimation of the light by the funnel in three steps against \citet{Ahlberg2026}: our Monte Carlo of \textit{their opaque funnel} against their results, which checks the Monte Carlo; the Monte Carlo through the wind of the model against the opaque funnel, which shows what the semi-transparent walls and the extended source change; and the model with the transfer correction against both.
 The result is summarised in Sect.~\ref{sec:disc:funnel}.
 
 \paragraph{Their setup and our Monte Carlo of it.}
@@ -361,12 +361,9 @@ where $R$ is the distance from the centre of the base to the edge of the funnel 
 In our wind, the innermost streamline is a straight cone at $\theta_{\rm c}$ from the axis starting at $\rin$, which is their geometry with $\alpha = \theta_{\rm c} = 45.6^\circ$.
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC"
 
-We first reproduced their setup with a Monte Carlo of our own (\code{docs/scripts/funnel\_beaming\_mc.py}): a conical frustum with Lambertian walls, an isotropic point source, and the plane $z = 0$ as a mirror for the lower half of the funnel, $4\times10^4$ packets per point.
-% source: funnel_beaming_mc.py docstring and cone_mc(alpha, R, n=40000) for the validation; commit 4da7c04
-The mean boost in the funnel agrees with their Eq.~\eqref{eq:mc_AhlbergB} within 1--13\% (Fig.~\ref{fig:funnel_validation}); Eq.~\eqref{eq:mc_AhlbergB} lies above our points at small $R$ and below them at large $R$, as \citet{Ahlberg2026} note.
-% source (sentence above): docs/green_surface_monte_carlo.md, "Our opaque-cone MC vs Ahlberg et al."; commit 4da7c04
+We  reproduced their setup with a Monte Carlo of our own (\code{docs/scripts/funnel\_beaming\_mc.py}): a conical frustum with Lambertian walls, an isotropic point source, and the plane $z = 0$ as a mirror for the lower half of the funnel.
 
-We then compared the same Monte Carlo, $2\times10^5$ packets per point, with the published results of \citet{Ahlberg2026}, read from their figures (Fig.~\ref{fig:funnel_published}).
+We  compared this Monte Carlo, $2\times10^5$ packets per point, with the published results of \citet{Ahlberg2026}, read from their figures (Fig.~\ref{fig:funnel_published}) and \textbf{found a very good agreement which supports out MC transfer method}.
 % method: the figures of arXiv:2610.23089v1 are vector graphics; curves (Fig. 2) and grid cells (Fig. 4, colour -> value
 %         through the viridis colorbar) are read from the drawing paths. Scripts and data: this repository,
 %         figures/ahlberg2026/ (extract_fig2.py, extract_fig4.py, cone_mc_runs.py); numbers: figures/ahlberg2026/data/summary.txt.
@@ -382,6 +379,12 @@ In all ten cases their curves match ours best if ours are moved by one bin towar
 Their Fig.~4a gives the mean boost for the electron-scattering walls on a grid $\alpha = 6.25^\circ$--$45^\circ$, $R = 10$--$10^5$; our Lambertian mean boost is 0.94--1.02 of it at $\alpha = 10^\circ$--$45^\circ$ (Fig.~\ref{fig:funnel_published}c).
 The difference is that of the wall law: in their Fig.~2a ($R = 10^3$) the Lambertian mean boost is 0.943--0.961 of the electron-scattering one for $\alpha = 10^\circ$--$25^\circ$.
 % source: figures/ahlberg2026/data/summary.txt, items 2 and 3; commit 2272e8a
+
+
+For the setting with $4\times10^4$ packets per point, we checked the boost inside the funnel against the dependence proposed by \citet{Ahlberg2026}.
+% source: funnel_beaming_mc.py docstring and cone_mc(alpha, R, n=40000) for the validation; commit 4da7c04
+The mean boost in the funnel agrees with their Eq.~\eqref{eq:mc_AhlbergB} within 1--13\% (Fig.~\ref{fig:funnel_validation}); Eq.~\eqref{eq:mc_AhlbergB} lies above our points at small $R$ and below them at large $R$, as \citet{Ahlberg2026} note.
+% source (sentence above): docs/green_surface_monte_carlo.md, "Our opaque-cone MC vs Ahlberg et al."; commit 4da7c04
 For the narrow and long funnel $\alpha = 10^\circ$, $R = 10^5$, their Fig.~4 gives $B/B_{\rm max} = 0.50$ (panel b) and 0.52 (panel a), and our Monte Carlo 0.50; the ``about 40\%'' in their text does not match their figure.
 % source: figures/ahlberg2026/data/ahlberg_fig4.npz (frac[alpha=10, logR=5] = 49.7; B = 34.28, B_max = 65.82);
 %         cone MC: 0.953 x 34.28 / 65.82 = 0.496 (summary.txt item 3); their text: Sect. 3.1, "only about 40% of B_max = 65.8 even at R = 10^5".
@@ -409,10 +412,10 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \end{figure}
 
 \paragraph{The wind against the opaque funnel.}
-The scattering case of Sect.~\ref{app:mc:method} agrees with the opaque cone in the mean (Table~\ref{tab:mc_funnel}).
+The scattering case of Sect.~\ref{app:mc:method} (wind funnel) agrees with the opaque cone ion the average (see Table~\ref{tab:mc_funnel}).
 At the edge of their grid, $\alpha = 45^\circ$ and $R \approx 10^2$--$10^4$, their Fig.~4a gives $B = 3.10$--$3.31$ ($B_{\rm max} = 3.41$); for $\alpha = \theta_{\rm c} = 45.6^\circ$ ($B_{\rm max} = 3.33$) our wind gives 2.92--3.05, with 88--92\% of the light escaping inside the funnel.
 % source: their Fig. 4a, figures/ahlberg2026/data/summary.txt item 5 (alpha = 45: R = 93.1: 3.10, 1084 and 1e4: 3.31)
-Our values are 0.88--0.98 of theirs, although the walls of our funnel are semi-transparent (2--32 scatterings in the median, Table~\ref{tab:mc_fits}) and our source is extended, the disc under the wind or the wind photosphere, rather than a point.
+Our values are 0.88--0.98 of theirs, although the walls of our wind funnel are semi-transparent (2--32 scatterings in the median, Table~\ref{tab:mc_fits}) and our emitting source, the disc under the wind or the wind photosphere, is extended rather than a point.
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC" table and paragraph; commit 4da7c04 (our 2.92-3.05; 2.92/3.31 = 0.88, 3.05/3.10 = 0.98)
 
 \begin{table}
@@ -436,7 +439,7 @@ reflection (all three) & 0.54--0.79 & 1.8--2.6 \\
 %            replaces the values of Eq. (mc_AhlbergB) (3.02-3.17) of the earlier version
 \end{table}
 
-The angular distributions differ more than the means (Fig.~\ref{fig:funnel_wind}).
+The angular distributions differ more than the average values (see Fig.~\ref{fig:funnel_wind}).
 Inside the funnel, $B(i) = L_{\rm iso}(i)/L_{\rm total}$ of the wind is steeper than that of the opaque cone: 3.6--3.8 near the axis (cone 3.3--3.5) and 2.2--2.5 just inside the edge (cone 2.9).
 Beyond $\theta_{\rm c}$ the wind leaks light with $B \approx 0.1$--$0.7$, and the opaque cone almost none.
 % source: docs/green_surface_monte_carlo.md, "B(i) cone vs wind"; commit 4da7c04
