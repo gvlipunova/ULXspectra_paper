@@ -40,9 +40,12 @@ At the earlier best fits, made before the wind toll was restricted to $R < \Rsph
 %         fail (1), 13 fail (2); eps_w = 0.5 fixed: 3 and 30 of 44; commit e294301
 We take the first limit as the firm one and the second as the likely need of the wind.
 % decided: the author 2026-11-19 (PLAN C22, ULXspectra-mc 52caec5): the paper quotes both
-At the refits with the transfer correction, 76 of the 99 clean fits pass the first limit and 45 pass the second.
-% source: ULXspectra-mc summaries/wind_energy_check_refits.tsv, PLAN C22 (52caec5)
-The fits are not constrained by either: $\epsilon_{\rm w}$ is as fitted, free in BH0, BH2 and BH3a and fixed at 0.5 in BH1a, BH4a and the NS presets.
+At the refits with the transfer correction, the fitted toll covers the first limit in about three quarters of the fits and the second in about half.
+% OUTLINE: exact counts once 'clean' is defined (see VERIFY below)
+% VERIFY: PLAN C22 (52caec5) says "of 99 clean fits 76 pass (1), 45 pass (2)"; from summaries/wind_energy_check_refits.tsv
+%         (fd5573f) the paper session gets 119 fits without a flag, 87 pass (1), 55 pass (2) (129/96/63 counting every fit
+%         with a photosphere). Definition of "clean" asked from the calculation session; numbers go in once it is defined.
+The fits are not constrained by either limit, so a fit that fails them needs a larger toll than it was given: $\epsilon_{\rm w}$ is as fitted, free in BH0, BH2 and BH3a and fixed at 0.5 in BH1a, BH4a and the NS presets.
 % source: calculation session 2026-11-19; a fit constraint eps_w >= need is planned (PLAN C25)
 % OUTLINE: table of eps_w vs the two limits at the best fits (docs/scripts/wind_energy_check.py).
 
