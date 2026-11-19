@@ -63,6 +63,8 @@ Lower panels: MC over the window-averaged model, with the Monte Carlo noise (ban
 % figure: ULXspectra-mc docs/scripts/plot_best_fits_mc.py, fit list docs/scripts/mc_table/paper_best_fits.txt (e597ba3)
 
 \subsection{Physical parameters of the best fits}
+% NOTE: all fits in this section use the old table of the transfer correction; they are to be redone with the revised
+%       table (PLAN C26, App. app:mc:table).
 \label{sec:results:params}
 
 Table~\ref{tab:bestfit_params} lists, for the presets of Table~\ref{tab:fitpresets}, the posterior medians and the 68\% intervals of the parameters of the best fit of each source, and of NGC247S BH3a, which we use for NGC247S (App.~\ref{app:mc:bestfits}).
@@ -90,7 +92,7 @@ Source & Preset & $\chi^2/n$ & $\log M/M_\odot$ & $\log\dot m_0$ & $i$ (deg) & $
 \hline
 HolmII & BH0 & 0.129/30 & $0.86^{+0.33}_{-0.48}$ & $1.87^{+1.27}_{-0.46}$ & $47^{+12}_{-32}$ & $0.12^{+0.07}_{-0.06}$ & $2.0^{+2.5}_{-0.8}$ & $6.93^{+2.10}_{-1.98}$ & -- & -- \\
 HolmIX & BH2 & 1.89/30 & $1.16^{+0.10}_{-0.10}$ & $1.22^{+0.18}_{-0.24}$ & $17^{+15}_{-11}$ & $0.23^{+0.13}_{-0.14}$ & $1.1^{+0.2}_{-0.1}$ & $6.69^{+2.24}_{-2.15}$ & -- & -- \\
-M101ULS & BH4a & 3.95/20 & $3.46^{+0.07}_{-0.07}$ & $1.29^{+0.03}_{-0.03}$ & $84.6^{+0.0}_{-0.1}$ & $0.5$ & $1.1^{+0.1}_{-0.1}$ & $7.51^{+1.95}_{-1.75}$ & $0.56^{+0.06}_{-0.04}$ & $\beta_{\rm w}{=}2.5^{+0.4}_{-0.5}$; $\Omega_{\rm w}/4\pi{=}0.101^{+0.001}_{-0.001}$ \\
+M101ULS & BH4a$^\S$ & 3.95/20 & $3.46^{+0.07}_{-0.07}$ & $1.29^{+0.03}_{-0.03}$ & $84.6^{+0.0}_{-0.1}$ & $0.5$ & $1.1^{+0.1}_{-0.1}$ & $7.51^{+1.95}_{-1.75}$ & $0.56^{+0.06}_{-0.04}$ & $\beta_{\rm w}{=}2.5^{+0.4}_{-0.5}$; $\Omega_{\rm w}/4\pi{=}0.101^{+0.001}_{-0.001}$ \\
 M51ULS & NS6r & 172/30 & $1.4$ & $3.12^{+0.65}_{-0.71}$ & $65^{+1}_{-1}$ & $0.5$ & $4.65^{+0.00}_{-0.05}{}^\dagger$ & $7.36^{+1.78}_{-1.82}$ & $0.50^{+0.34}_{-0.33}$ & $\log\eta_{\rm magn}{=}-1.72^{+0.74}_{-0.61}$ \\
 M81ULS & BH3a & 0.32/15 & $1.87^{+0.35}_{-0.30}$ & $1.42^{+0.16}_{-0.18}$ & $57^{+15}_{-10}$ & $0.99^{+0.00}_{-0.01}$ & $5.6^{+5.0}_{-2.7}$ & $6.30^{+2.43}_{-2.33}$ & $0.59^{+0.22}_{-0.28}$ & $\beta_{\rm w}{=}1.6^{+1.0}_{-1.0}$ \\
 NGC1313B & NS5r & 1.97/30 & $1.4$ & $1.22^{+0.06}_{-0.04}$ & $36^{+3}_{-2}$ & $0.5$ & $3.02^{+0.04}_{-0.04}{}^\dagger$ & $7.23^{+1.93}_{-1.87}$ & $0.45^{+0.37}_{-0.35}$ & -- \\
@@ -109,6 +111,8 @@ NGC247S & BH3a & 0.133/27 & $1.78^{+0.35}_{-0.41}$ & $1.04^{+0.84}_{-0.24}$ & $5
 \raggedright\footnotesize
 $^\dagger$ NS: $\log(\rmag/\rg)$, the inner radius of the disc.
 $^\ddagger$ Fails the wind energy test of Sect.~\ref{sec:disc:epsw} strongly: the fitted $\epsilon_{\rm w} = 0.06$ is about 10 times below the firm (flux) limit, 0.65.
+We mark a fit only when the flux limit alone exceeds the fitted $\epsilon_{\rm w}$ by more than a factor of 2; the cases where the need comes mostly from the lift (end of Sect.~\ref{sec:disc:epsw}) are not marked.
+$^\S$ Rejected by the revised table of the transfer correction and by the Monte Carlo ($\chi^2 \approx 1900$ at the same parameters, App.~\ref{app:mc:bestfits}); M101ULS has no confirmed fit at present.
 % source: ULXspectra-mc summaries/wind_energy_check_refits.tsv (a40ceec), NGC300 BH2 mc_0p3-10keV: eps_w 0.0614, need_flux 0.650,
 %         need_lift 0.741. Marked: flux need > 2 x fitted eps_w (author 2026-11-19: only very strong cases); HolmIX BH2
 %         (0.37 vs 0.44, x1.2) not marked. NGC247S BH4a (mc): no photosphere, untestable.
