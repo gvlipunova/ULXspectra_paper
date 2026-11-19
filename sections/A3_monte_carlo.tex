@@ -546,6 +546,12 @@ For the NS fits with the dipole surface beyond $\theta_{\rm c}$, $L_{\rm iso}$ M
 The remaining mismatch beyond the funnel edge comes from the table of the correction, which sends too little scattered light beyond $\theta_{\rm c}$.
 For the outer disc the deficit is 10--17 per cent, because the limit of an optically thin wind, in which the light is scattered in proportion to $\cos^2\theta_{\rm c}$, is not built into the table; for weak winds with a wide funnel it reaches a factor of 2--3.
 Until the table is improved and the fits are redone, we take the ratios above as the systematic error of the model beyond the funnel edge.
+% STATUS (calculation session 2026-11-19, PLAN C26, ULXspectra-mc 1c7edf0, not yet pushed; no model change yet):
+%   131 new MC calibration runs with the current model, incl. weak winds at all theta_c; rebuilt table (finer tau bins,
+%   extra ring class at R_sph) tested in the Python copy of the model: beyond the edge, total light of the 16 BH refits
+%   MC/model 0.94-1.04 (was 0.98-1.09); 17 held-out fits: typical error per angle bin 3.6% -> 2.3% inside the funnel,
+%   14% -> 12% beyond the edge. Remaining: i ~ 89 deg up to +-35%; hard end beyond the edge up to x1.3.
+%   The C model and the fits still use the old table; update this section when the refits with the new table exist.
 % source: calculation session 2026-11-19; PLAN C26 (ULXspectra-mc e597ba3, "C26 step 1: diagnosis of the transfer correction beyond theta_c")
 % VERIFY (author): wording of the tau -> 0 limit ("cos^2 theta_c") is as given by the calculation session
 
