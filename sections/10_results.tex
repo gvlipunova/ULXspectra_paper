@@ -26,14 +26,16 @@ Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the b
 \includegraphics[width=0.8\textwidth]{chi2_overview.pdf}
 \caption{Reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction).
 The row colour gives the type of the source in Table~\ref{tab:sources}: grey for a BH candidate, orange for a pulsating ULX or a NS candidate.
-On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination, and the free parameter that lies farthest from its default value (in brackets; $\dot m_0 = 10$ and $\dot m_{\rm in}/\dot m_0 = 0.5$ for all presets, the others as set in each preset), the distance measured in units of the prior range of the parameter.
+On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination, and the free parameter that lies farthest from its default value (in brackets: the centre of the starting positions of the chains in the preset, Table~\ref{tab:params}), the distance measured in units of the prior range of the parameter.
 For NGC247S the BH fit is BH3a (App.~\ref{app:mc:bestfits}).}
 \label{fig:chi2_overview}
 \end{figure*}
 % figure: this repository, figures/plot_chi2_overview.py (layout: the author's sketch 2026-11-19), data ULXspectra-mc
 %         summaries/best_refit_per_source.tsv and refits_summary.tsv (e597ba3); reduced chi2 = chi2/(n - n_params);
 %         defaults: preset sections of ULX.conf.example, priors psrcs/config_loader.py (4ca9834); author 2026-11-19
-%         except mdot0 = 10 and mdot_in/mdot0 = 0.5 for all presets (author 2026-11-19)
+%         at ULXspectra-mc 454490d (mdot0 = 10, mdot_in/mdot0 = 0.5 where free, author 2026-11-19)
+% AUTHOR: the calculation session notes that the distance from the starting value has no meaning for a converged fit;
+%         it suggests the position within the prior range, or the posterior width relative to the prior. Keep or change?
 
 Figure~\ref{fig:chi2_all} shows the same comparison for the best fit of every preset, five BH and eight NS, for each source.
 % OUTLINE (author): what the spread of the presets within a family says (robustness of the family choice).

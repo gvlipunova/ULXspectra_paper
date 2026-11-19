@@ -171,7 +171,7 @@ For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph
 
 Table~\ref{tab:params} lists the parameters of the model.
 The fits use the presets of \code{ULX.conf} in Table~\ref{tab:fitpresets}, which relates each of them to the flow rules of Table~\ref{tab:presets} and to the $\Rsph$ rules of Sect.~\ref{sec:radii}.
-Parameters that a preset does not free keep the defaults of Table~\ref{tab:params}; for a NS, $M = 1.4\,M_\odot$, and $\log(\rmag/\rg)$ has a flat prior over (0.65, 4.65).
+Parameters that a preset does not free keep the defaults of Table~\ref{tab:params} or the values the preset sets; for a free parameter the default is only the centre of the starting positions of the chains and does not enter the prior; for a NS, $M = 1.4\,M_\odot$, and $\log(\rmag/\rg)$ has a flat prior over (0.65, 4.65).
 % source: ULX.conf.example (ULXspectra-mc commit 7ba8568; the working ULX.conf, git-ignored, has the same presets;
 %         only [DEFAULT] KEV_max differs, 100 vs 1, overridden by --Emax in the fits); log_m_bh = 0.14612803;
 %         README "Model Presets" (NS table and the note below it); PLAN C23
@@ -235,7 +235,7 @@ NS7r & NS & main & Ledd & NS5r $+$ $\eta_{\rm magn}$ & spherical emitter \\
 Symbol & Code name & Meaning & Default & Prior \\
 \midrule
 $\log M/M_\odot$ & \code{log\_m\_bh} & mass of the accretor & 1.0 & (0, 4) \\
-$\log \mdot_0$ & \code{log\_mdot0} & outer accretion rate, units of $\MEdd$ & 2.0 & (0, 5) \\
+$\log \mdot_0$ & \code{log\_mdot0} & outer accretion rate, units of $\MEdd$ & 1.0 & ($-2$, 5) \\
 $f_{\rm in}$ & \code{user\_mdot\_in\_fraction} & $\mdot(\rin)/\mdot_0$, main model & 0.5 & (0, 1) \\
 $r_{\rm in,f}$ & \code{r\_in\_factor} & BH: $\rin/\rg$ & 6 & (1, 20) \\
 $\log(\rmag/\rg)$ & \code{log\_wind\_inner\_launch\_x} & NS: $\rmag/\rg = \code{wind\_inner\_launch\_x}\cdot4.5$ & 1.65 & (0.65, 4.65) \\
@@ -250,7 +250,10 @@ $\beta_{\rm t}$ & \code{beta\_torque\_in} & NS: torque at $\rmag$ & 1 & fixed \\
 $z/R$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $\Rtrap$ & 0.5 & fixed \\
 \bottomrule
 \end{tabular}
-% code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters".
+% code: ULX.conf [DEFAULT] at commit 5f00569; README "Physical Parameters"; ULX.conf.example 454490d (ULXspectra-mc):
+%   log_mdot0 = 1 in all presets, prior (-2, 5) as in psrcs/config_loader.py (the "(0, 5)" comment was stale).
+%   The refits of 2026-11-09 to 11-17 started from log_mdot0 = -1 (BH0), 1 (NS1/NS1a), 2 (others), f_in = 0.001 (NS5-NS7 family);
+%   a converged posterior does not depend on the start (calculation session 2026-11-19).
 % z_over_r_trap: rtrap_over_rin(), rule M26 (csrcs/disc_struct.c). beta_torque_in = 1 (model_params.py default) is set by no
 %   preset, so it is 1 in all NS fits.
 % NS radius row: r_m/r_g = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 in all NS presets used (PLAN C23);
