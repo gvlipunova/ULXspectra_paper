@@ -13,6 +13,7 @@ here: file, script, code commit, and the section that uses it.
 | `funnel_beaming_by_radius.png` | `docs/scripts/funnel_beaming_mc.py` | `4da7c04` | App. Monte Carlo (fig:funnel_radius) |
 | `ahlberg_published_vs_cone_mc.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/funnel_beaming_mc.py`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_published) |
 | `ahlberg_published_vs_mc_transfer.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/mc_green_surface.py` and the C model) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:mc_transfer_ahlberg) |
+| `HolmIX_mc_vs_nomc.png` | `docs/scripts/plot_mc_vs_nomc.py` | `b551655` (branch `mc-transfer-corrections`) | Sect. Results (fig:holmix_mcnomc) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
