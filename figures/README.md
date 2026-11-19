@@ -17,6 +17,7 @@ here: file, script, code commit, and the section that uses it.
 | `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:best_fits_mc) |
 | `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
 | `chi2_all.pdf` | this repository: `figures/plot_chi2_all.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_all) |
+| `mass_comparison.pdf` | this repository: `figures/plot_mass_comparison.py` (data: ULXspectra-mc summaries, tab:masses) | `e597ba3` (branch `mc-transfer-corrections`) | App. Published masses (fig:masses) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
