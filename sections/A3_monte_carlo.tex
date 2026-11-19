@@ -358,7 +358,6 @@ and the mean boost inside the funnel is approximated to about 10\% by (their equ
 \end{equation}
 % source: Ahlberg et al. 2026 (arXiv:2610.23089v1), Eq. (15) and the sentence after it ("accuracy of ~10%"); checked in the PDF 2026-11-10
 where $R$ is the distance from the centre of the base to the edge of the funnel in units of the base radius.
-In our wind, the innermost streamline is a straight cone at $\theta_{\rm c}$ from the axis starting at $\rin$, which is their geometry with $\alpha = \theta_{\rm c} = 45.6^\circ$.
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC"
 
 We  reproduced their setup with a Monte Carlo of our own (\code{docs/scripts/funnel\_beaming\_mc.py}): a conical frustum with Lambertian walls, an isotropic point source, and the plane $z = 0$ as a mirror for the lower half of the funnel.
@@ -373,7 +372,7 @@ We  compared this Monte Carlo, $2\times10^5$ packets per point, with the publish
 Their $B(i)$ is tallied in 500 bins of equal solid angle, $\Delta\mu = 0.002$.
 % source: Ahlberg et al. 2026, Sect. 3.1 ("tallied them into 500 inclination bins of equal solid angle")
 For Lambertian walls (their figure~2: $\alpha = 5^\circ$--$25^\circ$ at $R = 10^3$, and $\alpha = 25^\circ$ at $R = 10$--$10^5$), our mean boost over their bins at $i \le \alpha$ is 1.001--1.021 of theirs, and outside the funnel the median ratio of $B(i)$ over their bins is 0.990--1.017.
-In all ten cases their curves match ours best if ours are moved by one bin ($\Delta\mu = 0.002$) towards the axis; with this shift the mean boosts at $i \le \alpha$ agree within 0.3\%.
+In all ten cases their curves match ours best if ours are moved by one bin ($\Delta\mu = 0.002$) towards the axis; with this shift the mean boosts at $i \le \alpha$ agree within 0.3\%.\footnote{There is no physical reason for the shift. Our comparison script tries shifting our curve by a few bins and finds that a shift of one bin ($\Delta\mu = 0.002$) fits their curves best. Even without the shift the mean boosts agree to 0--2\%, and with it to 0.3\%. The likely cause is how the bins are indexed or the steps drawn in their figure, but this is a guess.}
 The offset is probably a matter of how the bins are indexed or the steps drawn in their figure; we do not apply it elsewhere.
 % interpretation (Claude): no physical reason; the shift is found by the fit in plot_ahlberg_comparison.py (summary.txt item 1)
 % source: figures/ahlberg2026/data/summary.txt, items 1 (ratios 1.001-1.021 unshifted, 0.998-1.003 shifted; outside 0.990-1.017;
@@ -383,14 +382,14 @@ This difference comes from the law of the walls, not from our Monte Carlo: their
 % source: figures/ahlberg2026/data/summary.txt, items 2 and 3; commit 2272e8a
 
 
-For the setting with $4\times10^4$ packets per point, we checked the boost inside the funnel against the dependence proposed by \citet{Ahlberg2026}.
+{\footnotesize For the setting with $4\times10^4$ packets per point, we checked\footnote{To remove?} the boost inside the funnel against the dependence proposed by \citet{Ahlberg2026}.
 % source: funnel_beaming_mc.py docstring and cone_mc(alpha, R, n=40000) for the validation; commit 4da7c04
 The mean boost in the funnel agrees with their Eq.~\eqref{eq:mc_AhlbergB} within 1--13\% (Fig.~\ref{fig:funnel_validation}); Eq.~\eqref{eq:mc_AhlbergB} lies above our points at small $R$ and below them at large $R$, as \citet{Ahlberg2026} note.
 % source (sentence above): docs/green_surface_monte_carlo.md, "Our opaque-cone MC vs Ahlberg et al."; commit 4da7c04
 For the narrow and long funnel $\alpha = 10^\circ$, $R = 10^5$, their figure~4 gives $B/B_{\rm max} = 0.50$ (panel b) and 0.52 (panel a), and our Monte Carlo 0.50; the ``about 40\%'' in their text does not match their figure.
 % source: figures/ahlberg2026/data/ahlberg_fig4.npz (frac[alpha=10, logR=5] = 49.7; B = 34.28, B_max = 65.82);
 %         cone MC: 0.953 x 34.28 / 65.82 = 0.496 (summary.txt item 3); their text: Sect. 3.1, "only about 40% of B_max = 65.8 even at R = 10^5".
-%         Note: panel (a)/B_max of their Fig. 4 is 1-6\% above panel (b), more at small alpha.
+%         Note: panel (a)/B_max of their Fig. 4 is 1-6\% above panel (b), more at small alpha.\par}
 
 \begin{figure*}
 \centering
@@ -414,6 +413,7 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \end{figure}
 
 \paragraph{The wind against the opaque funnel.}
+In our wind, the innermost streamline is a straight cone at $\theta_{\rm c}$ from the axis starting at $\rin$, which is their geometry with $\alpha = \theta_{\rm c} = 45.6^\circ$.
 The scattering case of Sect.~\ref{app:mc:method} (wind funnel) agrees with the opaque cone in the average (see Table~\ref{tab:mc_funnel}).
 At the edge of their grid, $\alpha = 45^\circ$ and $R \approx 10^2$--$10^4$, their figure~4a gives $B = 3.10$--$3.31$ ($B_{\rm max} = 3.41$); for $\alpha = \theta_{\rm c} = 45.6^\circ$ ($B_{\rm max} = 3.33$) our wind gives 2.92--3.05, with 88--92\% of the light escaping inside the funnel.
 % source: their Fig. 4a, figures/ahlberg2026/data/summary.txt item 5 (alpha = 45: R = 93.1: 3.10, 1084 and 1e4: 3.31)
