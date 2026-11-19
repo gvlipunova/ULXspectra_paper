@@ -18,6 +18,7 @@ here: file, script, code commit, and the section that uses it.
 | `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
 | `chi2_all.pdf` | this repository: `figures/plot_chi2_all.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_all) |
 | `mass_comparison.pdf` | this repository: `figures/plot_mass_comparison.py` (data: ULXspectra-mc summaries, tab:masses) | `e597ba3` (branch `mc-transfer-corrections`) | App. Published masses (fig:masses) |
+| `corrected_B_of_i.png` | this repository: `figures/ahlberg2026/plot_corrected_B.py` (data `figures/ahlberg2026/data/wind_mc.npz`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:corrected_B) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository

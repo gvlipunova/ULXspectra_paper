@@ -363,7 +363,7 @@ In our wind, the innermost streamline is a straight cone at $\theta_{\rm c}$ fro
 
 We  reproduced their setup with a Monte Carlo of our own (\code{docs/scripts/funnel\_beaming\_mc.py}): a conical frustum with Lambertian walls, an isotropic point source, and the plane $z = 0$ as a mirror for the lower half of the funnel.
 
-We  compared this Monte Carlo, $2\times10^5$ packets per point, with the published results of \citet{Ahlberg2026}, read from their figures (Fig.~\ref{fig:funnel_published}) and \textbf{found a very good agreement which supports out MC transfer method}.
+We  compared this Monte Carlo, $2\times10^5$ packets per point, with the published results of \citet{Ahlberg2026}, read from their figures (Fig.~\ref{fig:funnel_published}) and \textbf{found a very good agreement which supports our MC transfer method}.
 % method: the figures of arXiv:2610.23089v1 are vector graphics; curves (Fig. 2) and grid cells (Fig. 4, colour -> value
 %         through the viridis colorbar) are read from the drawing paths. Scripts and data: this repository,
 %         figures/ahlberg2026/ (extract_fig2.py, extract_fig4.py, cone_mc_runs.py); numbers: figures/ahlberg2026/data/summary.txt.
@@ -373,11 +373,13 @@ We  compared this Monte Carlo, $2\times10^5$ packets per point, with the publish
 Their $B(i)$ is tallied in 500 bins of equal solid angle, $\Delta\mu = 0.002$.
 % source: Ahlberg et al. 2026, Sect. 3.1 ("tallied them into 500 inclination bins of equal solid angle")
 For Lambertian walls (their figure~2: $\alpha = 5^\circ$--$25^\circ$ at $R = 10^3$, and $\alpha = 25^\circ$ at $R = 10$--$10^5$), our mean boost over their bins at $i \le \alpha$ is 1.001--1.021 of theirs, and outside the funnel the median ratio of $B(i)$ over their bins is 0.990--1.017.
-In all ten cases their curves match ours best if ours are moved by one bin towards the axis; with this shift the mean boosts at $i \le \alpha$ agree within 0.3\%.
+In all ten cases their curves match ours best if ours are moved by one bin ($\Delta\mu = 0.002$) towards the axis; with this shift the mean boosts at $i \le \alpha$ agree within 0.3\%.
+The offset is probably a matter of how the bins are indexed or the steps drawn in their figure; we do not apply it elsewhere.
+% interpretation (Claude): no physical reason; the shift is found by the fit in plot_ahlberg_comparison.py (summary.txt item 1)
 % source: figures/ahlberg2026/data/summary.txt, items 1 (ratios 1.001-1.021 unshifted, 0.998-1.003 shifted; outside 0.990-1.017;
 %         best shift +1 bin for all ten curves); commit 2272e8a
 Their figure~4a gives the mean boost for the electron-scattering walls on a grid $\alpha = 6.25^\circ$--$45^\circ$, $R = 10$--$10^5$; our Lambertian mean boost is 0.94--1.02 of it at $\alpha = 10^\circ$--$45^\circ$ (Fig.~\ref{fig:funnel_published}c).
-The difference is that of the wall law: in their figure~2a ($R = 10^3$) the Lambertian mean boost is 0.943--0.961 of the electron-scattering one for $\alpha = 10^\circ$--$25^\circ$.
+This difference comes from the law of the walls, not from our Monte Carlo: their own figure~2a ($R = 10^3$) shows both laws, and there the Lambertian mean boost is 0.943--0.961 of the electron-scattering one for $\alpha = 10^\circ$--$25^\circ$, the same offset as ours (diamonds in Fig.~\ref{fig:funnel_published}c).
 % source: figures/ahlberg2026/data/summary.txt, items 2 and 3; commit 2272e8a
 
 
@@ -412,7 +414,7 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \end{figure}
 
 \paragraph{The wind against the opaque funnel.}
-The scattering case of Sect.~\ref{app:mc:method} (wind funnel) agrees with the opaque cone ion the average (see Table~\ref{tab:mc_funnel}).
+The scattering case of Sect.~\ref{app:mc:method} (wind funnel) agrees with the opaque cone in the average (see Table~\ref{tab:mc_funnel}).
 At the edge of their grid, $\alpha = 45^\circ$ and $R \approx 10^2$--$10^4$, their figure~4a gives $B = 3.10$--$3.31$ ($B_{\rm max} = 3.41$); for $\alpha = \theta_{\rm c} = 45.6^\circ$ ($B_{\rm max} = 3.33$) our wind gives 2.92--3.05, with 88--92\% of the light escaping inside the funnel.
 % source: their Fig. 4a, figures/ahlberg2026/data/summary.txt item 5 (alpha = 45: R = 93.1: 3.10, 1084 and 1e4: 3.31)
 Our values are 0.88--0.98 of theirs, although the walls of our wind funnel are semi-transparent (2--32 scatterings in the median, Table~\ref{tab:mc_fits}) and our emitting source, the disc under the wind or the wind photosphere, is extended rather than a point.
@@ -479,7 +481,7 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 % Parameter sets: tests/reference/mcmc_NGC7793.{BH2,BH3a,BH4a}.wide_1keV.npz of the code (regression references),
 %       not the best fits in results/ (not available to this comparison).
 
-Finally, we compared the model with the transfer correction of Sect.~\ref{sec:spectrum:transfer} with their results and with the Monte Carlo through the same wind (Fig.~\ref{fig:mc_transfer_ahlberg} in Sect.~\ref{sec:disc:funnel}).
+Finally, we compared the model with the transfer correction of Sect.~\ref{sec:spectrum:transfer} with their results and with the Monte Carlo through the same wind (Fig.~\ref{fig:mc_transfer_ahlberg} in Sect.~\ref{sec:disc:funnel}; $B(i)$ for all parameter sets in Fig.~\ref{fig:corrected_B}).
 We used the parameter sets of NGC~7793 for the presets BH2, BH3a and BH4a, and for BH3a also $\omf = 0.85$, 0.5, 0.3 and 0.1, so that $\theta_{\rm c} = 31.8^\circ$--$84.3^\circ$.
 NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab:mc_calib}), so these are held-out checks.
 % source: tab:mc_calib (5 sources: HolmIX, NGC1313B, NGC5408, NGC247SS, NGC6946); theta_c = arccos(omega_frac) for h_disc = 0
@@ -498,7 +500,17 @@ The angular distribution inside the funnel is steeper than theirs.
 Near the edge of the funnel, $B(\theta_{\rm c} - 1^\circ)$ is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of $B$ near the axis, whereas in their figure~2a ($R = 10^3$, electron-scattering walls) the ratio is 0.93 for $\alpha = 20^\circ$ and 0.90 for $\alpha = 25^\circ$.
 At $10^\circ$ beyond the edge, the ratio is 0.12 and 0.048 for us and 0.092 and 0.075 for them.
 % source: summary.txt item 6 (ours: B at i = 5 deg as "near the axis"; theirs: B at i = 1 deg); commit 2272e8a
-Their results stop at $\alpha = 25^\circ$ for $B(i)$ and at $\alpha = 45^\circ$ for $\bar B$; the comparison at $\theta_{\rm c} \ge 31.8^\circ$ is therefore only of $\bar B$.
+Their results stop at $\alpha = 25^\circ$ for $B(i)$ and at $\alpha = 45^\circ$ for $\bar B$, so the shape of $B(i)$ can be compared only with their narrower funnels, and $\bar B$ at $\theta_{\rm c} > 45^\circ$ only with $B_{\rm max}$.
+Against the Monte Carlo through the same wind, the corrected model follows $B(i)$ at all seven openings, inside the funnel and beyond its edge, whereas without the correction the funnel is too faint and the light beyond the edge too bright (Fig.~\ref{fig:corrected_B}).
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{corrected_B_of_i.png}
+\caption{$B(i) = L_{\rm iso}(i)/L_{\rm total}$ for the NGC~7793 parameter sets of the text: the model with (solid) and without (dashed) the transfer correction and the Monte Carlo through the wind (dots, $10^5$ packets, scattering); the dotted line marks $\theta_{\rm c}$.
+Made with \code{figures/ahlberg2026/plot\_corrected\_B.py} of the manuscript repository from the runs of \code{run\_all.sh} (code commit 2272e8a).}
+\label{fig:corrected_B}
+\end{figure*}
+% figure: figures/corrected_B_of_i.png (author's request 2026-11-20), data figures/ahlberg2026/data/wind_mc.npz
 
 \subsection{Monte Carlo check of the best fits}
 \label{app:mc:bestfits}
