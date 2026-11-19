@@ -553,19 +553,9 @@ The best fit of NGC247S, BH4a at $i = 86^\circ$, $24^\circ$ beyond $\theta_{\rm 
 For NGC247S we therefore use its second best fit, BH3a ($\chi^2 = 0.133$, $i = 54^\circ$), which passes: $\chi^2$ rises from 0.13 to 4.9.
 % source: transfer_correction_results.md sect. 6, bullet 3; author 2026-11-18 ("Use NGC247S BH3a instead")
 
-Figure~\ref{fig:best_fits_mc} shows the spectra of the 14 best fits used in the paper, with NGC247S BH3a, against the Monte Carlo for the same parameters.
+Figure~\ref{fig:best_fits_mc} (Sect.~\ref{sec:results:overview}) shows the spectra of the 14 best fits used in the paper, with NGC247S BH3a, against the Monte Carlo for the same parameters.
 Within the fitted band the two agree to 0.94--1.06 for HolmIX BH2, NGC55 BH0 and NGC7793 NS7r.
 Beyond the funnel edge the model is too faint by up to a factor of 1.2 for NGC5408 BH0, NGC6946 BH0 and NGC300 BH2, and more at the hard end of the band (1.4 for NGC247SS BH3a).
 M101ULS BH4a is seen at $i = 84.6^\circ$, just beyond its funnel edge at $84.3^\circ$; the window $\cos i \pm 0.05$ reaches into the funnel, where the model is 10--100 times brighter, so its panel compares averages over the window rather than the spectrum at $i_{\rm best}$ (MC/model 0.71--0.90 in the band, $\chi^2$ from 3.95 to 30.5).
 % source: ULXspectra-mc (branch mc-transfer-corrections, commit e597ba3, redone figure): code session 2026-11-19;
 %         spectra summaries/best_refit_spectra/<fit>/mc_spectrum.txt; chi2 in the panels from summaries/mc_check_best_refits.tsv
-
-\begin{figure*}
-\centering
-\includegraphics[width=\textwidth]{best_fits_mc.png}
-\caption{The best fits at their own inclination against the Monte Carlo transfer.
-Upper panels: the data (points, fitted over 0.3--10\,keV, shaded), the model with the transfer correction at $i_{\rm best}$ (solid), the model averaged over $\cos i_{\rm best} \pm 0.05$ (dotted) and the Monte Carlo spectrum of the packets leaving in that window, for the same parameters (dashed); $\chi^2$ of the data against the best-fit model and against the model times MC/model ($\sigma = 0.08$\,dex).
-Lower panels: MC over the window-averaged model, with the Monte Carlo noise (band).}
-\label{fig:best_fits_mc}
-\end{figure*}
-% figure: ULXspectra-mc docs/scripts/plot_best_fits_mc.py, fit list docs/scripts/mc_table/paper_best_fits.txt (e597ba3)
