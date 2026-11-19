@@ -7,12 +7,14 @@ chi2 of the best BH fit (black) and of the best NS fit (orange), sets "BH" and
 "NS" of summaries/best_refit_per_source.tsv; for NGC247S the BH fit is BH3a
 (refits_summary.tsv), not BH4a, which fails the Monte Carlo check. Note at the
 right end: preset of the best fit of the source (tab:bestfit_params), its
-best-fit M (BH) or R_m (NS) and inclination.
+best-fit M (BH) or R_m (NS) and inclination, and the free parameter farthest
+from its default value in the preset (ULX.conf.example), the distance measured
+in units of the prior range (psrcs/config_loader.py, 4ca9834).
 
     python3 figures/plot_chi2_overview.py [ULXspectra-mc] [OUT.pdf]
 Data: ULXspectra-mc summaries (branch mc-transfer-corrections, e597ba3).
 """
-import csv, sys
+import csv, sys, configparser
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -34,6 +36,31 @@ bh3a = [r for r in summ if r["source"] == "NGC247S" and r["preset"] == "BH3a" an
 pick[("BH", "NGC247S")] = pick[("all", "NGC247S")] = bh3a
 
 
+# Prior ranges of the free parameters (psrcs/config_loader.py, ULXspectra-mc 4ca9834)
+PRIOR = {"log_m_bh": (0.0, 4.0), "log_mdot0": (-2.0, 5.0), "eps_w": (1e-4, 0.999), "beta_w": (0.05, 3.0),
+         "incl_deg": (0.0, 88.0), "omega_frac": (0.1, 0.85), "r_in_factor": (1.0, 20.0),
+         "log_r_out_factor": (2.0, 10.0), "log_wind_inner_launch_x": (0.0, 4.0),
+         "user_mdot_in_fraction": (0.0, 1.0), "log_magn_eta": (-5.0, 0.0)}
+LABEL = {"log_m_bh": r"\log M", "log_mdot0": r"\log\dot m_0", "eps_w": r"\epsilon_{\rm w}", "beta_w": r"\beta_{\rm w}",
+         "incl_deg": "i", "omega_frac": r"\Omega_{\rm w}/4\pi", "r_in_factor": r"R_{\rm in}/R_{\rm g}",
+         "log_r_out_factor": r"\log R_{\rm out}/R_{\rm g}", "log_wind_inner_launch_x": r"\log R_{\rm m}/R_{\rm g}",
+         "user_mdot_in_fraction": r"\dot m_{\rm in}/\dot m_0", "log_magn_eta": r"\log\eta_{\rm magn}"}
+CONF = configparser.ConfigParser(inline_comment_prefixes="#")
+CONF.read(B + "/ULX.conf.example")
+
+
+def farthest(preset, p):
+    """Free parameter with the largest |best - default| / prior range; returns (name, best, default)."""
+    sec = CONF[preset]
+    free = [x.strip() for x in sec["free_params"].split(",")]
+    d = {k: float(sec[k]) for k in free}
+    k = max(free, key=lambda k: abs(p[k] - d[k]) / (PRIOR[k][1] - PRIOR[k][0]))
+    v, v0 = p[k], d[k]
+    if k == "log_wind_inner_launch_x":   # shown as log R_m/R_g = log 4.5 + log x
+        v, v0 = v + 0.65321, v0 + 0.65321
+    return k, v, v0
+
+
 def params(r):
     return {k.strip(): float(v) for k, v in (kv.split("=") for kv in r["params"].split(";"))}
 
@@ -45,12 +72,16 @@ def note(r):
     else:
         m = 10 ** p['log_m_bh']
         q = rf"$M = {m:.2g}\,M_\odot$" if m < 10 else rf"$M = {m:.0f}\,M_\odot$"
-    return rf"{r['preset']}: {q}, $i = {p['incl_deg']:.0f}^\circ$"
+    k, v, v0 = farthest(r["preset"], p)
+    fmt = (lambda x: f"{x:.0f}") if k == "incl_deg" else (lambda x: f"{x:.2g}")
+    if k == "incl_deg":
+        return rf"{r['preset']}: {q}, $i = {p['incl_deg']:.0f}^\circ$ (def. {v0:.0f}$^\circ$)"
+    return rf"{r['preset']}: {q}, $i = {p['incl_deg']:.0f}^\circ$; ${LABEL[k]} = {fmt(v)}$ (def. {fmt(v0)})"
 
 
 n = len(SOURCES)
-fig, ax = plt.subplots(figsize=(7.2, 0.42 * n + 1.0))
-X0, X1, XN = 2e-3, 1e2, 3e3
+fig, ax = plt.subplots(figsize=(8.4, 0.42 * n + 1.0))
+X0, X1, XN = 2e-3, 1e2, 3e4
 for k, (src, ns) in enumerate(SOURCES):
     y = n - 1 - k
     ax.add_patch(Rectangle((X0, y - 0.4), XN - X0, 0.8, color=ORANGE if ns else GREY, alpha=0.18, lw=0))

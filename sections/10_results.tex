@@ -26,12 +26,14 @@ Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the b
 \includegraphics[width=0.8\textwidth]{chi2_overview.pdf}
 \caption{Reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction).
 The row colour gives the type of the source in Table~\ref{tab:sources}: grey for a BH candidate, orange for a pulsating ULX or a NS candidate.
-On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination.
+On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination, and the free parameter that lies farthest from its default value in the preset (in brackets), the distance measured in units of the prior range of the parameter.
 For NGC247S the BH fit is BH3a (App.~\ref{app:mc:bestfits}).}
 \label{fig:chi2_overview}
 \end{figure*}
 % figure: this repository, figures/plot_chi2_overview.py (layout: the author's sketch 2026-11-19), data ULXspectra-mc
-%         summaries/best_refit_per_source.tsv and refits_summary.tsv (e597ba3); reduced chi2 = chi2/(n - n_params)
+%         summaries/best_refit_per_source.tsv and refits_summary.tsv (e597ba3); reduced chi2 = chi2/(n - n_params);
+%         defaults: preset sections of ULX.conf.example, priors psrcs/config_loader.py (4ca9834); author 2026-11-19
+% AUTHOR: the defaults are the starting values of the presets (e.g. log mdot0 = -1 in BH0); is this the 'default' you mean?
 
 \subsection{Physical parameters of the best fits}
 \label{sec:results:params}
