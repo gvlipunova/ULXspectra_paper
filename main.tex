@@ -8,7 +8,9 @@
 \usepackage{booktabs}
 \usepackage{xspace}
 \usepackage[authoryear,round]{natbib}
+\newcommand{\idq}{\textcolor{red}{?}}  % unconfirmed identification
 \providecommand{\pasp}{PASP}\providecommand{\nat}{Nature}  % journal macros used in refs.bib
+\usepackage{xcolor}
 \usepackage[colorlinks=true,citecolor=blue,linkcolor=blue,urlcolor=blue]{hyperref}
 \usepackage[margin=2cm,columnsep=0.7cm]{geometry}
 
@@ -90,6 +92,8 @@ $^4$AFFILIATION MISSING}}
 \input{sections/12_conclusions}
 
 \appendix
+\section*{Appendices}
+\addcontentsline{toc}{section}{Appendices}
 \input{sections/A1_numerics}
 \input{sections/A2_ballistic}
 \input{sections/A3_monte_carlo}

@@ -43,7 +43,7 @@ We take the first limit as the firm one and the second as the likely need of the
 Of the 182 fits with the transfer correction (14 sources, 13 presets, 0.3--10\,keV), 99 allow the test; of these, 76 satisfy the flux limit and 45 the flux-plus-lift limit.
 The other fits are not failures; the test cannot be applied to them.
 In 76 fits the wind is optically thin everywhere and has no photosphere, so the computed need is zero and any $\epsilon_{\rm w}$ would pass.
-In 4 fits the photosphere catches less than 60 per cent of the launched mass flux, so the need is underestimated; the threshold is a choice of the code, not physics.
+In 4 fits the photosphere catches less than 60\% of the launched mass flux, so the need is underestimated; the threshold is a choice of the code, not physics.
 In 3 fits the wind is launched beyond the outer edge of the disc, $\rout < \Rsph$, while the energy available to it is taken only from the disc inside $\rout$, so the comparison is inconsistent.
 % source: calculation session 2026-11-19 ("Why some fits are excluded"; suggested wording used)
 % source: ULXspectra-mc PLAN C22, definition of "clean" (815e85a): run tag mc_0p3-10keV, flag "-" in
@@ -53,6 +53,32 @@ The fits are not constrained by either limit, so a fit that fails them needs a l
 % source: calculation session 2026-11-19; planned (PLAN C25): eps_w >= need as a fit constraint, and winds without a
 %         photosphere counted out to R_sph, which would make them testable
 % OUTLINE: table of eps_w vs the two limits at the best fits (docs/scripts/wind_energy_check.py).
+
+\subsection{Collimation by the funnel}
+\label{sec:disc:funnel}
+% Source: Appendix app:mc:funnel (merged 2026-11-19); numbers from figures/ahlberg2026/data/summary.txt items 4-6
+%         (code commit 2272e8a) and ULXspectra docs/green_surface_monte_carlo.md (commit 4da7c04)
+
+The wind leaves an empty funnel around the axis, and its walls send light that hits them back towards the axis.
+\citet{Ahlberg2026} computed this geometric beaming for an opaque conical funnel with a point source at its base; averaged over the inclinations inside the funnel, the boost of the apparent luminosity cannot exceed $B_{\rm max} = 1/(1 - \cos\alpha)$ for a half-opening angle $\alpha$ (Eq.~\ref{eq:mc_Bmax}).
+The funnel of our wind differs from theirs: its walls are semi-transparent, with 2--32 scatterings in the median, and the source is extended, the disc under the wind or the wind photosphere.
+Nevertheless, the Monte Carlo through the wind of three earlier best fits with $\theta_{\rm c} = 45.6^\circ$ (Table~\ref{tab:mc_funnel}) gives a mean boost inside the funnel of 2.92--3.05, 0.88--0.98 of their value for an opaque funnel of the same opening, and 88--92\% of the light escapes inside the funnel (App.~\ref{app:mc:funnel}).
+
+The model with the transfer correction (Sect.~\ref{sec:spectrum:transfer}) reproduces this collimation (Fig.~\ref{fig:mc_transfer_ahlberg}).
+For the parameter sets of NGC~7793, which are not among the calibration runs of the correction, the mean boost inside the funnel is 4.48 at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$, against 4.55 and 3.02--3.15 in the Monte Carlo; without the correction it is only 1.26--1.43.
+For wider openings, $\theta_{\rm c} = 59^\circ$--$84^\circ$, the corrected model, the Monte Carlo and $B_{\rm max}$ agree within 4\%.
+The angular distribution differs from that of an opaque funnel: inside the funnel the boost of the wind falls more steeply from the axis to the edge, and beyond the edge the wind leaks light, $B \approx 0.1$--$0.7$, where an opaque funnel leaks almost none.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{ahlberg_published_vs_mc_transfer.png}
+\caption{The transfer correction against the published results of \citet{Ahlberg2026}.
+(a): $B(i) = L_{\rm iso}(i)/L_{\rm total}$; steps: their Fig.~2a ($R = 10^3$, electron-scattering walls), read from the figure; lines: the model for NGC~7793 BH3a with $\omf = 0.85$ ($\theta_{\rm c} = 31.8^\circ$) and 0.7 ($45.6^\circ$), with (solid) and without (dashed) the correction; dots: Monte Carlo through the wind.
+(b): mean boost at $i < \alpha$; lines: their Fig.~4a for five $R$ and Eq.~\eqref{eq:mc_Bmax}; symbols: the model with and without the correction and the Monte Carlo, for the NGC~7793 parameter sets of the text.
+Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository (code commit 2272e8a).}
+\label{fig:mc_transfer_ahlberg}
+% figure (moved from App. C 2026-11-19): figures/ahlberg_published_vs_mc_transfer.png, script figures/ahlberg2026/plot_ahlberg_comparison.py; code commit 2272e8a
+\end{figure*}
 
 \subsection{Does the wind emit a blackbody?}
 \label{sec:disc:thermalization}
@@ -123,20 +149,26 @@ $E$ [keV] & Ho IX X-1 & NGC 5408 X-1 & NGC 5408 X-1 \\
 Its X-rays are disc photons, made where the disc is dense enough to thermalise them, and scattered by the wind.
 Scattering conserves the photon energy, so they keep the colour temperature of the disc under the wind; spread over the larger photosphere, they form a diluted blackbody, not a blackbody at the effective temperature of the wind.
 \textbf{In the UV, near 0.01~keV}, $\tau_* \approx 2$--$3$ is below the column of \srcNGCfiftyfour, \textbf{the wind thermalises}, and a modified blackbody at the gas temperature applies.
+The model does not compute this: it gives the wind a diluted blackbody at all frequencies (Eq.~\ref{eq:Inu_wind}).
+% code: wind_spectrum = 1 for the whole spectrum (README "Wind spectrum"); no absorption or thermal emission in the wind
 % source: thermalization_in_wind.md, sect. 3
 
+The model also leaves out the adiabatic cooling of radiation trapped in the outflow ($\tau v/c > 1$), which shifts photon energies without thermalising them.
+% code: no photon energy change in the wind (diluted blackbody of the disc colour temperature; MC scatters coherently)
 These estimates are rough.
 Deeper in the column the density is higher, and $\tau_*$ is about 1.5 times lower (30 instead of 47 at 0.1~keV for \srcHoIX).
 Bound-free absorption by metals raises the opacity at 0.1--1~keV and lowers $\tau_*$ by a factor of 3--10, which does not change the conclusion above about 0.3~keV.
 Compton energy exchange is weak: $y = (4kT_{\rm e}/m_{\rm e}c^2)\,N \approx 0.07$ for $T_{\rm e} = 10^6$~K and $N = 100$ scatterings.
-Radiation trapped in the outflow ($\tau v/c > 1$) cools adiabatically, which shifts photon energies without thermalising them.
 Finally, the gas temperature of the wind is not known in the model.
 % source: thermalization_in_wind.md, sect. 3, caveats
 
 The same reasoning applies to the spherical envelope of \citet{Lipunova1999}, whose optical spectrum is a modified blackbody \citep{ZeldovichShakura1969}.
 For the parameters of SS~433 used there, optical photons thermalise at $\tau_* \approx 2$ inside the envelope (Appendix~\ref{app:envelope}), so the modified blackbody is correct there.
-From the optical at $3.5\times10^4$~K to 1~keV at $10^6$~K, however, the free-free coefficient decreases by a factor of about $2.5\times10^8$, and $\tau_* \propto (\alpha^{\rm ff}_\nu)^{-1/2}$ grows by about $1.6\times10^4$.
-Moreover, the wind of our model is a finite column, $\taup \approx 1$--$30$ above the disc, not an envelope with $n \propto r^{-2}$ reaching ever denser layers inwards.
+The difference from the X-rays of ULXs lies in the frequency, not in the optical depth of the outflow.
+From the optical at $3.5\times10^4$~K to 1~keV at $10^6$~K, the free-free coefficient decreases by a factor of about $2.5\times10^8$, and $\tau_* \propto (\alpha^{\rm ff}_\nu)^{-1/2}$ grows by about $1.6\times10^4$, to $\sim10^3$, far above the column of any outflow considered here.
+The geometry decides where the photons are made.
+In an envelope with $n \propto r^{-2}$ the density grows inwards, so going deeper one reaches the layer $\tau_*$, where photons are made, as long as that layer lies above the base of the envelope; this is the case in the optical for SS~433.
+The wind of our model is a finite column above the disc, $\taup \approx 1$--$30$; where $\tau_*$ exceeds it, no such layer exists in the wind, and the photons are made in the disc below and only scattered by the wind.
 % source: thermalization_in_wind.md, sect. 4 (last paragraph): k_ff falls by ~4e-9, tau_* grows by ~1.6e4
 
 \textbf{A physically consistent spectrum of the wind therefore changes regime with frequency.}

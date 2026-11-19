@@ -48,7 +48,7 @@ for k, (src, ns) in enumerate(SOURCES):
 ax.set_xscale("log"); ax.set_xlim(X0, XN); ax.set_ylim(-0.6, n - 0.4)
 ax.set_yticks(range(n)); ax.set_yticklabels([s for s, _ in SOURCES][::-1])
 ax.spines[["top", "right"]].set_visible(False)
-ax.set_xlabel(r"reduced $\chi^2$ of the best fit ($\sigma = 0.08$ dex)")
+ax.set_xlabel(r"normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$ dex)")
 ax.plot([], [], "s", mfc="k", mec="k", alpha=0.55, label="BH presets (5)")
 ax.plot([], [], "s", mfc=ORANGE, mec="k", alpha=0.55, label="NS presets (8)")
 ax.plot([], [], "s", mfc="none", mec="k", label="fails the MC check")

@@ -24,7 +24,7 @@ Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the b
 \begin{figure*}
 \centering
 \includegraphics[width=0.8\textwidth]{chi2_overview.pdf}
-\caption{Reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction).
+\caption{Normalized reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction); the data have no measured errors, only the uniform $\sigma$ assumed in the fits (Sect.~\ref{sec:fitting:data}), so the values compare fits rather than test them absolutely.
 The row colour gives the type of the source in Table~\ref{tab:sources}: grey for a BH candidate, orange for a pulsating ULX or a NS candidate.
 On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination, and the free parameter that lies farthest from its default value (in brackets: the centre of the starting positions of the chains in the preset, Table~\ref{tab:params}), the distance measured in units of the prior range of the parameter.
 For NGC247S the BH fit is BH3a (App.~\ref{app:mc:bestfits}).}
@@ -97,7 +97,7 @@ NGC1313B & NS5r & 1.97/30 & $1.4$ & $1.22^{+0.06}_{-0.04}$ & $36^{+3}_{-2}$ & $0
 NGC1313H & NS5r & 1.76/30 & $1.4$ & $0.86^{+1.05}_{-0.07}$ & $24^{+3}_{-11}$ & $0.5$ & $3.02^{+0.09}_{-0.50}{}^\dagger$ & $7.26^{+1.85}_{-1.86}$ & $0.08^{+0.60}_{-0.03}$ & -- \\
 NGC247S & BH4a & 0.114/27 & $2.22^{+0.30}_{-0.28}$ & $1.10^{+0.22}_{-0.35}$ & $71^{+8}_{-4}$ & $0.5$ & $3.2^{+1.2}_{-0.8}$ & $6.05^{+2.67}_{-2.31}$ & $0.45^{+0.23}_{-0.27}$ & $\beta_{\rm w}{=}1.5^{+1.1}_{-0.9}$; $\Omega_{\rm w}/4\pi{=}0.428^{+0.045}_{-0.067}$ \\
 NGC247SS & BH3a & 355/29 & $1.25^{+0.02}_{-0.02}$ & $1.38^{+0.02}_{-0.02}$ & $47.2^{+0.1}_{-0.1}$ & $0.98^{+0.00}_{-0.00}$ & $1.00^{+0.01}_{-0.00}$ & $9.69^{+0.12}_{-0.39}$ & $0.79^{+0.02}_{-0.01}$ & $\beta_{\rm w}{=}0.2^{+0.1}_{-0.0}$ \\
-NGC300 & BH2 & 0.111/30 & $1.01^{+0.12}_{-0.07}$ & $0.20^{+0.07}_{-0.07}$ & $62^{+6}_{-3}$ & $0.11^{+0.14}_{-0.08}$ & $1.2^{+0.3}_{-0.2}$ & $6.77^{+2.15}_{-2.13}$ & -- & -- \\
+NGC300 & BH2$^\ddagger$ & 0.111/30 & $1.01^{+0.12}_{-0.07}$ & $0.20^{+0.07}_{-0.07}$ & $62^{+6}_{-3}$ & $0.11^{+0.14}_{-0.08}$ & $1.2^{+0.3}_{-0.2}$ & $6.77^{+2.15}_{-2.13}$ & -- & -- \\
 NGC5408 & BH0 & 3.17/30 & $1.08^{+0.21}_{-0.15}$ & $2.37^{+0.35}_{-0.20}$ & $51^{+5}_{-4}$ & $0.13^{+0.04}_{-0.03}$ & $1.7^{+0.5}_{-0.4}$ & $6.83^{+2.16}_{-2.16}$ & -- & -- \\
 NGC55 & BH0 & 1.77/28 & $1.19^{+0.31}_{-0.39}$ & $1.69^{+0.26}_{-0.24}$ & $63^{+14}_{-11}$ & $0.67^{+0.10}_{-0.19}$ & $7.5^{+4.8}_{-2.7}$ & $6.78^{+2.19}_{-2.22}$ & -- & -- \\
 NGC6946 & BH0 & 5.73/30 & $1.25^{+0.19}_{-0.17}$ & $1.91^{+0.21}_{-0.16}$ & $54^{+8}_{-5}$ & $0.11^{+0.02}_{-0.03}$ & $1.3^{+0.4}_{-0.2}$ & $6.74^{+2.22}_{-2.25}$ & -- & -- \\
@@ -108,6 +108,10 @@ NGC247S & BH3a & 0.133/27 & $1.78^{+0.35}_{-0.41}$ & $1.04^{+0.84}_{-0.24}$ & $5
 \par\smallskip
 \raggedright\footnotesize
 $^\dagger$ NS: $\log(\rmag/\rg)$, the inner radius of the disc.
+$^\ddagger$ Fails the wind energy test of Sect.~\ref{sec:disc:epsw} strongly: the fitted $\epsilon_{\rm w} = 0.06$ is about 10 times below the firm (flux) limit, 0.65.
+% source: ULXspectra-mc summaries/wind_energy_check_refits.tsv (a40ceec), NGC300 BH2 mc_0p3-10keV: eps_w 0.0614, need_flux 0.650,
+%         need_lift 0.741. Marked: flux need > 2 x fitted eps_w (author 2026-11-19: only very strong cases); HolmIX BH2
+%         (0.37 vs 0.44, x1.2) not marked. NGC247S BH4a (mc): no photosphere, untestable.
 NGC247S BH4a, its formal best fit, fails the Monte Carlo check (App.~\ref{app:mc:bestfits}); NGC247S BH3a is the fit we use.
 \end{table*}
 
@@ -123,15 +127,6 @@ The largest gains are for BH4a: M101ULS ($\chi^2$ from 1438 to 3.95), NGC247SS (
 \textbf{Without the correction} the model \textbf{funnel is too faint}, by a factor of 1.2--3.5 (App.~\ref{app:mc:bestfits}), and the fits move in inclination to compensate.
 The BH3a fits go towards face-on (M51ULS from $49^\circ$ to $4^\circ$, NGC247SS from $47^\circ$ to $2^\circ$, NGC6946 from $47^\circ$ to $5^\circ$, NGC300 from $56^\circ$ to $22^\circ$), and the BH4a fits mostly towards edge-on (NGC1313H from $1^\circ$ to $68^\circ$, NGC5408 from $35^\circ$ to $79^\circ$, NGC1313B from $22^\circ$ to $68^\circ$, NGC247SS from $62^\circ$ to $86^\circ$).
 The physical parameters change too.
-For HolmIX, BH3a with the correction is a supercritical wind solution ($\dot m_0 = 2.6$, $\epsilon_{\rm w} = 0.02$), while without it the fit is subcritical ($\dot m_0 = 0.84$) and leaves the wind parameters unconstrained (Fig.~\ref{fig:holmix_mcnomc}).
+For HolmIX, BH3a with the correction is a supercritical wind solution ($\dot m_0 = 2.6$, $\epsilon_{\rm w} = 0.02$), while without it the fit is subcritical ($\dot m_0 = 0.84$) and leaves the wind parameters unconstrained (Fig.~\ref{fig:holmix_mcnomc} in App.~\ref{app:mc:nomc}).
 Other shifts by $3\sigma$ or more: M51ULS BH3a, $\dot m_0 = 672$ against 30 and $\epsilon_{\rm w} = 0.02$ against 0.92; M101ULS BH4a, $M = 2900$ against $106\,M_\odot$ and $\rin = 1.1$ against $18\,\rg$; NGC1313H BH4a, $\dot m_0 = 21$ against 0.94; NGC247SS BH4a, $\dot m_0 = 284$ against 33.
 % values: posterior medians with / without (mc_vs_nomc_BH3a_BH4a.txt)
-
-\begin{figure*}
-\centering
-\includegraphics[width=\textwidth]{HolmIX_mc_vs_nomc.png}
-\caption{HolmIX fitted with BH3a (left) and BH4a (right) over 0.3--10\,keV with (blue) and without (orange) the transfer correction: the SED (black, grey outside the fitted band), the model total (solid), wind (dashed) and disc (dotted) components and the model at the data energies (points); the fitted band is shaded.
-Lower panels: $\log$(model/data), with $\pm0.08$\,dex shaded.}
-\label{fig:holmix_mcnomc}
-\end{figure*}
-% figure: ULXspectra-mc docs/scripts/plot_mc_vs_nomc.py, docs/figures/HolmIX_mc_vs_nomc.png (b551655)
