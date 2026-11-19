@@ -40,12 +40,18 @@ At the earlier best fits, made before the wind toll was restricted to $R < \Rsph
 %         fail (1), 13 fail (2); eps_w = 0.5 fixed: 3 and 30 of 44; commit e294301
 We take the first limit as the firm one and the second as the likely need of the wind.
 % decided: the author 2026-11-19 (PLAN C22, ULXspectra-mc 52caec5): the paper quotes both
-Of the 182 fits with the transfer correction (14 sources, 13 presets, 0.3--10\,keV), 99 have a wind photosphere that at least 0.6 of the wind mass crosses, and $\rout \ge \Rsph$; of these, 76 pass the first limit and 45 the second.
+Of the 182 fits with the transfer correction (14 sources, 13 presets, 0.3--10\,keV), 99 allow the test; of these, 76 satisfy the flux limit and 45 the flux-plus-lift limit.
+The other fits are not failures; the test cannot be applied to them.
+In 76 fits the wind is optically thin everywhere and has no photosphere, so the computed need is zero and any $\epsilon_{\rm w}$ would pass.
+In 4 fits the photosphere catches less than 60 per cent of the launched mass flux, so the need is underestimated; the threshold is a choice of the code, not physics.
+In 3 fits the wind is launched beyond the outer edge of the disc, $\rout < \Rsph$, while the energy available to it is taken only from the disc inside $\rout$, so the comparison is inconsistent.
+% source: calculation session 2026-11-19 ("Why some fits are excluded"; suggested wording used)
 % source: ULXspectra-mc PLAN C22, definition of "clean" (815e85a): run tag mc_0p3-10keV, flag "-" in
 %         summaries/wind_energy_check_refits.tsv, i.e. excluded no_photosphere (76), Mdot_ph<0.6Mdot_w (4), r_out<R_sp (3);
 %         the 99 include 3 eclipse-edge fits (without them 96 / 73 / 45)
 The fits are not constrained by either limit, so a fit that fails them needs a larger toll than it was given: $\epsilon_{\rm w}$ is as fitted, free in BH0, BH2 and BH3a and fixed at 0.5 in BH1a, BH4a and the NS presets.
-% source: calculation session 2026-11-19; a fit constraint eps_w >= need is planned (PLAN C25)
+% source: calculation session 2026-11-19; planned (PLAN C25): eps_w >= need as a fit constraint, and winds without a
+%         photosphere counted out to R_sph, which would make them testable
 % OUTLINE: table of eps_w vs the two limits at the best fits (docs/scripts/wind_energy_check.py).
 
 \subsection{Does the wind emit a blackbody?}
