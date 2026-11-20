@@ -108,10 +108,10 @@ For \srcHoIX and \srcNGCthirteen it overestimates $L_{\rm iso}$ by a factor of 2
 Close to the disc plane the ray cast gives no hard flux at all, while the scattered light keeps a hard tail.
 The ratios above unity at the largest inclinations in Table~\ref{tab:mc_ratio} (\srcHoIX at $70^\circ$, \srcNGCfiftyfour at $63$--$70^\circ$) do not mean that the Monte Carlo is bright there.
 They arise because the ray cast becomes dark: the outer part of the emitting surface hides the inner disc from the observer.
-In \srcHoIX the wind photosphere rises to $z/R = 0.39$ at $x \approx 490$, which hides the surface well inside this radius for $i \gtrsim 68.5^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast drops from 0.90 at $63^\circ$ to 0.033 at $70^\circ$.
-In \srcNGCfiftyfour the photosphere reaches $z/R = 0.88$ at $x \approx 320$, so the hiding begins at $i \approx 49^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast falls from 0.19 at $57^\circ$ to 0.015 at $70^\circ$.
+In \srcHoIX the wind photosphere rises to $z/r = 0.39$ at $x \approx 490$, which hides the surface well inside this radius for $i \gtrsim 68.5^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast drops from 0.90 at $63^\circ$ to 0.033 at $70^\circ$.
+In \srcNGCfiftyfour the photosphere reaches $z/r = 0.88$ at $x \approx 320$, so the hiding begins at $i \approx 49^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast falls from 0.19 at $57^\circ$ to 0.015 at $70^\circ$.
 The Monte Carlo, in contrast, changes smoothly with $i$: the light that leaks out of the funnel through the wind gives $L_{\rm iso}/L_{\rm total} \approx 0.06$--$0.09$ in both cases, and the reflection case keeps the light that the surface blocks.
-In \srcNGCthirteen the photosphere is lower, $z/R \le 0.24$, the hiding begins only at $i \approx 77^\circ$, and the ratio stays below unity up to $75^\circ$.
+In \srcNGCthirteen the photosphere is lower, $z/r \le 0.24$, the hiding begins only at $i \approx 77^\circ$, and the ratio stays below unity up to $75^\circ$.
 % derived (Claude, 2026-11-01) at the request of the author ("explain"): max z_ph/x of
 %   results/mcmc_{HolmIX,NGC1313B,NGC5408}.BH3a.full/surface_Python.dat (0.394 at x = 489; 0.237 at x = 647;
 %   0.882 at x = 320), i = 90 deg - arctan(max z/x); code and MC L_iso/L_tot per bin from mc_results.txt of the
@@ -218,7 +218,7 @@ NS best fits (NS1a, NS2, NS3a, NS4a, NS5, NS5a, NS6, NS7) of 9 sources, $\omf = 
 \paragraph{The revised table.}
 The results of this paper were obtained with the table described above, built from 117 runs.
 We have since rebuilt the table in two steps.
-First, its Monte Carlo runs were redone with the current model (the wind toll restricted to $R < \Rsph$ and the diluted wind spectrum), 28 runs with weak winds were added at all funnel openings, the bins in optical depth were refined to $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class was added with a boundary at $\Rsph$ (145 runs).
+First, its Monte Carlo runs were redone with the current model (the wind toll restricted to $r < \Rsph$ and the diluted wind spectrum), 28 runs with weak winds were added at all funnel openings, the bins in optical depth were refined to $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class was added with a boundary at $\Rsph$ (145 runs).
 This version left thick winds seen beyond the funnel edge at $i > 64^\circ$ too bright, by up to a factor of 1.5.
 Second, each ring class was split into four sub-classes by the ring's place in its own wind: its optical depth relative to the largest one of the wind photosphere, and its radius relative to the outer edge of the photosphere, each above or below 0.3; 45 runs at the best fits of all BH presets and sources were added (190 runs).
 For 17 held-out runs, the revised table gives MC/model per angle bin of 0.93--1.04 inside the funnel and 0.76--1.14 beyond its edge (117-run table: 0.64--1.22 beyond the edge; without the correction 0.59--2.49 inside and 0.37--18 beyond).
@@ -507,7 +507,7 @@ Made with \code{docs/scripts/funnel\_wind\_cone.py} (code commit ef403b4).}
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{funnel_beaming_by_radius.png}
-\caption{$B(i)$ of the light emitted at different radii $x = R/\rin$, Monte Carlo with scattering through the wind of the three best fits; the share of the luminosity emitted in each range is given in the legends.
+\caption{$B(i)$ of the light emitted at different radii $x = r/\rin$, Monte Carlo with scattering through the wind of the three best fits; the share of the luminosity emitted in each range is given in the legends.
 The dotted line marks $\theta_{\rm c}$.
 Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 \label{fig:funnel_radius}

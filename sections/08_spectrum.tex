@@ -12,10 +12,10 @@ We consider the cylindrical coordinate system with the star at the origin and th
 The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}.
 
 For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
-The surface is axisymmetric, $z(R)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
-An element at azimuth $\phi$ contributes its area $R\,{\rm d}R\,{\rm d}\phi$ times the projection of its normal onto the line of sight,
+The surface is axisymmetric, $z(r)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
+An element at azimuth $\phi$ contributes its area $r\,{\rm d}r\,{\rm d}\phi$ times the projection of its normal onto the line of sight,
 \begin{equation}
-\mu_{\rm proj} = \cos i - \frac{{\rm d}z}{{\rm d}R}\,\sin i\,\cos\phi ,
+\mu_{\rm proj} = \cos i - \frac{{\rm d}z}{{\rm d}r}\,\sin i\,\cos\phi ,
 \label{eq:muproj}
 \end{equation}
 % code: projected_area_weights_surface_raycast() (mu_proj) (csrcs/visibility.c)
@@ -89,7 +89,7 @@ For a NS the central body, the surface of the magnetosphere, is opaque: a ray th
 The light that the ring does not send out directly,
 \begin{equation}
 \begin{split}
-S_j = {} & 2\sigma T_j^4\,2\pi R\,\Delta R\sqrt{1 + \left(\frac{{\rm d}z}{{\rm d}R}\right)^2} \\
+S_j = {} & 2\sigma T_j^4\,2\pi r\,\Delta r\sqrt{1 + \left(\frac{{\rm d}z}{{\rm d}r}\right)^2} \\
 & - \int_0^1 4\sigma T_j^4\,A_{{\rm att},j}(\mu)\,{\rm d}\mu ,
 \end{split}
 \label{eq:Sj}

@@ -26,16 +26,16 @@ The first is the kinetic and enthalpy flux through the photosphere,
 \end{equation}
 % code: wind_energy_loss_through_green_surface() (psrcs/wind_emission.py; enthalpy 2.5 rho k T/m_p); README "Energy the wind needs"
 so that $\epsilon_{\rm w} \ge \dot E_{\rm wind}/L_{\rm sph}$.
-The second adds the work $E_{\rm lift}$ to bring the gas from a Keplerian orbit at its launch radius $R_0$ to its point $(R, z)$ on the photosphere with its angular momentum kept,
+The second adds the work $E_{\rm lift}$ to bring the gas from a Keplerian orbit at its launch radius $R_0$ to its point $(r, z)$ on the photosphere with its angular momentum kept,
 \begin{equation}
-GM\left[\frac{1}{2R_0} + \frac{R_0}{2R^2} - \frac{1}{\sqrt{R^2 + z^2}}\right]
+GM\left[\frac{1}{2R_0} + \frac{R_0}{2r^2} - \frac{1}{\sqrt{r^2 + z^2}}\right]
 \label{eq:Elift}
 \end{equation}
 % code: wind_energy_demand() (psrcs/wind_emission.py); README "Energy the wind needs"; PLAN C22
 per unit mass, so that $\epsilon_{\rm w} \ge (\dot E_{\rm wind} + E_{\rm lift})/L_{\rm sph}$.
 Nothing is counted beyond the photosphere, so both are lower limits for a wind that escapes.
 % source: PLAN C22
-At the earlier best fits, made before the wind toll was restricted to $R < \Rsph$, the second limit often exceeds the fitted toll: in large winds the lift alone takes 0.65--1 of $L_{\rm sph}$, so $\epsilon_{\rm w} \approx 0.7$--1 would be needed.
+At the earlier best fits, made before the wind toll was restricted to $r < \Rsph$, the second limit often exceeds the fitted toll: in large winds the lift alone takes 0.65--1 of $L_{\rm sph}$, so $\epsilon_{\rm w} \approx 0.7$--1 would be needed.
 % source: PLAN C22 / README: 182 full best fits (summaries/wind_energy_check_full.tsv), 69 clean; eps_w free: 6 of 25
 %         fail (1), 13 fail (2); eps_w = 0.5 fixed: 3 and 30 of 44; commit e294301
 We take the first limit as the firm one and the second as the likely need of the wind.

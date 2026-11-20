@@ -7,10 +7,10 @@
 \subsection{Viscous torque}
 \label{sec:disc:torque}
 
-Let $h = \sqrt{GMR}$ be the specific angular momentum of the Keplerian disc and $\Fvis > 0$ the viscous torque.
-If the matter lost to the wind at $R$ carries away the specific angular momentum $k_{\rm w}h(R)$, the conservation of angular momentum in a stationary disc reads
+Let $h = \sqrt{GMr}$ be the specific angular momentum of the Keplerian disc and $\Fvis > 0$ the viscous torque.
+If the matter lost to the wind at $r$ carries away the specific angular momentum $k_{\rm w}h(r)$, the conservation of angular momentum in a stationary disc reads
 \begin{equation}
-\frac{{\rm d}(\Mdot h)}{{\rm d}R} - \frac{{\rm d}\Fvis}{{\rm d}R} - k_{\rm w}\,h\,\frac{{\rm d}\Mdot}{{\rm d}R} = 0 .
+\frac{{\rm d}(\Mdot h)}{{\rm d}r} - \frac{{\rm d}\Fvis}{{\rm d}r} - k_{\rm w}\,h\,\frac{{\rm d}\Mdot}{{\rm d}r} = 0 .
 \label{eq:angmom}
 \end{equation}
 % source: old manuscript (SEA_spectrum.zip, main.tex, Sect. "Effective temperature distribution"),
@@ -18,7 +18,7 @@ If the matter lost to the wind at $R$ carries away the specific angular momentum
 We take $k_{\rm w} = 1$, that is, the wind removes the Keplerian angular momentum of the radius where it is launched.
 Then the viscous torque obeys
 \begin{equation}
-\frac{{\rm d}\Fvis}{{\rm d}h} = \Mdot(R), \quad \Fvis(R) = F_{\rm in} + \int_{h(\rin)}^{h(R)} \!\Mdot\,{\rm d}h .
+\frac{{\rm d}\Fvis}{{\rm d}h} = \Mdot(r), \quad \Fvis(r) = F_{\rm in} + \int_{h(\rin)}^{h(r)} \!\Mdot\,{\rm d}h .
 \label{eq:Fvis}
 \end{equation}
 % code: disc_Fvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"; PLAN C10
@@ -33,12 +33,12 @@ with $\beta_{\rm t} = 1$ in all NS models.
 % code: beta_torque_in default 1 (psrcs/model_params.py, config_loader.py), set by no preset in ULX.conf.example (7ba8568)
 % AUTHOR: physical justification of beta_t = 1 (PLAN C10)?
 
-All the accretion-rate profiles of Sect.~\ref{sec:model:mdot} are linear in $R$ between $\rin$ and $\Rsph$, so the integral is analytic.
+All the accretion-rate profiles of Sect.~\ref{sec:model:mdot} are linear in $r$ between $\rin$ and $\Rsph$, so the integral is analytic.
 With $s = \sqrt{\min(x, \xsp)}$ and $h_{\rm in} = h(\rin)$,
 \begin{multline}
 \Fvis = F_{\rm in} + \frac{h_{\rm in}(s - 1)}{3(s + 1)}\bigl[\Mdot(\rin)(2s + 1) \\
 + \Mdot(s^2\rin)(s + 2)\bigr]
-+ \Mdot_0\,\bigl[h(R) - h(\Rsph)\bigr]\,\Theta(R - \Rsph),
++ \Mdot_0\,\bigl[h(r) - h(\Rsph)\bigr]\,\Theta(r - \Rsph),
 \label{eq:Fvis_lin}
 \end{multline}
 % code: disc_Fvis_point() (csrcs/disc_struct.c), closed form in its header comment
@@ -52,7 +52,7 @@ Outside $\Rsph$ the torque is lower than in a disc without outflow and with the 
 % AUTHOR: the old manuscript marks the paragraph before this one "somehow wrong: see the
 %         figure" (Fvis_comp.png: SS73 torque vs. an advective disc with outflow). Is the
 %         statement above unaffected?
-The relative difference fades at $R \gg \Rsph$, where $\Fvis \approx \Mdot_0 h$ in both discs.
+The relative difference fades at $r \gg \Rsph$, where $\Fvis \approx \Mdot_0 h$ in both discs.
 % derived (Claude)
 % AUTHOR (minor): for P07 with r_in,f < 6 the profile can be clipped at 0 near r_in;
 %         the code ignores that non-linear piece (comment in disc_Fvis_point()).
@@ -63,7 +63,7 @@ The relative difference fades at $R \gg \Rsph$, where $\Fvis \approx \Mdot_0 h$ 
 
 The viscous heating per unit area of one side of the disc is
 \begin{equation}
-\Qvis = \frac{3}{8\pi}\,\frac{\Fvis\,\Omega_{\rm K}}{R^2} .
+\Qvis = \frac{3}{8\pi}\,\frac{\Fvis\,\Omega_{\rm K}}{r^2} .
 \label{eq:Qvis}
 \end{equation}
 This is a usual expression for viscous disc, formulated in terms of the viscous torque, instead of the accretion rate.  
@@ -71,12 +71,12 @@ This is a usual expression for viscous disc, formulated in terms of the viscous 
 
 We describe the energy that the disc releases per unit area of one side by the temperature $\Tvis$.
 Outside the trapping radius the disc releases it locally, $\sigma\Tvis^4 = \Qvis$.
-Inside it, advection makes the released flux fall as $R^{-2}$, and we join the two continuously at $\Rtrap$:
+Inside it, advection makes the released flux fall as $r^{-2}$, and we join the two continuously at $\Rtrap$:
 \begin{equation}
 \sigma\Tvis^4 =
 \begin{cases}
-\Qvis(R), & R > \Rtrap, \\
-\Qvis(\Rtrap)\,(\Rtrap/R)^2, & \rin \le R \le \Rtrap .
+\Qvis(r), & r > \Rtrap, \\
+\Qvis(\Rtrap)\,(\Rtrap/r)^2, & \rin \le r \le \Rtrap .
 \end{cases}
 \label{eq:Teff}
 \end{equation}
@@ -94,8 +94,8 @@ The disc thermalises, so what remains is radiated as a true blackbody at
 \begin{equation}
 T_{\rm disc} =
 \begin{cases}
-(1 - \epsilon_{\rm w})^{1/4}\,\Tvis, & \rin \le R < \Rsph, \\
-\Tvis, & R \ge \Rsph .
+(1 - \epsilon_{\rm w})^{1/4}\,\Tvis, & \rin \le r < \Rsph, \\
+\Tvis, & r \ge \Rsph .
 \end{cases}
 \label{eq:Tdisc}
 \end{equation}
@@ -117,13 +117,13 @@ The wind toll is paid in the disc, before its photons are made, and it applies w
 
 The luminosity released by the disc is the integral of the profile~\eqref{eq:Teff} over both sides of the disc from $\rin$ to $\rout$:
 \begin{multline}
-L_{\rm disc} = 4\pi\int_{\rin}^{\rout} \sigma\Tvis^4\,R\,{\rm d}R
+L_{\rm disc} = 4\pi\int_{\rin}^{\rout} \sigma\Tvis^4\,r\,{\rm d}r
 = L_{\rm vis}(\Rtrap, \rout) \\
 + 4\pi\Rtrap^2\,\Qvis(\Rtrap)\,\ln\frac{\min(\Rtrap, \rout)}{\rin},
 \label{eq:Ldisc}
 \end{multline}
 % code: accretion_luminosity_split(), disc_L_out_above(), disc_advective_L_per_lnr() (csrcs/wind_emission.c, csrcs/disc_struct.c); README "Luminosity budget"
-where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis R\,{\rm d}R$ is the viscous release between $\Rtrap$ and $\rout$.
+where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis r\,{\rm d}r$ is the viscous release between $\Rtrap$ and $\rout$.
 For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
 When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
 % code: README "Luminosity budget", mode 1+log
@@ -131,7 +131,7 @@ Of $L_{\rm disc}$, the wind toll takes the fraction $\epsilon_{\rm w}$ of the re
 \begin{equation}
 \begin{split}
 L_{\rm disc,rad} &= L_{\rm disc} - \epsilon_{\rm w}L_{\rm sph}, \\
-L_{\rm sph} &= 4\pi\int_{\rin}^{\min(\Rsph, \rout)} \sigma\Tvis^4\,R\,{\rm d}R ,
+L_{\rm sph} &= 4\pi\int_{\rin}^{\min(\Rsph, \rout)} \sigma\Tvis^4\,r\,{\rm d}r ,
 \end{split}
 \label{eq:Ldisc_rad}
 \end{equation}
