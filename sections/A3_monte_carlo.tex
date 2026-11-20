@@ -455,7 +455,8 @@ As an example, beyond $\theta_{\rm c}$ the wind leaks light with $B \approx 0.1$
 % source: docs/green_surface_monte_carlo.md, "B(i) cone vs wind"; commit 4da7c04
 
 %These runs differ from the opaque cone in two ways at once: the walls are semi-transparent, and the source is extended.
-To separate the effects of transparency and source size, we compared three cases at the same geometry, $\alpha = 10^\circ$, $25^\circ$,  and $45^\circ$ and $R = 10^2$--$10^4$, with $4\times10^5$ packets each (see Fig.~\ref{fig:funnel_wind}): (A) the opaque cone with a point source at the base centre, copying the Lambertian-walls setup of \citet{Ahlberg2026}; (B) the same funnel and point source, with the walls replaced by the wind of a BH3a fit, its inner streamline along the wall of the cone and the wind cut at $r = R$; and (C) the opaque cone with the fit's own emission, wind photosphere and disc, put on the wall at the same distance from the base centre.
+To separate the effects of transparency and source size, we compared three cases at the same geometry, $\alpha = 10^\circ$, $25^\circ$,  and $45^\circ$ and $R = 10^2$--$10^4$, with $4\times10^5$ packets each (see Fig.~\ref{fig:funnel_wind}): (A) the opaque cone with a point source at the base centre, copying the Lambertian-walls setup of \citet{Ahlberg2026}; (B) the same funnel and point source, with the walls replaced by the wind of a BH3a fit, its inner streamline along the wall of the cone and the wind cut at $r = R$; and (C) the opaque cone with extended emission from wind photosphere and disc\footnote{
+The wind and disc are those of a preliminary BH3a fit of HolmIX over $10^{-6}$–$10^3$ keV: $M = 23.3\,M_\odot$, $\dot m_0 = 51.4$, $\rin = 1.05\,\rg$, $\dot m_{\rm in}/\dot m_0 = 0.85$, $\epsilon_{\rm w} = 0.98$, $\beta_{\rm w} = 0.057$, $\Rsph = 802\,\rin$; only $\omf$ is changed, so that the inner streamline lies on the wall of the cone.}, put on the wall at the same distance from the base centre.
 B differs from A only in the walls, C only in the source.
 % source: ULXspectra-mc docs/green_surface_monte_carlo.md, last section ("Opaque cone vs wind cone at equal alpha and R"),
 %         commits 1349a03-ef403b4, 3d3521b; table summaries/funnel_wind_cone_B.tsv; wind parameters
@@ -474,8 +475,9 @@ The thick wind of the NGC5408 fit is nearly opaque at $\alpha = 45.6^\circ$ (95-
 
 For the thin winds the walls matter more, about a factor of 2 at $\alpha = 25^\circ$; for the thick wind the extended source matters more, by 9--17\% at $45^\circ$.
 
-The full model, a wind with an extended source, is the case of Table~\ref{tab:mc_funnel}, computed only at $\alpha = 45.6^\circ$.
-The light emitted at different radii is collimated alike: inside the funnel its $B(i)$ is the same within about 10\% (Fig.~\ref{fig:funnel_radius}).
+As one can see in Fig.~\ref{fig:funnel_radius}, 
+%the full model, a wind with an extended source, is the case of Table~\ref{tab:mc_funnel}, computed only at $\alpha = 45.6^\circ$.
+the light emitted at different radii is collimated alike: inside the funnel its $B(i)$ is the same within about 10\%.
 Only the outermost wind photosphere of \srcNGCfiftyfour ($x > 300$, 25\% of the luminosity) gives a flatter $B(i)$ and leaks more.
 % source: docs/green_surface_monte_carlo.md, "B(i) by emission radius"; commit 4da7c04
 For this reason the share of the luminosity above 1~keV in the Monte Carlo is constant within 1--2\% inside the funnel.
@@ -509,34 +511,40 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 % figure: ULXspectra docs/figures/funnel_beaming_by_radius.png, commit 4da7c04
 \end{figure*}
 
-\paragraph{The corrected model.}
+\subsection{Comparison of transfer-corrected model with full MC-transfer model.}
 % Code: ULXspectra branch mc-transfer-corrections, commit 2272e8a (C model with mc_transfer = 1 and 0;
 %       Monte Carlo docs/scripts/mc_green_surface.py, scattering, 1e5 packets).
 % Scripts and numbers: this repository, figures/ahlberg2026/ (run_all.sh; numbers in data/summary.txt, items 4-6).
 % Parameter sets: tests/reference/mcmc_NGC7793.{BH2,BH3a,BH4a}.wide_1keV.npz of the code (regression references),
 %       not the best fits in results/ (not available to this comparison).
 
-Finally, we compared the model with the transfer correction of Sect.~\ref{sec:spectrum:transfer} with  results of \citet{Ahlberg2026} and with the Monte Carlo through the same wind (Fig.~\ref{fig:mc_transfer_ahlberg} in Sect.~\ref{sec:disc:funnel}; $B(i)$ for all parameter sets in Fig.~\ref{fig:corrected_B}).
+We compared the simple occultation model with the model with the transfer correction used for fits (see Sect.~\ref{sec:spectrum:transfer})
+%with  results of \citet{Ahlberg2026} and 
+and 
+with the Monte Carlo through the same wind (see Figs.~\ref{fig:mc_transfer_ahlberg}  and~\ref{fig:corrected_B}).
 We used the parameter sets of NGC~7793 for the presets BH2, BH3a and BH4a, and for BH3a also $\omf = 0.85$, 0.5, 0.3 and 0.1, so that $\theta_{\rm c} = 31.8^\circ$--$84.3^\circ$.
-NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab:mc_calib}), so these are held-out checks.
+%NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab:mc_calib}), so these are held-out checks.
 % source: tab:mc_calib (5 sources: HolmIX, NGC1313B, NGC5408, NGC247SS, NGC6946); theta_c = arccos(omega_frac) for h_disc = 0
 
-The mean boost at $i < \theta_{\rm c}$ is $\bar B = 4.48$ at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$ with the correction, 4.55 and 3.02--3.15 in the Monte Carlo, and 1.26 and 1.27--1.43 without the correction.
+%The mean boost at $i < \theta_{\rm c}$ is $\bar B = 4.48$ at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$ with the correction, 4.55 and 3.02--3.15 in the Monte Carlo, and 1.26 and 1.27--1.43 without the correction.
 % source: summary.txt item 4 (BH3a w = 0.85; BH3a and BH2 at w = 0.7); commit 2272e8a
-Their figure~4a gives 3.74, 5.02, 5.87, 6.30 and 6.52 at $\alpha = 31.25^\circ$ and 2.67, 3.10, 3.31, 3.31 and 3.31 at $\alpha = 45^\circ$, for $R = 10$, $93$, $1.1\times10^3$, $10^4$ and $10^5$.
+%Their figure~4a gives 3.74, 5.02, 5.87, 6.30 and 6.52 at $\alpha = 31.25^\circ$ and 2.67, 3.10, 3.31, 3.31 and 3.31 at $\alpha = 45^\circ$, for $R = 10$, $93$, $1.1\times10^3$, $10^4$ and $10^5$.
 % source: summary.txt item 5 (their grid: R = 10, 93.1, 1084, 1e4, 1e5)
-Our $\bar B$ lies between their values for $R = 10$ and $R \approx 10^2$.
-For $\theta_{\rm c} = 59.2^\circ$--$84.3^\circ$, beyond their grid, the corrected model gives $\bar B = 1.97$, 1.93, 1.41 and 1.10, the Monte Carlo 2.01, 1.96, 1.42 and 1.11, and Eq.~\eqref{eq:mc_Bmax} 2.05, 2.00, 1.43 and 1.11.
+%Our $\bar B$ lies between their values for $R = 10$ and $R \approx 10^2$.
+%For $\theta_{\rm c} = 59.2^\circ$--$84.3^\circ$, beyond their grid, the corrected model gives $\bar B = 1.97$, 1.93, 1.41 and 1.10, the Monte Carlo 2.01, 1.96, 1.42 and 1.11, and Eq.~\eqref{eq:mc_Bmax} 2.05, 2.00, 1.43 and 1.11.
 % source: summary.txt item 4 (BH4a, w = 0.513; BH3a w = 0.5, 0.3, 0.1)
-The energy that reaches observers, $\int_0^1 B\,{\rm d}\mu$, is 0.982--0.993 with the correction and 0.35--0.99 without it.
+
+
 % source: summary.txt item 4 (int B1 dmu, int B0 dmu)
 
-The angular distribution inside the funnel is steeper than theirs.
-Near the edge of the funnel, $B(\theta_{\rm c} - 1^\circ)$ is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of $B$ near the axis, whereas in their figure~2a ($R = 10^3$, electron-scattering walls) the ratio is 0.93 for $\alpha = 20^\circ$ and 0.90 for $\alpha = 25^\circ$.
-At $10^\circ$ beyond the edge, the ratio is 0.12 and 0.048 for us and 0.092 and 0.075 for them.
-% source: summary.txt item 6 (ours: B at i = 5 deg as "near the axis"; theirs: B at i = 1 deg); commit 2272e8a
-Their results stop at $\alpha = 25^\circ$ for $B(i)$ and at $\alpha = 45^\circ$ for $\bar B$, so the shape of $B(i)$ can be compared only with their narrower funnels, and $\bar B$ at $\theta_{\rm c} > 45^\circ$ only with $B_{\rm max}$.
-Against the Monte Carlo through the same wind, the corrected model follows $B(i)$ at all seven openings, inside the funnel and beyond its edge, whereas without the correction the funnel is too faint and the light beyond the edge too bright (Fig.~\ref{fig:corrected_B}).
+% The angular distribution inside the funnel is steeper than theirs.
+% Near the edge of the funnel, $B(\theta_{\rm c} - 1^\circ)$ is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of $B$ near the axis, whereas in their figure~2a ($R = 10^3$, electron-scattering walls) the ratio is 0.93 for $\alpha = 20^\circ$ and 0.90 for $\alpha = 25^\circ$.
+% At $10^\circ$ beyond the edge, the ratio is 0.12 and 0.048 for us and 0.092 and 0.075 for them.
+% % source: summary.txt item 6 (ours: B at i = 5 deg as "near the axis"; theirs: B at i = 1 deg); commit 2272e8a
+% Their results stop at $\alpha = 25^\circ$ for $B(i)$ and at $\alpha = 45^\circ$ for $\bar B$, so the shape of $B(i)$ can be compared only with their narrower funnels, and $\bar B$ at $\theta_{\rm c} > 45^\circ$ only with $B_{\rm max}$.
+
+As we see in Fig.~\ref{fig:corrected_B},  the transfer-corrected model follows Monte-Carlo results $B(i)$ at all seven openings, inside the funnel and beyond its edge, whereas without the correction the funnel is too faint and the light beyond the edge too bright.
+The energy that reaches observers, $\int_0^1 B\,{\rm d}\mu$, is 0.982--0.993 with the correction and 0.35--0.99 without it.
 
 \begin{figure*}
 \centering
