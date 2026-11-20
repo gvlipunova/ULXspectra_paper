@@ -29,10 +29,10 @@ This is limb darkening: for pure electron scattering \citep{Chandrasekhar1960}
 % source: docs/green_surface_monte_carlo.md, "Analytic expectations" (Chandrasekhar)
 which is 1.29 at $\mu = 1$, 0.86 at $\mu = 0.5$ and 0.42 at $\mu \to 0$.
 The Lambertian elements of the code give the same total, but miss this redistribution over angles by 30--60\%.
-In an extended wind with $\rho \propto r^{-2}$ the optical depth from the distance $r$ to infinity along a straight ray at the angle $\psi$ to the radius vector is $\tau = \tau_r\,\psi/\sin\psi$, where $\tau_r = \kT\rho r$ is the radial optical depth.
+In an extended wind with $\rho \propto R^{-2}$, $R$ the spherical radius, the optical depth from the distance $R$ to infinity along a straight ray at the angle $\psi$ to the radius vector is $\tau = \tau_R\,\psi/\sin\psi$, where $\tau_R = \kT\rho R$ is the radial optical depth.
 % derived (Claude, 2026-11-01): impact parameter b = r sin(psi); int_{r cos psi}^inf ds/(b^2 + s^2) = psi/b,
 %         so tau = kappa rho r^2 psi/b = tau_r psi/sin(psi)
-Since $\tau_r \propto 1/r$, the photosphere seen along rays leaving at $\psi$ lies at $\psi/\sin\psi$ times the radius of the radial one, that is further out by at most a factor $\pi/2$ for the rays that point outwards, $\psi \le \pi/2$.
+Since $\tau_R \propto 1/R$, the photosphere seen along rays leaving at $\psi$ lies at $\psi/\sin\psi$ times the radius of the radial one, that is further out by at most a factor $\pi/2$ for the rays that point outwards, $\psi \le \pi/2$.
 % source: docs/green_surface_monte_carlo.md, "Analytic expectations" (factor psi/sin psi <= pi/2); psi defined by Claude (author 2026-11-01: define)
 Neither estimate covers the case that dominates in our fits.
 Where $\taup < 1$ through the whole wind, the surface $\taup = 1$ lies on the disc, yet an inclined ray crosses the wind cone over a long path, and the optical depth along it is $\gg 1$.
@@ -458,7 +458,7 @@ As an example, beyond $\theta_{\rm c}$ the wind leaks light with $B \approx 0.1$
 % source: docs/green_surface_monte_carlo.md, "B(i) cone vs wind"; commit 4da7c04
 
 %These runs differ from the opaque cone in two ways at once: the walls are semi-transparent, and the source is extended.
-To separate the effects of transparency and source size, we compared three cases at the same geometry, $\alpha = 10^\circ$, $25^\circ$,  and $45^\circ$ and $R = 10^2$--$10^4$, with $4\times10^5$ packets each (see Fig.~\ref{fig:funnel_wind}): (A) the opaque cone with a point source at the base centre, copying the Lambertian-walls setup of \citet{Ahlberg2026}; (B) the same funnel and point source, with the walls replaced by the wind of a BH3a fit, its inner streamline along the wall of the cone and the wind cut at $r = R$; and (C) the opaque cone with extended emission from wind photosphere and disc\footnote{
+To separate the effects of transparency and source size, we compared three cases at the same geometry, $\alpha = 10^\circ$, $25^\circ$,  and $45^\circ$ and $R = 10^2$--$10^4$, with $4\times10^5$ packets each (see Fig.~\ref{fig:funnel_wind}): (A) the opaque cone with a point source at the base centre, copying the Lambertian-walls setup of \citet{Ahlberg2026}; (B) the same funnel and point source, with the walls replaced by the wind of a BH3a fit, its inner streamline along the wall of the cone and the wind cut at the spherical distance $R$ from the base centre; and (C) the opaque cone with extended emission from wind photosphere and disc\footnote{
 The wind and disc are those of a preliminary BH3a fit of HolmIX over $10^{-6}$–$10^3$ keV: $M = 23.3\,M_\odot$, $\dot m_0 = 51.4$, $\rin = 1.05\,\rg$, $\dot m_{\rm in}/\dot m_0 = 0.85$, $\epsilon_{\rm w} = 0.98$, $\beta_{\rm w} = 0.057$, $\Rsph = 802\,\rin$; only $\omf$ is changed, so that the inner streamline lies on the wall of the cone.}, put on the wall at the same distance from the base centre.
 B differs from A only in the walls, C only in the source.
 % source: ULXspectra-mc docs/green_surface_monte_carlo.md, last section ("Opaque cone vs wind cone at equal alpha and R"),

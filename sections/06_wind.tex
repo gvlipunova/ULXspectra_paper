@@ -95,9 +95,10 @@ Then $J = \cos\theta_0$ is the ratio of the width of the streamtube, ${\rm d}R_0
 In our default law the gas moves ballistically: it has the speed $\beta_{\rm w}\vK(R_0)$ at infinity, where $\vK(R_0) = \sqrt{GM/R_0}$, and conserves its angular momentum.
 Energy conservation then gives the poloidal speed
 \begin{equation}
-v_{\rm pol}^2 = GM\left(\frac{\beta_{\rm w}^2}{R_0} + \frac{2}{\sqrt{r^2 + z^2}} - \frac{R_0}{r^2}\right) .
+v_{\rm pol}^2 = GM\left(\frac{\beta_{\rm w}^2}{R_0} + \frac{2}{R} - \frac{R_0}{r^2}\right), \qquad R^2 = r^2 + z^2 ,
 \label{eq:vballistic}
 \end{equation}
+where $r$ is the cylindrical and $R$ the spherical radius.
 % code: v_wind_streamline(), law "ballistic" (csrcs/wind_struct.c); README "Wind: streamlines"; docs/wind_velocity_laws.md; PLAN C11
 This is the ballistic picture of Sect.~\ref{sec:wind:streamlines}, with $\beta_{\rm w} = \zeta$.
 % source: docs/wind_velocity_laws.md "What Poutanen et al. (2007) assume"
