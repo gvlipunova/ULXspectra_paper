@@ -4,8 +4,8 @@
 
 Usage:  python3 extract_fig2.py 2610.23089v1.pdf ROW OUT.npz      ROW = L (top row) or Ch (middle row)
 
-Fig. 2a: alpha = 5, 10, 15, 20, 25 deg at R = 1e3; Fig. 2b: alpha = 25 deg at R = 1e1 ... 1e5 (the alpha = 10 deg
-curves of Fig. 2b are not extracted). Their B(i) is tallied in 500 inclination bins of equal solid angle
+Fig. 2a: alpha = 5, 10, 15, 20, 25 deg at R = 1e3; Fig. 2b: alpha = 25 deg at R = 1e1 ... 1e5 and alpha = 10 deg at R = 1e1 ... 1e5
+(Fig. 2b, red-orange curves; key "b10:R=1e<k>", added 2026-11-20). Their B(i) is tallied in 500 inclination bins of equal solid angle
 (their Sect. 3.1), so the curves are step functions in mu with steps of 0.002.
 Each curve is stored as an (n, 2) array of (i [deg], B) under the key "a:alpha=<deg>" or "b:R=1e<k>".
 Axis calibration: centres of the tick labels "0" and "80" (x) and "10" and "0.01" (y, log).
@@ -17,13 +17,15 @@ import pymupdf as fitz
 
 pdf, row, out = sys.argv[1], sys.argv[2], sys.argv[3]
 page = fitz.open(pdf)[3]
-XC = {"a": (104.4, 214.5), "b": (241.7, 352.4)}              # x of tick labels "0" and "80"
+XC = {"a": (104.4, 214.5), "b": (241.7, 352.4), "b10": (241.7, 352.4)}              # x of tick labels "0" and "80"
 Y10, Y001, YLO, YHI = {"Ch": (264.4, 337.6, 240, 345), "L": (142.2, 215.9, 118, 222)}[row]
 KEY = {
     "a": {(0.267, 0.005, 0.329): "alpha=5", (0.254, 0.265, 0.53): "alpha=10", (0.164, 0.471, 0.558): "alpha=15",
           (0.135, 0.659, 0.518): "alpha=20", (0.478, 0.821, 0.318): "alpha=25"},
     "b": {(0.098, 0.098, 0.439): "R=1e1", (0.049, 0.049, 0.72): "R=1e2", (0.0, 0.0, 1.0): "R=1e3",
           (0.0, 0.402, 0.902): "R=1e4", (0.0, 0.804, 0.804): "R=1e5"},
+    "b10": {(0.545, 0.137, 0.137): "R=1e1", (0.773, 0.069, 0.069): "R=1e2", (1.0, 0.0, 0.0): "R=1e3",
+            (1.0, 0.275, 0.0): "R=1e4", (1.0, 0.549, 0.0): "R=1e5"},   # legend order of their Fig. 2b, alpha = 10 deg
 }
 res = {}
 for pan, (x0, x80) in XC.items():

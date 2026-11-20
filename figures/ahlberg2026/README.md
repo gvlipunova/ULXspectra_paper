@@ -8,11 +8,14 @@ are vector graphics, and the curves and grid cells are read from the drawing pat
 
 | Their result | Script | Data | What it is |
 |---|---|---|---|
-| Fig. 2a, 2b (top row, Lambertian walls) | `extract_fig2.py PDF L` | `data/ahlberg_fig2_L.npz` | B_L(i): alpha = 5-25 deg at R = 1e3; alpha = 25 deg at R = 1e1-1e5 |
+| Fig. 2a, 2b (top row, Lambertian walls) | `extract_fig2.py PDF L` | `data/ahlberg_fig2_L.npz` | B_L(i): alpha = 5-25 deg at R = 1e3; alpha = 25 and 10 deg at R = 1e1-1e5 (alpha = 10 added 2026-11-20) |
 | Fig. 2a, 2b (middle row, Chandrasekhar walls) | `extract_fig2.py PDF Ch` | `data/ahlberg_fig2_Ch.npz` | B_Ch(i), same cases |
 | Fig. 4a, 4b | `extract_fig4.py PDF` | `data/ahlberg_fig4.npz` | B_Ch averaged over i <= alpha, and B_Ch/B_max; alpha = 6.25-45 deg, R = 10-1e5 |
 
 Checks of the extraction:
+- Fig. 2b, alpha = 10 deg, R = 1e3 reproduces the alpha = 10 deg curve of Fig. 2a (same case): median
+  difference 0.7% at i = 11-20 deg, 0.0% at i < 9 deg; up to 3-6% only at the steps.
+- Plain-text tables: `export_tables.py data` -> `data/export/` (see its README.txt).
 - Fig. 2: their B(i) is tallied in 500 bins of equal solid angle (their Sect. 3.1); the
   extracted curves have their steps at mu = 0.998, 0.996, ... The integral of B over mu
   from 0 to 1 is 0.93-0.99 (1 by definition): the curves end at B = 0.01, the lower edge of the plot.
