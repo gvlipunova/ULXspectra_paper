@@ -449,10 +449,26 @@ reflection (all three) & 0.54--0.79 & 1.8--2.6 \\
 %            replaces the values of Eq. (mc_AhlbergB) (3.02-3.17) of the earlier version
 \end{table*}
 
-The angular distributions differ more than the average values (see Fig.~\ref{fig:funnel_wind}).
+The angular distributions differ more than the average values.
 Inside the funnel, $B(i) = L_{\rm iso}(i)/L_{\rm total}$ of the wind is steeper than that of the opaque cone: 3.6--3.8 near the axis (cone 3.3--3.5) and 2.2--2.5 just inside the edge (cone 2.9).
 Beyond $\theta_{\rm c}$ the wind leaks light with $B \approx 0.1$--$0.7$, and the opaque cone almost none.
 % source: docs/green_surface_monte_carlo.md, "B(i) cone vs wind"; commit 4da7c04
+
+These runs differ from the opaque cone in two ways at once: the walls are semi-transparent, and the source is extended.
+To separate the two, we compared three cases at the same geometry, $\alpha = 45.6^\circ$--$10^\circ$ and $R = 10^2$--$10^4$, with $4\times10^5$ packets each (Fig.~\ref{fig:funnel_wind}): (A) the opaque cone with a point source at the base centre, the setup of \citet{Ahlberg2026}; (B) the same funnel and point source, with the walls replaced by the wind of a BH3a fit, its inner streamline along the wall of the cone and the wind cut at $r = R$; and (C) the opaque cone with the fit's own emission, wind photosphere and disc, put on the wall at the same distance from the base centre.
+B differs from A only in the walls, C only in the source.
+% source: ULXspectra-mc docs/green_surface_monte_carlo.md, last section ("Opaque cone vs wind cone at equal alpha and R"),
+%         commits 1349a03-ef403b4, 3d3521b; table summaries/funnel_wind_cone_B.tsv; wind parameters
+%         docs/data/funnel_wind_cone_HolmIX_wind.md (f2beeda): omega_frac = cos zeta, tan zeta = (R sin alpha - 1)/(R cos alpha);
+%         Thomson scattering only; disc plane a mirror inside the base, diffuse reflector (albedo 1) outside.
+%         Three BH3a winds: HolmIX, NGC1313B, NGC5408; the figure shows HolmIX.
+Case A agrees with the published results: against their $B(i)$ for Lambertian walls (their figure~2) inside the funnel, the median ratio is 1.003--1.007 per panel, and against their mean boosts for electron-scattering walls (their figure~4) it is $-1$\% to $+2$\% at $\alpha = 45^\circ$ and 3--5\% lower at $25^\circ$ and $10^\circ$, as expected for Lambertian walls.
+Semi-transparent walls (B) lower the boost in the funnel and send the light beyond $\alpha$.
+The thin winds of the HolmIX and NGC1313B fits keep 62--91\% of the opaque-cone boost at $\alpha = 45.6^\circ$ but only 33--48\% at $25^\circ$, with 60--80\% of the light beyond $\alpha$ (opaque cone 17--41\%), and inside a $10^\circ$ funnel they give $B = 2$--3.5 instead of 13--27.
+The thick wind of the NGC5408 fit is nearly opaque at $\alpha = 45.6^\circ$ (95--99\% of A) and keeps 67--79\% at $25^\circ$.
+The extended source (C) lowers the boost by 3--21\% at $\alpha = 45.6^\circ$ and by 14--39\% at $25^\circ$: light emitted part of the way up the wall sees a wider opening than light from the base centre.
+For the thin winds the walls matter more, about a factor of 2 at $\alpha = 25^\circ$; for the thick wind the extended source matters more, by 9--17\% at $45.6^\circ$.
+The full model, a wind with an extended source, is the case of Table~\ref{tab:mc_funnel}, computed only at $\alpha = 45.6^\circ$.
 The light emitted at different radii is collimated alike: inside the funnel its $B(i)$ is the same within about 10\% (Fig.~\ref{fig:funnel_radius}).
 Only the outermost wind photosphere of \srcNGCfiftyfour ($x > 300$, 25\% of the luminosity) gives a flatter $B(i)$ and leaks more.
 % source: docs/green_surface_monte_carlo.md, "B(i) by emission radius"; commit 4da7c04
@@ -461,16 +477,19 @@ In the ray cast it is constant as well, because the directly seen surface is nea
 Beyond $\theta_{\rm c}$ the Monte Carlo spectrum is softer than inside, because the hot centre is hidden.
 % source: docs/green_surface_monte_carlo.md, "Spectral shape against i"; commit 4da7c04
 
-\begin{figure}
+\begin{figure*}
 \centering
-\includegraphics[width=\columnwidth]{funnel_beaming_vs_wind.png}
-\caption{Angular distribution of the escaping light, $B(i) = L_{\rm iso}(i)/L_{\rm total}$, in 20 bins in $\mu$.
-Black: opaque cone in the setup of \citet{Ahlberg2026}, $\alpha = 45.6^\circ$, $R = 10^2$, $10^3$, $10^4$.
-Colours: Monte Carlo through the wind of the three best fits, scattering (solid) and reflection (dashed).
-Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
+\includegraphics[width=\textwidth]{funnel_cone_vs_wind.png}
+\caption{Angular distribution of the escaping light, $B(i) = L_{\rm iso}(i)/L_{\rm total}$, for funnels of half-opening $\alpha = 45^\circ$, $25^\circ$ and $10^\circ$ (rows) and edge distance $R = 10^2$, $10^3$, $10^4$ base radii (columns).
+Black: opaque cone with Lambertian walls and a point source at the base centre (our Monte Carlo in the setup of \citealt{Ahlberg2026}); blue: the same funnel with the walls replaced by the wind of a model fit, same point source; blue dashed: the opaque cone with the fit's own emission put on the wall at the same distance from the base centre.
+Red: $B(i)$ of \citet{Ahlberg2026}, their figure~2 (Lambertian walls), at $\alpha = 25^\circ$ and $10^\circ$, not shifted; dash-dot: their figure~4 mean boost at $i < \alpha$ (electron-scattering walls) at $\alpha = 45^\circ$.
+In the rows $\alpha = 25^\circ$ and $10^\circ$, $i < 18.2^\circ$ is drawn in their bins ($\Delta\mu = 0.002$), elsewhere in 20 bins in $\mu$; the row $\alpha = 10^\circ$ is scaled to its curves.
+Made with \code{docs/scripts/funnel\_wind\_cone.py} (code commit ef403b4).}
 \label{fig:funnel_wind}
-% figure: ULXspectra docs/figures/funnel_beaming_vs_wind.png, commit 4da7c04
-\end{figure}
+\end{figure*}
+% figure: ULXspectra-mc docs/figures/funnel_cone_vs_wind.png, commit ef403b4 (replaces funnel_beaming_vs_wind.png of 4da7c04,
+%         author's request 2026-11-20: compare opaque and wind cones at the same geometry); wind of HolmIX BH3a
+%         (results/mcmc_HolmIX.BH3a.full; parameters docs/data/funnel_wind_cone_HolmIX_wind.md, f2beeda)
 
 \begin{figure*}
 \centering
