@@ -4,8 +4,13 @@
 
 \section{Visibility and the observed spectrum}
 \label{sec:spectrum}
+To calculate observed spectra, two broad approaches are considered: `ray cast' and `wind transfer'.
+The second approach appears to be more physically justified.
+It can be implemented as a Monte-Carlo radiation transfer calculation.  For fits, however, it is much faster to apply corrections, obtained by comparing MC transfer to ray-cast  results. This method, which interpolates the data of pre-calculated tables,  is called \textit{'transfer-corrected approach'}, and is presented in more detail in Sect.~\ref{sec:spectrum:transfer}.
 
-The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere.
+We consider the cylindrical coordinate system with the star at the origin and the disc in the equatorial plane. 
+The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}.
+
 For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
 The surface is axisymmetric, $z(R)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
 An element at azimuth $\phi$ contributes its area $R\,{\rm d}R\,{\rm d}\phi$ times the projection of its normal onto the line of sight,
