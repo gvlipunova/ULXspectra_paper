@@ -216,15 +216,18 @@ NS best fits (NS1a, NS2, NS3a, NS4a, NS5, NS5a, NS6, NS7) of 9 sources, $\omf = 
 \end{table*}
 
 \paragraph{The revised table.}
-The results of this paper were obtained with the table described above.
-We have since rebuilt the table (Sect.~\ref{app:mc:bestfits} gives its effect on the best fits): its Monte Carlo runs were redone with the current model, the wind toll restricted to $R < \Rsph$ and the diluted wind spectrum, 28 runs with weak winds were added at all funnel openings, giving 145 runs in all, and it has finer bins in optical depth, $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class with a boundary at $\Rsph$.
-For 17 held-out fits, the revised table gives MC/model per angle bin of 0.96--1.04 inside the funnel and 0.64--1.22 beyond its edge (without the correction 0.59--2.49 and 0.37--18); the typical error falls from 3.6\% to 2.3\% inside the funnel and from 14\% to 12\% beyond it.
-Its remaining weak point is that thick winds seen beyond the edge at $i > 64^\circ$ come out too bright, by up to a factor of 1.5.
-The fits will be redone with the revised table.
-% source: calculation session 2026-11-19/20; ULXspectra-mc PLAN C26, commits 1c7edf0, 4945ea7 (pushed), docs/transfer_correction_results.md
-%         sect. 4 and 6 (second part), summaries/mc_check_best_refits_c26.tsv. Old table: 86 BH runs made before C21 + 31 NS;
-%         new: the 86 redone + 28 weak-wind runs + the same 31 NS = 145. Under consideration before the refit: a wind-size
-%         dimension of the table against the x1.5 excess (about 2 days).
+The results of this paper were obtained with the table described above, built from 117 runs.
+We have since rebuilt the table in two steps.
+First, its Monte Carlo runs were redone with the current model (the wind toll restricted to $R < \Rsph$ and the diluted wind spectrum), 28 runs with weak winds were added at all funnel openings, the bins in optical depth were refined to $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class was added with a boundary at $\Rsph$ (145 runs).
+This version left thick winds seen beyond the funnel edge at $i > 64^\circ$ too bright, by up to a factor of 1.5.
+Second, each ring class was split into four sub-classes by the ring's place in its own wind: its optical depth relative to the largest one of the wind photosphere, and its radius relative to the outer edge of the photosphere, each above or below 0.3; 45 runs at the best fits of all BH presets and sources were added (190 runs).
+For 17 held-out runs, the revised table gives MC/model per angle bin of 0.93--1.04 inside the funnel and 0.76--1.14 beyond its edge (117-run table: 0.64--1.22 beyond the edge; without the correction 0.59--2.49 inside and 0.37--18 beyond).
+The typical error per angle bin beyond the edge falls from 12.6\% to 7.5\% for the held-out runs, from 14.4\% to 6.8\% for the best fits, and from 14.2\% to 9.9\% for BH4a fits between the nodes of the funnel angle; the excess of thick winds at $i > 64^\circ$ is gone.
+All fits are being redone with the revised table.
+% source: calculation session 2026-11-19/20; ULXspectra-mc PLAN C26 (commits 1c7edf0, 4945ea7; 145 runs) and PLAN C28 (commit afaa8b3; 190 runs),
+%         docs/transfer_correction_results.md sect. 4, 6, 8. The 12.6% -> 7.5% etc. compare the 145-run (C26) and 190-run (C28) tables.
+% STATUS: full refit round with the C28 table started 2026-11-20 14:18 (run tags mc28_0p3-10keV, 182 fits, and mc28_1e-6-1e3keV;
+%         without the eps_w constraint), about 6 days. All fit results and Table tab:bestfit_params still use the 117-run table.
 
 \subsection{Held-out checks of the correction}
 \label{app:mc:heldout}
@@ -618,13 +621,14 @@ The best fit of NGC247S, BH4a at $i = 86^\circ$, $24^\circ$ beyond $\theta_{\rm 
 For NGC247S we therefore use its second best fit, BH3a ($\chi^2 = 0.133$, $i = 54^\circ$), which passes: $\chi^2$ rises from 0.13 to 4.9.
 % source: transfer_correction_results.md sect. 6, bullet 3; author 2026-11-18 ("Use NGC247S BH3a instead")
 
-With the revised table (Sect.~\ref{app:mc:table}), the model and the Monte Carlo agree that the two best fits seen almost edge-on are not valid.
+With the first version of the revised table (145 runs, Sect.~\ref{app:mc:table}), the model and the Monte Carlo agree that the two best fits seen almost edge-on are not valid.
 At their fitted parameters, NGC247S BH4a gives $\chi^2 = 528$ with the revised table and 586 with the Monte Carlo (0.114 with the old table), and M101ULS BH4a gives 1930 and 1810 (3.95 with the old table).
 These fits were good only because of the error of the old table beyond the funnel edge.
 The earlier pass of M101ULS BH4a in the check above was not valid, because its comparison window crossed the funnel edge.
 M101ULS therefore has no confirmed fit at present; its next best fit is BH2 with $\chi^2 = 121$.
 NGC247S keeps BH3a, which still passes.
-For the other best fits, $\chi^2$ at fixed parameters changes by at most 7 with the revised table.
+For the other best fits, $\chi^2$ at fixed parameters changes by at most 7 with that version.
+% NOTE: these numbers are for the 145-run (C26) table; the refits with the 190-run (C28) table will replace them.
 % source: calculation session 2026-11-19/20; transfer_correction_results.md sect. 6 (second part), summaries/mc_check_best_refits_c26.tsv
 %         (ULXspectra-mc 4945ea7)
 
