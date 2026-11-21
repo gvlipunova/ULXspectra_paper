@@ -23,6 +23,7 @@ here: file, script, code commit, and the section that uses it.
 | `fits_by_source_mc_0p3-10keV.pdf` (6 pages) | `docs/scripts/plot_fits_by_source.py` | `8176d9c` (branch `mc-transfer-corrections`; page 6 redrawn) | App. Overview of the fits (fig:fits_M ... fig:fits_spectra) |
 | `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | App. Radial profiles (fig:mdot_profiles) |
 | `torque_profile.pdf`, `temperature_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4) | -- | App. Radial profiles (fig:torque, fig:temperature) |
+| `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | App. Radial profiles and geometry (fig:wind_geometry) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository

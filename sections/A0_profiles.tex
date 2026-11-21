@@ -1,28 +1,26 @@
 % Illustrations of the accretion-rate, torque and temperature profiles (author's requests 2026-11-21),
 % moved here from Sects. 2.3 and 4; scripts figures/plot_mdot_profiles.py, figures/plot_torque_temperature.py
 
-\section{Radial profiles of the disc}
+\section{Radial profiles of the disc and geometry of the wind}
 \label{app:profiles}
 
 Figures~\ref{fig:mdot_profiles}--\ref{fig:temperature} illustrate the accretion rate (Sect.~\ref{sec:model:mdot}), the viscous torque (Sect.~\ref{sec:disc:torque}) and the disc temperature (Sect.~\ref{sec:disc:teff}) of a BH disc, computed from the equations of those sections for one set of parameters.
 
-\begin{figure*}
+\begin{figure}
 \centering
-\includegraphics[width=\textwidth]{mdot_profiles.pdf}
-\caption{Accretion rate against $x = r/\rin$ (logarithmic).
-(a) BH: the main model, Eq.~\eqref{eq:mdot_setin}, falls linearly in $r$ from $\mdot_0$ at $\Rsph$ to $f_{\rm in}\mdot_0$ at $\rin$ (solid); the SS73 profile, Eq.~\eqref{eq:mdot_SS73}, falls to $\mdot(\rin) = \mdot_0\rin/\Rsph$, that is $\mdot/\mdot_0 = 1/\mdot_0$ for $\rin = 6\,\rg$ (dashed).
-(b) NS: the main model with $\rin = \rmag$, $x = r/\rmag$.
+\includegraphics[width=\columnwidth]{mdot_profiles.pdf}
+\caption{Accretion rate of a BH disc against $x = r/\rin$ (logarithmic): the main model, Eq.~\eqref{eq:mdot_setin}, falls linearly in $r$ from $\mdot_0$ at $\Rsph$ to $f_{\rm in}\mdot_0$ at $\rin$ (solid); the SS73 profile, Eq.~\eqref{eq:mdot_SS73}, falls to $\mdot(\rin) = \mdot_0\rin/\Rsph$, that is $\mdot/\mdot_0 = 1/\mdot_0$ for $\rin = 6\,\rg$ (dashed).
 Outside $\Rsph$ the rate is $\mdot_0$.
-Drawn for $\Rsph/\rin = 50$ and $f_{\rm in} = 0.3$; in (a) $\mdot_0 = 50$ and $r_{\rm in,f} = 6$.}
+Drawn for $\mdot_0 = 50$, $f_{\rm in} = 0.3$ and $r_{\rm in,f} = 6$.}
 \label{fig:mdot_profiles}
-\end{figure*}
+\end{figure}
 % figure: this repository, figures/plot_mdot_profiles.py (layout: the author's sketch 2026-11-21)
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{torque_profile.pdf}
 \caption{Viscous torque of a BH disc, Eq.~\eqref{eq:Fvis}, in units of $\Mdot_0 h(\rin)$, for the main accretion-rate profile (solid), the SS73 profile (dashed) and a disc without wind (dotted), $F_{\rm vis} = \Mdot_0[\sqrt{GMr} - \sqrt{GM\rin}] \to \Mdot_0\sqrt{GMr}$ at $r \gg \rin$.
-Drawn for $\mdot_0 = 50$, $r_{\rm in,f} = 6$, $\Rsph = 6\mdot_0\rg$ ($\Rsph = 50\rin$), $f_{\rm in} = 0.3$, as in Fig.~\ref{fig:mdot_profiles}a.}
+Drawn for $\mdot_0 = 50$, $r_{\rm in,f} = 6$, $\Rsph = 6\mdot_0\rg$ ($\Rsph = 50\rin$), $f_{\rm in} = 0.3$, as in Fig.~\ref{fig:mdot_profiles}.}
 \label{fig:torque}
 \end{figure}
 % figure: this repository, figures/plot_torque_temperature.py (author's request 2026-11-21), computed from Eqs. (Fvis), (mdot_setin), (mdot_SS73)
@@ -36,3 +34,27 @@ Parameters as in Fig.~\ref{fig:torque}.}
 \label{fig:temperature}
 \end{figure}
 % figure: this repository, figures/plot_torque_temperature.py, computed from Eqs. (Fvis), (Qvis), (Teff), (Tdisc), (rtrap)
+
+Figure~\ref{fig:wind_geometry} shows the geometry of the wind (Sect.~\ref{sec:wind}) at two fits.
+The BH panel is the BH3a fit of NGC5408, made with the revised table of the transfer correction (190 runs): $M = 19.9\,M_\odot$, $\rin = 1.088\,r_{\rm isco} = 3.20\times10^6$~cm, $\log\mdot_0 = 2.153$, $\epsilon_{\rm w} = 0.387$, $\beta_{\rm w} = 2.68$, $\mdot_{\rm in}/\mdot_0 = 0.609$, $i = 50.3^\circ$ and $\omf = 0.7$.
+Then $\Rsph = 1924\,\rin$, $\Rtrap = 1570\,\rin$ and $\rout = 2.57\times10^5\,\rin$; the wind photosphere covers $r = 94$--$6.6\times10^3\,\rin$ and rises to $z = 718\,\rin$, and the disc is seen directly inside and outside it.
+The NS panel is the NS5r fit of NGC7793 with the dipole central emitter, made with the 117-run table ($\chi^2 = 0.94$ for 30 points): $M = 1.4\,M_\odot$, $\rmag = 6.48\times10^6$~cm, $\RNS = 0.154\,\rmag$, $\log\mdot_0 = 3.088$, $\epsilon_{\rm w} = 0.5$ and $\beta_{\rm w} = 1$ (fixed), $\mdot_{\rm in}/\mdot_0 = 0.0045$, $i = 17.3^\circ$, $\log\eta_{\rm magn} = 0$ and $\omf = 0.7$.
+Then $\Rsph = 272\,\rmag$, $\Rtrap = 469\,\rmag$ and $\rout = 4.08\times10^8\,\rmag$; the wind photosphere covers $r = 1.29$--$2.8\times10^4\,\rmag$ and rises to $z = 4.4\times10^3\,\rmag$, and the disc is seen directly beyond about $3\times10^4\,\rmag$.
+In both fits $\theta_{\rm c} = 45.6^\circ$ and $\theta_{\rm d} = 90^\circ$, so the outermost streamline runs along the disc.
+% source: ULXspectra-mc docs/data/wind_geometry_params.md, commit 65f8bbf (calculation session 2026-11-21). BH: run mc28_0p3-10keV;
+%         NS: run mc_0p3-10keV (NS5r chosen: NS7r, the best fit of NGC7793, has dip = 0; M51ULS NS6r has no wind, R_sph <= R_m);
+%         the NS panel will be redrawn with the mc28 round's NGC7793 NS5r.
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{wind_geometry.pdf}
+\caption{Geometry of the wind in the $(r, z)$ plane, both axes logarithmic, $r$ cylindrical in units of $\rin$ (NS: $\rmag$); the bottom edge is the disc plane.
+Straight streamlines are launched at $\rin \le R_0 \le \Rsph$ with $\cos\theta_0$ linear from $\theta_{\rm c}$ to $\theta_{\rm d}$ (Eq.~\ref{eq:theta0}); the innermost one, at $\theta_{\rm c}$, is the funnel wall.
+Also shown: the wind photosphere $\taup = 1$ and its end, the disc rings seen directly (bars on the disc plane), and $\rin$ ($\rmag$), $\Rsph$, $\Rtrap$ and $\rout$ on the $r$ axis.
+NS: the last closed dipole field line $R = \rmag\sin^2\theta$, the rings of the central emitter and the NS surface $R = \RNS$.
+Fits and parameters in the text.
+Made with \code{docs/scripts/plot\_wind\_geometry.py} (code commit 65f8bbf).}
+\label{fig:wind_geometry}
+\end{figure*}
+% figure: ULXspectra-mc docs/figures/wind_geometry.pdf, commit 65f8bbf
+
