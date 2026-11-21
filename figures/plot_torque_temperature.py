@@ -70,21 +70,14 @@ def mark(ax):
     ax.set_xlabel(r"$x = r/R_{\rm in}$")
 
 
-# NS: torque at R_in = R_m, F_in = beta_t Mdot(R_m) h(R_m), beta_t = 1 (Eq. Fin_NS); x = r/R_m. The normalized profiles
-# depend only on x_sph and f_in, so x_sph = 50 stands e.g. for mdot_0 = 500, R_m = 60 R_g.
-FNS = {p: F[p] + mdot(p)[0] for p in ("main", "nowind")}
-fig, axs = plt.subplots(1, 2, figsize=(6.6, 2.7), sharey=True)
-for ax, FF, tag in ((axs[0], F, "(a) BH"), (axs[1], FNS, "(b) NS")):
-    for p, st in style.items():
-        if p in FF:
-            ax.plot(x, FF[p], **st)
-    ax.set_yscale("log"); ax.set_ylim(1e-2, 80)
-    mark(ax)
-    ax.text(20, 6, r"$\sim\dot M_0\sqrt{GMr}$", color="0.4", fontsize=8.5, ha="right")
-    ax.text(0.04, 0.93, tag, transform=ax.transAxes, va="top")
-    ax.legend(loc="lower right", frameon=False)
-axs[0].set_ylabel(r"$F_{\rm vis}/[\dot M_0\,h(R_{\rm in})]$")
-axs[1].set_xlabel(r"$x = r/R_{\rm m}$")
+fig, ax = plt.subplots(figsize=(3.3, 2.7))
+for p, st in style.items():
+    ax.plot(x, F[p], **st)
+ax.set_yscale("log"); ax.set_ylim(1e-2, 80)
+mark(ax)
+ax.set_ylabel(r"$F_{\rm vis}/[\dot M_0\,h(R_{\rm in})]$")
+ax.text(20, 6, r"$\sim\dot M_0\sqrt{GMr}$", color="0.4", fontsize=8.5, ha="right")
+ax.legend(loc="lower right", frameon=False)
 fig.savefig(f"{OUT}/torque_profile.pdf", bbox_inches="tight")
 
 fig, ax = plt.subplots(figsize=(3.3, 2.7))
