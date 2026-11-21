@@ -43,7 +43,16 @@ With $s = \sqrt{\min(x, \xsp)}$ and $h_{\rm in} = h(\rin)$,
 \end{multline}
 % code: disc_Fvis_point() (csrcs/disc_struct.c), closed form in its header comment
 where $\Theta$ is the Heaviside step function.
-$\Fvis$ and the disc temperature are continuous at $\Rsph$.
+$\Fvis$ and the disc temperature are continuous at $\Rsph$ (Fig.~\ref{fig:torque}).
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{torque_profile.pdf}
+\caption{Viscous torque of a BH disc, Eq.~\eqref{eq:Fvis}, in units of $\Mdot_0 h(\rin)$, for the main accretion-rate profile (solid), the SS73 profile (dashed) and a disc without wind (dotted).
+Drawn for $\mdot_0 = 50$, $r_{\rm in,f} = 6$, $\Rsph = 6\mdot_0\rg$ ($\Rsph = 50\rin$), $f_{\rm in} = 0.3$, as in Fig.~\ref{fig:mdot_profiles}.}
+\label{fig:torque}
+\end{figure}
+% figure: this repository, figures/plot_torque_temperature.py (author's request 2026-11-21), computed from Eqs. (Fvis), (mdot_setin), (mdot_SS73)
 
 Since the wind takes away angular momentum, less of it has to be transported by the viscous stress, and it is the stress that heats the disc.
 Outside $\Rsph$ the torque is lower than in a disc without outflow and with the same $\Mdot_0$ by $\int (\Mdot_0 - \Mdot)\,{\rm d}h$, taken from $\rin$ to $\Rsph$, so the outer disc is colder.
@@ -106,6 +115,18 @@ T_{\rm disc} =
 % reason: the author, 2026-11-09 ("only inside this radius the disc has to spend energy on launching the wind")
 % term "wind toll": the author 2026-11-10 (PLAN C21, README "Terms"); replaces "eps_w loss", "launch loss",
 %       "energy given to the wind". Never "diluted" for the toll.
+Figure~\ref{fig:temperature} shows the resulting profiles.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{temperature_profile.pdf}
+\caption{Temperature of a BH disc: $\Tvis$ of Eq.~\eqref{eq:Teff} for the main accretion-rate profile (dash-dotted) and for a disc without wind (dotted), and the radiated temperature $T_{\rm disc}$ of Eq.~\eqref{eq:Tdisc} for the main profile with $\epsilon_{\rm w} = 0.5$ (solid), in units of the largest $\Tvis$ of the disc without wind.
+Inside $\Rtrap = 12\mdot_0\rg$ (Eq.~\ref{eq:rtrap}) the temperature falls as $r^{-1/2}$, outside as $r^{-3/4}$; $T_{\rm disc}$ steps down inwards at $\Rsph$ by $(1 - \epsilon_{\rm w})^{1/4}$.
+Parameters as in Fig.~\ref{fig:torque}.}
+\label{fig:temperature}
+\end{figure}
+% figure: this repository, figures/plot_torque_temperature.py, computed from Eqs. (Fvis), (Qvis), (Teff), (Tdisc), (rtrap)
+
 This discontinuous relation holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
 The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset) the disc inside $\Rsph$ is dark (\textbf{this was implicitely ignored by L99 - check}).
 The wind toll is paid in the disc, before its photons are made, and it applies whatever the wind then does to them (Sect.~\ref{sec:spectrum}).
