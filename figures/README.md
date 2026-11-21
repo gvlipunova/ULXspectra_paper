@@ -21,9 +21,11 @@ here: file, script, code commit, and the section that uses it.
 | `corrected_B_of_i.png` | this repository: `figures/ahlberg2026/plot_corrected_B.py` (data `figures/ahlberg2026/data/wind_mc.npz`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:corrected_B) |
 | `funnel_cone_vs_wind.png` | `docs/scripts/funnel_wind_cone.py` (`plot ... HolmIX alphas=45,25,10`) | `ef403b4` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_wind; replaces `funnel_beaming_vs_wind.png`) |
 | `fits_by_source_mc_0p3-10keV.pdf` (6 pages) | `docs/scripts/plot_fits_by_source.py` | `8176d9c` (branch `mc-transfer-corrections`; page 6 redrawn) | App. Overview of the fits (fig:fits_M ... fig:fits_spectra) |
-| `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | App. Radial profiles (fig:mdot_profiles) |
+| `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | Sect. Critical radii, 3.1 (fig:mdot_profiles) |
 | `torque_profile.pdf`, `temperature_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4) | -- | App. Radial profiles (fig:torque, fig:temperature) |
 | `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | App. Radial profiles and geometry (fig:wind_geometry) |
+| `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `bb66b81`, `eba4a0e` (branch `mc-transfer-corrections`) | Sect. Wind, 6.1 (fig:streamlines_linear) |
+| `streamline_speed.pdf`, `streamline_speed_beta1.pdf` | `docs/scripts/plot_streamline_speed.py` | `eba4a0e`, `afb2f1f` | Sect. Wind, 6.3 (fig:streamline_speed, fig:streamline_speed_beta1) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
