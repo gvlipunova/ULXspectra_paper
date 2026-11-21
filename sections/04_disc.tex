@@ -69,7 +69,7 @@ The viscous heating per unit area of one side of the disc is
 This is a usual expression for viscous disc, formulated in terms of the viscous torque, instead of the accretion rate.  
 % code: disc_Qvis_point() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
 
-We describe the energy that the disc releases per unit area of one side by the temperature $\Tvis$.
+We describe the energy that the disc releases per unit area of one side by the effective temperature $\Tvis$: $Q_{\rm out} = \sigma \Tvis^4$.
 Outside the trapping radius the disc releases it locally, $\sigma\Tvis^4 = \Qvis$.
 Inside it, advection makes the released flux fall as $r^{-2}$, and we join the two continuously at $\Rtrap$:
 \begin{equation}
@@ -82,13 +82,15 @@ Inside it, advection makes the released flux fall as $r^{-2}$, and we join the t
 \end{equation}
 % code: disc_Qvis_and_Teff() (csrcs/disc_struct.c); README "Viscous torque and disc temperature"
 $\Qvis(\Rtrap)$ is evaluated as if the disc continued beyond $\rout$.
-$\Tvis$ does not include the wind toll; the disc radiates at the temperature~\eqref{eq:Tdisc} below.
+
+%$\Tvis$ does not include the wind toll; the disc radiates at the temperature~\eqref{eq:Tdisc} below.
+
 % symbol T_vis as in README "Wind temperature and energy budget" (T_disk = (1 - eps_w)^(1/4) T_vis); author 2026-11-13
 % AUTHOR: physical argument for sigma T^4 ~ R^-2 inside R_trap (L_per ln R = const),
 %         with a reference?
 
 The wind is launched from the disc between $\rin$ and $\Rsph$, and there the disc gives the fraction $\epsilon_{\rm w}$ of the energy it releases to the wind.
-We call this the `wind toll'.
+We call this the `\textit{wind toll}'.
 Only inside $\Rsph$ does the disc pay it.
 The disc thermalises, so what remains is radiated as a true blackbody at
 \begin{equation}
@@ -105,7 +107,7 @@ T_{\rm disc} =
 % term "wind toll": the author 2026-11-10 (PLAN C21, README "Terms"); replaces "eps_w loss", "launch loss",
 %       "energy given to the wind". Never "diluted" for the toll.
 This discontinuous relation holds both for the disc seen directly and for the disc under the wind (Sect.~\ref{sec:wtemp}), for a BH and for a NS.
-The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset, \textbf{this was implicitely ignored by L99 - check}) the disc inside $\Rsph$ is dark.
+The disc temperature thus steps down inwards at $\Rsph$ by the factor $(1 - \epsilon_{\rm w})^{1/4}$; with $\epsilon_{\rm w} = 1$ (the L99 preset) the disc inside $\Rsph$ is dark (\textbf{this was implicitely ignored by L99 - check}).
 The wind toll is paid in the disc, before its photons are made, and it applies whatever the wind then does to them (Sect.~\ref{sec:spectrum}).
 % source: PLAN C21 (two steps), README "Terms"
 % source: README "Wind temperature and energy budget"
@@ -127,7 +129,9 @@ where $L_{\rm vis}(\Rtrap, \rout) = 4\pi\int \Qvis r\,{\rm d}r$ is the viscous r
 For $\Rtrap \le \rin$ this is the whole viscous release, which also covers sub-Eddington rates.
 When $\Rtrap$ is close to the radius outside which the disc releases $\LEdd$, Eq.~\eqref{eq:Ldisc} gives $L_{\rm disc} \approx \LEdd[1 + \ln(\Rtrap/\rin)]$.
 % code: README "Luminosity budget", mode 1+log
-Of $L_{\rm disc}$, the wind toll takes the fraction $\epsilon_{\rm w}$ of the release inside $\Rsph$, and the disc radiates
+
+
+The wind toll takes the fraction $\epsilon_{\rm w}$  of the disc release inside $\Rsph$, and the disc radiates
 \begin{equation}
 \begin{split}
 L_{\rm disc,rad} &= L_{\rm disc} - \epsilon_{\rm w}L_{\rm sph}, \\

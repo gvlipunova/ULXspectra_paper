@@ -43,7 +43,7 @@ P07 give a fit to their numerical solutions (P07, eq.~21),
 \label{eq:rsph_P07}
 \end{equation}
 % code: rsp_over_rin(), rule "P07fit" (csrcs/disc_struct.c); README "Spherization radius"
-For the SS73 profile, the rule \code{SS73} places $\Rsph$ where $\mdot(\Rref) = 1$ in Eq.~\eqref{eq:mdot_SS73}, and \code{SS73\_eq71} takes eq.~(7.1) of \citet{Shakura1973} literally.
+For the SS73 profile, the rule \code{SS73} places $\Rsph$ where $\mdot(\Rref) = 1$ in Eq.~\eqref{eq:mdot_SS73}, and \code{SS73\_eq71} takes equation~(7.1) of \citet{Shakura1973} literally.
 The rule \code{M26} is $\Rsph = (3/8\pi)\,\kT\Mdot_0/c$ \citep{Middleton2026}.
 The rule \code{mdot0} sets $\Rsph = \mdot_0\,\rin$, so that it scales with the actual inner radius rather than with $\Rref$.
 % code: rsp_over_rin(), rules "SS73", "SS73_eq71", "M26", "mdot0"
@@ -88,7 +88,11 @@ If the disc is already below $\LEdd$ beyond $\rin$, $\Rsph = \rin$.
 \subsection{Trapping radius}
 \label{sec:radii:trap}
 
-We assume that inside the trapping radius, photons are advected with the flow and the temperature $\Tvis$ of Eq.~\eqref{eq:Teff} falls as $r^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
+We assume that inside the trapping radius, photons are advected with the flow,
+\begin{equation}
+    Q_{\rm vis } =  Q_{\rm out }  + Q_{\rm adv } 
+\end{equation}
+and the temperature $\Tvis$ of Eq.~\eqref{eq:Teff} falls as $r^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
 Following \citet{Middleton2026} we take
 \begin{equation}
 \Rtrap = 2\,\frac{z}{r}\,\frac{\mdot_0}{\etaEdd}\,\rg ,

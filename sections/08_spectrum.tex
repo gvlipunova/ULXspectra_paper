@@ -6,13 +6,13 @@
 \label{sec:spectrum}
 To calculate observed spectra, two broad approaches are considered: `ray cast' and `wind transfer'.
 The second approach appears to be more physically justified.
-It can be implemented as a Monte-Carlo radiation transfer calculation.  For fits, however, it is much faster to apply corrections, obtained by comparing MC transfer to ray-cast  results. This method, which interpolates the data of pre-calculated tables,  is called \textit{'transfer-corrected approach'}, and is presented in more detail in Sect.~\ref{sec:spectrum:transfer}.
+It can be implemented as a Monte-Carlo radiation transfer calculation.  For fits, however, it is much faster to apply corrections, obtained by comparing grey MC transfer to ray-cast  results. This method, which interpolates the data of pre-calculated tables,  is called \textit{'transfer-corrected approach'}, and is presented in more detail in Sect.~\ref{sec:spectrum:transfer}.
 
 We consider the cylindrical coordinate system with the star at the origin and the disc in the equatorial plane. 
-The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}.
+The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}. \textit{Wind photosphere} is defined as a surface where the optical thickness on scattering, calculated from infinity to disc along a normal to it, is unity.
 
 For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
-The surface is axisymmetric, $z(r)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
+The emitting surface is axisymmetric, has height $z(r)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
 An element at azimuth $\phi$ contributes its area $r\,{\rm d}r\,{\rm d}\phi$ times the projection of its normal onto the line of sight,
 \begin{equation}
 \mu_{\rm proj} = \cos i - \frac{{\rm d}z}{{\rm d}r}\,\sin i\,\cos\phi ,
@@ -24,9 +24,9 @@ if it faces the observer ($\mu_{\rm proj} > 0$) and if the ray from it towards t
 % AUTHOR: the observer sees one side; the factor 4 pi in eq. (Lnu) makes the spectrum
 %         isotropic-equivalent. Check the wording.
 
-The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, and so does the central emitter of a NS.
+The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, and so does the central emitter of a NS.\footnote{This simplification should be modified in future modifications of the code.}
 The wind rings do not.
-Above about 0.3~keV the wind is far too thin to absorb photons and emit them again (Sect.~\ref{sec:disc:thermalization}).
+Above about 0.3~keV the wind is far too thin to absorb photons and emit them again (see Sect.~\ref{sec:disc:thermalization}).
 It scatters the disc photons without changing their frequency, so they keep the colour temperature $T_{\rm w,raw}$ of the disc that made them (Eq.~\ref{eq:Twraw}) and are spread over the larger photosphere.
 Each wind ring is therefore a diluted blackbody, with the dilution factor $w$,
 \begin{equation}
@@ -57,14 +57,16 @@ The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is 
 At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
 % source: ULXspectra-mc PLAN.md C21 (fits from before the temperature step at R_sph, eq. Tdisc); README "Wind spectrum"; commit f546151
 
-The alternative is a wind that thermalises the photons again: a blackbody at $\Tw$, cooler and with more photons than the disc made; it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
-% code: wind_spectrum switch (default 1), CHANGELOG 2026-11-04
 Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $w > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $w > 1$ (1.03).
-% source: CHANGELOG 2026-11-04 ("f_cor > 1 only at NGC300 BH3a (1.03)"); README "Wind spectrum"
-The dilution has limits.
-In the UV, near 0.01~keV, the wind does thermalise, and there a blackbody at $\Tw$ would be the better description (Sect.~\ref{sec:disc:thermalization}).
-One $w$ holds for the whole wind, and each wind ring has one source radius $\xeff$.
+A simplification of the model, which is hard to overcome, is that one value of $w$ holds for the whole wind, and each wind ring has one `source radius'
+$\xeff$ \footnote{the radius of the underlying disc ring that feeds the photosphere ring with photons  \textbf{check ?}}.
 % source: README "Wind spectrum" (limitations)
+
+The alternative is a wind that thermalises the photons: a blackbody, which is cooler and has more photons than the disc made; it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
+% code: wind_spectrum switch (default 1), CHANGELOG 2026-11-04
+% source: CHANGELOG 2026-11-04 ("f_cor > 1 only at NGC300 BH3a (1.03)"); README "Wind spectrum"
+%The dilution has limits.
+In the UV, near 0.01~keV, the wind does thermalise, and there a blackbody at $\Tw$ would be the better description (see Sect.~\ref{sec:disc:thermalization}).
 
 \subsection{Transfer through the wind}
 \label{sec:spectrum:transfer}
@@ -75,6 +77,7 @@ The ray cast alone treats the wind above the surface $\taup = 1$ as transparent,
 A Monte Carlo of electron scattering through the wind shows that this makes $L_{\rm iso}$ too low inside the funnel, by a factor of 1.5--2.4, and too high and too hard beyond its edge, where the hot inner disc stays visible (Appendix~\ref{app:mc}).
 % source: ULXspectra docs/green_surface_monte_carlo.md, "Conclusions" items 1-2; commit 4da7c04
 We therefore correct the ray cast with a table of Monte Carlo runs (switch \code{mc\_transfer} = 1).
+
 Each emitting ring $j$ of the wind, the disc or, for a NS, the central emitter contributes at $\mu = \cos i$
 \begin{equation}
 L_j(\mu) = 4\sigma T_j^4\,A_{{\rm att},j}(\mu) + S_j\,h_j(\mu) .
@@ -105,7 +108,7 @@ f_j\,g_{\rm out}(v)/\cos\theta_{\rm c}, & \mu < \cos\theta_{\rm c},
 \label{eq:hj}
 \end{equation}
 % code: README "Visibility and spectrum" (h_j, u, v, f_j); csrcs/mc_transfer.c
-with $u = (1 - \mu)/(1 - \cos\theta_{\rm c})$ and $v = \mu/\cos\theta_{\rm c}$.
+with introduced variables $u = (1 - \mu)/(1 - \cos\theta_{\rm c})$ and $v = \mu/\cos\theta_{\rm c}$.
 The share $f_j$ of this light that leaves beyond $\theta_{\rm c}$ and the profiles $g_{\rm in}$ and $g_{\rm out}$ come from a table of 117 Monte Carlo runs (Appendix~\ref{app:mc:table}).
 They depend on the class of the ring (wind or disc, and its position $x/\xsp$; for a NS with the dipole surface, the position on the central emitter), on the optical depth $\tau_j$ of the ring towards the angle $\theta_{\rm c} + \min[10^\circ, (90^\circ - \theta_{\rm c})/2]$, and on $\theta_{\rm c}$.
 % code: README "Visibility and spectrum" (classes, tau_j direction, interpolation: ln f linear between theta_c nodes,
