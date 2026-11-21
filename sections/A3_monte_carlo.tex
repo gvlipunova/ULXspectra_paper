@@ -514,6 +514,21 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 % figure: ULXspectra docs/figures/funnel_beaming_by_radius.png, commit 4da7c04
 \end{figure*}
 
+\paragraph{A thick disc.}
+% Calculation-session note 2026-11-21 (author's request: "put inside beaming section in appendix").
+% Source: MC estimate from the 43 C28 runs with theta_c = 45.6 deg (ULXspectra-mc, branch mc-transfer-corrections);
+% AUTHOR: code commit and script of this estimate are not given in the note -- ask the calculation session.
+% AUTHOR: "R_b" (end of the flat top) as in the note; is it R_sph, R_in or the funnel base radius?
+We considered, but did not implement, a thick-disc variant: $z/r = 0.5$ inside $\max(\Rsph, R_{\rm trap})$, a flat top out to $10\,R_{\rm b}$, and $z/r = 0.05$ beyond.
+In the Monte Carlo of the 43 runs of the revised table with $\theta_{\rm c} = 45.6^\circ$, only 0--10\% (median 2\%) of the light emitted inside $\Rsph$ leaves at $i > 63.4^\circ$.
+A disc that thick would therefore raise $L_{\rm iso}$ inside the funnel by about 3\% (at most 17\%).
+The collimation is set by the wind funnel, not by the thickness of the disc.
+The thick disc adds a second occultation edge at $\theta_{\rm d} = \arctan(1/H_1) = 63.4^\circ$, beyond which the hot centre is hidden.
+% H_1 = z/r = 0.5 of the inner disc: arctan(2) = 63.4 deg
+The vertical column of the wind does not depend on its solid angle, so the temperature of the wind changes by about 10\% at most.
+This variant matches the geometry of \citet{Shakura1973}, with $H \approx (3/8\pi)\,\kappa \dot M_0/c$ beyond $\Rsph$.
+It would need a new axis, $\theta_{\rm d}$, in the table of the correction.
+
 \subsection{Comparison of transfer-corrected model with full MC-transfer model.}
 % Code: ULXspectra branch mc-transfer-corrections, commit 2272e8a (C model with mc_transfer = 1 and 0;
 %       Monte Carlo docs/scripts/mc_green_surface.py, scattering, 1e5 packets).
