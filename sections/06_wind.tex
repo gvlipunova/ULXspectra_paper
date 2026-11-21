@@ -133,7 +133,7 @@ The gas leaves the disc at $\sqrt{\beta_{\rm w}^2 + 1}\,\vK(R_0) = \xi\vK(R_0)$ 
 The direction of the flow, however, is set by the straight streamlines of Eq.~\eqref{eq:streamline}, not by the ballistic trajectory.
 % code: v_wind_streamline() uses only the speed of the ballistic solution (csrcs/wind_struct.c)
 The speed is floored at $\beta_{\rm w}\vK(R_0)$, which acts only for streamlines within $7.4^\circ$ of the axis; the law~\eqref{eq:theta0} gives $45^\circ$--$89^\circ$ at the fits, so the floor is not active.
-The ballistic speed depends little on the angle of the streamline: it differs by less than 1\% between $\theta_0 = 45.6^\circ$ and $80^\circ$ (Figs.~\ref{fig:streamline_speed} and~\ref{fig:streamline_speed_beta1}).
+The ballistic speed depends little on the angle of the streamline: it differs by less than 1\% between $\theta_0 = 45.6^\circ$ and $80^\circ$ (Figs.~\ref{fig:streamline_speed} and~\ref{fig:streamline_speed_beta1} in Appendix~\ref{app:profiles}).
 % source: calculation session 2026-11-21 (correction: the floor acts only for theta_0 < 7.4 deg, not for every theta_0 < 45 deg);
 %         docs/scripts/plot_streamline_speed.py (commits eba4a0e, afb2f1f)
 % source: docs/wind_velocity_laws.md, notes on (c); AUTHOR: confirm the range of angles for the final fits.
@@ -147,29 +147,6 @@ The P07 law was meant for the vertically averaged wind; applied along a streamli
 % source: docs/wind_velocity_laws.md, findings 1
 The three other laws share the speed at infinity and give the same outer wind.
 At the best fits of NGC~7793 (made with the P07 law), replacing it with the ballistic law changes the spectrum by up to 0.29~dex, at the lowest energies.
-
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{streamline_speed.pdf}
-\caption{Speed along the funnel-wall streamline ($\theta_0 = 45.6^\circ$) in units of $\vK(R_0)$, against the distance $l$ from the launch point in units of $R_0$, for $\beta_{\rm w} = 0.3$, 1 and 2.7 (colours) and the four laws (line styles): ballistic, Eq.~\eqref{eq:vballistic}; constant $\beta_{\rm w}\vK(R_0)$; rising, $v_0 + (v_\infty - v_0)\,l/(R_0 + l)$ with $v_0 = 0.1v_\infty$; and the P07 mean speed $\beta_{\rm w}\vK(r)$, held constant beyond $\Rsph$.
-The ballistic speed starts at $\xi\vK(R_0)$, $\xi = \sqrt{\beta_{\rm w}^2 + 1} = 1.04$, 1.41 and 2.88, and falls to $\beta_{\rm w}\vK(R_0)$.
-Made with \code{docs/scripts/plot\_streamline\_speed.py} (code commit eba4a0e).}
-\label{fig:streamline_speed}
-\end{figure}
-% figure: ULXspectra-mc docs/figures/streamline_speed.pdf
-
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{streamline_speed_beta1.pdf}
-\caption{As Fig.~\ref{fig:streamline_speed}, for $\beta_{\rm w} = 1$: the ballistic law at $\theta_0 = 45.6^\circ$ (solid), $60^\circ$ (dashed) and $80^\circ$ (open circles), which agree within 0.4\%, starting at $\sqrt2\,\vK(R_0)$ and falling to $\vK(R_0)$; and the comparison laws, constant, rising, and the P07 mean speed $\vK(r)$ held constant beyond $\Rsph = 1924\,\rin$, for $\theta_0 = 45.6^\circ$ and $60^\circ$.
-Made with \code{docs/scripts/plot\_streamline\_speed.py} (code commit afb2f1f).}
-\label{fig:streamline_speed_beta1}
-\end{figure}
-% figure: ULXspectra-mc docs/figures/streamline_speed_beta1.pdf
-% AUTHOR: keep both speed figures, or only one?
-% numbers: docs/wind_velocity_laws.md, commit 8920be0 (C model, 13 fits; max |dlog nuLnu| = 0.29 for BH4a at 0.003 keV)
-% AUTHOR: keep this comparison here, or move it to the Discussion/Results after the refits?
-% OUTLINE: figure vwind_laws.png (docs/scripts/compare_wind_velocity_laws.py, commit 35a22c0).
 
 \subsection{Photosphere and outer wall}
 \label{sec:wind:photosphere}

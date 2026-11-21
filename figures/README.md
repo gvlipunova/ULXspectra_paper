@@ -25,7 +25,7 @@ here: file, script, code commit, and the section that uses it.
 | `torque_profile.pdf`, `temperature_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4) | -- | App. Radial profiles (fig:torque, fig:temperature) |
 | `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | Sect. Wind (fig:wind_geometry; parameters in App. A) |
 | `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `bb66b81`, `eba4a0e` (branch `mc-transfer-corrections`) | Sect. Wind, 6.1 (fig:streamlines_linear) |
-| `streamline_speed.pdf`, `streamline_speed_beta1.pdf` | `docs/scripts/plot_streamline_speed.py` | `eba4a0e`, `afb2f1f` | Sect. Wind, 6.3 (fig:streamline_speed, fig:streamline_speed_beta1) |
+| `streamline_speed.pdf`, `streamline_speed_beta1.pdf` | `docs/scripts/plot_streamline_speed.py` | `eba4a0e`, `afb2f1f` | App. A (fig:streamline_speed, fig:streamline_speed_beta1) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
