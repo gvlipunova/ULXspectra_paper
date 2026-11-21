@@ -25,7 +25,7 @@ Parameters as in Fig.~\ref{fig:torque}.}
 \end{figure}
 % figure: this repository, figures/plot_torque_temperature.py, computed from Eqs. (Fvis), (Qvis), (Teff), (Tdisc), (rtrap)
 
-Figure~\ref{fig:wind_geometry} shows the geometry of the wind (Sect.~\ref{sec:wind}) at two fits.
+Figures~\ref{fig:streamlines_linear} and~\ref{fig:wind_geometry} (Sect.~\ref{sec:wind}) show the geometry of the wind at two fits.
 The BH panel is the BH3a fit of NGC5408, made with the revised table of the transfer correction (190 runs): $M = 19.9\,M_\odot$, $\rin = 1.088\,r_{\rm isco} = 3.20\times10^6$~cm, $\log\mdot_0 = 2.153$, $\epsilon_{\rm w} = 0.387$, $\beta_{\rm w} = 2.68$, $\mdot_{\rm in}/\mdot_0 = 0.609$, $i = 50.3^\circ$ and $\omf = 0.7$.
 Then $\Rsph = 1924\,\rin$, $\Rtrap = 1570\,\rin$ and $\rout = 2.57\times10^5\,\rin$; the wind photosphere covers $r = 94$--$6.6\times10^3\,\rin$ and rises to $z = 718\,\rin$, and the disc is seen directly inside and outside it.
 The NS panel is the NS5r fit of NGC7793 with the dipole central emitter, made with the 117-run table ($\chi^2 = 0.94$ for 30 points): $M = 1.4\,M_\odot$, $\rmag = 6.48\times10^6$~cm, $\RNS = 0.154\,\rmag$, $\log\mdot_0 = 3.088$, $\epsilon_{\rm w} = 0.5$ and $\beta_{\rm w} = 1$ (fixed), $\mdot_{\rm in}/\mdot_0 = 0.0045$, $i = 17.3^\circ$, $\log\eta_{\rm magn} = 0$ and $\omf = 0.7$.
@@ -34,17 +34,4 @@ In both fits $\theta_{\rm c} = 45.6^\circ$ and $\theta_{\rm d} = 90^\circ$, so t
 % source: ULXspectra-mc docs/data/wind_geometry_params.md, commit 65f8bbf (calculation session 2026-11-21). BH: run mc28_0p3-10keV;
 %         NS: run mc_0p3-10keV (NS5r chosen: NS7r, the best fit of NGC7793, has dip = 0; M51ULS NS6r has no wind, R_sph <= R_m);
 %         the NS panel will be redrawn with the mc28 round's NGC7793 NS5r.
-
-\begin{figure*}
-\centering
-\includegraphics[width=\textwidth]{wind_geometry.pdf}
-\caption{Geometry of the wind in the $(r, z)$ plane, both axes logarithmic, $r$ cylindrical in units of $\rin$ (NS: $\rmag$); the bottom edge is the disc plane.
-Straight streamlines are launched at $\rin \le R_0 \le \Rsph$ with $\cos\theta_0$ linear from $\theta_{\rm c}$ to $\theta_{\rm d}$ (Eq.~\ref{eq:theta0}); the innermost one, at $\theta_{\rm c}$, is the funnel wall.
-Also shown: the wind photosphere $\taup = 1$ and its end, the disc rings seen directly (bars on the disc plane), and $\rin$ ($\rmag$), $\Rsph$, $\Rtrap$ and $\rout$ on the $r$ axis.
-NS: the last closed dipole field line $R = \rmag\sin^2\theta$, the rings of the central emitter and the NS surface $R = \RNS$.
-Fits and parameters in the text.
-Made with \code{docs/scripts/plot\_wind\_geometry.py} (code commit 65f8bbf).}
-\label{fig:wind_geometry}
-\end{figure*}
-% figure: ULXspectra-mc docs/figures/wind_geometry.pdf, commit 65f8bbf
 
