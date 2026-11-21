@@ -70,8 +70,6 @@ For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and t
 %       units of r_in_factor*r_g = 4.5 r_g (NS1-NS3 and the r presets), neither R/r_m nor R/r_g.
 %       R/r_g = 4.5 x; R/r_m = x / wind_inner_launch_x. (BH: units of r_in, unchanged.)
 
-
-
 The outer disc radius $\rout$ is free.
 Models with $\rout \le \rin$ or $\rout < 0.1\,R_\odot$, smaller than the binary allows, are rejected.
 % code: apply_physical_radii() (csrcs/disc_struct.c: x_out_disc > 1, else -3; r_out >= r_out_min_rsun R_sun, else -4);
@@ -92,17 +90,8 @@ Inside $\Rsph$ the main model of this paper prescribes the fraction $f_{\rm in} 
 \label{eq:mdot_setin}
 \end{equation}
 % code: mdot_acc_profile_scalar(), branch "set_mdot_in" (csrcs/disc_struct.c); README "Wind scenarios"
-for $1 \le x < \xsp$, with $\xsp = \Rsph/\rin$ (Fig.~\ref{fig:mdot_profiles}).
+for $1 \le x < \xsp$, with $\xsp = \Rsph/\rin$ (Fig.~\ref{fig:mdot_profiles} in Appendix~\ref{app:profiles}).
 
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{mdot_profiles.pdf}
-\caption{Accretion rate against $x = r/\rin$ (logarithmic): the main model, Eq.~\eqref{eq:mdot_setin}, falls linearly in $r$ from $\mdot_0$ at $\Rsph$ to $f_{\rm in}\mdot_0$ at $\rin$ (solid); the SS73 profile, Eq.~\eqref{eq:mdot_SS73}, falls to $\mdot(\rin) = \mdot_0\rin/\Rsph$, that is $\mdot/\mdot_0 = 1/\mdot_0$ for $\rin = 6\,\rg$ (dashed).
-Outside $\Rsph$ the rate is $\mdot_0$.
-Drawn for $\mdot_0 = 50$, $f_{\rm in} = 0.3$ and $r_{\rm in,f} = 6$.}
-\label{fig:mdot_profiles}
-\end{figure}
-% figure: this repository, figures/plot_mdot_profiles.py (layout: the author's sketch 2026-11-21)
 $f_{\rm in}$ is free in the fits.
 % AUTHOR: motivation for the linear profile and for leaving f_in free (vs P07 eq. 23,
 %         which fixes it through eps_w)?
@@ -200,8 +189,6 @@ The presets with the suffix ``r'' fix \code{r\_in\_factor} = 4.5, as NS1--NS3 do
 %       empty rsp_rule -> LEGACY_RSP_RULES[use_simple_rsp] {0: P07fit, 1: mdot0, 2: Ledd}, [DEFAULT] use_simple_rsp = 0
 % OUTLINE: say which BH presets the paper's fits use, once the set of BH refits is fixed.
 
-
-
 \begin{table*}
 \centering
 \caption{Physical parameters. Default values and prior ranges are those of \code{ULX.conf}; free parameters have flat priors in the range given.}
@@ -240,7 +227,6 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 % Discrete switches (not in the table): wind_scenario, rsp_rule, rtrap_rule,
 % disc_luminosity_mode (1+log for BH, NS), dip, wind_velocity_law (ballistic).
 \end{table*}
-
 
 \begin{table*}
 \centering

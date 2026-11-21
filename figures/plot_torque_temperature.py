@@ -62,9 +62,9 @@ T0 = T["nowind"].max()
 
 def mark(ax):
     ax.set_xscale("log"); ax.set_xlim(1, x[-1])
-    top = ax.secondary_xaxis("top", functions=(lambda v: v, lambda v: v))
-    top.set_xticks([XSP, XTR], [r"$R_{\rm sph}$", r"$R_{\rm trap}$"]); top.minorticks_off()
-    tl = top.get_xticklabels(); tl[0].set_ha("right"); tl[1].set_ha("left")
+    tr = ax.get_xaxis_transform()       # x in data, y in axes units: labels above the frame, apart
+    ax.text(XSP / 1.25, 1.02, r"$R_{\rm sph}$", transform=tr, ha="right", va="bottom")
+    ax.text(XTR * 1.25, 1.02, r"$R_{\rm trap}$", transform=tr, ha="left", va="bottom")
     for v in (XSP, XTR):
         ax.axvline(v, color="0.6", lw=0.7, ls=":")
     ax.set_xlabel(r"$x = r/R_{\rm in}$")
@@ -76,6 +76,7 @@ for p, st in style.items():
 ax.set_yscale("log"); ax.set_ylim(1e-2, 80)
 mark(ax)
 ax.set_ylabel(r"$F_{\rm vis}/[\dot M_0\,h(R_{\rm in})]$")
+ax.text(20, 6, r"$\dot M_0\sqrt{GMr}$", color="0.4", fontsize=8.5, ha="right")
 ax.legend(loc="lower right", frameon=False)
 fig.savefig(f"{OUT}/torque_profile.pdf", bbox_inches="tight")
 
