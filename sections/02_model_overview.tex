@@ -90,9 +90,18 @@ Inside $\Rsph$ the main model of this paper prescribes the fraction $f_{\rm in} 
 \label{eq:mdot_setin}
 \end{equation}
 % code: mdot_acc_profile_scalar(), branch "set_mdot_in" (csrcs/disc_struct.c); README "Wind scenarios"
-for $1 \le x < \xsp$, with $\xsp = \Rsph/\rin$ (Fig.~\ref{fig:mdot_profiles} in Sect.~\ref{sec:radii:sph}).
+for $1 \le x < \xsp$, with $\xsp = \Rsph/\rin$ (see Fig.~\ref{fig:mdot_profiles} and details on the spherization radius in  Sect.~\ref{sec:radii:sph}).
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{mdot_profiles.pdf}
+\caption{Accretion rate of a BH disc against $x = r/\rin$: the main model, Eq.~\eqref{eq:mdot_setin}, falls linearly in $r$ from $\mdot_0$ at $\Rsph$ to $f_{\rm in}\mdot_0$ at $\rin$ (solid); the SS73 profile, Eq.~\eqref{eq:mdot_SS73}, falls to $\mdot(\rin) = \mdot_0\rin/\Rsph$, that is $\mdot/\mdot_0 = 1/\mdot_0$ for $\rin = 6\,\rg$ (dashed).
+Outside $\Rsph$ the rate is $\mdot_0$.
+Drawn for $\mdot_0 = 50$, $f_{\rm in} = 0.3$ and $r_{\rm in,f} = 6$.}
+\label{fig:mdot_profiles}
+\end{figure}
+% figure: this repository, figures/plot_mdot_profiles.py (layout: the author's sketch 2026-11-21)
 
-$f_{\rm in}$ is free in the fits.
+%$f_{\rm in}$ is free in the fits.
 % AUTHOR: motivation for the linear profile and for leaving f_in free (vs P07 eq. 23,
 %         which fixes it through eps_w)?
 
