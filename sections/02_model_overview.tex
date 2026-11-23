@@ -121,6 +121,8 @@ with the inner rate set by the wind energy fraction $\epsilon_{\rm w}$ (P07, eq.
 \end{equation}
 % code: mdot_in_over_mdot0(), a_ew() (csrcs/disc_struct.c); README "Wind scenarios"
 where $a = \epsilon_{\rm w}(0.83 - 0.25\,\epsilon_{\rm w})$.
+$\Rref$ stays at $6\,\rg$ also when $r_{\rm in,f}$ is free (preset BH0); $\mdot_{\rm in}$ is then the rate at $\Rref$, not at $\rin$.
+% code: mdot_acc_profile_scalar(), branch "P07" (csrcs/disc_struct.c: u_per_x = r_in_factor/R_IN_REF_FACTOR, R_IN_REF_FACTOR = 6 in disc_struct.h), ULXspectra-mc 40e29fa; author 2026-11-23
 The profile is evaluated at $\max(r, \rin)$ and is not allowed to become negative.
 The L99 preset is the P07 profile with $\epsilon_{\rm w} = 1$ \citep{Lipunova1999}.
 In the profile of \citet[][SS73]{Shakura1973},

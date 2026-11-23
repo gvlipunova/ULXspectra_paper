@@ -67,17 +67,17 @@ On its photosphere $\xeff/x$ grows from 0.70 at the inner end to 0.90 at the out
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{temperatures.pdf}
-\caption{Temperatures of the BH3a fit of \srcNGCfiftyfour (parameters in Appendix~\ref{app:profiles}) against $x = r/\rin$.
-Upper panel: $\Tvis$ of Eq.~\eqref{eq:Teff} for the fitted $\Mdot(r)$ and for a disc without wind ($\Mdot = \Mdot_0$, dashed); $T_{\rm disc}$ of Eq.~\eqref{eq:Tdisc}, which differs from $\Tvis$ only inside $\Rsph$; on the wind photosphere, $r = 94$--$6.6\times10^3\,\rin$, $T_{\rm w,raw}$ of Eq.~\eqref{eq:Twraw} and $\Tw$ of Eq.~\eqref{eq:fcor}, with $f_{\rm cor}^{1/4} = 0.846$ (denoted $f_T$ in the legend); the dot is $\Tw$ at the outer wall, $kT = 0.018$~keV.
+\caption{Temperatures of the BH3a fit of \srcNGCfiftyfour, the BH panel of Fig.~\ref{fig:wind_geometry} (parameters in Appendix~\ref{app:profiles}), against $x = r/\rin$.
+Upper panel: $\Tvis$ of Eq.~\eqref{eq:Teff} for the fitted $\Mdot(r)$; $T_{\rm disc}$ of Eq.~\eqref{eq:Tdisc}, which differs from $\Tvis$ only inside $\Rsph$ and on the photosphere almost coincides with $\Tw$; on the wind photosphere, $r = 94$--$6.6\times10^3\,\rin$, $T_{\rm w,raw}$ of Eq.~\eqref{eq:Twraw} and $\Tw$ of Eq.~\eqref{eq:fcor}, with $f_{\rm cor}^{1/4} = 0.846$; the dot is $\Tw$ at the outer wall, $kT = 0.018$~keV.
 $T_{\rm w,raw}$ and $\Tw$ step up by $(1 - \epsilon_{\rm w})^{-1/4} = 1.13$ near $r = 2.5\times10^3\,\rin$, where $\xeff$ crosses $\Rsph$.
 Lower panel: $\xeff/x = 1/(1 + \taup v_{\rm w}/c)$ on the photosphere.
 Dotted lines: $\Rtrap$ and $\Rsph$.}
 \label{fig:temperatures}
 \end{figure}
 % figure: ULXspectra-mc (branch mc-transfer-corrections) docs/figures/temperatures.pdf, script docs/scripts/plot_temperatures.py,
-%         commits b5ba026 (script, PNG) and c231c1a (PDF); fit NGC5408 BH3a, run mc28_0p3-10keV; Note 5 of docs/for_paper_session.md (40e29fa).
+%         commit ea7f3e2 (legend in the paper's notation, no-wind curve removed, x to 3e4); fit NGC5408 BH3a, run mc28_0p3-10keV,
+%         the same run as the BH panel of fig:wind_geometry; Note 5 of docs/for_paper_session.md (baf274d).
 %         T_wall = T_w of the last photosphere ring (csrcs/wind_surface.c: T_wall_raw = Twind_raw[j_last]; wind_model_api.c).
-% AUTHOR: legend "f_T" to be relabelled f_cor^{1/4} by the calculation session; then drop "(denoted f_T in the legend)".
 
 \subsection{Energy budget}
 \label{sec:wtemp:budget}
