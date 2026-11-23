@@ -31,14 +31,7 @@ Made with \code{docs/scripts/plot\_wind\_geometry.py} (code commit 65f8bbf).}
 \subsection{Streamlines}
 \label{sec:wind:streamlines}
 
-The wind moves along straight streamlines launched from the disc surface at $(R_0, \hd R_0)$.
-The angle $\theta_0$ of a streamline to the axis depends on the launch radius through a law linear in $\cos\theta_0$:
-\begin{equation}
-\cos\theta_0 = \cos\theta_{\rm c} - (\cos\theta_{\rm c} - \cos\theta_{\rm d})\,\frac{x_0 - 1}{\xsp - 1},
-\label{eq:theta0}
-\end{equation}
-% code: theta_of_launch_radius(), wind_angular_bounds() (csrcs/wind_struct.c); README "Wind: streamlines"
-with $x_0 = R_0/\rin$ between 1 and $\xsp$.
+The wind moves along straight streamlines (see Figs.~\ref{fig:streamlines_linear} and \ref{fig:wind_geometry} below) launched from the disc surface at $(R_0, \hd R_0)$.
 The outermost streamline, launched at $\Rsph$, runs along the disc surface, $\cos\theta_{\rm d} = \hd/\sqrt{1 + \hd^2}$.
 The innermost one, launched at $\rin$, bounds the funnel, $\cos\theta_{\rm c} = \omf + \cos\theta_{\rm d}$.
 % code: wind_angular_bounds() (csrcs/wind_struct.c)
@@ -46,20 +39,11 @@ So $\omf$ is the fraction of the solid angle above the disc that the wind fills.
 For $\hd = 0$ and $\omf = 0.7$, $\theta_{\rm c} = 46^\circ$ and $\theta_{\rm d} = 90^\circ$.
 % source: docs/wind_column_angles.md (46 deg for omega_frac = 0.7)
 
-The law~\eqref{eq:theta0} distributes the solid angle of the wind among the streamlines in proportion to the mass they carry:
-\begin{equation}
-\frac{\cos\theta_{\rm c} - \cos\theta_0}{\cos\theta_{\rm c} - \cos\theta_{\rm d}} = \frac{\Mdot_{\rm w}(R_0)}{\Mdot_{\rm w}(\Rsph)} .
-\label{eq:theta0_massloss}
-\end{equation}
-% source: old manuscript (SEA_spectrum.zip, main.tex, "Mapping theta(r_0) from cumulative mass loss")
-For the profiles of Sect.~\ref{sec:model:mdot}, $\Mdot_{\rm w}$ is linear in $R_0$, and Eq.~\eqref{eq:theta0_massloss} turns into Eq.~\eqref{eq:theta0}, which is the form used in the code.
-% derived (Claude): Mdot_w(R_0) = Mdot(R_0) - Mdot(r_in) is linear in R_0 for eqs. (mdot_setin), (mdot_P07),
-%       (mdot_SS73); exception: P07 profile clipped at 0 near r_in when r_in,f < 6.
-% code: theta_of_launch_radius() uses u = (x_0 - 1)/(x_sph - 1) (csrcs/wind_struct.c)
-Each streamline thus carries the same mass-loss rate per unit solid angle.
+
 
 An estimate of $\theta_{\rm c}$ follows from the ballistic picture of P07 (their section~4.1).
 A gas element launched from a Keplerian orbit at $R_0$ with no radial velocity and with the vertical velocity $\xi\vK(R_0)$, $\xi \gtrsim 1$, has the specific energy $(\xi^2 - 1)\vK^2/2$.
+%Egrav+Ekin = (\xi^2 - 1)\vK^2/2
 If it moves ballistically and conserves its angular momentum, it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/r = \zeta$ (Appendix~\ref{app:ballistic}).
 To emerge above the surface of a geometrically thick supercritical disc with $H/r \sim 0.6$, the outflow must have $\zeta \gtrsim H/r$.
 On the other hand, energy constraints make $\xi \gtrsim 1.5$--$2$ unlikely, which corresponds to $\zeta \lesssim 1.1$--$1.7$.
@@ -75,6 +59,26 @@ of the solid angle, that is $\omf \simeq 0.5$--$0.85$ for $\zeta \simeq 0.6$--$1
 We use this estimate only to motivate the range of $\omf$ in the fits, up to 0.85 (Table~\ref{tab:params}).
 In the model, $\omf$ and the wind speed $\beta_{\rm w}$ (Sect.~\ref{sec:wind:velocity}) are independent parameters, and the relation $\cot\theta_{\rm c} = \beta_{\rm w}$ is not imposed.
 % author's decision 2026-10-29; code: omega_frac and beta_w independent (ULX.conf priors (0.1, 0.85), (0.05, 3))
+
+The angle $\theta_0$ of each streamline to the axis depends on the launch radius through a law linear in $\cos\theta_0$:
+\begin{equation}
+\cos\theta_0 = \cos\theta_{\rm c} - (\cos\theta_{\rm c} - \cos\theta_{\rm d})\,\frac{x_0 - 1}{\xsp - 1},
+\label{eq:theta0}
+\end{equation}
+% code: theta_of_launch_radius(), wind_angular_bounds() (csrcs/wind_struct.c); README "Wind: streamlines"
+with $x_0 = R_0/\rin$ between 1 and $\xsp$.
+
+The law~\eqref{eq:theta0} distributes the solid angle of the wind among the streamlines in proportion to the mass they carry:
+\begin{equation}
+\frac{\cos\theta_{\rm c} - \cos\theta_0}{\cos\theta_{\rm c} - \cos\theta_{\rm d}} = \frac{\Mdot_{\rm w}(R_0)}{\Mdot_{\rm w}(\Rsph)} .
+\label{eq:theta0_massloss}
+\end{equation}
+% source: old manuscript (SEA_spectrum.zip, main.tex, "Mapping theta(r_0) from cumulative mass loss")
+For the profiles of Sect.~\ref{sec:model:mdot}, $\Mdot_{\rm w}$ is linear in $R_0$, and Eq.~\eqref{eq:theta0_massloss} turns into Eq.~\eqref{eq:theta0}, which is the form used in the code.
+% derived (Claude): Mdot_w(R_0) = Mdot(R_0) - Mdot(r_in) is linear in R_0 for eqs. (mdot_setin), (mdot_P07),
+%       (mdot_SS73); exception: P07 profile clipped at 0 near r_in when r_in,f < 6.
+% code: theta_of_launch_radius() uses u = (x_0 - 1)/(x_sph - 1) (csrcs/wind_struct.c)
+Each streamline thus carries the same mass-loss rate per unit solid angle.
 
 Figure~\ref{fig:streamlines_linear} shows the streamlines on linear axes, and Fig.~\ref{fig:wind_geometry} on logarithmic axes, with the wind photosphere, at two fits (parameters in Appendix~\ref{app:profiles}).
 
