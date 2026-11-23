@@ -1,40 +1,22 @@
 % Sources: README "Spherization radius", "Trapping radius"
 % Code: ULXspectra, branch fix-results-integrity, commit 5f00569
 
-\section{Spherization and trapping radii}
-\label{sec:radii}
+% \section{Spherization and trapping radii}
+% \label{sec:radii}
 
 \subsection{Spherization radius}
 \label{sec:radii:sph}
 
 For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$.
 Otherwise $\Rsph$ follows from one of the rules in Table~\ref{tab:rsph}, and it is never below $\rin$.
-Figure~\ref{fig:mdot_profiles} shows how the accretion rate falls inside $\Rsph$.
+
 % code: rsp_over_rin() (csrcs/disc_struct.c); README "Spherization radius"
 % code: the rule is rsp_rule, fixed by wind_scenario for P07/L99/SS73; for set_mdot_in with empty rsp_rule
 %       the legacy switch use_simple_rsp = 0/1/2 maps to P07fit/mdot0/Ledd (psrcs/flow_rules.py LEGACY_RSP_RULES).
 %       The text names the rules, never the integer (author 2026-11-01).
 
 
-\begin{table}
-\centering
-\caption{Rules for the spherization radius (\code{rsp\_rule}), with $\Rref = 6\,\rg$.}
-\label{tab:rsph}
-\small
-\begin{tabular}{@{}ll@{}}
-\toprule
-Rule & $\Rsph$ \\
-\midrule
-P07fit & Eq.~\eqref{eq:rsph_P07} \\
-SS73 & $\Rref\,\mdot_0 = 6\,\mdot_0\,\rg$ \\
-SS73\_eq71 & $(9/4)\,\Rref\,\mdot_0$ \\
-M26 & $1.5\,(\mdot_0/\etaEdd)\,\rg$ \\
-Ledd & Eq.~\eqref{eq:rsph_Ledd} \\
-mdot0 & $\mdot_0\,\rin$ \\
-\bottomrule
-\end{tabular}
-% code: rsp_over_rin() (csrcs/disc_struct.c); README table "Spherization radius"
-\end{table}
+
 
 P07 give a fit to their numerical solutions (P07, eq.~21),
 \begin{equation}
@@ -45,7 +27,7 @@ P07 give a fit to their numerical solutions (P07, eq.~21),
 \label{eq:rsph_P07}
 \end{equation}
 % code: rsp_over_rin(), rule "P07fit" (csrcs/disc_struct.c); README "Spherization radius"
-For the SS73 profile, the rule \code{SS73} places $\Rsph$ where $\mdot(\Rref) = 1$ in Eq.~\eqref{eq:mdot_SS73}, and \code{SS73\_eq71} takes equation~(7.1) of \citet{Shakura1973} literally.
+The rule \code{SS73} adjusts $\Rsph$ so that $\mdot(\Rref) = 1$ in Eq.~\eqref{eq:mdot_SS73}, and \code{SS73\_eq71} takes equation~(7.1) of \citet{Shakura1973} literally.
 The rule \code{M26} is $\Rsph = (3/8\pi)\,\kT\Mdot_0/c$ \citep{Middleton2026}.
 The rule \code{mdot0} sets $\Rsph = \mdot_0\,\rin$, so that it scales with the actual inner radius rather than with $\Rref$.
 % code: rsp_over_rin(), rules "SS73", "SS73_eq71", "M26", "mdot0"
@@ -94,7 +76,9 @@ We assume that inside the trapping radius, photons are advected with the flow,
 \begin{equation}
     Q_{\rm vis } =  Q_{\rm out }  + Q_{\rm adv } 
 \end{equation}
-and the temperature $\Tvis$ of Eq.~\eqref{eq:Teff} falls as $r^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
+and the heat released locally, $Q_{\rm out}  \equiv \sigma \Tvis^4 $, varies with radius as $\propto 1/r^2$~\citep[e.g.,][]{Abramowicz+1998}.
+%and the temperature $\Tvis$ of Eq.~\eqref{eq:Teff} falls as $r^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
+
 Following \citet{Middleton2026} we take
 \begin{equation}
 \Rtrap = 2\,\frac{z}{r}\,\frac{\mdot_0}{\etaEdd}\,\rg ,
@@ -103,7 +87,7 @@ Following \citet{Middleton2026} we take
 % code: rtrap_over_rin(), rule "M26" (csrcs/disc_struct.c); README "Trapping radius"
 with the disc thickness $z/r = 0.5$, which gives $\Rtrap = 12\,\mdot_0\,\rg$ for $\etaEdd = 1/12$.
 For the SS73 preset we set $\Rtrap = \Rsph$ instead.
-SS73 have no advection, but inside $\Rsph$, the presence of the outflow also ensures that $\Tvis \propto r^{-1/2}$.
+SS73 have no advection, but inside $\Rsph$, the disc looses mass to the super-Eddington outflow, and the locally released energy varies in the same fashion, ensuring that $\Tvis \propto r^{-1/2}$ (see Sect.~\ref{sec:disc:teff}).
 % code: rtrap_over_rin(), rule "rsp"; psrcs/flow_rules.py (SS73 default rtrap_rule = rsp)
 Indeed, with $\Mdot \propto r$ (Eq.~\ref{eq:mdot_SS73}) and $F_{\rm in} = 0$, Eq.~\eqref{eq:Fvis} gives $\Fvis = \Mdot_0\,(rh - \rin h_{\rm in})/(3\Rsph)$, and far from $\rin$
 \begin{equation}

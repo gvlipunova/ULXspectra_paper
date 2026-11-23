@@ -52,6 +52,7 @@ The outer accretion rate is $\mdot_0$.
 Radii are cylindrical, $r$, measured from the axis of the disc; where a spherical radius is needed, it is denoted by $R$.
 They are given in $\rg = GM/c^2$, and in the code in units of the inner disc radius, $x = r/\rin$.
 % source: calculation session 2026-11-19 (r_m = r_in_disc, the photosphere radii, R_sp and r_out are cylindrical, x = R/r_in_disc)
+
 The inner disc radius is $\rin = r_{\rm in,f}\,\rg$.
 For a NS it is the magnetospheric radius, $\rin = \rmag$, and the fitted quantity is $\log(\rmag/\rg)$.
 % code: apply_physical_radii() (csrcs/disc_struct.c): for a NS only r_m/r_g = wind_inner_launch_x * r_in_factor enters
@@ -60,7 +61,8 @@ For a NS it is the magnetospheric radius, $\rin = \rmag$, and the fitted quantit
 The radius of the NS is fixed at $\RNS = 10$~km in all fits, and the prior rejects $\rmag \le \RNS$.
 Since $\rmag$ is fitted, the same $x$ means a different $r$ in different NS fits.
 % source: calculation session 2026-11-19
-The disc, the launch of the wind, $\Mdot(r)$, $\Rsph$ and the wind photosphere all start at $x = 1$.
+The disc, the launch of the wind, %$\Mdot(r)$, $\Rsph$ 
+and the wind photosphere all start at $x = 1$.
 For a BH the radial grid starts there too, and nothing emits photons inside.
 For a NS the grid continues inwards to $x_{\rm min} = (\RNS/\rmag)^{3/2}$, and the part $x < 1$ is the central emitter, e.g., the surface of the magnetosphere (Sect.~\ref{sec:central}).
 % code: apply_physical_radii() (csrcs/disc_struct.c:659; x = R/r_m after it, r_in_factor holds r_m/r_g,
@@ -79,11 +81,11 @@ If $\rout$ lies inside the outer wall of the wind (Sect.~\ref{sec:wind:photosphe
 The radial grid extends to $\max(10^4\mdot_0\,\rin, \rout)$; the rings beyond $\rout$ do not emit but can occult. (\textbf{check})
 % code: README "Units and radii"; radial_grid_edges() (csrcs/wind_surface.c)
 
-\subsection{Accretion rate in the disc}
+\subsection{Accretion rate and mass loss}
 \label{sec:model:mdot}
 
 Beyond spherization radius $\Rsph$ the accretion rate is constant, $\mdot = \mdot_0$.
-For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$ (Sect.~\ref{sec:radii}).
+For $\mdot_0 \le 1$ there is no wind and $\Rsph = \rin$ (Sect.~\ref{sec:radii:sph}).
 Inside $\Rsph$ the main model of this paper prescribes the fraction $f_{\rm in} = \mdot(\rin)/\mdot_0$ (\code{user\_mdot\_in\_fraction}) that reaches the inner disc radius, and takes $\Mdot$ linear in $r$ between $\rin$ and $\Rsph$:
 \begin{equation}
 \mdot(x) = \mdot_0 \left[ f_{\rm in} + (1 - f_{\rm in})\,\frac{x - 1}{\xsp - 1} \right]
@@ -136,13 +138,13 @@ which corresponds to $f_{in}=1/\dot m_0$ in terms of Eq.~\eqref{eq:mdot_setin} f
 \caption{Flow rules (\code{wind\_scenario}). The presets of the literature fix the $\Mdot(r)$ profile, the $\Rsph$ rule and $\etaEdd$; $\Rtrap$ can be set in any of them.}
 \label{tab:presets}
 \small
-\begin{tabular}{@{}llp{0.42\textwidth}ll@{}}
+\begin{tabular}{@{}llp{0.22\textwidth}ll@{}}
 \toprule
-Preset & $\Mdot(r)$ & $\Rsph$ & $\etaEdd$ & $\Rtrap$ \\
+Preset & $\Mdot(r)$ & $\Rsph$  & $\etaEdd$ & $\Rtrap$ \\
 \midrule
-main (\code{set\_mdot\_in}) & Eq.~\eqref{eq:mdot_setin} & any rule of Table~\ref{tab:rsph}; in the fits $\mdot_0\,\rin$, Eq.~\eqref{eq:rsph_Ledd} or Eq.~\eqref{eq:rsph_P07} & 1/12 & Eq.~\eqref{eq:rtrap} \\
+main (\code{set\_mdot\_in}) & Eq.~\eqref{eq:mdot_setin} & any rule of Table~\ref{tab:rsph} & 1/12 & Eq.~\eqref{eq:rtrap} \\
 P07 & Eq.~\eqref{eq:mdot_P07} & Eq.~\eqref{eq:rsph_P07} & 1/12 & Eq.~\eqref{eq:rtrap} \\
-L99 & Eq.~\eqref{eq:mdot_P07}, $\epsilon_{\rm w}=1$ & Eq.~\eqref{eq:rsph_P07} & 1/12 & Eq.~\eqref{eq:rtrap} \\
+L99 & Eq.~\eqref{eq:mdot_P07} & Eq.~\eqref{eq:rsph_P07}, $\epsilon_{\rm w}=1$ & 1/12 & Eq.~\eqref{eq:rtrap} \\
 SS73 & Eq.~\eqref{eq:mdot_SS73} & $\Rref\,\mdot_0$ or $(9/4)\,\Rref\,\mdot_0$ & 1/12 & $\Rsph$ \\
 \bottomrule
 \end{tabular}
@@ -151,16 +153,16 @@ SS73 & Eq.~\eqref{eq:mdot_SS73} & $\Rref\,\mdot_0$ or $(9/4)\,\Rref\,\mdot_0$ & 
 %   SS73_eq71 = (9/4) R_ref mdot0, M26 = eq. rtrap, rsp = R_sph, Ledd = eq. rsph_Ledd, mdot0 = mdot0 r_in (tab:rsph).
 %   Main-model fits: rsp_rule mdot0, Ledd or P07fit (legacy use_simple_rsp; Table fitpresets).
 \end{table*}
-The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Table.~\ref{tab:presets}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}.
-The disc starts at $\rin$ for a BH and for a NS alike.
+%The flow rules of \citet{Poutanen2007} and \citet{Shakura1973} (Table.~\ref{tab:presets}) are fixed in units of $\rg$ through the reference radius $\Rref = 6\,\rg$, the innermost stable circular orbit of a non-rotating BH and the inner radius $3R_{\rm S}$ of \citet{Poutanen2007}. The disc starts at $\rin$ for a BH and for a NS alike.
+
 Where $\rin > \Rref$, which is always the case for a NS and for a BH with $r_{\rm in,f} > 6$, the actual inner disc radius truncates these profiles.
 For a BH with $r_{\rm in,f} < 6$ the P07 profile continues linearly inwards of $\Rref$ and is clipped at zero, and the SS73 profile, $\mdot_0 r/\Rsph$, continues down to $\rin$.
 % code: mdot_acc_profile_scalar() (csrcs/disc_struct.c: u = max(x, x_launch) r_in_factor/R_IN_REF_FACTOR, fmax(..., 0)
 %       for P07; mdot0 x/x_sp for SS73), the same for BH and NS; author's question 2026-11-13
 % code: R_IN_REF_FACTOR (csrcs); README "Units and radii"
 
-\subsection{Mass loss}
-\label{sec:model:massloss}
+% \subsection{Mass loss}
+% \label{sec:model:massloss}
 
 The wind carries away
 \begin{equation}
@@ -177,29 +179,32 @@ The rate of mass loss per unit area of each side of the disc at the launch radiu
 % code: make_dotSigma_table() (csrcs/wind_struct.c); README "Wind scenarios"
 For the main model, $\dot\Sigma_{\rm w} \propto 1/R_0$ between $\rin$ and $\Rsph$.
 
-\subsection{Parameters}
-\label{sec:model:params}
 
-Table~\ref{tab:params} lists the parameters of the model.
-The fits use the presets of \code{ULX.conf} in Table~\ref{tab:fitpresets}, which relates each of them to the flow rules of Table~\ref{tab:presets} and to the rules for the  spherization radius $\Rsph$, see Sect.~\ref{sec:radii}.
-Parameters that a preset does not free keep the defaults of Table~\ref{tab:params} or the values the preset sets; for a free parameter the default is only the centre of the starting positions of the chains and does not enter the prior; for a NS, $M = 1.4\,M_\odot$, and $\log(\rmag/\rg)$ has a flat prior over (0.65, 4.65).
-% source: ULX.conf.example (ULXspectra-mc commit 7ba8568; the working ULX.conf, git-ignored, has the same presets;
-%         only [DEFAULT] KEV_max differs, 100 vs 1, overridden by --Emax in the fits); log_m_bh = 0.14612803;
-%         README "Model Presets" (NS table and the note below it); PLAN C23
-Except for BH0, BH2 and NS2, all presets use the $\Mdot(r)$ profile of the main model (Eq.~\ref{eq:mdot_setin}).
-
-{\footnotesize{The presets with the suffix ``a'' differ from their parents only in the $\Rsph$ rule, which is Ledd instead of mdot0 or P07fit.
-The NS fits use NS1a, NS2, NS3a, NS4ar, NS5r, NS5ar, NS6r and NS7r.
-% source: PLAN C23 (NS refits, run tag mc_0p3-10keV, start_refits_ns.sh; after the BH refits, from about 2026-11-15)
-Earlier fits used the presets NS4, NS4a, NS5, NS5a, NS6 and NS7, which leave both \code{r\_in\_factor} and \code{wind\_inner\_launch\_x} free.
-Only their product $\rmag/\rg$ enters the model, so one direction of the parameter space is flat, and the implied prior on $\log(\rmag/\rg)$ rises over 0--1.3 (cut at $\RNS$, 0.68), is flat over 1.3--4.0 and falls over 4.0--5.3.
-It biases $\rmag$ only where the posterior reaches $\rmag \lesssim 20\,\rg$ or $\gtrsim 10^4\,\rg$.
-The presets with the suffix ``r'' fix \code{r\_in\_factor} = 4.5, as NS1--NS3 do: the model is the same, and the prior on $\log(\rmag/\rg)$ is flat.}}
 % source: PLAN C23; README "Model Presets" (note below the NS table); author 2026-11-13
 % code: psrcs/flow_rules.py resolve_flow_rules(): P07 -> P07fit, SS73 -> SS73 (first allowed rule); set_mdot_in with
 %       empty rsp_rule -> LEGACY_RSP_RULES[use_simple_rsp] {0: P07fit, 1: mdot0, 2: Ledd}, [DEFAULT] use_simple_rsp = 0
 % OUTLINE: say which BH presets the paper's fits use, once the set of BH refits is fixed.
-
+\begin{table}
+\centering
+\caption{Rules for the spherization radius (\code{rsp\_rule}), with $\Rref = 6\,\rg$.}
+\label{tab:rsph}
+\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+Rule & $\Rsph$ \\
+\midrule
+P07fit & Eq.~\eqref{eq:rsph_P07} \\
+SS73 & $\Rref\,\mdot_0$
+% = 6\,\mdot_0\,\rg$ 
+\\
+SS73\_eq71 & $(9/4)\,\Rref\,\mdot_0$ \\
+M26 & $1.5\,(\mdot_0/\etaEdd)\,\rg$ \\
+Ledd & Eq.~\eqref{eq:rsph_Ledd} \\
+mdot0 & $\mdot_0\,\rin$ \\
+\bottomrule
+\end{tabular}
+% code: rsp_over_rin() (csrcs/disc_struct.c); README table "Spherization radius"
+\end{table}
 \begin{table*}
 \centering
 \caption{Physical parameters. Default values and prior ranges are those of \code{ULX.conf}; free parameters have flat priors in the range given.}
@@ -249,8 +254,8 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Comments \\
 \midrule
 BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ &   P07 wind scenario \\
-BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & wind with arbitrary mass loss\\
-BH1a & BH & main & Ledd & as BH1 & \\
+BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & Wind with arbitrary mass loss\\
+BH1a & BH & main & Ledd & as BH1 & \dots alterntive spherization radius \\
 BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
 BH3 & BH & main & mdot0 & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & \\
 BH3a & BH & main & Ledd & as BH3 & \\
