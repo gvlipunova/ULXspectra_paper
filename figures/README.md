@@ -21,7 +21,8 @@ here: file, script, code commit, and the section that uses it.
 | `funnel_cone_vs_wind.png` | `docs/scripts/funnel_wind_cone.py` (`plot ... HolmIX alphas=45,25,10`) | `ef403b4` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_wind; replaces `funnel_beaming_vs_wind.png`) |
 | `fits_by_source_mc_0p3-10keV.pdf` (6 pages) | `docs/scripts/plot_fits_by_source.py` | `8176d9c` (branch `mc-transfer-corrections`; page 6 redrawn) | App. Overview of the fits (fig:fits_M ... fig:fits_spectra) |
 | `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | Sect. Critical radii, 3.1 (fig:mdot_profiles) |
-| `torque_profile.pdf`, `temperature_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4) | -- | App. Radial profiles (fig:torque, fig:temperature) |
+| `torque_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4; its `temperature_profile.pdf` is no longer used) | -- | App. Radial profiles (fig:torque) |
+| `temperatures.pdf` | ULXspectra-mc `docs/scripts/plot_temperatures.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `b5ba026`, `c231c1a` | Sect. 7.1 (fig:temperatures) |
 | `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | Sect. Wind (fig:wind_geometry; parameters in App. A) |
 | `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `fa64b89` (branch `mc-transfer-corrections`; panel (a) marks R0, theta0, v_pol) | Sect. Wind, 6.1 (fig:streamlines_linear) |
 | `streamline_speed_simple.pdf` | `docs/scripts/plot_streamline_speed.py ... simple` | `086ecf7` | App. A (fig:streamline_speed; ballistic law only) |

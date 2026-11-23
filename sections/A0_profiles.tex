@@ -4,7 +4,8 @@
 \section{Radial profiles of the disc and geometry of the wind}
 \label{app:profiles}
 
-Figures~\ref{fig:torque} and~\ref{fig:temperature} illustrate the viscous torque (Sect.~\ref{sec:disc:torque}) and the disc temperature (Sect.~\ref{sec:disc:teff}) of a BH disc, computed from the equations of those sections for one set of parameters.
+Figure~\ref{fig:torque} illustrates the viscous torque (Sect.~\ref{sec:disc:torque}) of a BH disc, computed from the equations of that section for one set of parameters.
+% fig:temperature (disc temperature, figures/plot_torque_temperature.py) removed 2026-11-23: replaced by fig:temperatures in Sect. wtemp:raw (author 2026-11-23)
 
 \begin{figure}
 \centering
@@ -15,18 +16,8 @@ Drawn for $\mdot_0 = 50$, $r_{\rm in,f} = 6$, $\Rsph = 6\mdot_0\rg$ ($\Rsph = 50
 \end{figure}
 % figure: this repository, figures/plot_torque_temperature.py (author's request 2026-11-21), computed from Eqs. (Fvis), (mdot_setin), (mdot_SS73)
 
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{temperature_profile.pdf}
-\caption{Temperature of a BH disc: $\Tvis$ of Eq.~\eqref{eq:Teff} for the main accretion-rate profile (dash-dotted) and for a disc without wind (dotted), and the radiated temperature $T_{\rm disc}$ of Eq.~\eqref{eq:Tdisc} for the main profile with $\epsilon_{\rm w} = 0.5$ (solid), in units of the largest $\Tvis$ of the disc without wind.
-Inside $\Rtrap = 12\mdot_0\rg$ (Eq.~\ref{eq:rtrap}) the temperature falls as $r^{-1/2}$, outside as $r^{-3/4}$; $T_{\rm disc}$ steps down inwards at $\Rsph$ by $(1 - \epsilon_{\rm w})^{1/4}$.
-Parameters as in Fig.~\ref{fig:torque}.}
-\label{fig:temperature}
-\end{figure}
-% figure: this repository, figures/plot_torque_temperature.py, computed from Eqs. (Fvis), (Qvis), (Teff), (Tdisc), (rtrap)
-
 Figures~\ref{fig:streamlines_linear} and~\ref{fig:wind_geometry} (Sect.~\ref{sec:wind}) show the geometry of the wind at two fits.
-The BH panel is the BH3a fit of NGC5408, made with the revised table of the transfer correction (190 runs): $M = 19.9\,M_\odot$, $\rin = 1.088\,r_{\rm isco} = 3.20\times10^6$~cm, $\log\mdot_0 = 2.153$, $\epsilon_{\rm w} = 0.387$, $\beta_{\rm w} = 2.68$, $\mdot_{\rm in}/\mdot_0 = 0.609$, $i = 50.3^\circ$ and $\omf = 0.7$.
+The BH panel is the BH3a fit of NGC5408, made with the revised table of the transfer correction (190 runs): $M = 19.9\,M_\odot$, $\rin = 1.088\,\rg = 3.20\times10^6$~cm, $\log\mdot_0 = 2.153$, $\epsilon_{\rm w} = 0.387$, $\beta_{\rm w} = 2.68$, $\mdot_{\rm in}/\mdot_0 = 0.609$, $i = 50.3^\circ$ and $\omf = 0.7$.
 Then $\Rsph = 1924\,\rin$, $\Rtrap = 1570\,\rin$ and $\rout = 2.57\times10^5\,\rin$; the wind photosphere covers $r = 94$--$6.6\times10^3\,\rin$ and rises to $z = 718\,\rin$, and the disc is seen directly inside and outside it.
 The NS panel is the NS5r fit of NGC7793 with the dipole central emitter, made with the 117-run table ($\chi^2 = 0.94$ for 30 points): $M = 1.4\,M_\odot$, $\rmag = 6.48\times10^6$~cm, $\RNS = 0.154\,\rmag$, $\log\mdot_0 = 3.088$, $\epsilon_{\rm w} = 0.5$ and $\beta_{\rm w} = 1$ (fixed), $\mdot_{\rm in}/\mdot_0 = 0.0045$, $i = 17.3^\circ$, $\log\eta_{\rm magn} = 0$ and $\omf = 0.7$.
 Then $\Rsph = 272\,\rmag$, $\Rtrap = 469\,\rmag$ and $\rout = 4.08\times10^8\,\rmag$; the wind photosphere covers $r = 1.29$--$2.8\times10^4\,\rmag$ and rises to $z = 4.4\times10^3\,\rmag$, and the disc is seen directly beyond about $3\times10^4\,\rmag$.
