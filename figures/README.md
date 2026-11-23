@@ -6,7 +6,6 @@ here: file, script, code commit, and the section that uses it.
 | File | Script (ULXspectra) | Commit | Used in |
 |---|---|---|---|
 | (candidate) `wind_column_angles.png` | `docs/scripts/compare_wind_column_angles.py` | `b6a9964` | Sect. wind temperature |
-| (candidate) `vwind_laws.png`, `vwind_compare.png` | `docs/scripts/compare_wind_velocity_laws.py` | `35a22c0` | Sect. wind |
 | `mc_green_surface_spectra.png` | `docs/scripts/mc_green_surface.py`, `docs/scripts/mc_green_surface_spectra.py` | `fa567f9` (unchanged at `4da7c04`) | App. Monte Carlo (fig:mc_spectra) |
 | `funnel_beaming_validation.png` | `docs/scripts/funnel_beaming_mc.py` | `4da7c04` | App. Monte Carlo (fig:funnel_validation) |
 | `funnel_beaming_vs_wind.png` | `docs/scripts/funnel_beaming_mc.py` | `4da7c04` | App. Monte Carlo (fig:funnel_wind) |
@@ -24,11 +23,11 @@ here: file, script, code commit, and the section that uses it.
 | `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | Sect. Critical radii, 3.1 (fig:mdot_profiles) |
 | `torque_profile.pdf`, `temperature_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4) | -- | App. Radial profiles (fig:torque, fig:temperature) |
 | `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | Sect. Wind (fig:wind_geometry; parameters in App. A) |
-| `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `bb66b81`, `eba4a0e` (branch `mc-transfer-corrections`) | Sect. Wind, 6.1 (fig:streamlines_linear) |
-| `streamline_speed.pdf`, `streamline_speed_beta1.pdf` | `docs/scripts/plot_streamline_speed.py` | `eba4a0e`, `afb2f1f` | App. A (fig:streamline_speed, fig:streamline_speed_beta1) |
+| `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `fa64b89` (branch `mc-transfer-corrections`; panel (a) marks R0, theta0, v_pol) | Sect. Wind, 6.1 (fig:streamlines_linear) |
+| `streamline_speed_simple.pdf` | `docs/scripts/plot_streamline_speed.py ... simple` | `086ecf7` | App. A (fig:streamline_speed; ballistic law only) |
 
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
 (see `figures/ahlberg2026/README.md`).
 
-- `slim_disc_streamlines.pdf`, `slim_disc_streamlines_columns.pdf` (fig:slim_disc, fig:slim_disc_columns; App. C, "Outlook: a slim disc"): copied from ULXspectra-mc docs/figures (commit b2dc222), made with docs/scripts/plot_slim_disc_streamlines.py 0.5 0.05; described in docs/slim_disc_geometry.md (1896e10).
+- `slim_disc_streamlines.pdf`, `slim_disc_streamlines_columns.pdf` (fig:slim_disc, fig:slim_disc_columns; App. D, "Outlook: a slim disc"): copied from ULXspectra-mc docs/figures (commit b2dc222), made with docs/scripts/plot_slim_disc_streamlines.py 0.5 0.05; described in docs/slim_disc_geometry.md (1896e10).

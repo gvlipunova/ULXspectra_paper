@@ -35,27 +35,15 @@ In both fits $\theta_{\rm c} = 45.6^\circ$ and $\theta_{\rm d} = 90^\circ$, so t
 %         NS: run mc_0p3-10keV (NS5r chosen: NS7r, the best fit of NGC7793, has dip = 0; M51ULS NS6r has no wind, R_sph <= R_m);
 %         the NS panel will be redrawn with the mc28 round's NGC7793 NS5r.
 
-Figures~\ref{fig:streamline_speed} and~\ref{fig:streamline_speed_beta1} show the speed along the streamlines for the laws of Sect.~\ref{sec:wind:velocity}.
+Figure~\ref{fig:streamline_speed} shows the ballistic speed along the funnel-wall streamline, Eq.~\eqref{eq:vballistic}.
 
 \begin{figure}
 \centering
-\includegraphics[width=\columnwidth]{streamline_speed.pdf}
-\caption{Speed along the funnel-wall streamline ($\theta_0 = 45.6^\circ$) in units of $\vK(R_0)$, against the distance $l$ from the launch point in units of $R_0$, for $\beta_{\rm w} = 0.3$, 1 and 2.7 (colours) and the four laws (line styles): ballistic, Eq.~\eqref{eq:vballistic}; constant $\beta_{\rm w}\vK(R_0)$; rising, $v_0 + (v_\infty - v_0)\,l/(R_0 + l)$ with $v_0 = 0.1v_\infty$; and the P07 mean speed $\beta_{\rm w}\vK(r)$, held constant beyond $\Rsph$.
-The ballistic speed starts at $\xi\vK(R_0)$, $\xi = \sqrt{\beta_{\rm w}^2 + 1} = 1.04$, 1.41 and 2.88, and falls to $\beta_{\rm w}\vK(R_0)$.
-Made with \code{docs/scripts/plot\_streamline\_speed.py} (code commit eba4a0e).}
+\includegraphics[width=\columnwidth]{streamline_speed_simple.pdf}
+\caption{Poloidal speed along the funnel-wall streamline ($\theta_0 = 45.6^\circ$) in units of $\vK(R_0)$, against the distance $l$ from the launch point in units of $R_0$, Eq.~\eqref{eq:vballistic}, for $\beta_{\rm w} = 0.3$, 1 and 2.7.
+The speed starts at $\xi\vK(R_0)$, $\xi = \sqrt{\beta_{\rm w}^2 + 1} = 1.04$, 1.41 and 2.88, and falls to $\beta_{\rm w}\vK(R_0)$ (dotted).
+Made with \code{docs/scripts/plot\_streamline\_speed.py} (code commit 086ecf7).}
 \label{fig:streamline_speed}
 \end{figure}
-% figure: ULXspectra-mc docs/figures/streamline_speed.pdf
-
-\begin{figure}
-\centering
-\includegraphics[width=\columnwidth]{streamline_speed_beta1.pdf}
-\caption{As Fig.~\ref{fig:streamline_speed}, for $\beta_{\rm w} = 1$: the ballistic law at $\theta_0 = 45.6^\circ$ (solid), $60^\circ$ (dashed) and $80^\circ$ (open circles), which agree within 0.4\%, starting at $\sqrt2\,\vK(R_0)$ and falling to $\vK(R_0)$; and the comparison laws, constant, rising, and the P07 mean speed $\vK(r)$ held constant beyond $\Rsph = 1924\,\rin$, for $\theta_0 = 45.6^\circ$ and $60^\circ$.
-Made with \code{docs/scripts/plot\_streamline\_speed.py} (code commit afb2f1f).}
-\label{fig:streamline_speed_beta1}
-\end{figure}
-% figure: ULXspectra-mc docs/figures/streamline_speed_beta1.pdf
-% AUTHOR: keep both speed figures, or only one?
-% numbers: docs/wind_velocity_laws.md, commit 8920be0 (C model, 13 fits; max |dlog nuLnu| = 0.29 for BH4a at 0.003 keV)
-% AUTHOR: keep this comparison here, or move it to the Discussion/Results after the refits?
-% OUTLINE: figure vwind_laws.png (docs/scripts/compare_wind_velocity_laws.py, commit 35a22c0).
+% figure: ULXspectra-mc docs/figures/streamline_speed_simple.pdf, commit 086ecf7 ("simple" variant: ballistic law only;
+%         author 2026-11-23: no comparison laws in the paper; replaces streamline_speed.pdf and streamline_speed_beta1.pdf)

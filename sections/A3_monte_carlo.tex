@@ -469,11 +469,14 @@ B differs from A only in the walls, C only in the source.
 
 Case A in Fig.~\ref{fig:funnel_wind}  agrees with the published results for  $B(i)$ for Lambertian walls (figure~2 of \citealt{Ahlberg2026}). %inside the funnel, the median ratio is 1.003--1.007 per panel, and against their mean boosts for electron-scattering walls (their figure~4) it is $-1$\% to $+2$\% at $\alpha = 45^\circ$ and 3--5\% lower at $25^\circ$ and $10^\circ$, as expected for Lambertian walls.
 \textbf{Semi-transparent walls (B) lower the boost in the funnel and send the light beyond $\alpha$.}
-For example, the thin winds of the HolmIX (\textit{see parameters in ?}) 
+For example, the thin wind of the HolmIX fit (parameters in the footnote above)
 %and NGC1313B fits keep 62--91\% of the opaque-cone boost at $\alpha = 45.6^\circ$ but only 33--48\% at $25^\circ$, with 60--80\% of the light beyond $\alpha$ (opaque cone 17--41\%), and 
 give $B = 2$--3.5 instead of 13--27
 inside a $10^\circ$ funnel.
-The thick wind of the NGC5408 fit is nearly opaque at $\alpha = 45.6^\circ$ (95--99\% of A) and keeps 67--79\% at $25^\circ$.(\textit{where is this result?})
+The thick wind of the NGC5408 BH3a fit (case B, not shown in Fig.~\ref{fig:funnel_wind}) is nearly opaque at $\alpha = 45.6^\circ$ (95--99\% of A) and keeps 67--79\% at $25^\circ$.
+% source: ULXspectra-mc docs/green_surface_monte_carlo.md, Fig. 8 section, table of mean boosts, column "B wind, point", NGC5408 BH3a
+%         (commit b7ad808); for_paper_session.md note 2.
+% AUTHOR: cite as "not shown" (as now), add an NGC5408 curve to Fig. funnel_wind (no new Monte Carlo runs needed), or drop the sentence?
 \textbf{The extended source (C) also lowers the boost}: by 3--20\% at $\alpha = 45^\circ$ and by 15--40\% at $25^\circ$: light emitted by the wall sees a wider opening than light from the base centre.
 
 For the thin winds the walls matter more, about a factor of 2 at $\alpha = 25^\circ$; for the thick wind the extended source matters more, by 9--17\% at $45^\circ$.
@@ -586,7 +589,35 @@ We compared the simple occultation model with the model with the transfer correc
 %with  results of \citet{Ahlberg2026} and 
 and 
 with the Monte Carlo through the same wind (see Figs.~\ref{fig:mc_transfer_ahlberg}  and~\ref{fig:corrected_B}).
-We used the parameter sets of NGC~7793 for the presets BH2, BH3a and BH4a, and for BH3a also $\omf = 0.85$, 0.5, 0.3 and 0.1, so that $\theta_{\rm c} = 31.8^\circ$--$84.3^\circ$.
+We used the parameter sets of NGC~7793 for the presets BH2, BH3a and BH4a (Table~\ref{tab:ngc7793_sets}), and for BH3a also $\omf = 0.85$, 0.5, 0.3 and 0.1, so that $\theta_{\rm c} = 31.8^\circ$--$84.3^\circ$.
+
+\begin{table}
+\centering
+\caption{The NGC~7793 parameter sets of the comparison of the corrected model with the Monte Carlo (Sect.~\ref{sec:disc:funnel}, Figs.~\ref{fig:mc_transfer_ahlberg} and~\ref{fig:corrected_B}).
+They are regression references of the code, fits of the SED below 1~keV with an earlier model version, not the best fits of Sect.~\ref{sec:results}.
+All three: $\hd = 0$, ballistic speed, with the transfer correction.}
+\label{tab:ngc7793_sets}
+\small
+\begin{tabular}{@{}lccc@{}}
+\toprule
+ & BH2 & BH3a & BH4a \\
+\midrule
+$M$ ($M_\odot$) & 1.74 & 3.80 & 3.80 \\
+$\log\mdot_0$ & 3.099 & 2.140 & 2.175 \\
+$\epsilon_{\rm w}$ & 0.132 & 0.485 & 0.500 \\
+$\beta_{\rm w}$ & 1.0 & 0.180 & 0.207 \\
+$\mdot_{\rm in}/\mdot_0$ & SS73 & 0.626 & 0.580 \\
+$\omf$ ($\theta_{\rm c}$) & 0.70 ($45.6^\circ$) & 0.70 ($45.6^\circ$) & 0.513 ($59.2^\circ$) \\
+$i$ & $16.3^\circ$ & $14.9^\circ$ & $34.5^\circ$ \\
+$\Rsph/\rin$ & 2614 & 1615 & 1645 \\
+$L_{\rm bol}$ (erg\,s$^{-1}$) & $7.7\times10^{39}$ & $1.0\times10^{40}$ & $5.5\times10^{39}$ \\
+\bottomrule
+\end{tabular}
+% source: ULXspectra-mc docs/data/ngc7793_reference_params.md (commit 05213b8), from tests/reference/mcmc_NGC7793.*.wide_1keV.npz
+%         (2272e8a; fits mcmc_NGC7793.<preset>.wide_1keV, model commit 763a102); for_paper_session.md note 2.
+%         BH2: SS73 wind scenario, mdot_in follows from the wind; beta_w = 1 fixed in its preset.
+% checked (Claude): E_keV of the reference npz spans 0.0031-0.9985 keV (220 points).
+\end{table}
 %NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab:mc_calib}), so these are held-out checks.
 % source: tab:mc_calib (5 sources: HolmIX, NGC1313B, NGC5408, NGC247SS, NGC6946); theta_c = arccos(omega_frac) for h_disc = 0
 

@@ -10,3 +10,67 @@
 %          cone with self-shadowing (old manuscript, SEA_spectrum.zip, "Opaque finite cone with
 %          self-shadowing"). The code tests only i <= theta_c (csrcs/test_wind_visibility.c);
 %          the i > theta_c case needs a test in the code first.
+
+\subsection{MCMC fitting}
+\label{app:numerics:mcmc}
+% Sources: ULXspectra-mc (branch mc-transfer-corrections, commit e0854b7): README "Adaptive Run Length", "Spectrum Thinning";
+%          psrcs/likelihood.py, psrcs/params_mcmc.py (log_prior), psrcs/mcmc.py (walker start, best fit), psrcs/mcmc_adaptive.py
+%          (last change of these files: d747a95). Run settings: run_settings.json of the 182 fits of the round mc_0p3-10keV
+%          (ULXspectra-refit/results), read 2026-11-23.
+
+\paragraph{Likelihood.}
+The SEDs carry no measured errors (Sect.~\ref{sec:fitting:data}).
+We therefore compare model and SED in $\log\nu L_\nu$ with one assumed scatter, $\sigma = 0.08$~dex, the same at all energies:
+\begin{equation}
+\ln\mathcal{L} = -\frac{1}{2}\sum_{k=1}^{n}\left[\left(\frac{\log y_k - \log m_k(\boldsymbol\theta)}{\sigma}\right)^2 + \ln\left(2\pi\sigma^2\right)\right],
+\label{eq:loglike}
+\end{equation}
+% code: log_likelihood_with_blob() (psrcs/likelihood.py): chi = (log10 y_obs - log10 y_model)/sigma_log; sigma_log = 0.08 (ULX.conf DEFAULT)
+where $y_k$ is the SED and $m_k$ the model, $\nu L_\nu$ at the energy $E_k$, and $\boldsymbol\theta$ the free parameters.
+The first term is $\chi^2$.
+The reduced $\chi^2$ that we quote is $\chi^2/(n - n_{\rm par})$ with this $\sigma$; it compares fits with each other but does not test them absolutely.
+% code: red_chi2 = chi2/(n_points - n_params) (summaries/refits_summary.tsv; psrcs/plotting_mcmc.py)
+
+\paragraph{Spectrum points.}
+The SED files sample the spectrum much more densely in X-rays than at low energies.
+The fit uses only the points nearest to energies evenly spaced in $\log E$, 20 per decade, so that every decade has the same weight in $\chi^2$; in 0.3--10~keV this gives $n = 30$ points.
+% code: --thin logE, --points-per-decade 20 (README "Spectrum Thinning"); n_points = 30 for all fits of mc_0p3-10keV (refits_summary.tsv)
+The SEDs are smooth model curves, not independent measurements: at 20 points per decade, linear interpolation reproduces them to 0.017~dex or better, well below $\sigma$.
+More points would add no information on the shape and would only shrink the posterior widths as $1/\sqrt{n}$.
+% source: README "Spectrum Thinning" ("Why 20": <= 0.017 dex; Fisher-matrix test, information per point within 5% (median) of
+%         200 per decade)
+
+\paragraph{Priors.}
+The priors are uniform within the ranges of Table~\ref{tab:params} and zero outside them.
+For a NS, a parameter set whose wind would be launched inside the NS ($\rin \le \RNS$) is also excluded.
+% code: log_prior() (psrcs/params_mcmc.py): 0 inside the bounds, -inf outside; NS: launch_radius_cm(pars) <= R_NS -> -inf
+With uniform priors and a constant $\sigma$, the maximum of the posterior is the minimum of $\chi^2$.
+
+\paragraph{Sampler.}
+We sample the posterior with the affine-invariant ensemble sampler \code{emcee} \citep{ForemanMackey2013} with 200 walkers.
+Instead of the stretch move of \citet{Goodman2010}, which gets stuck between separate modes of the posterior, we use differential-evolution moves \citep{terBraak2006, terBraak2008}: 80\% of the proposals are $\boldsymbol\theta + \gamma(\boldsymbol\theta_j - \boldsymbol\theta_k)$, built from two other walkers $j$ and $k$, and 20\% are snooker moves.
+% code: --moves de (README "Adaptive Run Length", "Further options"); nwalkers = 200 and moves = de in all 182 run_settings.json
+The walkers start in a Gaussian ball around the default values of the preset (Table~\ref{tab:params}), with widths equal to the proposal scales of the parameters; a start point is kept only if its posterior is finite.
+% code: psrcs/mcmc.py (p0 = theta0 + scale * N(0,1), accepted if log_prior and log_probability are finite)
+
+\paragraph{Run length.}
+Burn-in and run length are set by a convergence rule, checked every 100 steps.
+The burn-in ends when it has lasted at least 300 steps, the median $\ln P$ of the walkers has changed by less than 1 since the previous check, and no walker lags behind.
+A walker lags if its best $\ln P$ in the last 100 steps lies below the best of all walkers by more than $\chi^2_{0.9999}(n_{\rm par})/2$, i.e.\ far outside the posterior; during burn-in such walkers are moved onto copies of other walkers with a small jitter.
+The reference is the best walker, not the median, because when a minority of walkers finds a much better mode, the median stays in the worse one and looks settled.
+The production run ends when it is at least 20 times longer than the largest integrated autocorrelation time of the parameters, $\tau_{\rm max}$, and $\tau_{\rm max}$ has changed by less than 10\% since the previous check.
+The effective sample size is then about $200 \times 20 = 4000$.
+The production run stops after 5000 steps in any case, and the burn-in after 2500.
+% code: psrcs/mcmc_adaptive.py; README "Adaptive Run Length" (burn_min 300, logp_tol 1, lag_prob 1e-4, n_tau 20, tau_rtol 0.1,
+%       check_every 100, max_steps 5000 (production), burn_max = max_steps/2 (mcmc.py); rule recorded in run_settings.json "adaptive")
+The best fit is the sample with the highest posterior in the whole production run.
+% code: psrcs/mcmc.py (best = flat[argmax(flat_logp)])
+
+In the 182 fits of 0.3--10~keV with the 117-run table of the transfer correction (Sect.~\ref{sec:results}), the burn-in took 300--1200 steps (median 400) and the production 700--5000 steps (median 1850).
+$\tau_{\rm max}$ was 12--570 steps (median 73), and the acceptance fraction 0.007--0.25 (median 0.10).
+125 fits met the convergence rule; the other 57 stopped at 5000 production steps, with an effective sample size of 1600--3900.
+% source: run_settings.json "adaptive" of the 182 fits mcmc_*.mc_0p3-10keV (ULXspectra-refit/results, read 2026-11-23):
+%         converged 125/182; burn 300/400/1200, nsteps 700/1850/5000, tau_max 12.0/73.1/572.8, ess 1641/4061/7677 (unconverged: 1641-3867),
+%         acceptance 0.0074/0.100/0.245 (min/median/max).
+% AUTHOR: these numbers are for the current round (old table); to be updated after the C28 refits. Which of the 57
+%         unconverged fits are best fits of Table bestfit_params (to be checked)?

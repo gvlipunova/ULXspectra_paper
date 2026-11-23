@@ -8,12 +8,12 @@
 \centering
 \includegraphics[width=\textwidth]{streamlines_linear.pdf}
 \caption{Streamlines of the wind, Eq.~\eqref{eq:theta0}, on linear axes of equal scale in units of $\Rsph$, for $\hd = 0$ and $\omf = 0.7$: the innermost streamline, the funnel wall, at $\theta_{\rm c} = 45.6^\circ$; the outermost runs along the disc ($\theta_{\rm d} = 90^\circ$).
-(a) BH, $\Rsph = 1924\,\rin$; (b) NS, $\Rsph = 272\,\rmag$, with an inset at a few $\rmag$ showing the last closed dipole field line $R = \rmag\sin^2\theta$ and the NS surface $\RNS = 0.154\,\rmag$.
+(a) BH, $\Rsph = 1924\,\rin$; the thick line is the streamline launched at $R_0 = 0.5\,\Rsph$, at $\theta_0 = 69.5^\circ$ to the axis, with its poloidal velocity $v_{\rm pol}$; (b) NS, $\Rsph = 272\,\rmag$, with an inset at a few $\rmag$ showing the last closed dipole field line $R = \rmag\sin^2\theta$ and the NS surface $\RNS = 0.154\,\rmag$.
 The radii are those of the fits of Fig.~\ref{fig:wind_geometry}.
-Made with \code{docs/scripts/plot\_streamlines\_linear.py} (code commit bb66b81).}
+Made with \code{docs/scripts/plot\_streamlines\_linear.py} (code commit fa64b89).}
 \label{fig:streamlines_linear}
 \end{figure*}
-% figure: ULXspectra-mc docs/figures/streamlines_linear.pdf, commits bb66b81, eba4a0e (calculation session 2026-11-21)
+% figure: ULXspectra-mc docs/figures/streamlines_linear.pdf, commit fa64b89 (R_0, theta_0, v_pol in panel (a): for_paper_session.md note 3)
 
 \begin{figure*}
 \centering
@@ -44,7 +44,7 @@ For $\hd = 0$ and $\omf = 0.7$, $\theta_{\rm c} = 46^\circ$ and $\theta_{\rm d} 
 An estimate of $\theta_{\rm c}$ follows from the ballistic picture of P07 (their section~4.1).
 A gas element launched from a Keplerian orbit at $R_0$ with no radial velocity and with the vertical velocity $\xi\vK(R_0)$, $\xi \gtrsim 1$, has the specific energy $(\xi^2 - 1)\vK^2/2$.
 %Egrav+Ekin = (\xi^2 - 1)\vK^2/2
-If it moves ballistically and conserves its angular momentum (r v_\phi  = R_0 sqrt{GM/R_0}), it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/r = \zeta$ (Appendix~\ref{app:ballistic}).
+If it moves ballistically and conserves its angular momentum ($r v_\phi = R_0\vK(R_0)$), it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/r = \zeta$ (Appendix~\ref{app:ballistic}).
 To emerge above the surface of a geometrically thick supercritical disc with $H/r \sim 0.6$, the outflow must have $\zeta \gtrsim H/r$.
 On the other hand, energy constraints make $\xi \gtrsim 1.5$--$2$ unlikely, which corresponds to $\zeta \lesssim 1.1$--$1.7$.
 If the innermost streamline follows the ballistic asymptote, $\cot\theta_{\rm c} = \zeta$, and for $\hd = 0$ the wind fills the fraction
@@ -123,9 +123,9 @@ Then $J = \cos\theta_0$ is the ratio of the width of the streamtube, ${\rm d}R_0
 \subsection{Speed along the streamlines}
 \label{sec:wind:velocity}
 
-The ballistic relation needs gas that is kicked once and then coasts. In a supercritical disc, radiation pressure keeps pushing the gas above the disc, where the flux is super-Eddington. The final speed is then set by that later acceleration, while the direction is set near the base, by the thick disc and the pressure of the inner outflow.
-
-
+The ballistic relation needs gas that is kicked once and then coasts.
+In a supercritical disc, radiation pressure keeps pushing the gas above the disc, where the flux is super-Eddington.
+The final speed is then set by that later acceleration, while the direction is set near the base, by the thick disc and the pressure of the inner outflow.
 
 In our default law the gas moves ballistically: it has the speed $\beta_{\rm w}\vK(R_0)$ at infinity, where $\vK(R_0) = \sqrt{GM/R_0}$, and conserves its angular momentum.
 Energy conservation then gives the poloidal speed
@@ -137,30 +137,30 @@ where $r$ is the cylindrical and $R$ the spherical radius.
 % code: v_wind_streamline(), law "ballistic" (csrcs/wind_struct.c); README "Wind: streamlines"; docs/wind_velocity_laws.md; PLAN C11
 This is the ballistic picture of Sect.~\ref{sec:wind:streamlines}, with $\beta_{\rm w} = \zeta$.
 % source: docs/wind_velocity_laws.md "What Poutanen et al. (2007) assume"
-The gas leaves the disc at $\sqrt{\beta_{\rm w}^2 + 1}\,\vK(R_0) = \xi\vK(R_0)$ and slows down as it climbs out of the potential well.
+The gas leaves the disc at $\sqrt{\beta_{\rm w}^2 + 1}\,\vK(R_0) = \xi\vK(R_0)$ and slows down as it climbs out of the potential well.\footnote{The poloidal speed falls below its value at infinity, $\beta_{\rm w}\vK(R_0)$, wherever $2/R < R_0/r^2$.
+This happens only on nearly vertical streamlines.
+The speed is floored at $\beta_{\rm w}\vK(R_0)$.
+This floor would act only on streamlines within $7.4^\circ$ of the axis, which keep nearly their full rotation while climbing out of the potential.
+In the model $\theta_0 \ge \theta_{\rm c} \ge 31.8^\circ$ ($\omf \le 0.85$), so the floor is never active.}
+% footnote: author's text 2026-11-23; 7.4 deg: calculation session 2026-11-21, checked (Claude): min of 2/R - R_0/r^2 along
+%           a straight streamline from (R_0, 0) reaches 0 at theta_0 = 7.4 deg, independent of beta_w
 % checked (Claude): Eq. (vballistic) at R = r = R_0 gives v_pol^2 = (beta_w^2 + 1) G M/R_0
 The direction of the flow, however, is set by the straight streamlines of Eq.~\eqref{eq:streamline}, not by the ballistic trajectory.
 % code: v_wind_streamline() uses only the speed of the ballistic solution (csrcs/wind_struct.c)
-The speed is floored at $\beta_{\rm w}\vK(R_0)$, which acts only for streamlines within $7.4^\circ$ of the axis; the law~\eqref{eq:theta0} gives $45^\circ$--$89^\circ$ at the fits, so the floor is not active.
-The ballistic speed depends little on the angle of the streamline: it differs by less than 1\% between $\theta_0 = 45.6^\circ$ and $80^\circ$ (Figs.~\ref{fig:streamline_speed} and~\ref{fig:streamline_speed_beta1} in Appendix~\ref{app:profiles}).
+The ballistic speed depends little on the angle of the streamline: it differs by less than 1\% between $\theta_0 = 45.6^\circ$ and $80^\circ$ (the speed along the funnel wall is shown in Fig.~\ref{fig:streamline_speed} in Appendix~\ref{app:profiles}).
 % source: calculation session 2026-11-21 (correction: the floor acts only for theta_0 < 7.4 deg, not for every theta_0 < 45 deg);
-%         docs/scripts/plot_streamline_speed.py (commits eba4a0e, afb2f1f)
+%         docs/scripts/plot_streamline_speed.py (commit afb2f1f: theta_0 = 45.6, 60, 80 deg within 0.4% at beta_w = 1)
 % source: docs/wind_velocity_laws.md, notes on (c); AUTHOR: confirm the range of angles for the final fits.
 
-The code has three more laws, which we use for comparison:
-a constant speed $\beta_{\rm w}\vK(R_0)$;
-the mean wind speed of P07 (their eq.~27) at the local radius, $\beta_{\rm w}\sqrt{GM/\min(r, \Rsph)}$;
-and a speed rising from $0.1$ to $1$ times $\beta_{\rm w}\vK(R_0)$ along the streamline.
-% code: v_wind_streamline(), laws "launch", "P07", "accelerating"; docs/wind_velocity_laws.md table "The four laws"
-The P07 law was meant for the vertically averaged wind; applied along a streamline, it makes the speed fall as $\sqrt{R_0/r}$ out to $\Rsph$, which inflates the outer photosphere.
-% source: docs/wind_velocity_laws.md, findings 1
-The three other laws share the speed at infinity and give the same outer wind.
-At the best fits of NGC~7793 (made with the P07 law), replacing it with the ballistic law changes the spectrum by up to 0.29~dex, at the lowest energies.
+We notice that all streamlines share one $\beta_{\rm w}$, yet their angles spread from $\theta_{\rm c}$ to $90^\circ$.
+Ballistically, one $\zeta$ would mean one direction for all of them.
+Tying only the innermost streamline to $\beta_{\rm w}$ would be arbitrary.
+On the other hand, the wind is not expected to be ballistic (see the beginning of this subsection).
 
-We notice that all streamlines share one β_w, yet their angles spread from θ_c to 90°. Ballistically, one ζ would mean one direction for all of them. Tying only the innermost streamline to β_w would be arbitrary.
-On the other hand, the wind is not expected to be ballistic (see the beginning of this subsection). 
-
-On the positive side, potentially the data can disetngangle ω_frac and $beta_w$. The geometry of the flow  depends on onega_frac, and the funnel opening, beaming and occultation against inclination as well. Velocity factor β_w acts through the density, ρ ∝ 1/v. That sets τ⊥, the size of the photosphere and the wind temperature.
+On the positive side, potentially the data can disentangle $\omf$ and $\beta_{\rm w}$.
+The geometry of the flow depends on $\omf$, and so do the funnel opening, the beaming and the occultation against inclination.
+The velocity factor $\beta_{\rm w}$ acts through the density, $\rho \propto 1/v$.
+That sets $\taup$, the size of the photosphere and the wind temperature.
 
 \subsection{Photosphere and outer wall}
 \label{sec:wind:photosphere}
