@@ -30,3 +30,5 @@ here: file, script, code commit, and the section that uses it.
 The two `ahlberg_published_*` figures compare with the published figures of Ahlberg et al. (2026);
 their scripts are in `figures/ahlberg2026/` of this repository, not in the code repository
 (see `figures/ahlberg2026/README.md`).
+
+- `slim_disc_streamlines.pdf`, `slim_disc_streamlines_columns.pdf` (fig:slim_disc, fig:slim_disc_columns; App. C, "Outlook: a slim disc"): copied from ULXspectra-mc docs/figures (commit b2dc222), made with docs/scripts/plot_slim_disc_streamlines.py 0.5 0.05; described in docs/slim_disc_geometry.md (1896e10).
