@@ -141,7 +141,7 @@ which corresponds to $f_{in}=1/\dot m_0$ in terms of Eq.~\eqref{eq:mdot_setin} f
 Preset & $\Mdot(r)$ & $\Rsph$ & $\etaEdd$ & $\Rtrap$ \\
 \midrule
 main (\code{set\_mdot\_in}) & Eq.~\eqref{eq:mdot_setin} & free & 1/12 & M26 \\
-P07 & Eq.~\eqref{eq:mdot_P07} & P07fit & 1/12 & M26 \\
+P07 & Eq.~\eqref{eq:mdot_P07} & Eq.~\ref{eq:rsph_P07} & 1/12 & M26 \\
 L99 & Eq.~\eqref{eq:mdot_P07}, $\epsilon_{\rm w}=1$ & P07fit & 1/12 & M26 \\
 SS73 & Eq.~\eqref{eq:mdot_SS73} & SS73, SS73\_eq71 & 1/12 & $\Rsph$ \\
 \bottomrule
@@ -244,10 +244,10 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 \footnotesize
 \begin{tabular}{@{}llllll@{}}
 \toprule
-Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Other settings \\
+Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Comments \\
 \midrule
-BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
-BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
+BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ &   P07 wind scenario \\
+BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & wind with arbitrary mass loss\\
 BH1a & BH & main & Ledd & as BH1 & \\
 BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
 BH3 & BH & main & mdot0 & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & \\
