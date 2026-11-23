@@ -44,7 +44,7 @@ For $\hd = 0$ and $\omf = 0.7$, $\theta_{\rm c} = 46^\circ$ and $\theta_{\rm d} 
 An estimate of $\theta_{\rm c}$ follows from the ballistic picture of P07 (their section~4.1).
 A gas element launched from a Keplerian orbit at $R_0$ with no radial velocity and with the vertical velocity $\xi\vK(R_0)$, $\xi \gtrsim 1$, has the specific energy $(\xi^2 - 1)\vK^2/2$.
 %Egrav+Ekin = (\xi^2 - 1)\vK^2/2
-If it moves ballistically and conserves its angular momentum, it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/r = \zeta$ (Appendix~\ref{app:ballistic}).
+If it moves ballistically and conserves its angular momentum (r v_\phi  = R_0 sqrt{GM/R_0}), it reaches infinity with the speed $\zeta\vK(R_0)$, where $\zeta = \sqrt{\xi^2 - 1}$, and its trajectory approaches a straight line with $z/r = \zeta$ (Appendix~\ref{app:ballistic}).
 To emerge above the surface of a geometrically thick supercritical disc with $H/r \sim 0.6$, the outflow must have $\zeta \gtrsim H/r$.
 On the other hand, energy constraints make $\xi \gtrsim 1.5$--$2$ unlikely, which corresponds to $\zeta \lesssim 1.1$--$1.7$.
 If the innermost streamline follows the ballistic asymptote, $\cot\theta_{\rm c} = \zeta$, and for $\hd = 0$ the wind fills the fraction
@@ -57,6 +57,7 @@ of the solid angle, that is $\omf \simeq 0.5$--$0.85$ for $\zeta \simeq 0.6$--$1
 % checked (Claude): 0.6/sqrt(1.36) = 0.51, 1.7/sqrt(3.89) = 0.86
 % AUTHOR: "energy constraints make xi > 1.5-2 unlikely": add the argument or a reference.
 We use this estimate only to motivate the range of $\omf$ in the fits, up to 0.85 (Table~\ref{tab:params}).
+%A faster wind would mean a narrower funnel.
 In the model, $\omf$ and the wind speed $\beta_{\rm w}$ (Sect.~\ref{sec:wind:velocity}) are independent parameters, and the relation $\cot\theta_{\rm c} = \beta_{\rm w}$ is not imposed.
 % author's decision 2026-10-29; code: omega_frac and beta_w independent (ULX.conf priors (0.1, 0.85), (0.05, 3))
 
@@ -122,6 +123,10 @@ Then $J = \cos\theta_0$ is the ratio of the width of the streamtube, ${\rm d}R_0
 \subsection{Speed along the streamlines}
 \label{sec:wind:velocity}
 
+The ballistic relation needs gas that is kicked once and then coasts. In a supercritical disc, radiation pressure keeps pushing the gas above the disc, where the flux is super-Eddington. The final speed is then set by that later acceleration, while the direction is set near the base, by the thick disc and the pressure of the inner outflow.
+
+
+
 In our default law the gas moves ballistically: it has the speed $\beta_{\rm w}\vK(R_0)$ at infinity, where $\vK(R_0) = \sqrt{GM/R_0}$, and conserves its angular momentum.
 Energy conservation then gives the poloidal speed
 \begin{equation}
@@ -151,6 +156,11 @@ The P07 law was meant for the vertically averaged wind; applied along a streamli
 % source: docs/wind_velocity_laws.md, findings 1
 The three other laws share the speed at infinity and give the same outer wind.
 At the best fits of NGC~7793 (made with the P07 law), replacing it with the ballistic law changes the spectrum by up to 0.29~dex, at the lowest energies.
+
+We notice that all streamlines share one β_w, yet their angles spread from θ_c to 90°. Ballistically, one ζ would mean one direction for all of them. Tying only the innermost streamline to β_w would be arbitrary.
+On the other hand, the wind is not expected to be ballistic (see the beginning of this subsection). 
+
+On the positive side, potentially the data can disetngangle ω_frac and $beta_w$. The geometry of the flow  depends on onega_frac, and the funnel opening, beaming and occultation against inclination as well. Velocity factor β_w acts through the density, ρ ∝ 1/v. That sets τ⊥, the size of the photosphere and the wind temperature.
 
 \subsection{Photosphere and outer wall}
 \label{sec:wind:photosphere}
