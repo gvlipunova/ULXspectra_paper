@@ -256,24 +256,28 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Comments \\
 \midrule
 BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ &   P07 wind scenario \\
-BH1 & BH & main & mdot0 & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & Wind with arbitrary mass loss\\
-BH1a & BH & main & Ledd & as BH1 & \dots alterntive spherization radius \\
-BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & \\
-BH3 & BH & main & mdot0 & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & \\
-BH3a & BH & main & Ledd & as BH3 & \\
-BH4 & BH & main & mdot0 & BH1 $+$ $\beta_{\rm w}$, $\omf$ & \\
-BH4a & BH & main & Ledd & as BH4 & \\
+BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & SS73 wind scenario $+$ free emission 
+% depends on $\epsilon_{\rm w}$ 
+\\
+BH1/BH1a & BH & main & mdot0/Ledd & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & Arbitrary wind mass loss\\
+% BH1a & BH & main & Ledd & as BH1 & \dots alterntive spherization radius \\
+BH3/BH3a & BH & main & mdot0/Ledd & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & $+$ free wind velocity and emission\\
+% BH3a & BH & main & Ledd & as BH3 & \\
+BH4/BH4a & BH & main & mdot0/Ledd & BH1 $+$ $\beta_{\rm w}$, $\omf$ & $+$ free wind velocity and geometry \\
+% BH4a & BH & main & Ledd & as BH4 & \\
 \midrule
-NS1 & NS & main & P07fit & $\mdot_0$, $f_{\rm in}$, $i$, $\rmag$, $\rout$ & spherical emitter \\
-NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
-NS2 & NS & SS73 & SS73 & $\mdot_0$, $i$, $\rmag$, $\rout$ & spherical emitter \\
-NS3 & NS & main & mdot0 & $\mdot_0$, $i$, $\rmag$, $\rout$ & $f_{\rm in} = 1$ (no wind); spherical emitter \\
-NS3a & NS & main & Ledd & as NS3 & as NS3 \\
-NS4ar & NS & main & Ledd & $\mdot_0$, $f_{\rm in}$, $\rmag$, $\rout$ & $i = 0$; spherical emitter \\
-NS5r & NS & main & P07fit & NS4ar $+$ $i$ & dipole emitter \\
-NS5ar & NS & main & Ledd & as NS5r & dipole emitter \\
-NS6r & NS & main & Ledd & NS5r $+$ $\eta_{\rm magn}$ & dipole emitter \\
-NS7r & NS & main & Ledd & NS5r $+$ $\eta_{\rm magn}$ & spherical emitter \\
+NS3 & NS /sph & --- & --- &
+% main and mdot0
+$\mdot_0$, $i$, $\rmag$, $\rout$ & No wind ($f_{\rm in} = 1$, $\epsilon_{\rm w}=0$)\\
+%NS3a & NS /sph & main & Ledd & as NS3 & as NS3 \\
+NS2 & NS /sph & SS73 & SS73 & $\mdot_0$, $i$, $\rmag$, $\rout$ & SS73 wind scenario \\
+NS1/NS1a & NS /sph & main & P07fit/Ledd & $\mdot_0$, $f_{\rm in}$, $i$, $\rmag$, $\rout$ & Arbitrary wind mass loss \\
+% NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
+NS4ar & NS /sph & main & Ledd & $\mdot_0$, $f_{\rm in}$, $\rmag$, $\rout$ & $ + ~~i = 0$ \\
+NS5r/NS5ar & NS /dip & main & P07fit/Ledd & NS1 & Arbitrary wind mass loss \\
+% NS5ar & NS /dip & main & Ledd & as NS5r & Arbitrary wind mass loss \\
+NS6r & NS /dip & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
+NS7r & NS /sph & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
 \bottomrule
 \end{tabular}
 % source: ULX.conf.example [BH0]-[NS7r] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction),
