@@ -12,7 +12,8 @@ here: file, script, code commit, and the section that uses it.
 | `funnel_beaming_by_radius.png` | `docs/scripts/funnel_beaming_mc.py` | `4da7c04` | App. Monte Carlo (fig:funnel_radius) |
 | `ahlberg_published_vs_cone_mc.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/funnel_beaming_mc.py`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_published) |
 | `ahlberg_published_vs_mc_transfer.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/mc_green_surface.py` and the C model) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:mc_transfer_ahlberg) |
-| `HolmIX_mc_vs_nomc_BH3a.png` | `docs/scripts/plot_mc_vs_nomc.py` (left panel of `HolmIX_mc_vs_nomc.png`, cropped; one-panel PDF requested) | `b551655` (branch `mc-transfer-corrections`) | App. D.11 (fig:holmix_mcnomc), cited in Sects. 5 and Results |
+| `HolmIX_mc_vs_nomc_BH3a.pdf` | `docs/scripts/plot_mc_vs_nomc.py` (one-preset mode, `BH3a`) | `e402ace` (branch `mc-transfer-corrections`) | App. D.11 (fig:holmix_mcnomc), cited in Sects. 5 and Results |
+| `visibility.pdf`, `visibility_transfer.pdf` | `docs/scripts/plot_visibility.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `d186025` | Sect. 5 (fig:visibility), Sect. 5.1 (fig:visibility_transfer) |
 | `wind_ring_spectrum.pdf` | this repository: `figures/plot_wind_ring_spectrum.py` (from Eqs. fcor, Inu_wind) | -- | Sect. 5 (fig:wind_ring_spectrum) |
 | `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:best_fits_mc) |
 | `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |

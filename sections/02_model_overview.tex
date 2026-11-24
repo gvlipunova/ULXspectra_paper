@@ -80,7 +80,7 @@ Models with $\rout \le \rin$ or $\rout < 0.1\,R_\odot$, smaller than the binary 
 % code: apply_physical_radii() (csrcs/disc_struct.c: x_out_disc > 1, else -3; r_out >= r_out_min_rsun R_sun, else -4);
 %       r_out_min_rsun = 0.1 fixed (README "Model Presets": common to all presets); author's question 2026-11-13
 Only the disc inside $\rout$ emits and counts in the disc luminosity.
-If $\rout$ lies inside the outer wall of the wind (Sect.~\ref{sec:wind:photosphere}), the disc there is hidden but still sets the wind temperature (Eq.~\ref{eq:Twraw}); beyond the wall the outer disc is seen directly.
+If $\rout$ lies inside the \new{outer edge of the wind photosphere} (Sect.~\ref{sec:wind:photosphere}), the disc there is hidden but still sets the wind temperature (Eq.~\ref{eq:Twraw}); beyond \new{it} the outer disc is seen directly.
 The radial grid extends to $\max(10^4\mdot_0\,\rin, \rout)$; the rings beyond $\rout$ do not emit but can occult. (\textbf{check})
 % code: README "Units and radii"; radial_grid_edges() (csrcs/wind_surface.c)
 
