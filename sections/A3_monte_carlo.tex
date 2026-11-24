@@ -96,7 +96,7 @@ The result depends on whether the line of sight lies inside the funnel, $i < \th
 Inside the funnel the ray cast underestimates $L_{\rm iso}$ by a factor of 1.5--2.4, and the shape of the spectrum above about 0.1~keV hardly changes.
 For \srcHoIX at $9^\circ$ and \srcNGCthirteen at $19^\circ$ the ratio is flat to within about 10\% from 0.3 to 30~keV.
 The factor has two parts.
-The occulted light that the ray cast drops \new{(the diagnostic case)} contributes a factor of 1.05--1.15 for \srcHoIX and \srcNGCthirteen and of 2.0 for the wind-dominated \srcNGCfiftyfour.
+The occulted light that the ray cast drops {(the diagnostic case)} contributes a factor of 1.05--1.15 for \srcHoIX and \srcNGCthirteen and of 2.0 for the wind-dominated \srcNGCfiftyfour.
 The rest, a factor of 1.2--1.8, is the collimation by the funnel: light scattered off the funnel walls leaves along the axis (Sect.~\ref{app:mc:funnel}).
 % source: docs/green_surface_monte_carlo.md, "Conclusions" item 2; commit 4da7c04
 
@@ -105,7 +105,7 @@ The line of sight crosses the wind cone, which is thin perpendicularly but thick
 The ray cast treats the wind above the surface $\taup = 1$ as transparent and still sees the hot inner disc.
 For \srcHoIX and \srcNGCthirteen it overestimates $L_{\rm iso}$ by a factor of 2.5--8 at $50$--$63^\circ$ (\srcNGCthirteen up to $75^\circ$), and its spectrum is too hard: the ratio of the Monte Carlo to the ray cast falls from 0.3--0.7 below 0.1~keV to 0.1--0.3 at 10~keV.
 Close to the disc plane the ray cast gives no hard flux at all, while the scattered light keeps a hard tail.
-\new{In the diagnostic case, which keeps the occulted light but not the wind, $L_{\rm iso}$ stays within about 15\% of the ray cast for \srcHoIX and \srcNGCthirteen at these inclinations: the error beyond the edge comes from the oblique wind, not from the dropped light.}
+{In the diagnostic case, which keeps the occulted light but not the wind, $L_{\rm iso}$ stays within about 15\% of the ray cast for \srcHoIX and \srcNGCthirteen at these inclinations: the error beyond the edge comes from the oblique wind, not from the dropped light.}
 % numbers: reflection/ray cast 1.13-1.16 (HolmIX) and 1.04-1.07 (NGC1313B) at 50-63 deg, old tab:mc_ratio (archive/archive.tex)
 The ratios above unity at the largest inclinations in Table~\ref{tab:mc_ratio} (\srcHoIX at $70^\circ$, \srcNGCfiftyfour at $63$--$70^\circ$) do not mean that the Monte Carlo is bright there.
 They arise because the ray cast becomes dark: the outer part of the emitting surface hides the inner disc from the observer.
