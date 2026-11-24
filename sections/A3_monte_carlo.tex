@@ -49,12 +49,11 @@ We considered two cases, which differ only in what happens to a packet after it 
 \item \emph{Scattering:} the packets scatter on electrons in the wind density of the model (Sect.~\ref{sec:wind:streamlines}, with the ballistic speed law) until they escape.
 Scattering is Thomson, isotropic and conservative, without change of photon energy, and the disc plane reflects diffusely with the albedo of unity.
 This is the physical case within these assumptions.
-\item \emph{Reflection:} the wind has no opacity, and the surface $\taup = 1$ is an opaque diffuse mirror.
-This is the geometry of the ray cast, but with the blocked light kept.
 \end{itemize}
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo" and the table "How to read the lines"
-The ratio of the reflection case to the ray cast thus gives the effect of dropping the occulted light.
-The ratio of the scattering case to the reflection case gives the effect of the wind above the surface $\taup = 1$, that is of defining the emitting surface by $\taup$.
+\new{The ray cast errs in two ways at once: it drops the light that the surface $\taup = 1$ occults, and it treats the wind above that surface as transparent.
+To separate them, we also ran a diagnostic case in which the wind has no opacity and the surface $\taup = 1$ is an opaque diffuse mirror: the geometry of the ray cast, with the blocked light kept (blue dashed in Fig.~\ref{fig:mc_spectra}).}
+% reflection case: its numbers are in archive/archive.tex (removed from tab:mc_ratio and tab:mc_funnel 2026-11-24, author)
 The ray cast of the code is reproduced in the script; at the best-fit inclination it gives the bolometric $L_{\rm iso}$ within 1.5\% of the code.
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo" (Lbol_iso within 1.5% of model_energy_report.txt)
 
@@ -97,7 +96,7 @@ The result depends on whether the line of sight lies inside the funnel, $i < \th
 Inside the funnel the ray cast underestimates $L_{\rm iso}$ by a factor of 1.5--2.4, and the shape of the spectrum above about 0.1~keV hardly changes.
 For \srcHoIX at $9^\circ$ and \srcNGCthirteen at $19^\circ$ the ratio is flat to within about 10\% from 0.3 to 30~keV.
 The factor has two parts.
-The occulted light that the ray cast drops contributes a factor of 1.05--1.15 for \srcHoIX and \srcNGCthirteen and of 2.0 for the wind-dominated \srcNGCfiftyfour.
+The occulted light that the ray cast drops \new{(the diagnostic case)} contributes a factor of 1.05--1.15 for \srcHoIX and \srcNGCthirteen and of 2.0 for the wind-dominated \srcNGCfiftyfour.
 The rest, a factor of 1.2--1.8, is the collimation by the funnel: light scattered off the funnel walls leaves along the axis (Sect.~\ref{app:mc:funnel}).
 % source: docs/green_surface_monte_carlo.md, "Conclusions" item 2; commit 4da7c04
 
@@ -106,11 +105,13 @@ The line of sight crosses the wind cone, which is thin perpendicularly but thick
 The ray cast treats the wind above the surface $\taup = 1$ as transparent and still sees the hot inner disc.
 For \srcHoIX and \srcNGCthirteen it overestimates $L_{\rm iso}$ by a factor of 2.5--8 at $50$--$63^\circ$ (\srcNGCthirteen up to $75^\circ$), and its spectrum is too hard: the ratio of the Monte Carlo to the ray cast falls from 0.3--0.7 below 0.1~keV to 0.1--0.3 at 10~keV.
 Close to the disc plane the ray cast gives no hard flux at all, while the scattered light keeps a hard tail.
+\new{In the diagnostic case, which keeps the occulted light but not the wind, $L_{\rm iso}$ stays within about 15\% of the ray cast for \srcHoIX and \srcNGCthirteen at these inclinations: the error beyond the edge comes from the oblique wind, not from the dropped light.}
+% numbers: reflection/ray cast 1.13-1.16 (HolmIX) and 1.04-1.07 (NGC1313B) at 50-63 deg, old tab:mc_ratio (archive/archive.tex)
 The ratios above unity at the largest inclinations in Table~\ref{tab:mc_ratio} (\srcHoIX at $70^\circ$, \srcNGCfiftyfour at $63$--$70^\circ$) do not mean that the Monte Carlo is bright there.
 They arise because the ray cast becomes dark: the outer part of the emitting surface hides the inner disc from the observer.
 In \srcHoIX the wind photosphere rises to $z/r = 0.39$ at $x \approx 490$, which hides the surface well inside this radius for $i \gtrsim 68.5^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast drops from 0.90 at $63^\circ$ to 0.033 at $70^\circ$.
 In \srcNGCfiftyfour the photosphere reaches $z/r = 0.88$ at $x \approx 320$, so the hiding begins at $i \approx 49^\circ$, and $L_{\rm iso}/L_{\rm total}$ of the ray cast falls from 0.19 at $57^\circ$ to 0.015 at $70^\circ$.
-The Monte Carlo, in contrast, changes smoothly with $i$: the light that leaks out of the funnel through the wind gives $L_{\rm iso}/L_{\rm total} \approx 0.06$--$0.09$ in both cases, and the reflection case keeps the light that the surface blocks.
+The Monte Carlo, in contrast, changes smoothly with $i$: the light that leaks out of the funnel through the wind gives $L_{\rm iso}/L_{\rm total} \approx 0.06$--$0.09$ in both cases.
 In \srcNGCthirteen the photosphere is lower, $z/r \le 0.24$, the hiding begins only at $i \approx 77^\circ$, and the ratio stays below unity up to $75^\circ$.
 % derived (Claude, 2026-11-01) at the request of the author ("explain"): max z_ph/x of
 %   results/mcmc_{HolmIX,NGC1313B,NGC5408}.BH3a.full/surface_Python.dat (0.394 at x = 489; 0.237 at x = 647;
@@ -133,27 +134,26 @@ What an observer at a given $i$ receives depends on this choice strongly, throug
 The fitted parameters absorb this error.
 % source: docs/green_surface_monte_carlo.md, "Conclusions" item 4
 
-\begin{table*}
+\begin{table}
 \centering
-\caption{Bolometric $L_{\rm iso}(i)$ of the Monte Carlo divided by that of the ray cast, for the scattering and the reflection cases, in bins $\Delta\mu = 0.1$. At $i \ge 76^\circ$ the ray cast gives $L_{\rm iso} \approx 0$ (for \srcNGCthirteen beyond the first bin, where the scattering ratio is 0.18).}
+\caption{Bolometric $L_{\rm iso}(i)$ of the Monte Carlo divided by that of the ray cast, for the scattering case, in bins $\Delta\mu = 0.1$. At $i \ge 76^\circ$ the ray cast gives $L_{\rm iso} \approx 0$ (for \srcNGCthirteen beyond the first bin, where the scattering ratio is 0.18).}
 \label{tab:mc_ratio}
 \small
-\begin{tabular}{@{}lcccccc@{}}
+\begin{tabular}{@{}lccc@{}}
 \toprule
-& \multicolumn{2}{c}{\srcHoIX} & \multicolumn{2}{c}{\srcNGCthirteen} & \multicolumn{2}{c}{\srcNGCfiftyfour} \\
-$i$ & scattering & reflection & scattering & reflection & scattering & reflection \\
+$i$ & \srcHoIX & \srcNGCthirteen & \srcNGCfiftyfour \\
 \midrule
-$18^\circ$ & 1.95 & 1.15 & 1.85 & 1.05 & 2.35 & 1.99 \\
-$32^\circ$ & 1.80 & 1.14 & 1.72 & 1.05 & 2.29 & 1.98 \\
-$41^\circ$ & 1.58 & 1.16 & 1.55 & 1.07 & 2.24 & 1.97 \\
-$50^\circ$ & 0.27 & 1.16 & 0.40 & 1.07 & 0.70 & 2.13 \\
-$57^\circ$ & 0.14 & 1.13 & 0.20 & 1.04 & 0.70 & 2.54 \\
-$63^\circ$ & 0.12 & 1.14 & 0.18 & 1.06 & 1.42 & 2.63 \\
-$70^\circ$ & 2.6 & 10 & 0.16 & 1.05 & 4.0 & 2.8 \\
+$18^\circ$ & 1.95 & 1.85 & 2.35 \\
+$32^\circ$ & 1.80 & 1.72 & 2.29 \\
+$41^\circ$ & 1.58 & 1.55 & 2.24 \\
+$50^\circ$ & 0.27 & 0.40 & 0.70 \\
+$57^\circ$ & 0.14 & 0.20 & 0.70 \\
+$63^\circ$ & 0.12 & 0.18 & 1.42 \\
+$70^\circ$ & 2.6 & 0.16 & 4.0 \\
 \bottomrule
 \end{tabular}
-% source: docs/green_surface_monte_carlo.md, "Results" table; commit 4da7c04
-\end{table*}
+% source: docs/green_surface_monte_carlo.md, "Results" table; commit 4da7c04 (reflection columns: archive/archive.tex)
+\end{table}
 
 \begin{figure*}
 \centering
@@ -453,7 +453,6 @@ Our values are 0.88--0.98 of theirs, although the walls of our wind funnel are s
 \srcHoIX, scattering & 0.91 & 3.04 \\
 \srcNGCthirteen, scattering & 0.88 & 2.92 \\
 \srcNGCfiftyfour, scattering & 0.92 & 3.05 \\
-reflection (all three) & 0.54--0.79 & 1.8--2.6 \\
 \bottomrule
 \end{tabular}
 % source: docs/green_surface_monte_carlo.md, "Comparison with our MC (scatter mode, 2026-10-31)"; commit 4da7c04

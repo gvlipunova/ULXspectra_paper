@@ -1,0 +1,50 @@
+% Archive of material removed from the paper. NOT compiled (not \input in main.tex).
+% Each block: date, where it was, why it was removed. Restore by copying back.
+
+%% ======================================================================
+%% 2026-11-24, App. D (sections/A3_monte_carlo.tex): the reflection case of the Monte Carlo.
+%% Author's decision: keep the reflection case only as a short diagnostic in the text; remove its columns
+%% from tab:mc_ratio and its row from tab:mc_funnel. Source of all numbers: ULXspectra docs/green_surface_monte_carlo.md,
+%% commit 4da7c04.
+
+%% --- D.2 Method, the two cases (replaced by one item and one diagnostic sentence)
+We considered two cases, which differ only in what happens to a packet after it leaves the surface.
+\begin{itemize}
+\item \emph{Scattering:} the packets scatter on electrons in the wind density of the model (Sect.~\ref{sec:wind:streamlines}, with the ballistic speed law) until they escape.
+Scattering is Thomson, isotropic and conservative, without change of photon energy, and the disc plane reflects diffusely with the albedo of unity.
+This is the physical case within these assumptions.
+\item \emph{Reflection:} the wind has no opacity, and the surface $\taup = 1$ is an opaque diffuse mirror.
+This is the geometry of the ray cast, but with the blocked light kept.
+\end{itemize}
+% source: docs/green_surface_monte_carlo.md, "Monte Carlo" and the table "How to read the lines"
+The ratio of the reflection case to the ray cast thus gives the effect of dropping the occulted light.
+The ratio of the scattering case to the reflection case gives the effect of the wind above the surface $\taup = 1$, that is of defining the emitting surface by $\taup$.
+
+%% --- D.3, end of the paragraph on the hidden centre (clause removed)
+% ... gives $L_{\rm iso}/L_{\rm total} \approx 0.06$--$0.09$ in both cases, and the reflection case keeps the light that the surface blocks.
+
+%% --- tab:mc_ratio with both cases (the paper now keeps the scattering columns only)
+\begin{table*}
+\centering
+\caption{Bolometric $L_{\rm iso}(i)$ of the Monte Carlo divided by that of the ray cast, for the scattering and the reflection cases, in bins $\Delta\mu = 0.1$. At $i \ge 76^\circ$ the ray cast gives $L_{\rm iso} \approx 0$ (for \srcNGCthirteen beyond the first bin, where the scattering ratio is 0.18).}
+\label{tab:mc_ratio}
+\small
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+& \multicolumn{2}{c}{\srcHoIX} & \multicolumn{2}{c}{\srcNGCthirteen} & \multicolumn{2}{c}{\srcNGCfiftyfour} \\
+$i$ & scattering & reflection & scattering & reflection & scattering & reflection \\
+\midrule
+$18^\circ$ & 1.95 & 1.15 & 1.85 & 1.05 & 2.35 & 1.99 \\
+$32^\circ$ & 1.80 & 1.14 & 1.72 & 1.05 & 2.29 & 1.98 \\
+$41^\circ$ & 1.58 & 1.16 & 1.55 & 1.07 & 2.24 & 1.97 \\
+$50^\circ$ & 0.27 & 1.16 & 0.40 & 1.07 & 0.70 & 2.13 \\
+$57^\circ$ & 0.14 & 1.13 & 0.20 & 1.04 & 0.70 & 2.54 \\
+$63^\circ$ & 0.12 & 1.14 & 0.18 & 1.06 & 1.42 & 2.63 \\
+$70^\circ$ & 2.6 & 10 & 0.16 & 1.05 & 4.0 & 2.8 \\
+\bottomrule
+\end{tabular}
+% source: docs/green_surface_monte_carlo.md, "Results" table; commit 4da7c04
+\end{table*}
+
+%% --- tab:mc_funnel, the reflection row (removed)
+% reflection (all three) & 0.54--0.79 & 1.8--2.6 \\
