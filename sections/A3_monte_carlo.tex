@@ -41,14 +41,16 @@ Where $\taup < 1$ through the whole wind, the surface $\taup = 1$ lies on the di
 \label{app:mc:method}
 
 We followed photon packets with a Monte Carlo code (\code{docs/scripts/mc\_green\_surface.py} in the code repository).
-The packets start on the emitting surface of the model, with the temperatures of the model: the wind photosphere and the directly seen disc inside $\rout$.
+The packets start on the emitting surface of the model: the wind photosphere and the directly seen disc inside $\rout$.
 They are drawn in proportion to $T^4\,{\rm d}A$ and emitted Lambertian about the local normal, as in the ray cast.
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo"; mc_green_surface.py docstring
-\new{After leaving the surface,} the packets scatter on electrons in the wind density of the model (Sect.~\ref{sec:wind:streamlines}, with the ballistic speed law) until they escape.
+
+{After leaving the surface,} the packets scatter on electrons in the wind density of the model (Sect.~\ref{sec:wind:streamlines}, with the ballistic speed law) until they escape.
 Scattering is Thomson, isotropic and conservative, without change of photon energy, and the disc plane reflects diffusely with the albedo of unity.
-This is the physical case within these assumptions\new{; we call it the scattering case}.
+This is the physical case within these assumptions{; we call it the scattering case}.
 % source: docs/green_surface_monte_carlo.md, "Monte Carlo" and the table "How to read the lines"
-\new{The ray cast errs in two ways at once: it drops the light that the surface $\taup = 1$ occults, and it treats the wind above that surface as transparent.
+
+{The `ray cast' errs in two ways at once: it drops the light that the surface $\taup = 1$ occults, and it treats the wind above that surface as transparent.
 To separate them, we also ran a diagnostic case in which the wind has no opacity and the surface $\taup = 1$ is an opaque diffuse mirror: the geometry of the ray cast, with the blocked light kept (blue dashed in Fig.~\ref{fig:mc_spectra}).}
 % reflection case: its numbers are in archive/archive.tex (removed from tab:mc_ratio and tab:mc_funnel 2026-11-24, author)
 The ray cast of the code is reproduced in the script; at the best-fit inclination it gives the bolometric $L_{\rm iso}$ within 1.5\% of the code.
