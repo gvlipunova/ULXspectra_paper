@@ -176,9 +176,9 @@ At each cylindrical radius $r$ we integrate the optical depth from above, perpen
 % code: tau_perp_streamtube_at_x(), z_ph_streamtube() (csrcs/wind_struct.c); README "Wind: streamlines"
 and the photosphere is at the height $z_{\rm ph}(r)$ where $\tau = 1$.
 Rings with $r \ge \rin$ and $z_{\rm ph}$ above the disc surface are the wind photosphere; the other rings show the disc directly.
-\new{Far from the centre the column of the wind thins, and the height where $\tau = 1$ sinks towards the disc.
-Beyond its highest point the photosphere therefore falls back to the disc over a few rings; we call this falling part the \textit{outer wall}.
-It is not vertical, and its rings are ordinary wind rings, each with its own area and temperature (Eq.~\ref{eq:Twraw}).}
+{Far from the centre the column density in the wind decreases, and the height where $\tau = 1$ sinks towards the disc.
+Beyond its highest point the photosphere therefore falls back to the disc over a few rings; we call this falling part the \textit{outer wall}}.
+%It is not vertical, and its rings are ordinary wind rings, each with its own area and temperature (Eq.~\ref{eq:Twraw}).}
 % source: ULXspectra-mc docs/for_paper_session.md Note 11 (d5b3f39): falling part 3-9 rings (BH), out to ~2x the radius of the top;
 %   z_surface = max(z_ph, z_disc), csrcs/wind_surface.c ~880-896; dS_curve_one_side ~1199; explicit vertical wall
 %   (include_outer_vertical_wall) off in all fits, wind_model_api.c lines 190, 310; L_wall = 0 in all fits.

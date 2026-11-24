@@ -9,7 +9,9 @@ The second approach appears to be more physically justified.
 It can be implemented as a Monte-Carlo radiation transfer calculation.  For fits, however, it is much faster to apply corrections, obtained by comparing grey MC transfer to ray-cast  results. This method, which interpolates the data of pre-calculated tables,  is called \textit{'transfer-corrected approach'}, and is presented in more detail in Sect.~\ref{sec:spectrum:transfer}.
 
 We consider the cylindrical coordinate system with the star at the origin and the disc in the equatorial plane. 
-The emitting surface consists of rings: the wind photosphere\new{, including its outer wall,} the directly seen disc and, for a NS, the magnetosphere \new{(Fig.~\ref{fig:visibility})}.
+The emitting surface consists of rings: the wind photosphere
+%\new{, including its outer wall,} 
+the directly seen disc and, for a NS, the magnetosphere \new{(Fig.~\ref{fig:visibility})}.
 Wind photosphere is defined as a surface where the optical thickness on scattering, calculated from infinity to disc along a normal to it, \eqref{eq:tau}, is unity.
 
 For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
@@ -22,7 +24,7 @@ An element at azimuth $\phi$ contributes its area $r\,{\rm d}r\,{\rm d}\phi$ tim
 % code: projected_area_weights_surface_raycast() (mu_proj) (csrcs/visibility.c)
 if it faces the observer ($\mu_{\rm proj} > 0$) and if the ray from it towards the observer is not blocked by the rest of the surface, including the disc plane beyond $\rout$.
 % code: projected_area_weights_surface_raycast(), is_occulted_by_surface() (csrcs/visibility.c); README "Visibility and spectrum"
-\new{The photosphere is shallow, so at moderate inclinations every element faces the observer and nothing is occulted.
+{The photosphere is shallow, so at moderate inclinations every element faces the observer and nothing is occulted.
 Only close to edge-on does the photosphere hide the inner disc and the near side of the inner wind (Fig.~\ref{fig:visibility}c).}
 % source: Note 10 (d186025): at i = 50.3 deg nothing occulted (z/r <= 0.33, cot i = 0.83); occultation from i ~ 70 deg,
 %         inner disc (r < 94 R_in) hidden at i >= 72 deg; occulted parts at 75 deg on wind rings 94-800 R_in.
@@ -30,7 +32,7 @@ Only close to edge-on does the photosphere hide the inner disc and the near side
 \begin{figure*}
 \centering
 \includegraphics[width=0.9\textwidth]{visibility.pdf}
-\caption{\new{Visibility of the emitting surface of the BH3a fit of \srcNGCfiftyfour (as in Figs.~\ref{fig:wind_geometry} and~\ref{fig:temperatures}).
+\caption{{Visibility of the emitting surface of the BH3a fit of \srcNGCfiftyfour (as in Figs.~\ref{fig:wind_geometry} and~\ref{fig:temperatures}).
 (a) Meridional cut on the observer's side ($\phi = 0$), in units of $\Rsph$: the funnel wall, the streamlines (thin), the wind photosphere $\taup = 1$ with its outer wall (green) and the disc seen directly (brown).
 The inset shows a wind ring $j$ with its element $A_j$ and normal $\mathbf{n}$ and its attenuated ray to the observer, and the ray from an inner disc ring, seen directly at the inclination of the fit and occulted by the photosphere at $i = 75^\circ$ (dashed).
 (b), (c) The surface as the observer sees it at the inclination of the fit, $i = 50.3^\circ$, and at $i = 75^\circ$: ring $j$ is filled where it is visible, the area $A_{{\rm proj},j}(i)$, dashed where it is occulted and dotted where it faces away from the observer.
@@ -142,13 +144,13 @@ f_j\,g_{\rm out}(v)/\cos\theta_{\rm c}, & \mu < \cos\theta_{\rm c},
 \end{equation}
 % code: README "Visibility and spectrum" (h_j, u, v, f_j); csrcs/mc_transfer.c
 with introduced variables $u = (1 - \mu)/(1 - \cos\theta_{\rm c})$ and $v = \mu/\cos\theta_{\rm c}$.
-\new{Figure~\ref{fig:visibility_transfer} shows $h_j$ for the wind ring of Fig.~\ref{fig:visibility}: most of its scattered light leaves inside the funnel, and about a quarter beyond its edge.}
+{Figure~\ref{fig:visibility_transfer} shows $h_j$ for the wind ring of Fig.~\ref{fig:visibility}: most of its scattered light leaves inside the funnel, and about a quarter beyond its edge.}
 % numbers: Note 10 (d186025): f_j = 0.26, tau_j = 4.0, h_j(cos i) = 0.96, A_att/A_proj = 0.094 at i = 50.3 deg
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{visibility_transfer.pdf}
-\caption{\new{Angular profile $h_j(\mu)$ of the scattered light, Eq.~\eqref{eq:hj}, of the wind ring $j$ of Fig.~\ref{fig:visibility}, from the table of the transfer correction.
+\caption{{Angular profile $h_j(\mu)$ of the scattered light, Eq.~\eqref{eq:hj}, of the wind ring $j$ of Fig.~\ref{fig:visibility}, from the table of the transfer correction.
 The shaded area is the share $f_j$ that leaves beyond the funnel edge, $\mu < \cos\theta_{\rm c}$; the dot marks the inclination of the fit.}}
 \label{fig:visibility_transfer}
 \end{figure}
