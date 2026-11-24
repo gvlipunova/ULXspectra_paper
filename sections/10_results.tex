@@ -20,7 +20,46 @@ Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the b
 %         NGC1313H, NGC5408, NGC55, NGC6946, NGC7793; it disagrees for M81ULS, NGC247S, NGC247SS (BH fits better, NS
 %         candidates), NGC1313B (NS fits better, BH candidate); NGC300 (PULX): both fit, BH slightly better
 % AUTHOR: interpretation to be written by the author.
-
+\begin{table*}
+\centering
+\caption{Fitting presets of \code{ULX.conf}. The $\Mdot(r)$ profile and the $\Rsph$ rule are those of Sects.~\ref{sec:model:mdot} and~\ref{sec:radii:sph}; ``main'' is Eq.~\eqref{eq:mdot_setin}. Parameters not listed as free take the values of Table~\ref{tab:params} or of the last column. For a NS, $\rmag/\rg = \code{wind\_inner\_launch\_x}\cdot\code{r\_in\_factor}$ with \code{r\_in\_factor} = 4.5.}
+\label{tab:fitpresets}
+\footnotesize
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Comments \\
+\midrule
+BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ &   P07 wind scenario \\
+BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & SS73 wind scenario $+$ free emission 
+% depends on $\epsilon_{\rm w}$ 
+\\
+BH1/BH1a & BH & main & mdot0/Ledd & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & Arbitrary wind mass loss\\
+% BH1a & BH & main & Ledd & as BH1 & \dots alterntive spherization radius \\
+BH3/BH3a & BH & main & mdot0/Ledd & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & $+$ free wind velocity and emission\\
+% BH3a & BH & main & Ledd & as BH3 & \\
+BH4/BH4a & BH & main & mdot0/Ledd & BH1 $+$ $\beta_{\rm w}$, $\omf$ & $+$ free wind velocity and geometry \\
+% BH4a & BH & main & Ledd & as BH4 & \\
+\midrule
+NS3 & NS /sph & --- & --- &
+% main and mdot0
+$\mdot_0$, $i$, $\rmag$, $\rout$ & No wind ($f_{\rm in} = 1$, $\epsilon_{\rm w}=0$)\\
+%NS3a & NS /sph & main & Ledd & as NS3 & as NS3 \\
+NS2 & NS /sph & SS73 & SS73 & $\mdot_0$, $i$, $\rmag$, $\rout$ & SS73 wind scenario \\
+NS1/NS1a & NS /sph & main & P07fit/Ledd & $\mdot_0$, $f_{\rm in}$, $i$, $\rmag$, $\rout$ & Arbitrary wind mass loss \\
+% NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
+NS4ar & NS /sph & main & Ledd & $\mdot_0$, $f_{\rm in}$, $\rmag$, $\rout$ & $ + ~~i = 0$ \\
+NS5r/NS5ar & NS /dip & main & P07fit/Ledd & NS1 & Arbitrary wind mass loss \\
+% NS5ar & NS /dip & main & Ledd & as NS5r & Arbitrary wind mass loss \\
+NS6r & NS /dip & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
+NS7r & NS /sph & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
+\bottomrule
+\end{tabular}
+% source: ULX.conf.example [BH0]-[NS7r] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction),
+%         ULXspectra-mc 7ba8568; README "Model Presets". NS: r_m = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 fixed;
+%         NS4, NS4a, NS5, NS5a, NS6, NS7 (r_in_factor also free) left out: superseded (PLAN C23), see text.
+%         R_sph rule resolved by psrcs/flow_rules.py (fix-results-integrity ea6090e). Spherical/dipole emitter: dip = 0/1 (Sect. central).
+%         No preset uses the L99 scenario.
+\end{table*}
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{chi2_overview.pdf}

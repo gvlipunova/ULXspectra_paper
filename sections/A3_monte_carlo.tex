@@ -158,10 +158,10 @@ $70^\circ$ & 2.6 & 10 & 0.16 & 1.05 & 4.0 & 2.8 \\
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{mc_green_surface_spectra.png}
-\caption{Intrinsic spectra $\nu L_\nu$ (no absorption) of the best fits of \srcHoIX, \srcNGCthirteen and \srcNGCfiftyfour (rows; preset BH3a, full energy range) in bins $\mu \pm 0.05$ around the best-fit inclination, $40^\circ$, $55^\circ$ and $70^\circ$ (columns).
-Black: the ray cast of the code (surface $\taup = 1$, occulted light lost).
+\caption{Illustration why one should use Monte-Carlo radiation transfer. Intrinsic spectra $\nu L_\nu$ (no absorption) of the best fits of \srcHoIX, \srcNGCthirteen and \srcNGCfiftyfour (rows; preset BH3a, full energy range) in bins $\mu \pm 0.05$ around the best-fit inclination, $40^\circ$, $55^\circ$ and $70^\circ$ (columns).
+\textbf{Black}: the ray cast of the code (surface $\taup = 1$, occulted light lost).
 Blue dashed: Monte Carlo with the surface $\taup = 1$ as an opaque diffuse mirror.
-Orange: Monte Carlo with electron scattering in the wind of the model.
+\textbf{Orange}: Monte Carlo with electron scattering in the wind of the model.
 The lower panels show the ratio of the Monte Carlo to the ray cast.
 Made with \code{docs/scripts/mc\_green\_surface.py} and \code{mc\_green\_surface\_spectra.py} (code commit fa567f9).}
 \label{fig:mc_spectra}
@@ -171,7 +171,7 @@ Made with \code{docs/scripts/mc\_green\_surface.py} and \code{mc\_green\_surface
 \subsection{Limits of the test}
 \label{app:mc:limits}
 
-These first results are preliminary.
+%These first results are preliminary.
 The scattering is grey: isotropic Thomson scattering, without the Rayleigh phase function, without Doppler shifts or bulk Comptonization by the outflow, and without thermal Comptonization.
 There is no absorption: a packet keeps the energy of the element that emitted it, and there is no thermalisation below the surface.
 The disc plane has the albedo of unity.
@@ -650,7 +650,7 @@ Made with \code{figures/ahlberg2026/plot\_corrected\_B.py} of the manuscript rep
 \end{figure*}
 % figure: figures/corrected_B_of_i.png (author's request 2026-11-20), data figures/ahlberg2026/data/wind_mc.npz
 
-\subsection{Monte Carlo check of the best fits}
+\subsection{Monte Carlo check of the best fits (not done yet)}
 \label{app:mc:bestfits}
 % Source: ULXspectra-mc docs/transfer_correction_results.md sect. 6 and summaries/mc_check_best_refits.tsv
 %         (branch mc-transfer-corrections, commit e597ba3: model averaged over 41 mu in the window, first version 5); fits with the correction, 0.3-10 keV,

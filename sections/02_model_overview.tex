@@ -4,6 +4,9 @@
 \section{Model overview}
 \label{sec:model}
 
+The model is based on the model of a super-Eddington accretion disc and outflow by \citet{Poutanen2007}, with geometry being extended to a NS as the central emitter (whose shape is spherical or dipolar). The super-Eddington wind blocks and re-radiates part of the disc's emission, and the central `empty' funnel beams the central emission of a source for some inclinations. The angular distribution of outgoing radiation is calculated using the results of MC method for photon scattering. A comparison is done with the results of  \cite{Ahlberg2026}.
+
+The model is used to fit 15 observed spectra. 
 \subsection{Geometry and order of the calculation}
 \label{sec:model:geometry}
 
@@ -246,43 +249,3 @@ $z/r$ & \code{z\_over\_r\_trap} & disc thickness in Eq.~\eqref{eq:rtrap}, sets $
 % disc_luminosity_mode (1+log for BH, NS), dip, wind_velocity_law (ballistic).
 \end{table*}
 
-\begin{table*}
-\centering
-\caption{Fitting presets of \code{ULX.conf}. The $\Mdot(r)$ profile and the $\Rsph$ rule are those of Sects.~\ref{sec:model:mdot} and~\ref{sec:radii:sph}; ``main'' is Eq.~\eqref{eq:mdot_setin}. Parameters not listed as free take the values of Table~\ref{tab:params} or of the last column. For a NS, $\rmag/\rg = \code{wind\_inner\_launch\_x}\cdot\code{r\_in\_factor}$ with \code{r\_in\_factor} = 4.5.}
-\label{tab:fitpresets}
-\footnotesize
-\begin{tabular}{@{}llllll@{}}
-\toprule
-Preset & Accretor & $\Mdot(r)$ & $\Rsph$ rule & Free parameters & Comments \\
-\midrule
-BH0 & BH & P07 & P07fit & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ &   P07 wind scenario \\
-BH2 & BH & SS73 & SS73 & $M$, $\mdot_0$, $\epsilon_{\rm w}$, $i$, $r_{\rm in,f}$, $\rout$ & SS73 wind scenario $+$ free emission 
-% depends on $\epsilon_{\rm w}$ 
-\\
-BH1/BH1a & BH & main & mdot0/Ledd & $M$, $\mdot_0$, $f_{\rm in}$, $i$, $r_{\rm in,f}$, $\rout$ & Arbitrary wind mass loss\\
-% BH1a & BH & main & Ledd & as BH1 & \dots alterntive spherization radius \\
-BH3/BH3a & BH & main & mdot0/Ledd & BH1 $+$ $\epsilon_{\rm w}$, $\beta_{\rm w}$ & $+$ free wind velocity and emission\\
-% BH3a & BH & main & Ledd & as BH3 & \\
-BH4/BH4a & BH & main & mdot0/Ledd & BH1 $+$ $\beta_{\rm w}$, $\omf$ & $+$ free wind velocity and geometry \\
-% BH4a & BH & main & Ledd & as BH4 & \\
-\midrule
-NS3 & NS /sph & --- & --- &
-% main and mdot0
-$\mdot_0$, $i$, $\rmag$, $\rout$ & No wind ($f_{\rm in} = 1$, $\epsilon_{\rm w}=0$)\\
-%NS3a & NS /sph & main & Ledd & as NS3 & as NS3 \\
-NS2 & NS /sph & SS73 & SS73 & $\mdot_0$, $i$, $\rmag$, $\rout$ & SS73 wind scenario \\
-NS1/NS1a & NS /sph & main & P07fit/Ledd & $\mdot_0$, $f_{\rm in}$, $i$, $\rmag$, $\rout$ & Arbitrary wind mass loss \\
-% NS1a & NS & main & Ledd & as NS1 & spherical emitter \\
-NS4ar & NS /sph & main & Ledd & $\mdot_0$, $f_{\rm in}$, $\rmag$, $\rout$ & $ + ~~i = 0$ \\
-NS5r/NS5ar & NS /dip & main & P07fit/Ledd & NS1 & Arbitrary wind mass loss \\
-% NS5ar & NS /dip & main & Ledd & as NS5r & Arbitrary wind mass loss \\
-NS6r & NS /dip & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
-NS7r & NS /sph & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency \\
-\bottomrule
-\end{tabular}
-% source: ULX.conf.example [BH0]-[NS7r] (free_params, wind_scenario, use_simple_rsp, dip, incl_deg, user_mdot_in_fraction),
-%         ULXspectra-mc 7ba8568; README "Model Presets". NS: r_m = wind_inner_launch_x * r_in_factor, r_in_factor = 4.5 fixed;
-%         NS4, NS4a, NS5, NS5a, NS6, NS7 (r_in_factor also free) left out: superseded (PLAN C23), see text.
-%         R_sph rule resolved by psrcs/flow_rules.py (fix-results-integrity ea6090e). Spherical/dipole emitter: dip = 0/1 (Sect. central).
-%         No preset uses the L99 scenario.
-\end{table*}

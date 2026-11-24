@@ -9,6 +9,42 @@
 %          (largest errors beyond theta_c: BH up to -22/+23%, NS dipole model faint by up to x1.6).
 % OUTLINE: Limits of the fixed choices (velocity law, R_sph and R_trap rules).
 
+
+\subsection{Collimation by the funnel}
+\label{sec:disc:funnel}
+% Source: Appendix app:mc:funnel (merged 2026-11-19); numbers from figures/ahlberg2026/data/summary.txt items 4-6
+%         (code commit 2272e8a) and ULXspectra docs/green_surface_monte_carlo.md (commit 4da7c04)
+
+The wind leaves an empty funnel around the axis, and its walls send light that hits them back towards the axis.
+\citet{Ahlberg2026} computed this geometric beaming for an opaque conical funnel with a point source at its base; averaged over the inclinations inside the funnel, the boost of the apparent luminosity cannot exceed $B_{\rm max} = 1/(1 - \cos\alpha)$ for a half-opening angle $\alpha$ (Eq.~\ref{eq:mc_Bmax}).
+The funnel of our wind differs from theirs: its walls are semi-transparent, with 2--32 scatterings in the median, and the source, the disc under the wind or the wind photosphere, is extended. Both these factors lower the beaming (see Appendix~\ref{app:mc:funnel}).
+\textbf{Nevertheless, the boosting by the wind funnel is still quite pronounced.} The Monte Carlo through the wind of some best fits with $\theta_{\rm c} = 45.6^\circ$ (Table~\ref{tab:mc_funnel}) gives a mean boost inside the funnel of 2.92--3.05, which is 0.88--0.98 of the value for an opaque funnel of the same opening by \citet{Ahlberg2026}.
+%, and 88--92\% of the light escapes inside the funnel (App.~\ref{app:mc:funnel}).
+
+The model with the transfer correction (Sect.~\ref{sec:spectrum:transfer}) reproduces this collimation (dots and thick solid lines in Fig.~\ref{fig:mc_transfer_ahlberg}).
+For the parameter sets of NGC~7793 (Table~\ref{tab:ngc7793_sets}),
+%which are not among the calibration runs of the correction, 
+the mean boost inside the funnel is 4.48 at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$, against 4.55 and 3.02--3.15 in the Monte Carlo. Without the transfer correction (the ray cast model, see Sect.~\ref{sec:spectrum}) the boosting  is only 1.26--1.43 (the dashed lines in Fig.~\ref{fig:mc_transfer_ahlberg}).
+For wider openings, $\theta_{\rm c} = 59^\circ$--$84^\circ$, the transfer-corrected model, the Monte Carlo, and $B_{\rm max}$ agree within 4\%.
+%Against the published results of \citet{Ahlberg2026} themselves, read from their figures, the corrected model lies between their mean boosts for $R = 10$ and $R \approx 10^2$: they give 3.74--6.52 at $\alpha = 31.25^\circ$ and 2.67--3.31 at $\alpha = 45^\circ$ for $R = 10$--$10^5$ (Fig.~\ref{fig:mc_transfer_ahlberg}b).
+%Near the edge of the funnel, our boost is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of its value near the axis, whereas their curves for $\alpha = 20^\circ$ and $25^\circ$ give 0.93 and 0.90 (Fig.~\ref{fig:mc_transfer_ahlberg}a); their $B(i)$ is published only up to $\alpha = 25^\circ$.
+% source: App. app:mc:funnel, paragraph "The corrected model"; figures/ahlberg2026/data/summary.txt items 4-6 (code commit 2272e8a)
+
+\textbf{The angular distribution of emission from a semi-transparent wind differs from that of an opaque funnel}: inside the funnel the boost of the wind falls more steeply from the axis to the edge, and beyond the edge the wind leaks light, $B \approx 0.1$--$0.7$, where an opaque funnel leaks almost none (see further details in App.~\ref{app:mc:funnel}).
+A slim disc, not yet in the model, would hardly change the collimation: by the Monte Carlo, $L_{\rm iso}$ inside the funnel would rise by about 3\% (at most 17\%; App.~\ref{app:mc:slim}).
+% source: ULXspectra-mc docs/slim_disc_geometry.md, Sect. 4 (commit 1896e10)
+
+\begin{figure*}
+\centering
+\includegraphics[width=\textwidth]{ahlberg_published_vs_mc_transfer.png}
+\caption{The transfer correction against the published results of \citet{Ahlberg2026}.
+(a): $B(i) = L_{\rm iso}(i)/L_{\rm total}$; steps: their figure~2a ($R = 10^3$, electron-scattering walls), read from the figure; lines: the model for NGC~7793 BH3a with $\omf = 0.85$ ($\theta_{\rm c} = 31.8^\circ$) and 0.7 ($45.6^\circ$), with (solid) and without (dashed) the correction; dots: Monte Carlo through the wind.
+(b): mean boost at $i < \alpha$; lines: their figure~4a for five $R$ and Eq.~\eqref{eq:mc_Bmax}; symbols: the model with and without the correction and the Monte Carlo, for the NGC~7793 parameter sets of the text.
+Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository (code commit 2272e8a).}
+\label{fig:mc_transfer_ahlberg}
+% figure (moved from App. C 2026-11-19): figures/ahlberg_published_vs_mc_transfer.png, script figures/ahlberg2026/plot_ahlberg_comparison.py; code commit 2272e8a
+\end{figure*}
+
 \subsection{Is the energy of the wind consistent?}
 \label{sec:disc:epsw}
 % Reminder paragraph (author 2026-11-10); source: ULXspectra-mc PLAN C22, README "Energy the wind needs",
@@ -54,40 +90,6 @@ The fits are not constrained by either limit, so a fit that fails them needs a l
 %         photosphere counted out to R_sph, which would make them testable
 % OUTLINE: table of eps_w vs the two limits at the best fits (docs/scripts/wind_energy_check.py).
 
-\subsection{Collimation by the funnel}
-\label{sec:disc:funnel}
-% Source: Appendix app:mc:funnel (merged 2026-11-19); numbers from figures/ahlberg2026/data/summary.txt items 4-6
-%         (code commit 2272e8a) and ULXspectra docs/green_surface_monte_carlo.md (commit 4da7c04)
-
-The wind leaves an empty funnel around the axis, and its walls send light that hits them back towards the axis.
-\citet{Ahlberg2026} computed this geometric beaming for an opaque conical funnel with a point source at its base; averaged over the inclinations inside the funnel, the boost of the apparent luminosity cannot exceed $B_{\rm max} = 1/(1 - \cos\alpha)$ for a half-opening angle $\alpha$ (Eq.~\ref{eq:mc_Bmax}).
-The funnel of our wind differs from theirs: its walls are semi-transparent, with 2--32 scatterings in the median, and the source, the disc under the wind or the wind photosphere, is extended. Both these factors lower the beaming (see Appendix~\ref{app:mc:funnel}).
-\textbf{Nevertheless, the boosting by the wind funnel is still quite pronounced.} The Monte Carlo through the wind of some best fits with $\theta_{\rm c} = 45.6^\circ$ (Table~\ref{tab:mc_funnel}) gives a mean boost inside the funnel of 2.92--3.05, which is 0.88--0.98 of the value for an opaque funnel of the same opening by \citet{Ahlberg2026}.
-%, and 88--92\% of the light escapes inside the funnel (App.~\ref{app:mc:funnel}).
-
-The model with the transfer correction (Sect.~\ref{sec:spectrum:transfer}) reproduces this collimation (dots and thick solid lines in Fig.~\ref{fig:mc_transfer_ahlberg}).
-For the parameter sets of NGC~7793 (Table~\ref{tab:ngc7793_sets}),
-%which are not among the calibration runs of the correction, 
-the mean boost inside the funnel is 4.48 at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$, against 4.55 and 3.02--3.15 in the Monte Carlo. Without the transfer correction (the ray cast model, see Sect.~\ref{sec:spectrum}) the boosting  is only 1.26--1.43 (the dashed lines in Fig.~\ref{fig:mc_transfer_ahlberg}).
-For wider openings, $\theta_{\rm c} = 59^\circ$--$84^\circ$, the transfer-corrected model, the Monte Carlo, and $B_{\rm max}$ agree within 4\%.
-%Against the published results of \citet{Ahlberg2026} themselves, read from their figures, the corrected model lies between their mean boosts for $R = 10$ and $R \approx 10^2$: they give 3.74--6.52 at $\alpha = 31.25^\circ$ and 2.67--3.31 at $\alpha = 45^\circ$ for $R = 10$--$10^5$ (Fig.~\ref{fig:mc_transfer_ahlberg}b).
-%Near the edge of the funnel, our boost is 0.79 ($\theta_{\rm c} = 31.8^\circ$) and 0.62 ($45.6^\circ$) of its value near the axis, whereas their curves for $\alpha = 20^\circ$ and $25^\circ$ give 0.93 and 0.90 (Fig.~\ref{fig:mc_transfer_ahlberg}a); their $B(i)$ is published only up to $\alpha = 25^\circ$.
-% source: App. app:mc:funnel, paragraph "The corrected model"; figures/ahlberg2026/data/summary.txt items 4-6 (code commit 2272e8a)
-
-\textbf{The angular distribution of emission from a semi-transparent wind differs from that of an opaque funnel}: inside the funnel the boost of the wind falls more steeply from the axis to the edge, and beyond the edge the wind leaks light, $B \approx 0.1$--$0.7$, where an opaque funnel leaks almost none (see further details in App.~\ref{app:mc:funnel}).
-A slim disc, not yet in the model, would hardly change the collimation: by the Monte Carlo, $L_{\rm iso}$ inside the funnel would rise by about 3\% (at most 17\%; App.~\ref{app:mc:slim}).
-% source: ULXspectra-mc docs/slim_disc_geometry.md, Sect. 4 (commit 1896e10)
-
-\begin{figure*}
-\centering
-\includegraphics[width=\textwidth]{ahlberg_published_vs_mc_transfer.png}
-\caption{The transfer correction against the published results of \citet{Ahlberg2026}.
-(a): $B(i) = L_{\rm iso}(i)/L_{\rm total}$; steps: their figure~2a ($R = 10^3$, electron-scattering walls), read from the figure; lines: the model for NGC~7793 BH3a with $\omf = 0.85$ ($\theta_{\rm c} = 31.8^\circ$) and 0.7 ($45.6^\circ$), with (solid) and without (dashed) the correction; dots: Monte Carlo through the wind.
-(b): mean boost at $i < \alpha$; lines: their figure~4a for five $R$ and Eq.~\eqref{eq:mc_Bmax}; symbols: the model with and without the correction and the Monte Carlo, for the NGC~7793 parameter sets of the text.
-Made with \code{figures/ahlberg2026/run\_all.sh} of the manuscript repository (code commit 2272e8a).}
-\label{fig:mc_transfer_ahlberg}
-% figure (moved from App. C 2026-11-19): figures/ahlberg_published_vs_mc_transfer.png, script figures/ahlberg2026/plot_ahlberg_comparison.py; code commit 2272e8a
-\end{figure*}
 
 \subsection{Does the wind emit a blackbody?}
 \label{sec:disc:thermalization}

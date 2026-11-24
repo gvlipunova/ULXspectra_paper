@@ -4,12 +4,12 @@
 
 \section{Visibility and the observed spectrum}
 \label{sec:spectrum}
-To calculate observed spectra, two broad approaches are considered: `ray cast' and `wind transfer'.
+To calculate observed spectra, two broad approaches have been considered: `ray cast' and `wind transfer'.
 The second approach appears to be more physically justified.
 It can be implemented as a Monte-Carlo radiation transfer calculation.  For fits, however, it is much faster to apply corrections, obtained by comparing grey MC transfer to ray-cast  results. This method, which interpolates the data of pre-calculated tables,  is called \textit{'transfer-corrected approach'}, and is presented in more detail in Sect.~\ref{sec:spectrum:transfer}.
 
 We consider the cylindrical coordinate system with the star at the origin and the disc in the equatorial plane. 
-The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}. \textit{Wind photosphere} is defined as a surface where the optical thickness on scattering, calculated from infinity to disc along a normal to it, is unity.
+The emitting surface consists of rings: the wind photosphere and the outer wall, the directly seen disc and, for a NS, the magnetosphere. \textbf{we need a figure here}. Wind photosphere is defined as a surface where the optical thickness on scattering, calculated from infinity to disc along a normal to it, \eqref{eq:tau}, is unity.
 
 For the observer at the inclination $i$, each ring $j$ has a projected area $A_{{\rm proj},j}(i)$.
 The emitting surface is axisymmetric, has height $z(r)$, and we divide each ring into \code{nphi\_area} azimuthal elements.
@@ -24,18 +24,19 @@ if it faces the observer ($\mu_{\rm proj} > 0$) and if the ray from it towards t
 % AUTHOR: the observer sees one side; the factor 4 pi in eq. (Lnu) makes the spectrum
 %         isotropic-equivalent. Check the wording.
 
-The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, and so does the central emitter of a NS.\footnote{This simplification should be modified in future modifications of the code.}
+The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, and so does the central emitter of a NS.\footnote{Blackbody spectrum  is a simplification and should be modified in future modifications of the code.}
 The wind rings do not.
 Above about 0.3~keV the wind is far too thin to absorb photons and emit them again (see Sect.~\ref{sec:disc:thermalization}).
 It scatters the disc photons without changing their frequency, so they keep the colour temperature $T_{\rm w,raw}$ of the disc that made them (Eq.~\ref{eq:Twraw}) and are spread over the larger photosphere.
 Each wind ring is therefore a diluted blackbody, with the dilution factor $w$,
 \begin{equation}
-I_\nu = w\,B_\nu(T_{\rm w,raw}), \qquad w = f_{\rm cor} = \frac{L_{\rm disc,hidden}}{L_{\rm wind,raw}} ,
+I_\nu = w\,B_\nu(T_{\rm w,raw}), \qquad w = f_{\rm cor} \, ,
+%= \frac{L_{\rm disc,hidden}}{L_{\rm wind,raw}} ,
 \label{eq:Inu_wind}
 \end{equation}
 % code: ULXspectra-mc f546151, csrcs/wind_emission.c (wind_spectrum == 1: f_cor * B_nu(T_j/f_T_cor), f_T_cor = f_cor^(1/4));
 %       README "Wind temperature and energy budget" ("Wind spectrum"), "Visibility and spectrum"; PLAN C21
-which carries the same energy as a blackbody at $\Tw = w^{1/4}\,T_{\rm w,raw}$ (Eq.~\ref{eq:fcor}).
+which carries the same energy as a blackbody at $\Tw = w^{1/4}\,T_{\rm w,raw}$ (see Eq.~\ref{eq:fcor}).
 Dilution has here its usual meaning: radiation that is already made is spread more thinly and keeps its shape, as in the diluted blackbody of colour-corrected discs.
 It is a separate step from the wind toll (Sect.~\ref{sec:disc:teff}), which sets how much the disc radiates at all and applies with either wind spectrum.
 % source: PLAN C21, user decision 2026-11-10 (two steps: wind toll = production; dilution = in the wind); README "Terms"
@@ -59,10 +60,11 @@ At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.1
 
 Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $w > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $w > 1$ (1.03).
 A simplification of the model, which is hard to overcome, is that one value of $w$ holds for the whole wind, and each wind ring has one `source radius'
-$\xeff$ \footnote{the radius of the underlying disc ring that feeds the photosphere ring with photons  \textbf{check ?}}.
+$\xeff$ \footnote{the radius of the underlying disc ring that feeds the photosphere ring with photons, see lower panel of Fig.~\ref{fig:temperatures}}.
 % source: README "Wind spectrum" (limitations)
 
-The alternative is a wind that thermalises the photons: a blackbody, which is cooler and has more photons than the disc made; it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
+An alternative would be  a wind that thermalises the photons: a blackbody, which is cooler and has more photons than the disc made.
+%it was the rule of earlier code versions and is kept as an option (\code{wind\_spectrum} = 0).
 % code: wind_spectrum switch (default 1), CHANGELOG 2026-11-04
 % source: CHANGELOG 2026-11-04 ("f_cor > 1 only at NGC300 BH3a (1.03)"); README "Wind spectrum"
 %The dilution has limits.

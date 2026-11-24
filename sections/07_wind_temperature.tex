@@ -5,11 +5,11 @@
 %\section{Wind temperature and energy budget}
 %\label{sec:wtemp}
 
-\subsection{Advection of photons by the wind}
-\label{sec:wtemp:raw}
+% \subsection{Advection of photons by the wind}
+% \label{sec:wtemp:raw}
 
 Photons released by the disc are carried outwards by the wind before they diffuse out of it (P07).
-The photosphere above $r$ therefore shows the disc temperature of a smaller radius:
+The photosphere above $r$ therefore `brings' the disc temperature of a smaller radius:
 \begin{equation}
 T_{\rm w,raw}(r) = T_{\rm disc}(\xeff\,\rin), \qquad \xeff = \frac{x}{1 + \taup v_{\rm w}/c} ,
 \label{eq:Twraw}
@@ -50,12 +50,11 @@ Since $|J| = \sin\theta_0\,|\partial z/\partial R_0|$, Eqs.~\eqref{eq:Sigmadotw}
 % derived (Claude) from Eqs. (Sigmadotw), (rho); generalises the old manuscript's derivation of tau_perp for
 %       parallel streamlines (SEA_spectrum.zip, main.tex, "old Density in the wind")
 For a speed $v = v_{\rm w}$ constant along the vertical, the integral over $z$ is Eq.~\eqref{eq:tauperp}.
-For any velocity law, $\rho v$ is the mass flux along the streamlines, and $(1/c)\int\kT\rho v\,{\rm d}z$ equals the ratio~\eqref{eq:advratio}.
-The advection ratio is therefore the one of the same density from which the photosphere is built.
-In the code the two are computed independently, and at the NGC~7793 best fits they agree to 0.15\%.
+For any velocity law, $\rho v$ is the mass flux along the streamlines, and $(1/c)\int\kT\rho v\,{\rm d}z$ equals the advection ratio~\eqref{eq:advratio}.
+%The advection ratio is therefore the one of the same density from which the photosphere is built. In the code the two are computed independently, and at the NGC~7793 best fits they agree to 0.15\%.
 % numbers: docs/wind_column_angles.md, table in "Speed in the advection ratio (C17)" (0.9985-1.0000), script docs/scripts/check_advection_ratio.py
 % AUTHOR: give the commit for this check (docs say C17; CHANGELOG entry 2026-10-28).
-Earlier versions of the code assigned all the wind at $r$ the angle $\theta_{\rm c}$; Eq.~\eqref{eq:tauperp} lowers $\taup$ by up to 20\% beyond $0.1\Rsph$ and changes the spectra at the NGC~7793 best fits by at most 0.056~dex.
+%Earlier versions of the code assigned all the wind at $r$ the angle $\theta_{\rm c}$; Eq.~\eqref{eq:tauperp} lowers $\taup$ by up to 20\% beyond $0.1\Rsph$ and changes the spectra at the NGC~7793 best fits by at most 0.056~dex.
 % numbers: CHANGELOG 2026-10-28 "Streamline angle in the wind column", docs/wind_column_angles.md
 % AUTHOR: keep this history in the paper, or drop it?
 % OUTLINE: figure wind_column_angles.png (docs/scripts/compare_wind_column_angles.py, commit b6a9964).
@@ -82,7 +81,7 @@ Dotted lines: $\Rtrap$ and $\Rsph$.}
 %         the same run as the BH panel of fig:wind_geometry; Note 5 of docs/for_paper_session.md (219e19b).
 %         T_wall = T_w of the last photosphere ring (csrcs/wind_surface.c: T_wall_raw = Twind_raw[j_last]; wind_model_api.c).
 
-\subsection{Energy budget}
+\subsection{Wind energy budget}
 \label{sec:wtemp:budget}
 
 The wind radiates what the disc under its photosphere radiates:
@@ -94,16 +93,17 @@ L_{\rm wind} = L_{\rm disc,hidden} = 2\sum_{\rm hidden} \sigma T_{\rm disc}^4\,{
 %       wind_temperature_correction_factor() (csrcs/wind_emission.c); README "Wind temperature and energy budget"
 where the sum runs over the disc rings with $\rin \le r < \rout$ under the wind photosphere, on the same grid as the rest of the surface.
 The temperatures~\eqref{eq:Tdisc} already exclude the wind toll, so $L_{\rm wind}$ is $(1 - \epsilon_{\rm w})$ of the release under the wind inside $\Rsph$ plus all of it beyond.
-The disc rings that the optically thick wind does not cover keep their temperature~\eqref{eq:Tdisc}, also where they are seen through a transparent inner wind.
+%The disc rings that the optically thick wind does not cover keep their temperature~\eqref{eq:Tdisc}, also where they are seen through a transparent inner wind.
 % source: README "Wind temperature and energy budget" ("Energy budget", "Directly seen disc")
 % (Before 2026-11-03: L_wind = (1 - eps_w)(L_disc - L_disc,seen) with the analytic L_disc; CHANGELOG.)
+
 The outer disc radius $\rout$ is set by the binary system and does not depend on the photosphere, whose extent depends on the mass loss in the wind.
 A photosphere that reaches beyond $\rout$ has no disc under it there, and a disc that reaches beyond the photosphere is seen directly.
 % source: the author 2026-11-09; code: csrcs/wind_emission.c (L_disc_under_wind: x_mid >= 1 and < x_out_disc,
 %         "r_out, the disc's outer edge in the binary (user, 2026-11-03)"), ULXspectra-mc f546151; README "Energy budget"
 %         (CHANGELOG 2026-11-03 "including rings beyond r_out" is superseded)
 
-A simplified approach for wind emission, which we take, assumes that the budget is global: one factor scales the raw temperatures of all wind rings,
+A simplified approach for wind emission, which we take, assumes that the budget is global: one factor scales the raw temperatures \eqref{eq:Twraw} of all wind rings,
 \begin{equation}
 \Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}, \qquad f_{\rm cor} = \frac{L_{\rm wind}}{L_{\rm wind,raw}} ,
 \label{eq:fcor}
@@ -118,12 +118,12 @@ L_{\rm wind,raw} = 2\int \sigma T_{\rm w,raw}^4\,2\pi r\,\sqrt{1 + \left(\frac{{
 % code: dS_curve_one_side (csrcs/wind_surface.c), bolometric_wind_power_from_surface() (csrcs/wind_emission.c)
 The integral runs along the photosphere including the outer wall, where it becomes $2\pi R_{\rm wall}\,{\rm d}z$.
 % code: wind_model_api.c (include_outer_vertical_wall = 0: the wall is part of the surface curve)
-$\Tw$ is the temperature of a blackbody with the energy of the wind ring; the bolometric luminosities and the transfer correction (Sect.~\ref{sec:spectrum:transfer}) use it, while the spectrum of the wind ring is a diluted blackbody at $T_{\rm w,raw}$ (Sect.~\ref{sec:spectrum}).
+$\Tw$ is the temperature of a blackbody with the energy of the wind ring; the bolometric luminosities and the transfer correction (see Sect.~\ref{sec:spectrum:transfer}) use it, while the spectrum of the wind ring is a diluted blackbody at $T_{\rm w,raw}$ (Sect.~\ref{sec:spectrum}).
 % source: README "Wind temperature and energy budget" ("Energies (L_bol, the transfer correction) use T_w in both cases")
 Since the disc temperature steps at $\Rsph$, the wind temperature steps where $\xeff = \xsp$, that is at $\Rsph(1 + \taup v_{\rm w}/c)$, which is 1.2--2.2~$\Rsph$ at the old best fits.
 % source: README "Wind temperature and energy budget" ("Where eps_w is taken"); ULXspectra-mc f546151
 $f_{\rm cor}$ is not capped.
-A value $f_{\rm cor} > 1$ means that the wind radiates more than its surface would at $T_{\rm w,raw}$; it is allowed and the model is flagged.
+A value $f_{\rm cor} > 1$ means that the wind radiates more than its surface would at $T_{\rm w,raw}$ (it is allowed but such fit would be flagged).
 If $L_{\rm wind} = 0$ ($\epsilon_{\rm w} = 1$, or no disc ring under the wind), the wind is dark, $f_{\rm cor} = 0$, and the model is flagged as well.
 % code: flags wind_f_cor_above_one, wind_budget_fallback (diagnostics and MCMC blobs); README "Wind temperature and energy budget";
 %       CHANGELOG 2026-11-04 (cap removed), 2026-11-03 (dark wind instead of f_cor = 1)
