@@ -13,7 +13,7 @@ here: file, script, code commit, and the section that uses it.
 | `ahlberg_published_vs_cone_mc.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/funnel_beaming_mc.py`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_published) |
 | `ahlberg_published_vs_mc_transfer.png` | this repository: `figures/ahlberg2026/run_all.sh` (uses `docs/scripts/mc_green_surface.py` and the C model) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:mc_transfer_ahlberg) |
 | `HolmIX_mc_vs_nomc_BH3a.pdf` | `docs/scripts/plot_mc_vs_nomc.py` (one-preset mode, `BH3a`) | `e402ace` (branch `mc-transfer-corrections`) | App. D.11 (fig:holmix_mcnomc), cited in Sects. 5 and Results |
-| `visibility.pdf`, `visibility_transfer.pdf` | `docs/scripts/plot_visibility.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `d186025` | Sect. 5 (fig:visibility), Sect. 5.1 (fig:visibility_transfer) |
+| `visibility.pdf`, `visibility_transfer.pdf` | `docs/scripts/plot_visibility.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `d186025`, `0075085` (visibility.pdf) | Sect. 5 (fig:visibility), Sect. 5.1 (fig:visibility_transfer) |
 | `wind_ring_spectrum.pdf` | this repository: `figures/plot_wind_ring_spectrum.py` (from Eqs. fcor, Inu_wind) | -- | Sect. 5 (fig:wind_ring_spectrum) |
 | `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:best_fits_mc) |
 | `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
@@ -24,7 +24,7 @@ here: file, script, code commit, and the section that uses it.
 | `fits_by_source_mc_0p3-10keV.pdf` (6 pages) | `docs/scripts/plot_fits_by_source.py` | `8176d9c` (branch `mc-transfer-corrections`; page 6 redrawn) | App. Overview of the fits (fig:fits_M ... fig:fits_spectra) |
 | `mdot_profiles.pdf` | this repository: `figures/plot_mdot_profiles.py` (schematic) | -- | Sect. Critical radii, 3.1 (fig:mdot_profiles) |
 | `torque_profile.pdf` | this repository: `figures/plot_torque_temperature.py` (from the equations of Sect. 4; its `temperature_profile.pdf` is no longer used) | -- | App. Radial profiles (fig:torque) |
-| `temperatures.pdf` | ULXspectra-mc `docs/scripts/plot_temperatures.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `a135898` | Sect. 7.1 (fig:temperatures) |
+| `temperatures.pdf` | ULXspectra-mc `docs/scripts/plot_temperatures.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `0075085` | Sect. 4.3 (fig:temperatures) |
 | `wind_geometry.pdf` | `docs/scripts/plot_wind_geometry.py` | `65f8bbf` (branch `mc-transfer-corrections`) | Sect. Wind (fig:wind_geometry; parameters in App. A) |
 | `streamlines_linear.pdf` | `docs/scripts/plot_streamlines_linear.py` | `fa64b89` (branch `mc-transfer-corrections`; panel (a) marks R0, theta0, v_pol) | Sect. Wind, 6.1 (fig:streamlines_linear) |
 | `streamline_speed_simple.pdf` | `docs/scripts/plot_streamline_speed.py ... simple` | `086ecf7` | App. A (fig:streamline_speed; ballistic law only) |

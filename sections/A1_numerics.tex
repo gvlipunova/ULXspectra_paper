@@ -50,8 +50,16 @@ With uniform priors and a constant $\sigma$, the maximum of the posterior is the
 We sample the posterior with the affine-invariant ensemble sampler \code{emcee} \citep{ForemanMackey2013} with 200 walkers.
 Instead of the stretch move of \citet{Goodman2010}, which gets stuck between separate modes of the posterior, we use differential-evolution moves \citep{terBraak2006, terBraak2008}: 80\% of the proposals are $\boldsymbol\theta + \gamma(\boldsymbol\theta_j - \boldsymbol\theta_k)$, built from two other walkers $j$ and $k$, and 20\% are snooker moves.
 % code: --moves de (README "Adaptive Run Length", "Further options"); nwalkers = 200 and moves = de in all 182 run_settings.json
-The walkers start in a Gaussian ball around the default values of the preset (Table~\ref{tab:params}), with widths equal to the proposal scales of the parameters; a start point is kept only if its posterior is finite.
+The walkers start in a \new{small} Gaussian ball around \new{fixed starting values of the preset, which carry no physics and do not enter the prior}, with widths equal to the proposal scales of the parameters; a start point is kept only if its posterior is finite.
 % code: psrcs/mcmc.py (p0 = theta0 + scale * N(0,1), accepted if log_prior and log_probability are finite)
+\new{Since the whole ensemble starts in one small region, it can settle in the first mode it meets.
+Nine NS fits that ended in a worse mode than an earlier fit were therefore re-run with half of the walkers around the earlier best fit and half spread uniformly over the prior.
+For later fits the walkers start at the best of many points drawn uniformly over the prior, which gives a narrow mode near the edge of the prior a better chance to be found.}
+% source: ULXspectra-mc docs/for_paper_session.md Note 13 (126dd71, edited 5c3a2b1): all rounds up to mc28_0p3-10keV start in the ball
+%   around the ULX.conf starting values (e.g. log mdot0 = 1 +- 0.05); nine NS re-runs mc28b_0p3-10keV (100 walkers --init-from the
+%   previous best, 100 --prior-walkers), running since 2026-11-24 13:14; later rounds: --prescan 5000, best 200 as starts
+%   (code commits "Walkers start uniformly over the whole prior by default..." 848ff94 and "Pre-scan of the prior..." b4153cf).
+% AUTHOR: after the mc28b re-runs finish, confirm that they replaced the nine mc28 fits; drop the last sentence if no later round is used.
 
 \paragraph{Run length.}
 Burn-in and run length are set by a convergence rule, checked every 100 steps.
