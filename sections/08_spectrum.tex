@@ -47,6 +47,7 @@ L_\nu(i) = 4\pi\sum_j I_{\nu,j}\,A_{{\rm proj},j}(i) ,
 \end{equation}
 % code: isotropic_luminosity_disc_wind() (csrcs/wind_emission.c); README "Visibility and spectrum"
 with $I_{\nu,j} = B_\nu(T_j)$ for the disc and the central emitter.
+Figure~\ref{fig:holmix_mcnomc} shows the wind and disc components of a fitted spectrum.
 The bolometric luminosities of the wind, the disc and the total follow from the same sum with $\sigma T_j^4/\pi$ in place of $I_{\nu,j}$, where $T_j = \Tw$ for the wind rings.
 % code: README "Visibility and spectrum" (Lbol_total, Lbol_wind, Lbol_disc)
 For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one side of the ring, and the isotropic-equivalent luminosity is $L_{\rm iso} = 2\cos i\,L_{\rm bol}$.
@@ -54,7 +55,19 @@ For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one 
 % AUTHOR: blackbody without colour correction or Comptonization (see Discussion);
 %         say so here explicitly?
 
-The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = w^{-1/4}\,\Tw$, and its Rayleigh--Jeans tail is fainter by the factor $w^{3/4}$.
+The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = w^{-1/4}\,\Tw$, and its Rayleigh--Jeans tail is fainter by the factor $w^{3/4}$ (Fig.~\ref{fig:wind_ring_spectrum}).
+In that tail $B_\nu \propto T$, so $w\,B_\nu(T_{\rm w,raw})/B_\nu(\Tw) = w\,T_{\rm w,raw}/\Tw = w^{3/4}$: the same energy is carried by fewer photons of higher frequency.
+
+\begin{figure}
+\centering
+\includegraphics[width=\columnwidth]{wind_ring_spectrum.pdf}
+\caption{Spectrum of one wind ring, Eq.~\eqref{eq:Inu_wind}: the diluted blackbody $I_\nu = f_{\rm cor}B_\nu(T_{\rm w,raw})$ (solid, hatched), the blackbody at its colour temperature $T_{\rm w,raw}$ (dashed) and the blackbody at $\Tw = f_{\rm cor}^{1/4}T_{\rm w,raw}$ of Eq.~\eqref{eq:fcor}, which carries the same energy, $\int I_\nu\,{\rm d}\nu = \sigma\Tw^4/\pi$ (dotted).
+$I_\nu$ and $B_\nu(T_{\rm w,raw})$ peak at $\nu_{\max} = 2.82\,kT_{\rm w,raw}/h$; in the Rayleigh--Jeans tail $I_\nu = f_{\rm cor}^{3/4}B_\nu(\Tw)$.
+Drawn for $kT_{\rm w,raw} = 0.1$~keV and $f_{\rm cor} = 0.51$, the value of the fit of Fig.~\ref{fig:temperatures}.}
+\label{fig:wind_ring_spectrum}
+\end{figure}
+% figure: this repository, figures/plot_wind_ring_spectrum.py (layout: the author's sketch 2026-11-24), from Eqs. (fcor), (Inu_wind);
+%         f_cor = 0.51: ULXspectra-mc for_paper_session.md Note 5 (f_cor^(1/4) = 0.846)
 At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
 % source: ULXspectra-mc PLAN.md C21 (fits from before the temperature step at R_sph, eq. Tdisc); README "Wind spectrum"; commit f546151
 
@@ -117,8 +130,10 @@ They depend on the class of the ring (wind or disc, and its position $x/\xsp$; f
 %       profiles linear in cos theta_c, in u, v and ln tau); csrcs/mc_transfer_table.h
 Energy is conserved by construction, and the scattering is grey and coherent, so each ring keeps its spectral shape.
 % source: transfer_correction_results.md sect. 1
+\ifheldout
 Against Monte Carlo runs of best fits not used in the table, the corrected model gives $L_{\rm iso}$ within 6\% inside the funnel for the BH fits, and within $-22$ to $+23$\% beyond its edge (Appendix~\ref{app:mc:heldout}).
 % source: transfer_correction_results.md sect. 4: MC/C 0.94-1.03 inside, 0.78-1.23 beyond (BH, held out); commit 2272e8a
+\fi % heldout
 % AUTHOR: are all the fits of the paper run with mc_transfer = 1 (README: default 1, "common to all presets")?
 
 % OUTLINE: example spectra and their dependence on the main parameters (mdot_0, f_in,

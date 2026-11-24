@@ -178,8 +178,12 @@ The disc plane has the albedo of unity.
 The packets start on the surfaces of the model, so the test covers the transfer after emission, not where the light is emitted.
 With $4\times10^4$ packets per run, a few hundred packets fall into each bin at $i \ge 70^\circ$.
 % source: docs/green_surface_monte_carlo.md, "Limits of the Monte Carlo"
+\ifheldout
 Only the BH fits were tested here; the NS central emitter was added to the Monte Carlo later (Sect.~\ref{app:mc:heldout}).
 % source: docs/green_surface_monte_carlo.md, "Limits" (BH fits only); ULXspectra-mc commit ecdbb64 (NS central emitter)
+\else
+Only the BH fits were tested here; the NS central emitter was added to the Monte Carlo later (Sect.~\ref{app:mc:table}).
+\fi % heldout
 
 
 \subsection{The table of the transfer correction}
@@ -221,14 +225,18 @@ We have since rebuilt the table in two steps.
 First, its Monte Carlo runs were redone with the current model (the wind toll restricted to $r < \Rsph$ and the diluted wind spectrum), 28 runs with weak winds were added at all funnel openings, the bins in optical depth were refined to $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class was added with a boundary at $\Rsph$ (145 runs).
 This version left thick winds seen beyond the funnel edge at $i > 64^\circ$ too bright, by up to a factor of 1.5.
 Second, each ring class was split into four sub-classes by the ring's place in its own wind: its optical depth relative to the largest one of the wind photosphere, and its radius relative to the outer edge of the photosphere, each above or below 0.3; 45 runs at the best fits of all BH presets and sources were added (190 runs).
+\ifheldout
 For 17 held-out runs, the revised table gives MC/model per angle bin of 0.93--1.04 inside the funnel and 0.76--1.14 beyond its edge (117-run table: 0.64--1.22 beyond the edge; without the correction 0.59--2.49 inside and 0.37--18 beyond).
 The typical error per angle bin beyond the edge falls from 12.6\% to 7.5\% for the held-out runs, from 14.4\% to 6.8\% for the best fits, and from 14.2\% to 9.9\% for BH4a fits between the nodes of the funnel angle; the excess of thick winds at $i > 64^\circ$ is gone.
+\fi % heldout
 All fits are being redone with the revised table.
 % source: calculation session 2026-11-19/20; ULXspectra-mc PLAN C26 (commits 1c7edf0, 4945ea7; 145 runs) and PLAN C28 (commit afaa8b3; 190 runs),
 %         docs/transfer_correction_results.md sect. 4, 6, 8. The 12.6% -> 7.5% etc. compare the 145-run (C26) and 190-run (C28) tables.
 % STATUS: full refit round with the C28 table started 2026-11-20 14:18 (run tags mc28_0p3-10keV, 182 fits, and mc28_1e-6-1e3keV;
 %         without the eps_w constraint), about 6 days. All fit results and Table tab:bestfit_params still use the 117-run table.
 
+% ===== Held-out checks: whole subsection, Tables tab:mc_heldout_bh and tab:mc_heldout_ns (switch \ifheldout in main.tex)
+\ifheldout
 \subsection{Held-out checks of the correction}
 \label{app:mc:heldout}
 
@@ -333,6 +341,7 @@ NGC55 NS7 & 0 & 1.23--1.39 $\to$ 0.95--0.96 & 0.54--1.39 $\to$ 0.79--1.11 \\
 \end{tabular}
 % source: transfer_correction_results.md sect. 5 table; README "Visibility and spectrum"; commit 2272e8a
 \end{table*}
+\fi % heldout
 
 \subsection{Collimation by the funnel: comparison with Ahlberg et al.}
 \label{app:mc:funnel}
@@ -517,67 +526,6 @@ Made with \code{docs/scripts/funnel\_beaming\_mc.py} (code commit 4da7c04).}
 % figure: ULXspectra docs/figures/funnel_beaming_by_radius.png, commit 4da7c04
 \end{figure*}
 
-\subsection{Outlook: a slim disc}
-\label{app:mc:slim}
-% Source: ULXspectra-mc, branch mc-transfer-corrections, docs/slim_disc_geometry.md (commit 1896e10; PLAN C29, planned,
-%         not implemented); sketch docs/scripts/plot_slim_disc_streamlines.py and figures (commit b2dc222);
-%         MC estimate from the 43 runs of the C28 table with theta_c = 45.6 deg (same document, Sect. 4).
-% Calculation-session notes 2026-11-21 and 2026-11-23 (author's request: beaming section of the appendix).
-All fits use a flat disc ($\hd = 0$).
-We considered, but did not implement, a slim disc, whose surface is
-\begin{equation}
-z_{\rm disc}(r) =
-\begin{cases}
-H_1 r, & r \le R_{\rm b},\\
-H_1 R_{\rm b}, & R_{\rm b} < r \le (H_1/H_2) R_{\rm b},\\
-H_2 r, & r > (H_1/H_2) R_{\rm b},
-\end{cases}
-\qquad R_{\rm b} = \max(\Rsph, \Rtrap),
-\label{eq:slim_disc}
-\end{equation}
-% source: docs/slim_disc_geometry.md, Sect. 1 (commit 1896e10)
-with $H_1 = 0.5$ and $H_2 = 0.05$ as proposed defaults: a conical bowl, a flat top, and the outer disc.
-Inside $\Rsph$ the disc is critical and $z/r \approx$ const; outside it, in the radiation-pressure zone, the half-thickness $H \approx (3/8\pi)\,\kT \dot M_0/c$ is constant \citep{Shakura1973}; further out, where gas pressure dominates, $z/r \approx 0.01$--0.05.
-The streamlines start on the bowl, with $\cos\theta_0$ linear in $r_0$ from $\cos\theta_{\rm c} = \omf$ at $\rin$ to $\cos\theta_{\rm d} = H_1/\sqrt{1 + H_1^2}$ at $\Rsph$, so that the outermost streamline is tangent to the bowl.
-The funnel keeps its opening ($\theta_{\rm c} = 45.6^\circ$ for $\omf = 0.7$), and the wind fills $\theta_{\rm c}$--$\theta_{\rm d} = 45.6^\circ$--$63.4^\circ$ instead of $45.6^\circ$--$90^\circ$ (Fig.~\ref{fig:slim_disc}).
-
-\textbf{The wind becomes denser but hardly more opaque vertically.}
-For the NGC5408 BH3a fit, the peak density on a vertical rises by a factor 2.1--2.2, and at the same point in mid-wind by 3.4--5.1, but $\taup$ from the top to the disc rises only by a factor 1.03--1.15 (Fig.~\ref{fig:slim_disc_columns}).
-The vertical column at a given $r$ is $\Sigma \approx \dot M_{\rm w}/(2\pi r v \sin\theta_0)$, which does not depend on the solid angle of the wind: a narrower wind is denser but also thinner in $z$.
-The photosphere keeps its radial extent ($r = 84$--$8.3\times10^3\,\rin$) but is lifted onto the bowl, to $z \le 4.1\times10^3\,\rin$ (flat disc: $716\,\rin$).
-The advection ratio $\taup v_{\rm w}/c$ changes by the same 12--15\%, and the energy budget is unchanged, so the wind temperature changes by about 10\% or less.
-Above the flat top a gap without wind opens, of height $\approx H_1(r - R_{\rm b})$; light from the flat top at $i > \theta_{\rm d}$ escapes through it without meeting the wind.
-
-\textbf{The beaming inside the funnel hardly changes.}
-In the Monte Carlo of the 43 runs of the revised table with $\theta_{\rm c} = 45.6^\circ$, only 0--10\% (median 2\%) of the light emitted inside $\Rsph$ leaves at $i > 63.4^\circ$, whereas 51--97\% (median 73\%) of all the light already escapes inside the funnel.
-Even if the bowl sent all the light it intercepts into the funnel, $L_{\rm iso}$ at $i < \theta_{\rm c}$ would rise by about 3\% (median) and at most 17\%.
-The collimation is set by the wind funnel, not by the thickness of the disc.
-The slim disc adds a second occultation edge at $\theta_{\rm d} = \arctan(1/H_1) = 63.4^\circ$: beyond it the bowl rim hides the centre and the inner wind, $L_{\rm iso}$ falls by about 25\% (median, up to 60\%), and the spectrum becomes softer.
-% H_1 = 0.5: arctan(2) = 63.4 deg. Of the 182 best fits of the previous round, 13 have i > 63.4 deg (same document, Sect. 4).
-Of the 182 best fits of the previous round, 13 have $i > 63.4^\circ$.
-To implement this geometry, the table of the correction would need a new axis, $\theta_{\rm d}$, and the visibility would need to describe the gap.
-
-\begin{figure*}
-\centering
-\includegraphics[width=0.86\textwidth]{slim_disc_streamlines.pdf}
-\caption{Wind of the NGC5408 BH3a fit (run \code{mc28\_0p3-10keV}; $M = 19.9\,M_\odot$, $\log\dot m_0 = 2.153$, $\dot m_{\rm in}/\dot m_0 = 0.609$, $\beta_{\rm w} = 2.68$, $\omf = 0.7$, $\Rsph = 1924\,\rin$, $\Rtrap = 1570\,\rin$) above a flat disc (a, b) and a slim disc, Eq.~\eqref{eq:slim_disc} with $H_1 = 0.5$, $H_2 = 0.05$ (c, d), in linear (units of $\Rsph$) and logarithmic (units of $\rin$) axes.
-Thin lines: streamlines; blue: the funnel wall; colour: the wind density; green: the surface $\taup = 1$; brown: the disc.
-The slim disc is planned, not implemented.
-Made with \code{docs/scripts/plot\_slim\_disc\_streamlines.py} (code commit b2dc222).}
-\label{fig:slim_disc}
-% figure: ULXspectra-mc docs/figures/slim_disc_streamlines.pdf, commit b2dc222 (described in docs/slim_disc_geometry.md, 1896e10)
-\end{figure*}
-
-\begin{figure*}
-\centering
-\includegraphics[width=0.8\textwidth]{slim_disc_streamlines_columns.pdf}
-\caption{Flat against slim disc for the wind of Fig.~\ref{fig:slim_disc}: (a) $\taup$ from the top to the disc surface, (b) the peak density on each vertical, against $r$.
-The spike at $\Rsph$ comes from the outermost streamline, which runs along the disc surface, in both geometries.
-Made with \code{docs/scripts/plot\_slim\_disc\_streamlines.py} (code commit b2dc222).}
-\label{fig:slim_disc_columns}
-% figure: ULXspectra-mc docs/figures/slim_disc_streamlines_columns.pdf, commit b2dc222
-\end{figure*}
-
 \subsection{Comparison of transfer-corrected model with full MC-transfer model.}
 % Code: ULXspectra branch mc-transfer-corrections, commit 2272e8a (C model with mc_transfer = 1 and 0;
 %       Monte Carlo docs/scripts/mc_green_surface.py, scattering, 1e5 packets).
@@ -649,6 +597,66 @@ Made with \code{figures/ahlberg2026/plot\_corrected\_B.py} of the manuscript rep
 \label{fig:corrected_B}
 \end{figure*}
 % figure: figures/corrected_B_of_i.png (author's request 2026-11-20), data figures/ahlberg2026/data/wind_mc.npz
+
+\subsection{Outlook: a slim disc}
+\label{app:mc:slim}
+% Source: ULXspectra-mc, branch mc-transfer-corrections, docs/slim_disc_geometry.md (commit 1896e10; PLAN C29, planned,
+%         not implemented); sketch docs/scripts/plot_slim_disc_streamlines.py and figures (commit b2dc222);
+%         MC estimate from the 43 runs of the C28 table with theta_c = 45.6 deg (same document, Sect. 4).
+% Calculation-session notes 2026-11-21 and 2026-11-23 (author's request: beaming section of the appendix).
+All fits use a flat disc ($\hd = 0$).
+We considered, but did not implement, a slim disc, whose surface is
+\begin{equation}
+z_{\rm disc}(r) =
+\begin{cases}
+H_1 r, & r \le R_{\rm b},\\
+H_1 R_{\rm b}, & R_{\rm b} < r \le (H_1/H_2) R_{\rm b},\\
+H_2 r, & r > (H_1/H_2) R_{\rm b},
+\end{cases}
+\label{eq:slim_disc}
+\end{equation}
+% source: docs/slim_disc_geometry.md, Sect. 1 (commit 1896e10)
+where $R_{\rm b} = \max(\Rsph, \Rtrap)$, with $H_1 = 0.5$ and $H_2 = 0.05$ as proposed defaults: a conical bowl, a flat top, and the outer disc.
+Inside $\Rsph$ the disc is critical and $z/r \approx$ const; outside it, in the radiation-pressure zone, the half-thickness $H \approx (3/8\pi)\,\kT \dot M_0/c$ is constant \citep{Shakura1973}; further out, where gas pressure dominates, $z/r \approx 0.01$--0.05.
+The streamlines start on the bowl, with $\cos\theta_0$ linear in $R_0$ from $\cos\theta_{\rm c} = \omf$ at $\rin$ to $\cos\theta_{\rm d} = H_1/\sqrt{1 + H_1^2}$ at $\Rsph$, so that the outermost streamline is tangent to the bowl.
+The funnel keeps its opening ($\theta_{\rm c} = 45.6^\circ$ for $\omf = 0.7$), and the wind fills $\theta_{\rm c}$--$\theta_{\rm d} = 45.6^\circ$--$63.4^\circ$ instead of $45.6^\circ$--$90^\circ$ (Fig.~\ref{fig:slim_disc}).
+
+\textbf{The wind becomes denser but hardly more opaque vertically.}
+For the NGC5408 BH3a fit, the peak density on a vertical rises by a factor 2.1--2.2, and at the same point in mid-wind by 3.4--5.1, but $\taup$ from the top to the disc rises only by a factor 1.03--1.15 (Fig.~\ref{fig:slim_disc_columns}).
+The vertical column at a given $r$ is $\Sigma \approx \dot M_{\rm w}/(2\pi r v \sin\theta_0)$, which does not depend on the solid angle of the wind: a narrower wind is denser but also thinner in $z$.
+The photosphere keeps its radial extent ($r = 84$--$8.3\times10^3\,\rin$) but is lifted onto the bowl, to $z \le 4.1\times10^3\,\rin$ (flat disc: $716\,\rin$).
+The advection ratio $\taup v_{\rm w}/c$ changes by the same 12--15\%, and the energy budget is unchanged, so the wind temperature changes by about 10\% or less.
+Above the flat top a gap without wind opens, of height $\approx H_1(r - R_{\rm b})$; light from the flat top at $i > \theta_{\rm d}$ escapes through it without meeting the wind.
+
+\textbf{The beaming inside the funnel hardly changes.}
+In the Monte Carlo of the 43 runs of the revised table with $\theta_{\rm c} = 45.6^\circ$, only 0--10\% (median 2\%) of the light emitted inside $\Rsph$ leaves at $i > 63.4^\circ$, whereas 51--97\% (median 73\%) of all the light already escapes inside the funnel.
+Even if the bowl sent all the light it intercepts into the funnel, $L_{\rm iso}$ at $i < \theta_{\rm c}$ would rise by about 3\% (median) and at most 17\%.
+The collimation is set by the wind funnel, not by the thickness of the disc.
+The slim disc adds a second occultation edge at $\theta_{\rm d} = \arctan(1/H_1) = 63.4^\circ$: beyond it the bowl rim hides the centre and the inner wind, $L_{\rm iso}$ falls by about 25\% (median, up to 60\%), and the spectrum becomes softer.
+% H_1 = 0.5: arctan(2) = 63.4 deg. Of the 182 best fits of the previous round, 13 have i > 63.4 deg (same document, Sect. 4).
+Of the 182 best fits of the previous round, 13 have $i > 63.4^\circ$.
+To implement this geometry, the table of the correction would need a new axis, $\theta_{\rm d}$, and the visibility would need to describe the gap.
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.86\textwidth]{slim_disc_streamlines.pdf}
+\caption{Wind of the NGC5408 BH3a fit (run \code{mc28\_0p3-10keV}; $M = 19.9\,M_\odot$, $\log\dot m_0 = 2.153$, $\dot m_{\rm in}/\dot m_0 = 0.609$, $\beta_{\rm w} = 2.68$, $\omf = 0.7$, $\Rsph = 1924\,\rin$, $\Rtrap = 1570\,\rin$) above a flat disc (a, b) and a slim disc, Eq.~\eqref{eq:slim_disc} with $H_1 = 0.5$, $H_2 = 0.05$ (c, d), in linear (units of $\Rsph$) and logarithmic (units of $\rin$) axes.
+Thin lines: streamlines; blue: the funnel wall; colour: the wind density; green: the surface $\taup = 1$; brown: the disc.
+The slim disc is planned, not implemented.
+Made with \code{docs/scripts/plot\_slim\_disc\_streamlines.py} (code commit b2dc222).}
+\label{fig:slim_disc}
+% figure: ULXspectra-mc docs/figures/slim_disc_streamlines.pdf, commit b2dc222 (described in docs/slim_disc_geometry.md, 1896e10)
+\end{figure*}
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.8\textwidth]{slim_disc_streamlines_columns.pdf}
+\caption{Flat against slim disc for the wind of Fig.~\ref{fig:slim_disc}: (a) $\taup$ from the top to the disc surface, (b) the peak density on each vertical, against $r$.
+The spike at $\Rsph$ comes from the outermost streamline, which runs along the disc surface, in both geometries.
+Made with \code{docs/scripts/plot\_slim\_disc\_streamlines.py} (code commit b2dc222).}
+\label{fig:slim_disc_columns}
+% figure: ULXspectra-mc docs/figures/slim_disc_streamlines_columns.pdf, commit b2dc222
+\end{figure*}
 
 \subsection{Monte Carlo check of the best fits (not done yet)}
 \label{app:mc:bestfits}
@@ -735,13 +743,14 @@ The figure was made with the old table.
 \subsection{Fits with and without the correction: HolmIX}
 \label{app:mc:nomc}
 
-Figure~\ref{fig:holmix_mcnomc} shows the fits of HolmIX with BH3a and BH4a, made with and without the transfer correction, discussed in Sect.~\ref{sec:results:mcnomc}.
+Figure~\ref{fig:holmix_mcnomc} shows the fits of HolmIX with BH3a, made with and without the transfer correction, discussed in Sect.~\ref{sec:results:mcnomc}, and the wind and disc components of the model spectrum.
 
-\begin{figure*}
+\begin{figure}
 \centering
-\includegraphics[width=\textwidth]{HolmIX_mc_vs_nomc.png}
-\caption{HolmIX fitted with BH3a (left) and BH4a (right) over 0.3--10\,keV with (blue) and without (orange) the transfer correction: the SED (black, grey outside the fitted band), the model total (solid), wind (dashed) and disc (dotted) components and the model at the data energies (points); the fitted band is shaded.
-Lower panels: $\log$(model/data), with $\pm0.08$\,dex shaded.}
+\includegraphics[width=\columnwidth]{HolmIX_mc_vs_nomc_BH3a.png}
+\caption{HolmIX fitted with BH3a over 0.3--10\,keV with (blue) and without (orange) the transfer correction: the SED (black, grey outside the fitted band), the model total (solid), wind (dashed) and disc (dotted) components and the model at the data energies (points); the fitted band is shaded.
+Lower panel: $\log$(model/data), with $\pm0.08$\,dex shaded.}
 \label{fig:holmix_mcnomc}
-\end{figure*}
-% figure: ULXspectra-mc docs/scripts/plot_mc_vs_nomc.py, docs/figures/HolmIX_mc_vs_nomc.png (b551655)
+\end{figure}
+% figure: ULXspectra-mc docs/scripts/plot_mc_vs_nomc.py, docs/figures/HolmIX_mc_vs_nomc.png (b551655): its left (BH3a) panel,
+%         cropped 2026-11-24 (author: one panel only); to be replaced by a one-panel PDF from the calculation session.
