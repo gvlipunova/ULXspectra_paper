@@ -26,11 +26,11 @@ PUB = [("HolmII", 16, 36, "range", "Barra+24"), ("HolmII", 16, 70, "range", "Fog
        ("M101ULS", 20, 30, "range", "Liu+13"), ("M101ULS", 3.2e4, 4.3e4, "range", "Titarchuk+16"),
        ("NGC1313B", 5000, 5000, "value", "Pasham+15"), ("NGC1313B", 2524, 6811, "range", "Huang19"),
        ("NGC1313B", 275, 2283, "range", "Majumder+23, a=0"), ("NGC1313B", 92, 883, "range", "Majumder+23, a=0.99"),
-       ("NGC247S", 600, None, "lower", "Jin+11"), ("NGC247SS", 600, None, "lower", "Jin+11"),
-       ("NGC5408", 1000, 9000, "range", "Strohmayer+09"), ("NGC5408", 800, None, "lower", "Dheeraj+12"),
+       ("NGC247S", 600, None, "lower", "Jin+11"), ("NGC247SS", 600, None, "lower", "Jin+11"),   # 600-3000 for a = 0, face-on; larger otherwise
+       ("NGC5408", 1000, 9000, "range", "Strohmayer+09"), ("NGC5408", 800, None, "lower", "Pasham+12"),
        ("NGC5408", 207, 1851, "range", "Majumder+23, a=0"), ("NGC5408", 104, 635, "range", "Majumder+23, a=0.99"),
        ("NGC55", 6, 14, "range", "Barra+22"),
-       ("NGC6946", 1000, 4000, "range", "Rao+10"), ("NGC6946", 248, 2221, "range", "Majumder+23, a=0"),
+       ("NGC6946", 1000, 4000, "range", "Rao+10"), ("NGC6946", 130, 1300, "range", "Rao+10, break"), ("NGC6946", 248, 2221, "range", "Majumder+23, a=0"),
        ("NGC6946", 214, 696, "range", "Majumder+23, a=0.99"),
        ("NGC7793", None, 15, "upper", "Motch+14")]
 
