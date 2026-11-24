@@ -16,8 +16,8 @@ here: file, script, code commit, and the section that uses it.
 | `visibility.pdf`, `visibility_transfer.pdf` | `docs/scripts/plot_visibility.py` (fit NGC5408 BH3a, mc28_0p3-10keV) | `d186025`, `0075085` (visibility.pdf) | Sect. 5 (fig:visibility), Sect. 5.1 (fig:visibility_transfer) |
 | `wind_ring_spectrum.pdf` | this repository: `figures/plot_wind_ring_spectrum.py` (from Eqs. fcor, Inu_wind) | -- | Sect. 5 (fig:wind_ring_spectrum) |
 | `best_fits_mc.png` | `docs/scripts/plot_best_fits_mc.py` (fit list `docs/scripts/mc_table/paper_best_fits.txt`) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:best_fits_mc) |
-| `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
-| `chi2_all.pdf` | this repository: `figures/plot_chi2_all.py` (data: ULXspectra-mc summaries) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_all) |
+| `chi2_overview.pdf` | this repository: `figures/plot_chi2_overview.py` (data: ULXspectra-mc summaries; presets ULX.conf.example 454490d; redrawn 2026-11-24 with the revised types of tab:sources) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_overview) |
+| `chi2_all.pdf` | this repository: `figures/plot_chi2_all.py` (data: ULXspectra-mc summaries; redrawn 2026-11-24 with the revised types of tab:sources) | `e597ba3` (branch `mc-transfer-corrections`) | Sect. Results (fig:chi2_all) |
 | `mass_comparison.pdf` | this repository: `figures/plot_mass_comparison.py` (data: ULXspectra-mc summaries, tab:masses) | `e597ba3` (branch `mc-transfer-corrections`) | App. Published masses (fig:masses) |
 | `corrected_B_of_i.png` | this repository: `figures/ahlberg2026/plot_corrected_B.py` (data `figures/ahlberg2026/data/wind_mc.npz`) | `2272e8a` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:corrected_B) |
 | `funnel_cone_vs_wind.png` | `docs/scripts/funnel_wind_cone.py` (`plot ... HolmIX alphas=45,25,10`) | `ef403b4` (branch `mc-transfer-corrections`) | App. Monte Carlo (fig:funnel_wind; replaces `funnel_beaming_vs_wind.png`) |
