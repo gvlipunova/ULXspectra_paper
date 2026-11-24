@@ -28,15 +28,15 @@ The disc rings radiate as blackbodies at their temperatures~\eqref{eq:Tdisc}, an
 The wind rings do not.
 Above about 0.3~keV the wind is far too thin to absorb photons and emit them again (see Sect.~\ref{sec:disc:thermalization}).
 It scatters the disc photons without changing their frequency, so they keep the colour temperature $T_{\rm w,raw}$ of the disc that made them (Eq.~\ref{eq:Twraw}) and are spread over the larger photosphere.
-Each wind ring is therefore a diluted blackbody, with the dilution factor $w$,
+Each wind ring is therefore a diluted blackbody, with the dilution factor $f_{\rm cor}$ of Eq.~\eqref{eq:fcor},
 \begin{equation}
-I_\nu = w\,B_\nu(T_{\rm w,raw}), \qquad w = f_{\rm cor} \, ,
+I_\nu = f_{\rm cor}\,B_\nu(T_{\rm w,raw}) ,
 %= \frac{L_{\rm disc,hidden}}{L_{\rm wind,raw}} ,
 \label{eq:Inu_wind}
 \end{equation}
 % code: ULXspectra-mc f546151, csrcs/wind_emission.c (wind_spectrum == 1: f_cor * B_nu(T_j/f_T_cor), f_T_cor = f_cor^(1/4));
 %       README "Wind temperature and energy budget" ("Wind spectrum"), "Visibility and spectrum"; PLAN C21
-which carries the same energy as a blackbody at $\Tw = w^{1/4}\,T_{\rm w,raw}$ (see Eq.~\ref{eq:fcor}).
+which carries the same energy as a blackbody at $\Tw = f_{\rm cor}^{1/4}\,T_{\rm w,raw}$.
 Dilution has here its usual meaning: radiation that is already made is spread more thinly and keeps its shape, as in the diluted blackbody of colour-corrected discs.
 It is a separate step from the wind toll (Sect.~\ref{sec:disc:teff}), which sets how much the disc radiates at all and applies with either wind spectrum.
 % source: PLAN C21, user decision 2026-11-10 (two steps: wind toll = production; dilution = in the wind); README "Terms"
@@ -55,24 +55,24 @@ For a flat disc without wind, $A_{{\rm proj},j} = \cos i$ times the area of one 
 % AUTHOR: blackbody without colour correction or Comptonization (see Discussion);
 %         say so here explicitly?
 
-The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = w^{-1/4}\,\Tw$, and its Rayleigh--Jeans tail is fainter by the factor $w^{3/4}$ (Fig.~\ref{fig:wind_ring_spectrum}).
-In that tail $B_\nu \propto T$, so $w\,B_\nu(T_{\rm w,raw})/B_\nu(\Tw) = w\,T_{\rm w,raw}/\Tw = w^{3/4}$: the same energy is carried by fewer photons of higher frequency.
+The diluted wind is harder than a blackbody at $\Tw$: its colour temperature is $T_{\rm w,raw} = f_{\rm cor}^{-1/4}\,\Tw$ (Fig.~\ref{fig:wind_ring_spectrum}), and its Rayleigh--Jeans tail is fainter by the factor $f_{\rm cor}^{3/4}$.
+In that tail $B_\nu \propto T$, so $f_{\rm cor}B_\nu(T_{\rm w,raw})/B_\nu(\Tw) = f_{\rm cor}T_{\rm w,raw}/\Tw = f_{\rm cor}^{3/4}$: the same energy is carried by fewer photons of higher frequency.
 
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{wind_ring_spectrum.pdf}
-\caption{Spectrum of one wind ring, Eq.~\eqref{eq:Inu_wind}: the diluted blackbody $I_\nu = f_{\rm cor}B_\nu(T_{\rm w,raw})$ (solid, hatched), the blackbody at its colour temperature $T_{\rm w,raw}$ (dashed) and the blackbody at $\Tw = f_{\rm cor}^{1/4}T_{\rm w,raw}$ of Eq.~\eqref{eq:fcor}, which carries the same energy, $\int I_\nu\,{\rm d}\nu = \sigma\Tw^4/\pi$ (dotted).
-$I_\nu$ and $B_\nu(T_{\rm w,raw})$ peak at $\nu_{\max} = 2.82\,kT_{\rm w,raw}/h$; in the Rayleigh--Jeans tail $I_\nu = f_{\rm cor}^{3/4}B_\nu(\Tw)$.
-Drawn for $kT_{\rm w,raw} = 0.1$~keV and $f_{\rm cor} = 0.51$, the value of the fit of Fig.~\ref{fig:temperatures}.}
+\caption{Spectrum of one wind ring, Eq.~\eqref{eq:Inu_wind}: the diluted blackbody $I_\nu = f_{\rm cor}B_\nu(T_{\rm w,raw})$ (solid, hatched), and the blackbody at its colour temperature $T_{\rm w,raw}$ (dashed); $\int I_\nu\,{\rm d}\nu = f_{\rm cor}\sigma T_{\rm w,raw}^4/\pi = \sigma\Tw^4/\pi$.
+Both peak at $\nu_{\max} = 2.82\,kT_{\rm w,raw}/h$.
+It is drawn for $kT_{\rm w,raw} = 0.1$~keV and $f_{\rm cor} = 0.51$, the value of the fit of Fig.~\ref{fig:temperatures}.}
 \label{fig:wind_ring_spectrum}
 \end{figure}
 % figure: this repository, figures/plot_wind_ring_spectrum.py (layout: the author's sketch 2026-11-24), from Eqs. (fcor), (Inu_wind);
 %         f_cor = 0.51: ULXspectra-mc for_paper_session.md Note 5 (f_cor^(1/4) = 0.846)
-At the 37 old BH best fits with a radiating wind, $w = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
+At the 37 old BH best fits with a radiating wind, $f_{\rm cor} = 0.03$--$0.92$ (median 0.14), so the colour temperature of the wind is 1.04--2.4 times $\Tw$ (median 1.6).
 % source: ULXspectra-mc PLAN.md C21 (fits from before the temperature step at R_sph, eq. Tdisc); README "Wind spectrum"; commit f546151
 
-Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $w > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $w > 1$ (1.03).
-A simplification of the model, which is hard to overcome, is that one value of $w$ holds for the whole wind, and each wind ring has one `source radius'
+Since scattering cannot raise the intensity above $B_\nu(T_{\rm w,raw})$, a model with $f_{\rm cor} > 1$ is flagged (Sect.~\ref{sec:wtemp:budget}); of the 87 old full best fits recomputed with the present rules, only one, NGC300 BH3a, has $f_{\rm cor} > 1$ (1.03).
+A simplification of the model, which is hard to overcome, is that one value of $f_{\rm cor}$ holds for the whole wind, and each wind ring has one `source radius'
 $\xeff$ \footnote{the radius of the underlying disc ring that feeds the photosphere ring with photons, see lower panel of Fig.~\ref{fig:temperatures}}.
 % source: README "Wind spectrum" (limitations)
 

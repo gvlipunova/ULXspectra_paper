@@ -3,9 +3,9 @@
 
   I_nu = f_cor B_nu(T_w,raw)            the diluted blackbody of the ring (solid, hatched)
   B_nu(T_w,raw)                         the blackbody at the colour temperature (dashed)
-  B_nu(T_w),  T_w = f_cor^(1/4) T_w,raw the blackbody with the same energy, int I_nu dnu = f_cor sigma T_w,raw^4/pi = sigma T_w^4/pi (dotted)
+  int I_nu dnu = f_cor sigma T_w,raw^4/pi = sigma T_w^4/pi, T_w = f_cor^(1/4) T_w,raw (Eq. fcor); B_nu(T_w) not drawn (author 2026-11-24)
 
-Both B_nu(T_w,raw) and I_nu peak at nu_max = 2.821 k T_w,raw / h; in the Rayleigh-Jeans tail I_nu/B_nu(T_w) = f_cor^(3/4).
+Both B_nu(T_w,raw) and I_nu peak at nu_max = 2.821 k T_w,raw / h.
 Illustrative values: k T_w,raw = 0.1 keV, f_cor = 0.51 (f_cor^(1/4) = 0.846, the NGC5408 BH3a fit of fig:temperatures,
 ULXspectra-mc for_paper_session.md Note 5). Computed from the formulas, not from the code.
 
@@ -32,7 +32,7 @@ def bnu(nu, T):
 
 
 nu = np.logspace(14.7, 17.6, 600)
-b_raw, b_w = bnu(nu, T_RAW), bnu(nu, T_W)
+b_raw = bnu(nu, T_RAW)
 i_nu = FCOR * b_raw
 NUMAX = 2.821 * K * T_RAW / H
 
@@ -40,16 +40,11 @@ fig, ax = plt.subplots(figsize=(3.2, 2.7))
 ax.fill_between(nu, 1e-30, i_nu, facecolor="none", edgecolor="#c0392b", hatch="////", lw=0)
 ax.loglog(nu, b_raw, color="#2a9d55", lw=1.4, ls="--", label=r"$B_\nu(T_{\rm w,raw})$")
 ax.loglog(nu, i_nu, color="#c0392b", lw=1.6, label=r"$I_\nu = f_{\rm cor} B_\nu(T_{\rm w,raw})$")
-ax.loglog(nu, b_w, color="#e07b1a", lw=1.4, ls=":", label=r"$B_\nu(T_{\rm w})$, $T_{\rm w} = f_{\rm cor}^{1/4}T_{\rm w,raw}$")
 ymax = b_raw.max()
 ax.set_ylim(ymax * 1e-4, ymax * 6)
 ax.set_xlim(nu[0], nu[-1])
 ax.axvline(NUMAX, color="0.5", lw=0.7, ls=(0, (4, 3)))
 ax.text(NUMAX * 1.1, ymax * 2.2, r"$\nu_{\max}$", fontsize=8, ha="left", va="center")
-x0 = 1.0e15                                  # Rayleigh-Jeans ratio, marked by an arrow
-ax.annotate("", xy=(x0, FCOR * bnu(x0, T_RAW)), xytext=(x0, bnu(x0, T_W)),
-            arrowprops=dict(arrowstyle="<->", lw=0.7, color="0.3", shrinkA=0, shrinkB=0))
-ax.text(x0 * 1.15, np.sqrt(FCOR * bnu(x0, T_RAW) * bnu(x0, T_W)) * 0.55, r"$\times f_{\rm cor}^{3/4}$", fontsize=8, bbox=dict(fc="white", ec="none", pad=0.5))
 ax.text(1.5e16, ymax * 4e-4, r"$\int I_\nu\,{\rm d}\nu = f_{\rm cor}\,\sigma T_{\rm w,raw}^4/\pi$", fontsize=8,
         ha="center", bbox=dict(fc="white", ec="none", pad=1))
 ax.set_xlabel(r"$\nu$ (Hz)")
