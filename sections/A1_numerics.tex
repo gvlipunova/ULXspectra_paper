@@ -50,9 +50,9 @@ With uniform priors and a constant $\sigma$, the maximum of the posterior is the
 We sample the posterior with the affine-invariant ensemble sampler \code{emcee} \citep{ForemanMackey2013} with 200 walkers.
 Instead of the stretch move of \citet{Goodman2010}, which gets stuck between separate modes of the posterior, we use differential-evolution moves \citep{terBraak2006, terBraak2008}: 80\% of the proposals are $\boldsymbol\theta + \gamma(\boldsymbol\theta_j - \boldsymbol\theta_k)$, built from two other walkers $j$ and $k$, and 20\% are snooker moves.
 % code: --moves de (README "Adaptive Run Length", "Further options"); nwalkers = 200 and moves = de in all 182 run_settings.json
-The walkers start in a \new{small} Gaussian ball around \new{fixed starting values of the preset, which carry no physics and do not enter the prior}, with widths equal to the proposal scales of the parameters; a start point is kept only if its posterior is finite.
+The walkers start in a {small} Gaussian ball around {fixed starting values of the preset, which carry no physics and do not enter the prior}, with widths equal to the proposal scales of the parameters; a start point is kept only if its posterior is finite.
 % code: psrcs/mcmc.py (p0 = theta0 + scale * N(0,1), accepted if log_prior and log_probability are finite)
-\new{Since the whole ensemble starts in one small region, it can settle in the first mode it meets.
+{Since the whole ensemble starts in one small region, it can settle in the first mode it meets.
 Nine NS fits that ended in a worse mode than an earlier fit were therefore re-run with half of the walkers around the earlier best fit and half spread uniformly over the prior.
 For later fits the walkers start at the best of many points drawn uniformly over the prior, which gives a narrow mode near the edge of the prior a better chance to be found.}
 % source: ULXspectra-mc docs/for_paper_session.md Note 13 (126dd71, edited 5c3a2b1): all rounds up to mc28_0p3-10keV start in the ball
