@@ -35,10 +35,10 @@ alpha=35: 1.011 0.980 0.976 0.993 0.984
 alpha=40: 0.963 0.965 1.006 0.993 1.011
 alpha=45: 0.997 0.986 0.989 1.013 1.024
 # 4. Mean boost at i < theta_c: C model (mc_transfer = 1, 0) and MC through the wind
-BH3a,w=0.85        theta_c  31.8: C1 4.48  MC 4.55  C0 1.26  B_max 6.67  share MC 0.682  int B1 dmu 0.982  int B0 dmu 0.347
-BH3a,w=0.7         theta_c  45.6: C1 2.95  MC 3.02  C0 1.43  B_max 3.33  share MC 0.906  int B1 dmu 0.991  int B0 dmu 0.606
-BH2,w=0.7          theta_c  45.6: C1 3.11  MC 3.15  C0 1.27  B_max 3.33  share MC 0.944  int B1 dmu 0.992  int B0 dmu 0.466
-BH4a,w=0.513       theta_c  59.2: C1 1.97  MC 2.01  C0 1.40  B_max 2.05  share MC 0.978  int B1 dmu 0.989  int B0 dmu 0.800
+BH3a,w=0.85        theta_c  31.8: C1 4.43  MC 4.55  C0 1.26  B_max 6.67  share MC 0.682  int B1 dmu 0.982  int B0 dmu 0.347
+BH3a,w=0.7         theta_c  45.6: C1 2.96  MC 3.02  C0 1.43  B_max 3.33  share MC 0.906  int B1 dmu 0.991  int B0 dmu 0.606
+BH2,w=0.7          theta_c  45.6: C1 3.10  MC 3.15  C0 1.27  B_max 3.33  share MC 0.944  int B1 dmu 0.992  int B0 dmu 0.466
+BH4a,w=0.513       theta_c  59.2: C1 1.97  MC 2.01  C0 1.40  B_max 2.05  share MC 0.978  int B1 dmu 0.988  int B0 dmu 0.800
 BH3a,w=0.5         theta_c  60.0: C1 1.93  MC 1.96  C0 1.40  B_max 2.00  share MC 0.980  int B1 dmu 0.992  int B0 dmu 0.821
 BH3a,w=0.3         theta_c  72.5: C1 1.41  MC 1.42  C0 1.27  B_max 1.43  share MC 0.997  int B1 dmu 0.993  int B0 dmu 0.937
 BH3a,w=0.1         theta_c  84.3: C1 1.10  MC 1.11  C0 1.09  B_max 1.11  share MC 1.000  int B1 dmu 0.993  int B0 dmu 0.988
@@ -49,5 +49,5 @@ alpha=45.00: R=10: 2.67, R=93.13: 3.10, R=1084: 3.31, R=1e+04: 3.31, R=1e+05: 3.
 # 6. Shape: B(alpha - 1 deg)/B(~0) and B(alpha + 10 deg)/B(~0)
 Ahlberg+ figure 2a Ch, alpha=20, R=1e3: 0.926  0.092
 Ahlberg+ figure 2a Ch, alpha=25, R=1e3: 0.895  0.075
-C mc_transfer=1 BH3a,w=0.85, theta_c=31.8: 0.788  0.123
-C mc_transfer=1 BH3a,w=0.7, theta_c=45.6: 0.617  0.048
+C mc_transfer=1 BH3a,w=0.85, theta_c=31.8: 0.756  0.123
+C mc_transfer=1 BH3a,w=0.7, theta_c=45.6: 0.617  0.049

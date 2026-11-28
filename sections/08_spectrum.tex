@@ -154,8 +154,11 @@ with introduced variables $u = (1 - \mu)/(1 - \cos\theta_{\rm c})$ and $v = \mu/
 The shaded area is the share $f_j$ that leaves beyond the funnel edge, $\mu < \cos\theta_{\rm c}$; the dot marks the inclination of the fit.}}
 \label{fig:visibility_transfer}
 \end{figure}
-% figure: ULXspectra-mc docs/figures/visibility_transfer.pdf, script docs/scripts/plot_visibility.py, commit d186025 (Note 10); 190-run table
-The share $f_j$ of this light that leaves beyond $\theta_{\rm c}$ and the profiles $g_{\rm in}$ and $g_{\rm out}$ come from a table of 117 Monte Carlo runs (Appendix~\ref{app:mc:table}).
+% figure: ULXspectra-mc docs/figures/visibility_transfer.pdf, script docs/scripts/plot_visibility.py, commit 07db0f3 (Note 18, item 4);
+%         200-run table (C32): h_j beyond theta_c log-linear between the bins; f_j = 0.26, h_j(cos i) = 0.96 unchanged. v0: d186025, 190 runs.
+The share $f_j$ of this light that leaves beyond $\theta_{\rm c}$ and the profiles $g_{\rm in}$ and $g_{\rm out}$ come from a table of \new{200} Monte Carlo runs (Appendix~\ref{app:mc:table}).
+% source: final model, PLAN C32 (ULXspectra-mc a650c54; Notes 17-18). AUTHOR: the class description below is that of the
+%         first (117-run) table; the revised table adds a fourth class and four sub-classes (App. app:mc:table).
 They depend on the class of the ring (wind or disc, and its position $x/\xsp$; for a NS with the dipole surface, the position on the central emitter), on the optical depth $\tau_j$ of the ring towards the angle $\theta_{\rm c} + \min[10^\circ, (90^\circ - \theta_{\rm c})/2]$, and on $\theta_{\rm c}$.
 % code: README "Visibility and spectrum" (classes, tau_j direction, interpolation: ln f linear between theta_c nodes,
 %       profiles linear in cos theta_c, in u, v and ln tau); csrcs/mc_transfer_table.h

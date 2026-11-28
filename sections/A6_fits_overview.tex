@@ -1,61 +1,65 @@
-% Sources: ULXspectra-mc docs/figures/fits_by_source_mc_0p3-10keV.pdf, script docs/scripts/plot_fits_by_source.py (commit 7dd40e3; page 6 redrawn in 8176d9c);
-%          included as is (author 2026-11-20). To be remade for the refit round with the 190-run table (run tag mc28_0p3-10keV).
+% Sources: ULXspectra-mc docs/figures/fits_by_source_final_both.pdf, script docs/scripts/plot_fits_by_source.py final both
+%          (commit 9fc8e3c; for_paper_session Note 18, item 2); NGC247SS in two panels (author 2026-11-28).
+%          v0 (tag v0) used fits_by_source_final_both.pdf (7dd40e3, 8176d9c), the round mc_0p3-10keV with the 117-run table.
+%          Fits: one per source and preset, the mc32 refit if there is one, else the lowest chi2 of mc28, mc28b, mc28c, mc30
+%          (summaries/final_round_all_fits.tsv, column selected). 190-run table, except the 10 mc32 refits (200 runs);
+%          with the 200-run table the chi2 of the others changes by less than max(0.3, 5%) (Note 18).
 
 \section{Overview of the fits}
 \label{app:fitsoverview}
 
-Figures~\ref{fig:fits_M}--\ref{fig:fits_spectra} show all fits of the round with the transfer correction over 0.3--10\,keV (run tag \code{mc\_0p3-10keV}, 13 presets for each of the 14 sources), made with the 117-run table of the correction (App.~\ref{app:mc:table}).
+Figures~\ref{fig:fits_M}--\ref{fig:fits_spectra} show all fits \new{of the final round with the transfer correction (transfer table of 200 Monte Carlo runs, App.~\ref{app:mc:table}): 13 presets for each of the 14 sources over 0.3--10\,keV, and for NGC247SS also over 0.3--1.7\,keV (Sect.~\ref{sec:fitting:data})}.
 In Figs.~\ref{fig:fits_M}--\ref{fig:fits_rin} each source has a panel, and each preset a point: the posterior median of a parameter with its 68\% interval against the normalized reduced $\chi^2 = \chi^2/(n - k)$ of the saved best fit ($\sigma = 0.08$\,dex); BH presets are black, NS presets orange, and a parameter fixed by the preset is drawn as a horizontal dash at its value.
 Figure~\ref{fig:fits_spectra} shows the model spectra of all presets.
-These figures will be remade for the refits with the revised table.
 \begin{figure*}[p]
 \centering
-\includegraphics[page=6,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{ (\textbf{preliminary}) Model spectra of all fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the observed SED (grey line), the fitted points (dots; the fitted band shaded orange for the NS and NS candidates of Table~\ref{tab:sources}, grey for the BH candidates) and the best-fit model of every preset, BH black and grey, NS orange; the best BH and the best NS fit are drawn thicker, and their normalized reduced $\chi^2$ are given above each panel.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 8176d9c).}
+\includegraphics[page=6,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{ (\textbf{preliminary}) Model spectra of all fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the observed SED (grey line), the fitted points (dots; the fitted band shaded orange for the NS and NS candidates of Table~\ref{tab:sources}, grey for the BH candidates) and the best-fit model of every preset, BH black and grey, NS orange; the best BH and the best NS fit are drawn thicker, and their normalized reduced $\chi^2$ are given above each panel.
+\new{The best BH and NS fits are chosen here by the reduced $\chi^2$ and can differ from Table~\ref{tab:bestfit_params}, which ranks by $\chi^2$ (M101ULS).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_spectra}
 \end{figure*}
 \begin{figure*}[p]
 \centering
-\includegraphics[page=1,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{(\textbf{preliminary}) All fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the accretor mass $M$ ($M_\odot$) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
+\includegraphics[page=1,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{(\textbf{preliminary}) All fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the accretor mass $M$ ($M_\odot$) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
 Points: posterior median and 68\% interval of each preset, BH black, NS orange, the preset named beside its point; dashes: values fixed by the preset.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 7dd40e3).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_M}
 \end{figure*}
 
 \begin{figure*}[p]
 \centering
-\includegraphics[page=2,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{(\textbf{preliminary}) All fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the inclination $i$ (degrees) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
+\includegraphics[page=2,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{(\textbf{preliminary}) All fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the inclination $i$ (degrees) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
 Points: posterior median and 68\% interval of each preset, BH black, NS orange, the preset named beside its point; dashes: values fixed by the preset.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 7dd40e3).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_i}
 \end{figure*}
 
 \begin{figure*}[p]
 \centering
-\includegraphics[page=3,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{(\textbf{preliminary}) All fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the wind toll $\epsilon_{\rm w}$ against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
+\includegraphics[page=3,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{(\textbf{preliminary}) All fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the wind toll $\epsilon_{\rm w}$ against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
 Points: posterior median and 68\% interval of each preset, BH black, NS orange, the preset named beside its point; dashes: values fixed by the preset.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 7dd40e3).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_epsw}
 \end{figure*}
 
 \begin{figure*}[p]
 \centering
-\includegraphics[page=4,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{(\textbf{preliminary})All fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the inner accretion rate $\dot m_{\rm in}/\dot m_0$ (presets with a set inner rate only) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
+\includegraphics[page=4,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{(\textbf{preliminary})All fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the inner accretion rate $\dot m_{\rm in}/\dot m_0$ (presets with a set inner rate only) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
 Points: posterior median and 68\% interval of each preset, BH black, NS orange, the preset named beside its point; dashes: values fixed by the preset.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 7dd40e3).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_fin}
 \end{figure*}
 
 \begin{figure*}[p]
 \centering
-\includegraphics[page=5,width=\textwidth]{fits_by_source_mc_0p3-10keV.pdf}
-\caption{(\textbf{preliminary}) All fits with the transfer correction (0.3--10\,keV, 117-run table), one panel per source: the inner disc radius $\rin/\rg$ (NS: $\rmag/\rg$) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
+\includegraphics[page=5,width=\textwidth]{fits_by_source_final_both.pdf}
+\caption{(\textbf{preliminary}) All fits with the transfer correction \new{(final round, transfer table of 200 Monte Carlo runs)}, one panel per source\new{, two for NGC247SS (0.3--10 and 0.3--1.7\,keV)}: the inner disc radius $\rin/\rg$ (NS: $\rmag/\rg$) against the normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$\,dex).
 Points: posterior median and 68\% interval of each preset, BH black, NS orange, the preset named beside its point; dashes: values fixed by the preset.
-Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit 7dd40e3).}
+Made with \code{docs/scripts/plot\_fits\_by\_source.py} (code commit \new{9fc8e3c}).}
 \label{fig:fits_rin}
 \end{figure*}

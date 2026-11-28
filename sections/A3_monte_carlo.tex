@@ -219,7 +219,7 @@ NS best fits (NS1a, NS2, NS3a, NS4a, NS5, NS5a, NS6, NS7) of 9 sources, $\omf = 
 \end{table*}
 
 \paragraph{The revised table.}
-The results of this paper were obtained with the table described above, built from 117 runs.
+\new{The first fits of this work used} the table described above, built from 117 runs.
 We have since rebuilt the table in two steps.
 First, its Monte Carlo runs were redone with the current model (the wind toll restricted to $r < \Rsph$ and the diluted wind spectrum), 28 runs with weak winds were added at all funnel openings, the bins in optical depth were refined to $\taup = 0$, 0.3, 1, 3, 6, 12, 25, 50 and 100, and a fourth ring class was added with a boundary at $\Rsph$ (145 runs).
 This version left thick winds seen beyond the funnel edge at $i > 64^\circ$ too bright, by up to a factor of 1.5.
@@ -228,11 +228,15 @@ Second, each ring class was split into four sub-classes by the ring's place in i
 For 17 held-out runs, the revised table gives MC/model per angle bin of 0.93--1.04 inside the funnel and 0.76--1.14 beyond its edge (117-run table: 0.64--1.22 beyond the edge; without the correction 0.59--2.49 inside and 0.37--18 beyond).
 The typical error per angle bin beyond the edge falls from 12.6\% to 7.5\% for the held-out runs, from 14.4\% to 6.8\% for the best fits, and from 14.2\% to 9.9\% for BH4a fits between the nodes of the funnel angle; the excess of thick winds at $i > 64^\circ$ is gone.
 \fi % heldout
-All fits are being redone with the revised table.
+\new{All the fits of Sect.~\ref{sec:results} were redone with the revised table.
+A last refinement resolves the angles close to edge-on better (200 runs): beyond the funnel edge the angular profiles are interpolated log-linearly, and windless NS runs were added.
+It changes the transfer only beyond the funnel edge, and the fits that it affected were redone with it.}
+% source: PLAN C32 (ULXspectra-mc a650c54, 200 runs: log-linear v profiles beyond theta_c, first v bin split at 0.1,
+%         10 windless NS runs); Notes 17-18: 10 fits refitted (mc32), the chi2 of the others changes by < max(0.3, 5%).
 % source: calculation session 2026-11-19/20; ULXspectra-mc PLAN C26 (commits 1c7edf0, 4945ea7; 145 runs) and PLAN C28 (commit afaa8b3; 190 runs),
 %         docs/transfer_correction_results.md sect. 4, 6, 8. The 12.6% -> 7.5% etc. compare the 145-run (C26) and 190-run (C28) tables.
-% STATUS: full refit round with the C28 table started 2026-11-20 14:18 (run tags mc28_0p3-10keV, 182 fits, and mc28_1e-6-1e3keV;
-%         without the eps_w constraint), about 6 days. All fit results and Table tab:bestfit_params still use the 117-run table.
+% STATUS (2026-11-28): final round done: mc28/mc28b/mc28c/mc30 (190 runs) and mc32 (200 runs); Table 6 and all fit figures
+%         use it. v0 (tag v0) used the 117-run table.
 
 % ===== Held-out checks: whole subsection, Tables tab:mc_heldout_bh and tab:mc_heldout_ns (switch \ifheldout in main.tex)
 \ifheldout
@@ -567,8 +571,8 @@ $L_{\rm bol}$ (erg\,s$^{-1}$) & $7.7\times10^{39}$ & $1.0\times10^{40}$ & $5.5\t
 %NGC~7793 is not among the sources of the table of the correction (Table~\ref{tab:mc_calib}), so these are held-out checks.
 % source: tab:mc_calib (5 sources: HolmIX, NGC1313B, NGC5408, NGC247SS, NGC6946); theta_c = arccos(omega_frac) for h_disc = 0
 
-%The mean boost at $i < \theta_{\rm c}$ is $\bar B = 4.48$ at $\theta_{\rm c} = 31.8^\circ$ and 2.95--3.11 at $45.6^\circ$ with the correction, 4.55 and 3.02--3.15 in the Monte Carlo, and 1.26 and 1.27--1.43 without the correction.
-% source: summary.txt item 4 (BH3a w = 0.85; BH3a and BH2 at w = 0.7); commit 2272e8a
+%The mean boost at $i < \theta_{\rm c}$ is $\bar B = 4.43$ at $\theta_{\rm c} = 31.8^\circ$ and 2.96--3.10 at $45.6^\circ$ with the correction, 4.55 and 3.02--3.15 in the Monte Carlo, and 1.26 and 1.27--1.43 without the correction.
+% source: summary.txt item 4 (BH3a w = 0.85; BH3a and BH2 at w = 0.7); MC 2272e8a, model 07db0f3 (200-run table; v0: 4.48, 2.95-3.11)
 %Their figure~4a gives 3.74, 5.02, 5.87, 6.30 and 6.52 at $\alpha = 31.25^\circ$ and 2.67, 3.10, 3.31, 3.31 and 3.31 at $\alpha = 45^\circ$, for $R = 10$, $93$, $1.1\times10^3$, $10^4$ and $10^5$.
 % source: summary.txt item 5 (their grid: R = 10, 93.1, 1084, 1e4, 1e5)
 %Our $\bar B$ lies between their values for $R = 10$ and $R \approx 10^2$.
@@ -591,10 +595,11 @@ The energy that reaches observers, $\int_0^1 B\,{\rm d}\mu$, is 0.982--0.993 wit
 \centering
 \includegraphics[width=\textwidth]{corrected_B_of_i.png}
 \caption{$B(i) = L_{\rm iso}(i)/L_{\rm total}$ for the NGC~7793 parameter sets of the text: the model with (solid) and without (dashed) the transfer correction and the Monte Carlo through the wind (dots, $10^5$ packets, scattering); the dotted line marks $\theta_{\rm c}$.
-Made with \code{figures/ahlberg2026/plot\_corrected\_B.py} of the manuscript repository from the runs of \code{run\_all.sh} (code commit 2272e8a).}
+Made with \code{figures/ahlberg2026/plot\_corrected\_B.py} of the manuscript repository from the runs of \code{run\_all.sh} (code commit 2272e8a\new{; model curves with the final table of the correction, code commit 07db0f3}).}
 \label{fig:corrected_B}
 \end{figure*}
-% figure: figures/corrected_B_of_i.png (author's request 2026-11-20), data figures/ahlberg2026/data/wind_mc.npz
+% figure: figures/corrected_B_of_i.png (author's request 2026-11-20), data figures/ahlberg2026/data/wind_mc.npz, replaced 2026-11-28 by
+%         ULXspectra-mc docs/data/ahlberg2026/wind_mc_c32.npz (62050f6; Note 18 item 5); redrawn here, identical to the calc session's.
 
 \subsection{Outlook: a slim disc}
 \label{app:mc:slim}
@@ -656,87 +661,33 @@ Made with \code{docs/scripts/plot\_slim\_disc\_streamlines.py} (code commit b2dc
 % figure: ULXspectra-mc docs/figures/slim_disc_streamlines_columns.pdf, commit b2dc222
 \end{figure*}
 
-\subsection{Monte Carlo check of the best fits (not done yet)}
+\subsection{Monte Carlo check of the best fits}
 \label{app:mc:bestfits}
-% Source: ULXspectra-mc docs/transfer_correction_results.md sect. 6 and summaries/mc_check_best_refits.tsv
-%         (branch mc-transfer-corrections, commit e597ba3: model averaged over 41 mu in the window, first version 5); fits with the correction, 0.3-10 keV,
-%         model state 2f22b12; script docs/scripts/mc_table/check_best_fits.py; spectra summaries/best_refit_spectra/
-% chi2: from the summaries tables (recomputed from best_fit_spectrum.txt), not from the chi2= header of
-%       best_params.txt, which is wrong in fits made before 2026-11-18 (PLAN C24)
+% Source: ULXspectra-mc summaries/mc_check_table6.tsv (f41efec; script docs/scripts/mc_table/check_best_fits.py), Table 6
+%         docs/data/table6_best_fits.md (b8e8f07), for_paper_session Notes 15-19. Final round, C model of the 200-run table.
+%         v0 text (round mc_0p3-10keV, 29 fits, 117- and 145-run tables): archive/archive.tex, block 2026-11-28.
 
-We checked the best fits made with the correction by one Monte Carlo run each, at the inclination of the fit.
-The 29 fits are, for each source, the best fit overall, the best BH fit and the best NS fit, and the second best fit of NGC247S (see below); none of them is in the table of the correction.
-Each run has $10^5$ packets, and we compare the packets that leave within $\cos i \pm 0.05$ with the model averaged over the same range of $\mu$ (41 values), at the energies of the fitted data.
-We also compute $\chi^2$ of the data, with $\sigma = 0.08$~dex as in the fits, against the best-fit model and against the best-fit model times the ratio MC/model, that is, how well the same parameters fit if the spectrum is that of the Monte Carlo.
-%Table~\ref{tab:mc_bestfits} gives the best fit of each source.
-% source: transfer_correction_results.md sect. 6 (introduction)
+\new{We checked each best fit of Table~\ref{tab:bestfit_params} by a Monte Carlo run with its parameters ($10^5$ or $10^6$ packets); none of these runs is in the table of the correction.
+We compare the packets that leave within $\cos i \pm 0.05$ with the model averaged over the same range of $\mu$, at the energies of the fitted data, and compute the rms deviation of the data from the model multiplied by the ratio of the Monte Carlo to the model, that is, how well the same parameters fit if the spectrum is that of the Monte Carlo (Table~\ref{tab:bestfit_params}, column rms).}
+% source: mc_check_table6.tsv columns n_mc, Liso_off, Liso_on, ratio_min/max, chi2_fit, chi2_mc; Table 6 notes
 
-% \begin{table*}
-% \centering
-% \caption{Monte Carlo check of the best fit of each source, at its inclination $i$. $L_{\rm iso}$: MC/model without and with the correction; $\nu L_\nu$: range of MC/model at the energies of the data; $\chi^2$ of the data against the best-fit model and against the Monte Carlo spectrum (in brackets, the part of it due to the Monte Carlo noise where it exceeds unity).}
-% \label{tab:mc_bestfits}
-% \small
-% \begin{tabular}{@{}lcccc@{}}
-% \toprule
-% Best fit & $i$ ($\theta_{\rm c}$) & $L_{\rm iso}$ MC/model, off $\to$ on & $\nu L_\nu$ MC/model & $\chi^2$, fit $\to$ MC \\
-% \midrule
-% HolmIX BH2 & $8.5^\circ$ ($45.6^\circ$) & 1.93 $\to$ 1.00 & 0.99--1.01 & 1.89 $\to$ 1.74 \\
-% NGC7793 NS7r & $20.7^\circ$ ($45.6^\circ$) & 2.21 $\to$ 0.95 & 0.94--1.00 & 0.51 $\to$ 2.36 \\
-% NGC1313H NS5r & $26.0^\circ$ ($45.6^\circ$) & 3.35 $\to$ 0.89 & 0.79--1.05 & 1.76 $\to$ 12.5 \\
-% NGC1313B NS5r & $35.5^\circ$ ($45.6^\circ$) & 2.50 $\to$ 0.94 & 0.92--1.09 & 1.98 $\to$ 4.58 \\
-% NGC55 BH0 & $39.0^\circ$ ($45.6^\circ$) & 1.47 $\to$ 1.00 & 0.99--1.02 & 1.77 $\to$ 2.15 \\
-% HolmII BH0 & $46.8^\circ$ ($45.6^\circ$) & 0.99 $\to$ 1.00 & 0.95--1.05 & 0.129 $\to$ 2.02 \\
-% NGC247SS BH3a & $47.1^\circ$ ($45.6^\circ$) & 1.00 $\to$ 0.95 & 0.93--1.41 & 355 $\to$ 381 (2.0) \\
-% NGC5408 BH0 & $51.3^\circ$ ($45.6^\circ$) & 0.59 $\to$ 1.06 & 1.02--1.17 & 3.17 $\to$ 16.9 \\
-% M81ULS BH3a & $51.7^\circ$ ($45.6^\circ$) & 0.87 $\to$ 0.98 & 0.97--1.40 & 0.32 $\to$ 8.07 (4.0) \\
-% NGC6946 BH0 & $52.7^\circ$ ($45.6^\circ$) & 0.64 $\to$ 1.08 & 1.04--1.13 & 5.73 $\to$ 14.5 \\
-% NGC300 BH2 & $62.3^\circ$ ($45.6^\circ$) & 0.55 $\to$ 1.09 & 1.02--1.15 & 0.111 $\to$ 9.7 \\
-% M51ULS NS6r & $65.9^\circ$ ($45.6^\circ$) & 1.45 $\to$ 1.05 & 0.73--1.22 & 172 $\to$ 114 (4.4) \\
-% M101ULS BH4a & $84.6^\circ$ ($84.3^\circ$) & 0.35 $\to$ 0.86 & 0.71--0.90 & 3.95 $\to$ 30.5 (3.0) \\
-% NGC247S BH4a & $86.1^\circ$ ($62.2^\circ$) & 0.66 $\to$ 1.72 & 1.51--3.24 & 0.114 $\to$ 571 (7.8) \\
-% NGC247S BH3a (2nd best) & $54.4^\circ$ ($45.6^\circ$) & 0.83 $\to$ 1.08 & 0.98--1.10 & 0.133 $\to$ 4.91 (1.3) \\
-% \bottomrule
-% \end{tabular}
-% % source: transfer_correction_results.md sect. 6, table "Best fit per source"; summaries/mc_check_best_refits.tsv
-% %         (Liso_off, Liso_on, ratio_min, ratio_max, chi2_fit, chi2_mc, chi2_noise); commit e597ba3 (redone with 41 mu);
-% %         rows generated by figures/make_mc_bestfits_table.py
-% \end{table*}
+\new{With the correction, the bolometric $L_{\rm iso}$ of the model agrees with the Monte Carlo to within 10\% for all fits, inside the funnel and beyond its edge, whereas without it the model funnel is too faint, by up to a factor of 3.5.
+In the band of the data the two spectra differ most at the ends of the band and for the poorest fits.
+With the Monte Carlo spectrum, all fits stay within 0.055\,dex of the data, except the three poorest ones (M101ULS, M51ULS and NGC247SS over 0.3--10\,keV), whose misfit is larger than the transfer correction.}
+% source: mc_check_table6.tsv: Liso_on 0.925-1.10 (NGC1313H NS5r 0.925, NGC6946 BH3a 1.10); Liso_off inside the funnel
+%         1.50-3.49 (NGC55, NGC7793, NGC1313B, NGC1313H; HolmIX BH2 0.999); band ratio 0.70-1.35 (M51ULS NS6r 0.70,
+%         M101ULS BH3a 1.35); rms with MC 0.016-0.054 except M101ULS 0.199, M51ULS 0.180, NGC247SS BH4a 0.233 (Note 16).
 
-With the correction, the model agrees with the Monte Carlo to within 10\% in $L_{\rm iso}$ inside the funnel: MC/model is 0.89--1.04 for the 15 of the 29 fits seen at $i < \theta_{\rm c}$, against 1.21--3.51 without the correction.
-In the band of the data, MC/model is 0.72--1.20 there; the low values are at the hard end of the band (HolmII NS6r 0.72, NGC1313H NS5r 0.79), where the model is too hard by up to a factor of 1.4.
-For the eight BH fits at $i = 47^\circ$--$62^\circ$, just beyond $\theta_{\rm c}$, $L_{\rm iso}$ MC/model is 0.95--1.09 and in the band 0.93--1.41: the model is mostly too faint, more so at the hard end of the band (1.41 for NGC247SS BH3a, 1.40 for M81ULS BH3a with a Monte Carlo noise of 0.22, at most 1.19 for the others).
-The $\chi^2$ of these fits rises from 0.1--6 to 2--17 for 15--30 data points when the Monte Carlo spectrum replaces the model (NGC247SS BH3a from 355 to 381), so the fits stay acceptable at $\sigma = 0.08$~dex, but their parameters would move somewhat.
-For the NS fits with the dipole surface beyond $\theta_{\rm c}$, $L_{\rm iso}$ MC/model is 0.99--1.05 and the band 0.71--1.22; for NGC5408 and NGC6946 the model is too faint at the soft end of the band and too bright at the hard end.
-% source: transfer_correction_results.md sect. 6, bullets 1, 2, 6 (e597ba3); tsv (M101ULS NS6r 1.53 inside the funnel has MC noise 0.16)
+\new{Two of the fits of the first round that were seen almost edge-on (NGC247S BH4a and M101ULS BH4a) failed this check; neither is a best fit in the final round, and the final-round fit of NGC247S with BH4a passes it.
+Over 0.3--10\,keV the lowest $\chi^2$ of NGC247SS is reached by the NS presets near edge-on, through light of the central emitter reflected towards the plane of the disc; the Monte Carlo gives several times less of this hard light, so these fits are rejected (Sect.~\ref{sec:fitting:data}).}
+% source: Note 18 item 7 (NGC247S BH4a mc28: i = 72, theta_c = 69, MC/C 1.03-1.11, rms 0.012 -> 0.028 dex);
+%         Note 15 (NGC247SS NS5ar/NS5r, i = 86 deg: MC/C = 0.06-0.1 at 2-8 keV).
 
-The remaining mismatch beyond the funnel edge comes from the table of the correction, which sends too little scattered light beyond $\theta_{\rm c}$.
-For the outer disc the deficit is 10--17\%, because the limit of an optically thin wind, in which the light is scattered in proportion to $\cos^2\theta_{\rm c}$, is not built into the table; for weak winds with a wide funnel it reaches a factor of 2--3.
-Until the table is improved and the fits are redone, we take the ratios above as the systematic error of the model beyond the funnel edge.
-% source: calculation session 2026-11-19; PLAN C26 (ULXspectra-mc e597ba3, "C26 step 1: diagnosis of the transfer correction beyond theta_c")
-% VERIFY (author): wording of the tau -> 0 limit ("cos^2 theta_c") is as given by the calculation session
+\new{For the three fits at the funnel edge (Table~\ref{tab:bestfit_params}) the window $\cos i \pm 0.05$ crosses the edge, so the check compares averages across the edge rather than the spectrum at the fitted inclination.}
+% source: Note 19; Note 18 item 1 (NGC5408: MC/model 1.00).
 
-The best fit of NGC247S, BH4a at $i = 86^\circ$, $24^\circ$ beyond $\theta_{\rm c}$, is not confirmed: there the corrected model is too faint by a factor of 1.7 in $L_{\rm iso}$ and 1.5--3.2 in the band, and the same parameters give $\chi^2 = 571$ against the Monte Carlo spectrum (without the correction the model is too bright there, MC/model = 0.66).
-For NGC247S we therefore use its second best fit, BH3a ($\chi^2 = 0.133$, $i = 54^\circ$), which passes: $\chi^2$ rises from 0.13 to 4.9.
-% source: transfer_correction_results.md sect. 6, bullet 3; author 2026-11-18 ("Use NGC247S BH3a instead")
-
-With the first version of the revised table (145 runs, Sect.~\ref{app:mc:table}), the model and the Monte Carlo agree that the two best fits seen almost edge-on are not valid.
-At their fitted parameters, NGC247S BH4a gives $\chi^2 = 528$ with the revised table and 586 with the Monte Carlo (0.114 with the old table), and M101ULS BH4a gives 1930 and 1810 (3.95 with the old table).
-These fits were good only because of the error of the old table beyond the funnel edge.
-The earlier pass of M101ULS BH4a in the check above was not valid, because its comparison window crossed the funnel edge.
-M101ULS therefore has no confirmed fit at present; its next best fit is BH2 with $\chi^2 = 121$.
-NGC247S keeps BH3a, which still passes.
-For the other best fits, $\chi^2$ at fixed parameters changes by at most 7 with that version.
-% NOTE: these numbers are for the 145-run (C26) table; the refits with the 190-run (C28) table will replace them.
-% source: calculation session 2026-11-19/20; transfer_correction_results.md sect. 6 (second part), summaries/mc_check_best_refits_c26.tsv
-%         (ULXspectra-mc 4945ea7)
-
-Figure~\ref{fig:best_fits_mc} (Sect.~\ref{sec:results:overview}) shows the spectra of the 14 best fits used in the paper, with NGC247S BH3a, against the Monte Carlo for the same parameters.
-Within the fitted band the two agree to 0.94--1.06 for HolmIX BH2, NGC55 BH0 and NGC7793 NS7r.
-Beyond the funnel edge the model is too faint by up to a factor of 1.2 for NGC5408 BH0, NGC6946 BH0 and NGC300 BH2, and more at the hard end of the band (1.4 for NGC247SS BH3a).
-M101ULS BH4a is seen at $i = 84.6^\circ$, just beyond its funnel edge at $84.3^\circ$; the window $\cos i \pm 0.05$ reaches into the funnel, where the model is 10--100 times brighter, so its panel compares averages over the window rather than the spectrum at $i_{\rm best}$ (MC/model 0.71--0.90 in the band, $\chi^2$ from 3.95 to 30.5); with the revised table this fit is rejected (see above).
-The figure was made with the old table.
-% source: ULXspectra-mc (branch mc-transfer-corrections, commit e597ba3, redone figure): code session 2026-11-19;
-%         spectra summaries/best_refit_spectra/<fit>/mc_spectrum.txt; chi2 in the panels from summaries/mc_check_best_refits.tsv
+Figure~\ref{fig:best_fits_mc} (Sect.~\ref{sec:results:overview}) shows the spectra of the \new{best fits of Table~\ref{tab:bestfit_params}} against the Monte Carlo for the same parameters.
+% figure: f41efec (Note 18 item 1).
 
 \subsection{Fits with and without the correction: HolmIX}
 \label{app:mc:nomc}
@@ -751,4 +702,6 @@ Lower panel: $\log$(model/data), with $\pm0.08$\,dex shaded.
 {Without the correction the wind of the fit is not seen, so that model has no wind component and its disc component lies under its total.}}
 \label{fig:holmix_mcnomc}
 \end{figure}
-% figure: ULXspectra-mc docs/figures/HolmIX_mc_vs_nomc_BH3a.pdf, docs/scripts/plot_mc_vs_nomc.py (one-preset mode), commit e402ace (Note 9)
+% figure: ULXspectra-mc docs/figures/HolmIX_mc_vs_nomc_BH3a.pdf, docs/scripts/plot_mc_vs_nomc.py (one-preset mode), commit e13c491
+%         (Note 18 item 3): mc28_0p3-10keV (chi2 10.0, i = 2 deg) and nomc32_0p3-10keV (a650c54, mc_transfer = 0; chi2 35.5).
+%         v0: e402ace (mc_0p3-10keV, nomc_0p3-10keV).

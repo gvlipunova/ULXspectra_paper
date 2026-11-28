@@ -74,6 +74,16 @@ Its low-energy slope, ${\rm d}\log\nu L_\nu/{\rm d}\log E \to 1.75$, is the asym
 % source: ULXspectra-mc docs/thermalization_in_wind.md sect. 1 (commit 69b9de7); checked (Claude): x << 1 gives N ~ E^(-1/4), nuLnu ~ E^(7/4)
 % source: ../data/scripts/ISSI_ULX_make_SED_topsources.sh (SPEX: ign 0:0.3, ign 10:100; par 1 3 t0 c 1 2 t;
 %         par 1 1 fc v 0; plot rx 1e-4 1e2 -> SED_keV_ergps_*.txt); author 2026-11-04
+\new{For NGC247SS we fit only the data below 1.7\,keV.
+Above this energy the spectrum rises into a hard component that our model cannot reproduce with any of the presets: its central emitter lacks a source of such hard emission.
+The only fits that approached it did so near edge-on, through a small fraction of reflected light from a strongly over-luminous central emitter, which our Monte Carlo transfer calculations do not confirm.
+For comparison, we also give the fit over the full band, 0.3--10\,keV.}
+% source: ULXspectra-mc docs/for_paper_session.md Note 15 (author 2026-11-26; suggested text) and Note 16 (two NGC247SS rows);
+%         cut at 1.7 keV, below the SED minimum at 1.78 keV; run tag mc30_0p3-1p7keV (code 70a23eb), all 13 presets.
+%         Last sentence (Claude): Table 6 and the figures keep the 0.3-10 keV fit (BH4a) as a second row.
+% AUTHOR: name possible origins of the hard component (Comptonisation in an accretion column or a hot inner flow)?
+%         The model has no Compton energy exchange (PLAN 8.2).
+
 % AUTHOR: who made the SEDs and from which observations (instrument, ObsID); cite SPEX? (not in refs.bib)
 % OUTLINE (plan, author 2026-11-04):
 %   - fits restricted to 0.3-10 keV (the data) vs the full range (mostly extrapolation); the "full"

@@ -1,21 +1,21 @@
 """Overview of the best BH and NS fits per source against the type of the source
 (fig:chi2_overview; layout: the author's sketch, 2026-11-19).
 
-Rows: the sources of tab:sources, in its order. Row background: the type in
-tab:sources, BH candidate grey, NS (PULX or candidate) orange,
-accretor unknown no background (since 2026-11-24). Squares: reduced
-chi2 of the best BH fit (black) and of the best NS fit (orange), sets "BH" and
-"NS" of summaries/best_refit_per_source.tsv; for NGC247S the BH fit is BH3a
-(refits_summary.tsv), not BH4a, which fails the Monte Carlo check. Note at the
-right end: preset of the best fit of the source (tab:bestfit_params), its
-best-fit M (BH) or R_m (NS) and inclination, and the free parameter farthest
-from its default value in the preset (ULX.conf.example), the distance measured
-in units of the prior range (psrcs/config_loader.py, 4ca9834).
+Final round (second version of the paper, 2026-11-28): fits of final_round_data.py (ULXspectra-mc
+summaries/final_round_*.tsv, 9fc8e3c). Rows: the sources of tab:sources, in its order, NGC247SS twice
+(0.3-10 keV and 0.3-1.7 keV). Row background: the type in tab:sources, BH candidate grey, NS (PULX or
+candidate) orange, accretor unknown no background. Squares: reduced chi2 of the best BH fit (black) and of the
+best NS fit (orange) of the source and band; open square: a fit that fails the Monte Carlo check (NGC247SS
+NS5ar, 0.3-10 keV). Note at the right end: preset of the best fit of the source (tab:bestfit_params), its
+best-fit M (BH) or R_m (NS) and inclination, and the free parameter farthest from its default value in the
+preset (ULX.conf.example), the distance measured in units of the prior range (psrcs/config_loader.py, 4ca9834).
 
     python3 figures/plot_chi2_overview.py [ULXspectra-mc] [OUT.pdf]
-Data: ULXspectra-mc summaries (branch mc-transfer-corrections, e597ba3); presets ULX.conf.example 454490d.
+Data: ULXspectra-mc summaries (branch mc-transfer-corrections, 9fc8e3c); presets ULX.conf.example (b8e8f07).
 """
-import csv, sys, configparser
+import os, sys, configparser
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import final_round_data as frd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -25,20 +25,8 @@ from matplotlib.patches import Rectangle
 B = sys.argv[1] if len(sys.argv) > 1 else "/aux/muses01b/glipunova/rabota/ULX_spectra/mcmcfit/ULXspectra-mc"
 OUT = sys.argv[2] if len(sys.argv) > 2 else "figures/chi2_overview.pdf"
 
-# Type column of tab:sources (sections/09_fitting.tex): "BH" = BH candidate, "NS" = PULX or NS candidate,
-# None = accretor unknown (NGC247S, NGC247SS since 2026-11-24)
-SOURCES = [("HolmII", "BH"), ("HolmIX", "BH"), ("M101ULS", "BH"), ("M51ULS", "NS"), ("M81ULS", "NS"),
-           ("NGC1313B", "BH"), ("NGC1313H", "NS"), ("NGC247S", None), ("NGC247SS", None), ("NGC300", "NS"),
-           ("NGC5408", "BH"), ("NGC55", "BH"), ("NGC6946", "BH"), ("NGC7793", "NS")]
 ORANGE, GREY = "#e07b1a", "0.55"
-
-rows = list(csv.DictReader(open(B + "/summaries/best_refit_per_source.tsv"), delimiter="\t"))
-summ = list(csv.DictReader(open(B + "/summaries/refits_summary.tsv"), delimiter="\t"))
-pick = {(r["set"], r["source"]): r for r in rows}
-bh3a = [r for r in summ if r["source"] == "NGC247S" and r["preset"] == "BH3a" and r["run_dir"].endswith(".mc_0p3-10keV")][0]
-pick[("BH", "NGC247S")] = pick[("all", "NGC247S")] = bh3a
-
-
+FITS, BEST = frd.load(B)
 # Prior ranges of the free parameters (psrcs/config_loader.py, ULXspectra-mc 4ca9834)
 PRIOR = {"log_m_bh": (0.0, 4.0), "log_mdot0": (-2.0, 5.0), "eps_w": (1e-4, 0.999), "beta_w": (0.05, 3.0),
          "incl_deg": (0.0, 88.0), "omega_frac": (0.1, 0.85), "r_in_factor": (1.0, 20.0),
@@ -68,7 +56,7 @@ def farthest(preset, p):
 
 
 def params(r):
-    return {k.strip(): float(v) for k, v in (kv.split("=") for kv in r["params"].split(";"))}
+    return frd.best_params(r)
 
 
 def note(r):
@@ -85,28 +73,32 @@ def note(r):
     return rf"{r['preset']}: {q}, $i = {p['incl_deg']:.0f}^\circ$; ${LABEL[k]} = {fmt(v)}$ (def. {fmt(v0)})"
 
 
-n = len(SOURCES)
+n = len(frd.ROWS)
 fig, ax = plt.subplots(figsize=(6.5, 0.36 * n + 1.0))
 X0, X1, XN = 2e-3, 1e2, 2e6
-for k, (src, typ) in enumerate(SOURCES):
+for k, (lab, src, band, typ) in enumerate(frd.ROWS):
     y = n - 1 - k
     if typ:                               # no background: accretor unknown
         ax.add_patch(Rectangle((X0, y - 0.4), XN - X0, 0.8, color=ORANGE if typ == "NS" else GREY, alpha=0.18, lw=0))
+    b = BEST[(src, band)]
     for st, c in (("BH", "k"), ("NS", ORANGE)):
-        r = pick.get((st, src))
-        if r:
+        r = FITS[(src, band, b["best_" + st])]
+        if (src, band, r["preset"]) in frd.FAILS_MC:
+            ax.plot(float(r["red_chi2"]), y, "s", ms=8, mfc="none", mec=c, mew=1.2)
+        else:
             ax.plot(float(r["red_chi2"]), y, "s", ms=8, mfc=c, mec="k", mew=0.6)
-    ax.text(X1 * 1.15, y, note(pick[("all", src)]), va="center", fontsize=7.5)
+    ax.text(X1 * 1.15, y, note(FITS[(src, band, frd.table6_preset(BEST, src, band))]), va="center", fontsize=7.5)
 ax.set_xscale("log"); ax.set_xlim(X0, XN); ax.set_ylim(-0.6, n - 0.4)
-ax.set_yticks(range(n)); ax.set_yticklabels([s for s, _ in SOURCES][::-1])
+ax.set_yticks(range(n)); ax.set_yticklabels([r[0] for r in frd.ROWS][::-1])
 ax.set_xticks([1e-2, 1e-1, 1, 1e1, 1e2])
 ax.spines[["top", "right"]].set_visible(False)
 ax.set_xlabel(r"normalized reduced $\chi^2$ of the best fit ($\sigma = 0.08$ dex)")
 ax.plot([], [], "s", mfc="k", mec="k", label="best BH fit")
 ax.plot([], [], "s", mfc=ORANGE, mec="k", label="best NS fit")
+ax.plot([], [], "s", mfc="none", mec="k", label="fails the MC check")
 ax.add_patch(Rectangle((0, 0), 0, 0, color=GREY, alpha=0.3, label="BH candidate"))
 ax.add_patch(Rectangle((0, 0), 0, 0, color=ORANGE, alpha=0.3, label="NS or NS candidate"))
 ax.add_patch(Rectangle((0, 0), 0, 0, facecolor="white", edgecolor="0.6", lw=0.6, label="accretor unknown"))
-ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, fontsize=8, frameon=False)
+ax.legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, fontsize=8, frameon=False)
 fig.savefig(OUT, bbox_inches="tight")
 print(OUT)

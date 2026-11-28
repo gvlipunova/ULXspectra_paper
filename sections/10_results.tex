@@ -1,5 +1,7 @@
-% Sources: refits with the transfer correction, 0.3-10 keV (ULXspectra-mc summaries/best_refit_per_source.tsv,
-%          spectra in summaries/best_refit_spectra/); chi2 from the summaries tables, not the best_params.txt header (PLAN C24)
+% Sources: final round (second version, 2026-11-28): ULXspectra-mc summaries/final_round_all_fits.tsv and
+%          final_round_best_per_source.tsv (9fc8e3c), Table 6 docs/data/table6_best_fits.md (b8e8f07); for_paper_session
+%          Notes 16-19. Run tags mc28/mc28b/mc28c/mc30/mc32 (afaa8b3/b08b4df/54a9e72/70a23eb/a650c54).
+%          v0 (tag v0): round mc_0p3-10keV, 117-run table (summaries/best_refit_per_source.tsv, e597ba3).
 
 \section{Results}
 \label{sec:results}
@@ -16,10 +18,11 @@
 
 Figure~\ref{fig:chi2_overview} compares, source by source, the best BH and the best NS fit with the nature of the source given in the literature (Table~\ref{tab:sources}).
 % OUTLINE (author): what the figure shows: which family fits better, and whether this agrees with the identification.
-% derived (Claude) from the figure: the better family agrees with Table tab:sources for HolmII, HolmIX, M101ULS, M51ULS,
-%         NGC1313H, NGC5408, NGC55, NGC6946, NGC7793; it disagrees for M81ULS (BH fits better, NS candidate),
-%         NGC1313B (NS fits better, BH candidate); NGC300 (PULX): both fit, BH slightly better; NGC247S, NGC247SS: accretor
-%         unknown since 2026-11-24 (tab:sources revised), the BH fits are better
+% derived (Claude) from the figure, final round (2026-11-28; unchanged from v0): the better family agrees with Table
+%         tab:sources for HolmII, HolmIX, M101ULS, M51ULS, NGC1313H, NGC5408, NGC55, NGC6946, NGC7793; it disagrees for
+%         M81ULS (BH fits better, NS candidate), NGC1313B (NS fits better, BH candidate); NGC300 (PULX): both fit, BH slightly
+%         better; NGC247S (unknown): BH better; NGC247SS (unknown): over 0.3-10 keV BH4a and NS5ar are equally poor (NS5ar
+%         fails the MC check), below 1.7 keV BH is much better.
 % AUTHOR: interpretation to be written by the author.
 \begin{table*}
 \centering
@@ -64,16 +67,16 @@ NS7r & NS /sph & main & Ledd & NS1 $+$ $\eta_{\rm magn}$ & + free NS efficiency 
 \begin{figure*}
 \centering
 \includegraphics[width=\textwidth]{chi2_overview.pdf}
-\caption{Normalized reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV, with the transfer correction); the data have no measured errors, only the uniform $\sigma$ assumed in the fits (Sect.~\ref{sec:fitting:data}), so the values compare fits rather than test them absolutely.
+\caption{Normalized reduced $\chi^2$ of the best BH fit (black) and the best NS fit (orange) of each source ($\sigma = 0.08$\,dex, 0.3--10\,keV\new{, and for NGC247SS also below 1.7\,keV}, with the transfer correction); the data have no measured errors, only the uniform $\sigma$ assumed in the fits (Sect.~\ref{sec:fitting:data}), so the values compare fits rather than test them absolutely.
 The row colour gives the type of the source in Table~\ref{tab:sources}: grey for a BH candidate, orange for a pulsating ULX or a NS candidate\new{, white where the accretor is unknown}.
 On the right: the best fit of the source (Table~\ref{tab:bestfit_params}), with its best-fit mass (BH) or magnetospheric radius (NS) and inclination, and the free parameter that lies farthest from its default value (in brackets: the centre of the starting positions of the chains in the preset, Table~\ref{tab:params}), the distance measured in units of the prior range of the parameter.
-For NGC247S the BH fit is BH3a (App.~\ref{app:mc:bestfits}).}
+\new{The open square is a fit that fails the Monte Carlo check (NGC247SS NS5ar over 0.3--10\,keV); for that band the right column gives BH4a, the fit of Table~\ref{tab:bestfit_params}.}}
 \label{fig:chi2_overview}
 \end{figure*}
 % figure: this repository, figures/plot_chi2_overview.py (layout: the author's sketch 2026-11-19), data ULXspectra-mc
-%         summaries/best_refit_per_source.tsv and refits_summary.tsv (e597ba3); reduced chi2 = chi2/(n - n_params);
-%         defaults: preset sections of ULX.conf.example, priors psrcs/config_loader.py (4ca9834); author 2026-11-19
-%         at ULXspectra-mc 454490d (mdot0 = 10, mdot_in/mdot0 = 0.5 where free, author 2026-11-19)
+%         summaries/final_round_*.tsv (9fc8e3c, figures/final_round_data.py); reduced chi2 = chi2/(n - n_params);
+%         defaults: preset sections of ULX.conf.example (b8e8f07), priors psrcs/config_loader.py (4ca9834)
+%         (mdot0 = 10, mdot_in/mdot0 = 0.5 where free, author 2026-11-19). v0: e597ba3, round mc_0p3-10keV.
 % AUTHOR: the calculation session notes that the distance from the starting value has no meaning for a converged fit;
 %         it suggests the position within the prior range, or the posterior width relative to the prior. Keep or change?
 
@@ -84,81 +87,95 @@ The parameters and spectra of all these fits are shown in App.~\ref{app:fitsover
 \begin{figure}
 \centering
 \includegraphics[width=\columnwidth]{chi2_all.pdf}
-\caption{As Fig.~\ref{fig:chi2_overview}, for the best fit of every preset: the five BH presets (black, above the row centre) and the eight NS presets (orange, below), with the transfer correction, 0.3--10\,keV.
-The open square is NGC247S BH4a, which fails the Monte Carlo check (App.~\ref{app:mc:bestfits}).}
+\caption{As Fig.~\ref{fig:chi2_overview}, for the best fit of every preset: the five BH presets (black, above the row centre) and the eight NS presets (orange, below), with the transfer correction, 0.3--10\,keV\new{, and for NGC247SS also below 1.7\,keV}.
+The open square is \new{NGC247SS NS5ar (0.3--10\,keV)}, which fails the Monte Carlo check\new{ (Sect.~\ref{sec:fitting:data})}.}
 \label{fig:chi2_all}
 \end{figure}
 % figure: this repository, figures/plot_chi2_all.py (author's request 2026-11-19), data ULXspectra-mc
-%         summaries/refits_summary.tsv, run tag mc_0p3-10keV, 182 fits (e597ba3)
+%         summaries/final_round_all_fits.tsv, column selected: 13 presets x 14 sources + 13 for NGC247SS 0.3-1.7 keV (9fc8e3c).
+%         NGC247S BH4a passes the MC check in the final round (Note 18, item 7) and is no longer marked. v0: e597ba3.
 
 The spectra of the best fits of Fig.~\ref{fig:chi2_overview} and Table~\ref{tab:bestfit_params} are shown in Fig.~\ref{fig:best_fits_mc}, together with the Monte Carlo spectrum for the same parameters (App.~\ref{app:mc:bestfits}).
 
 \begin{figure*}
 \centering
 \includegraphics[width=0.9\textwidth]{best_fits_mc.png}
-\caption{The best fits (\textbf{preliminary}) against the Monte Carlo transfer.
-Upper panels: the data (points, fitted over 0.3--10\,keV, shaded), the model with the transfer correction at $i_{\rm best}$ (solid), the model averaged over $\cos i_{\rm best} \pm 0.05$ (dotted) and the `MC check' (Monte Carlo spectrum of the packets leaving in that window, for the same parameters, dashed); $\chi^2$ of the data against the best-fit model and against the model times MC/model ($\sigma = 0.08$\,dex).
-Lower panels: MC over the window-averaged model, with the Monte Carlo noise (band).}
+\caption{The best fits (\textbf{preliminary}) against the Monte Carlo transfer\new{, as in Table~\ref{tab:bestfit_params}, NGC247SS twice}.
+Upper panels: the data (points, fitted over 0.3--10\,keV, shaded\new{; for NGC247SS below 1.7\,keV only the fitted band is shaded and the data above it are open grey circles}), the model with the transfer correction at $i_{\rm best}$ (solid), the model averaged over $\cos i_{\rm best} \pm 0.05$ (dotted) and the `MC check' (Monte Carlo spectrum of the packets leaving in that window, for the same parameters, dashed); \new{the rms deviation in dex of the data from the best-fit model and from the model times MC/model, as in Table~\ref{tab:bestfit_params}}.
+Lower panels: MC over the window-averaged model, with the Monte Carlo noise (band).
+\new{For the three fits at the funnel edge (marked in Table~\ref{tab:bestfit_params}) the window crosses the edge, so the window-averaged model and the MC lie above the model at $i_{\rm best}$: the check tests the average across the edge.}}
 \label{fig:best_fits_mc}
 \end{figure*}
-% figure: ULXspectra-mc docs/scripts/plot_best_fits_mc.py, fit list docs/scripts/mc_table/paper_best_fits.txt (e597ba3)
+% figure: ULXspectra-mc docs/scripts/plot_best_fits_mc.py, fit list docs/scripts/mc_table/paper_best_fits.txt (f41efec; Note 18,
+%         item 1: Table 6, 15 entries; MC/C with the 200-run table). Edge crossing: M101ULS, NGC247SS BH4a, NGC5408 (Notes 18-19).
 
 \subsection{Physical parameters of the best fits}
-% NOTE: all fits in this section use the old table of the transfer correction; they are to be redone with the revised
-%       table (PLAN C26, App. app:mc:table).
 \label{sec:results:params}
 
-Table~\ref{tab:bestfit_params} lists, for the presets of Table~\ref{tab:fitpresets}, the posterior medians and the 68\% intervals of the parameters of the best fit of each source, and of NGC247S BH3a, which we use for NGC247S (App.~\ref{app:mc:bestfits}).
-% source: posterior_summary.txt ("physical parameters") in ULXspectra-mc summaries/best_refit_spectra/ (b551655),
-%         NGC247S BH3a from results/mcmc_NGC247S.BH3a.mc_0p3-10keV; chi2 and n from summaries/best_refit_per_source.tsv
-%         and summaries/mc_check_best_refits.tsv (PLAN C24). Table generated by a script, not typed.
+Table~\ref{tab:bestfit_params} lists, for the presets of Table~\ref{tab:fitpresets}, the posterior medians and the 68\% intervals of the parameters of the best fit of each source\new{, and for NGC247SS of both bands}.
+% source: ULXspectra-mc docs/data/table6_best_fits.md (b8e8f07; posterior_summary.txt of each run); converted by a script.
 % AUTHOR: medians +- 68% (as here) or the best-fit values? Which columns to keep?
 The masses of the best BH fits are compared with the published estimates in App.~\ref{app:masses} (Fig.~\ref{fig:masses}).
 The medians can differ from the best-fit values when the posterior is broad or skewed.
 % best-fit inclinations: tab:mc_bestfits was commented out (author 2026-11-24); tab:bestfit_params gives medians only.
 The mass of a NS is fixed, so $\dot m_0$ and $\rmag/\rg$ are its main fitted quantities; $\rmag$ is the inner radius of its disc and the outer radius of its central emitter (Sect.~\ref{sec:central}).
-The outer radius is not constrained by the 0.3--10\,keV band: its posterior is close to the prior in all fits but NGC247SS.
-% derived (Claude): log r_out medians 6.0-7.5 with +-2 dex in all fits except NGC247SS BH3a (9.69 +0.12 -0.39)
+The outer radius is not constrained by the 0.3--10\,keV band: its posterior is close to the prior in all fits\new{; only in the two poorest fits, M101ULS and NGC247SS over 0.3--10\,keV, does it lean towards large radii}.
+% derived (Claude) from Table 6 (b8e8f07): log r_out medians 6.4-7.4 with about +-2 dex, except M101ULS 9.04 +0.67/-2.78
+%         and NGC247SS BH4a 8.81 +0.80/-2.34. (v0: NGC247SS BH3a 9.69 +0.12/-0.39.)
 
 \begin{table*}
-\caption{(\textbf{preliminary}) Parameters of the best fits (0.3--10\,keV, with the transfer correction): posterior medians and 68\% intervals.
+\caption{(\textbf{preliminary}) Parameters of the best fits (\new{with the transfer correction, 0.3--10\,keV unless stated}): posterior medians and 68\% intervals.
+\new{One row per source and two for NGC247SS, fitted over 0.3--10\,keV and below 1.7\,keV (Sect.~\ref{sec:fitting:data}).}
 $\chi^2$ of the saved best fit for $\sigma = 0.08$\,dex and $n$ data points.
-For a NS the mass is fixed at $1.4\,M_\odot$; $\epsilon_{\rm w}$ is fixed at 0.5 in BH4a and the NS presets; $\dot m_{\rm in}/\dot m_0$ is the set inner accretion rate of the presets with a set $\dot m_{\rm in}$.}
+\new{The data points carry no individual errors; we assign each a fixed uncertainty of 0.08\,dex in $\log\nu L_\nu$, so $\chi^2$ measures the rms logarithmic deviation of the model rather than a formal goodness of fit.
+The column ``rms'' gives this deviation for the best fit and for the same model corrected by our Monte Carlo radiative-transfer calculation (App.~\ref{app:mc:bestfits}).}
+For a NS the mass is fixed at $1.4\,M_\odot$; $\epsilon_{\rm w}$ is fixed at 0.5 in BH4a and the NS presets; $\dot m_{\rm in}/\dot m_0$ is the set inner accretion rate of the presets with a set $\dot m_{\rm in}$.
+\new{The last column gives the second-best preset of the source and its $\chi^2$.}}
 \label{tab:bestfit_params}
 \centering
 \footnotesize
-\setlength{\tabcolsep}{2.5pt}\renewcommand{\arraystretch}{1.35}
-\begin{tabular}{llcccccccc p{3.1cm}}
+\setlength{\tabcolsep}{2pt}\renewcommand{\arraystretch}{1.35}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllcccccccccl}
 \hline
-Source & Preset & $\chi^2/n$ & $\log M/M_\odot$ & $\log\dot m_0$ & $i$ (deg) & $\epsilon_{\rm w}$ & $\rin/\rg$ & $\log\rout/\rg$ & $\dot m_{\rm in}/\dot m_0$ & Other \\
+Source & Preset & $\chi^2/n$ & rms (dex) & $\log M/M_\odot$ & $\log\dot m_0$ & $i$ (deg) & $\epsilon_{\rm w}$ & $\rin/\rg$ & $\log\rout/\rg$ & $\dot m_{\rm in}/\dot m_0$ & Other & 2nd best ($\chi^2$) \\
 \hline
-HolmII & BH0 & 0.129/30 & $0.86^{+0.33}_{-0.48}$ & $1.87^{+1.27}_{-0.46}$ & $47^{+12}_{-32}$ & $0.12^{+0.07}_{-0.06}$ & $2.0^{+2.5}_{-0.8}$ & $6.93^{+2.10}_{-1.98}$ & -- & -- \\
-HolmIX & BH2 & 1.89/30 & $1.16^{+0.10}_{-0.10}$ & $1.22^{+0.18}_{-0.24}$ & $17^{+15}_{-11}$ & $0.23^{+0.13}_{-0.14}$ & $1.1^{+0.2}_{-0.1}$ & $6.69^{+2.24}_{-2.15}$ & -- & -- \\
-M101ULS & BH4a$^\S$ & 3.95/20 & $3.46^{+0.07}_{-0.07}$ & $1.29^{+0.03}_{-0.03}$ & $84.6^{+0.0}_{-0.1}$ & $0.5$ & $1.1^{+0.1}_{-0.1}$ & $7.51^{+1.95}_{-1.75}$ & $0.56^{+0.06}_{-0.04}$ & $\beta_{\rm w}{=}2.5^{+0.4}_{-0.5}$; $\Omega_{\rm w}/4\pi{=}0.101^{+0.001}_{-0.001}$ \\
-M51ULS & NS6r & 172/30 & $1.4$ & $3.12^{+0.65}_{-0.71}$ & $65^{+1}_{-1}$ & $0.5$ & $4.65^{+0.00}_{-0.05}{}^\dagger$ & $7.36^{+1.78}_{-1.82}$ & $0.50^{+0.34}_{-0.33}$ & $\log\eta_{\rm magn}{=}-1.72^{+0.74}_{-0.61}$ \\
-M81ULS & BH3a & 0.32/15 & $1.87^{+0.35}_{-0.30}$ & $1.42^{+0.16}_{-0.18}$ & $57^{+15}_{-10}$ & $0.99^{+0.00}_{-0.01}$ & $5.6^{+5.0}_{-2.7}$ & $6.30^{+2.43}_{-2.33}$ & $0.59^{+0.22}_{-0.28}$ & $\beta_{\rm w}{=}1.6^{+1.0}_{-1.0}$ \\
-NGC1313B & NS5r & 1.97/30 & $1.4$ & $1.22^{+0.06}_{-0.04}$ & $36^{+3}_{-2}$ & $0.5$ & $3.02^{+0.04}_{-0.04}{}^\dagger$ & $7.23^{+1.93}_{-1.87}$ & $0.45^{+0.37}_{-0.35}$ & -- \\
-NGC1313H & NS5r & 1.76/30 & $1.4$ & $0.86^{+1.05}_{-0.07}$ & $24^{+3}_{-11}$ & $0.5$ & $3.02^{+0.09}_{-0.50}{}^\dagger$ & $7.26^{+1.85}_{-1.86}$ & $0.08^{+0.60}_{-0.03}$ & -- \\
-NGC247S & BH4a & 0.114/27 & $2.22^{+0.30}_{-0.28}$ & $1.10^{+0.22}_{-0.35}$ & $71^{+8}_{-4}$ & $0.5$ & $3.2^{+1.2}_{-0.8}$ & $6.05^{+2.67}_{-2.31}$ & $0.45^{+0.23}_{-0.27}$ & $\beta_{\rm w}{=}1.5^{+1.1}_{-0.9}$; $\Omega_{\rm w}/4\pi{=}0.428^{+0.045}_{-0.067}$ \\
-NGC247SS & BH3a & 355/29 & $1.25^{+0.02}_{-0.02}$ & $1.38^{+0.02}_{-0.02}$ & $47.2^{+0.1}_{-0.1}$ & $0.98^{+0.00}_{-0.00}$ & $1.00^{+0.01}_{-0.00}$ & $9.69^{+0.12}_{-0.39}$ & $0.79^{+0.02}_{-0.01}$ & $\beta_{\rm w}{=}0.2^{+0.1}_{-0.0}$ \\
-NGC300 & BH2$^\ddagger$ & 0.111/30 & $1.01^{+0.12}_{-0.07}$ & $0.20^{+0.07}_{-0.07}$ & $62^{+6}_{-3}$ & $0.11^{+0.14}_{-0.08}$ & $1.2^{+0.3}_{-0.2}$ & $6.77^{+2.15}_{-2.13}$ & -- & -- \\
-NGC5408 & BH0 & 3.17/30 & $1.08^{+0.21}_{-0.15}$ & $2.37^{+0.35}_{-0.20}$ & $51^{+5}_{-4}$ & $0.13^{+0.04}_{-0.03}$ & $1.7^{+0.5}_{-0.4}$ & $6.83^{+2.16}_{-2.16}$ & -- & -- \\
-NGC55 & BH0 & 1.77/28 & $1.19^{+0.31}_{-0.39}$ & $1.69^{+0.26}_{-0.24}$ & $63^{+14}_{-11}$ & $0.67^{+0.10}_{-0.19}$ & $7.5^{+4.8}_{-2.7}$ & $6.78^{+2.19}_{-2.22}$ & -- & -- \\
-NGC6946 & BH0 & 5.73/30 & $1.25^{+0.19}_{-0.17}$ & $1.91^{+0.21}_{-0.16}$ & $54^{+8}_{-5}$ & $0.11^{+0.02}_{-0.03}$ & $1.3^{+0.4}_{-0.2}$ & $6.74^{+2.22}_{-2.25}$ & -- & -- \\
-NGC7793 & NS7r & 0.51/30 & $1.4$ & $2.76^{+1.07}_{-0.45}$ & $18^{+13}_{-12}$ & $0.5$ & $1.46^{+0.08}_{-0.07}{}^\dagger$ & $7.22^{+1.87}_{-1.87}$ & $0.64^{+0.23}_{-0.23}$ & $\log\eta_{\rm magn}{=}-1.69^{+0.36}_{-1.09}$ \\
-NGC247S & BH3a & 0.133/27 & $1.78^{+0.35}_{-0.41}$ & $1.04^{+0.84}_{-0.24}$ & $55^{+13}_{-15}$ & $0.90^{+0.05}_{-0.06}$ & $3.1^{+1.2}_{-1.2}$ & $6.49^{+2.35}_{-2.20}$ & $0.52^{+0.23}_{-0.24}$ & $\beta_{\rm w}{=}1.8^{+0.9}_{-1.2}$ \\
+HolmII & BH0 & 0.168/30 & 0.006\,$\to$\,0.036 & $0.98^{+0.24}_{-0.53}$ & $1.70^{+1.24}_{-0.34}$ & $50^{+12}_{-26}$ & $0.12^{+0.07}_{-0.06}$ & $1.6^{+2.5}_{-0.4}$ & $6.94^{+2.05}_{-2.07}$ & -- & -- & BH3a (0.304) \\
+HolmIX & BH2 & 1.86/30 & 0.020\,$\to$\,0.019 & $1.20^{+0.25}_{-0.13}$ & $1.11^{+0.27}_{-1.18}$ & $17^{+17}_{-12}$ & $0.26^{+0.19}_{-0.17}$ & $1.1^{+0.1}_{-0.1}$ & $6.71^{+2.26}_{-2.23}$ & -- & -- & BH3a (10.0) \\
+M101ULS & BH3a & 99.2/20 & 0.178\,$\to$\,0.199$^*$ & $1.98^{+0.04}_{-0.04}$ & $1.53^{+0.03}_{-0.05}$ & $49^{+0}_{-0}$$^\S$ & $1.00^{+0.00}_{-0.00}$ & $1.0^{+0.0}_{-0.0}$ & $9.04^{+0.67}_{-2.78}$ & $0.68^{+0.03}_{-0.03}$ & $\beta_{\rm w}{=}0.3^{+0.1}_{-0.1}$ & BH0 (110) \\
+M51ULS & NS6r & 175/30 & 0.193\,$\to$\,0.180$^*$ & $1.4$ & $3.12^{+0.65}_{-0.69}$ & $66^{+1}_{-1}$ & $0.5$ & $4.65^{+0.00}_{-0.05}{}^\dagger$ & $7.30^{+1.84}_{-1.82}$ & $0.50^{+0.33}_{-0.34}$ & $\log\eta_{\rm magn}{=}-1.72^{+0.69}_{-0.64}$ & NS5r (182) \\
+M81ULS & BH0 & 0.208/15 & 0.009\,$\to$\,0.028$^*$ & $1.77^{+0.40}_{-0.38}$ & $1.87^{+0.19}_{-0.20}$ & $61^{+16}_{-10}$ & $0.99^{+0.00}_{-0.00}$ & $6.8^{+5.4}_{-3.6}$ & $6.51^{+2.43}_{-2.28}$ & -- & -- & BH3a (0.219) \\
+NGC1313B & NS5r & 2.11/30 & 0.021\,$\to$\,0.022 & $1.4$ & $1.22^{+0.04}_{-0.04}$ & $36^{+2}_{-2}$ & $0.5$ & $3.05^{+0.04}_{-0.03}{}^\dagger$ & $7.34^{+1.83}_{-1.92}$ & $0.50^{+0.34}_{-0.35}$ & -- & NS5ar (2.11) \\
+NGC1313H & NS5r & 2.21/30 & 0.022\,$\to$\,0.044$^*$ & $1.4$ & $0.81^{+0.04}_{-0.04}$ & $25^{+1}_{-2}$ & $0.5$ & $3.12^{+0.05}_{-0.05}{}^\dagger$ & $7.32^{+1.82}_{-1.86}$ & $0.49^{+0.34}_{-0.33}$ & -- & NS5ar (2.23) \\
+NGC247S & BH3a & 0.102/27 & 0.005\,$\to$\,0.031 & $1.66^{+0.38}_{-0.39}$ & $0.94^{+0.20}_{-0.18}$ & $56^{+20}_{-36}$ & $0.91^{+0.05}_{-0.05}$ & $3.3^{+0.9}_{-0.9}$ & $6.37^{+2.39}_{-2.25}$ & $0.63^{+0.20}_{-0.22}$ & $\beta_{\rm w}{=}1.6^{+0.9}_{-1.1}$ & BH2 (0.247) \\
+NGC247SS (0.3--10) & BH4a & 264/29 & 0.242\,$\to$\,0.233 & $2.31^{+0.07}_{-0.15}$ & $1.28^{+0.06}_{-0.03}$ & $74^{+0}_{-0}$$^\S$ & $0.5$ & $1.0^{+0.1}_{-0.0}$ & $8.81^{+0.80}_{-2.34}$ & $0.27^{+0.09}_{-0.04}$ & $\beta_{\rm w}{=}0.65^{+0.10}_{-0.07}$, $\Omega_{\rm w}/4\pi{=}0.30$ & NS5ar (254; fails MC) \\
+NGC247SS (0.3--1.7) & BH2 & 1.09/15 & 0.022\,$\to$\,0.022$^*$ & $1.95^{+0.42}_{-0.31}$ & $1.61^{+0.15}_{-0.20}$ & $57^{+13}_{-7}$ & $1.00^{+0.00}_{-0.00}$ & $2.6^{+2.6}_{-1.2}$ & $6.55^{+2.31}_{-2.35}$ & -- & -- & BH0 (1.23) \\
+NGC300 & BH2 & 0.143/30 & 0.006\,$\to$\,0.017 & $0.99^{+0.09}_{-0.08}$ & $0.22^{+0.08}_{-0.08}$ & $62^{+5}_{-4}$ & $0.13^{+0.14}_{-0.10}$ & $1.2^{+0.3}_{-0.2}$ & $6.84^{+2.12}_{-2.14}$ & -- & -- & NS7r (0.348) \\
+NGC5408 & BH2$^\ddagger$ & 2.49/30 & 0.023\,$\to$\,0.024$^*$ & $1.17^{+0.24}_{-0.17}$ & $2.90^{+0.26}_{-0.32}$ & $46^{+2}_{-1}$$^\S$ & $0.19^{+0.20}_{-0.14}$ & $1.5^{+0.7}_{-0.3}$ & $6.80^{+2.11}_{-2.14}$ & -- & -- & BH1a (3.43) \\
+NGC55 & BH0 & 1.19/28 & 0.017\,$\to$\,0.016$^*$ & $0.90^{+0.53}_{-0.48}$ & $1.85^{+0.16}_{-0.27}$ & $54^{+25}_{-37}$ & $0.69^{+0.25}_{-0.39}$ & $9.0^{+3.3}_{-2.7}$ & $6.93^{+2.07}_{-2.06}$ & -- & -- & BH3a (1.86) \\
+NGC6946 & BH3a & 6.22/30 & 0.036\,$\to$\,0.054 & $1.17^{+0.09}_{-0.17}$ & $2.21^{+1.31}_{-1.06}$ & $26^{+20}_{-19}$ & $0.73^{+0.06}_{-0.48}$ & $1.1^{+0.6}_{-0.1}$ & $7.34^{+1.84}_{-2.04}$ & $0.70^{+0.17}_{-0.12}$ & $\beta_{\rm w}{=}2.4^{+0.5}_{-1.1}$ & BH0 (6.98) \\
+NGC7793 & NS7r & 0.597/30 & 0.011\,$\to$\,0.020 & $1.4$ & $2.76^{+1.13}_{-0.46}$ & $18^{+13}_{-12}$ & $0.5$ & $1.46^{+0.08}_{-0.07}{}^\dagger$ & $7.18^{+1.90}_{-1.85}$ & $0.64^{+0.23}_{-0.23}$ & $\log\eta_{\rm magn}{=}-1.71^{+0.38}_{-1.13}$ & NS6r (0.695) \\
 \hline
-\end{tabular}
+\end{tabular}}
+% source: ULXspectra-mc docs/data/table6_best_fits.md at b8e8f07 (for_paper_session Notes 16-19), converted by a script
+%         (not typed). Run tags: mc28 (afaa8b3), mc30 (70a23eb; NGC55, NGC247SS 0.3-1.7 keV mc30_0p3-1p7keV), mc32 (a650c54;
+%         NGC1313H, NGC5408); 190-run table, mc32 200-run table. rms with MC: C model of the 200-run table for all rows
+%         (summaries/mc_check_table6.tsv). v0 table: tag v0 (round mc_0p3-10keV, 117-run table).
 \par\smallskip
 \raggedright\footnotesize
+\new{rms: $0.08\sqrt{\chi^2/n}$, for the best fit $\to$ for the same model times the ratio of the Monte Carlo to the model in the window $\cos i \pm 0.05$; $^*$~Monte Carlo with $10^6$ packets, otherwise $10^5$.}
 $^\dagger$ NS: $\log(\rmag/\rg)$, the inner radius of the disc.
-$^\ddagger$ Fails the wind energy test of Sect.~\ref{sec:disc:epsw} strongly: the fitted $\epsilon_{\rm w} = 0.06$ is about 10 times below the firm (flux) limit, 0.65.
+$^\ddagger$ \new{Fails the wind energy test of Sect.~\ref{sec:disc:epsw} at its best-fit point: the fraction of the dissipated energy that the fit assigns to the wind is lower than what the luminosity of the wind and the work of lifting it out of the potential well require; the posterior median reaches the first requirement within errors, but not the second.}
 We mark a fit only when the flux limit alone exceeds the fitted $\epsilon_{\rm w}$ by more than a factor of 2; the cases where the need comes mostly from the lift (end of Sect.~\ref{sec:disc:epsw}) are not marked.
-$^\S$ Rejected by the revised table of the transfer correction and by the Monte Carlo ($\chi^2 \approx 1900$ at the same parameters, App.~\ref{app:mc:bestfits}); M101ULS has no confirmed fit at present.
-% source: ULXspectra-mc summaries/wind_energy_check_refits.tsv (a40ceec), NGC300 BH2 mc_0p3-10keV: eps_w 0.0614, need_flux 0.650,
-%         need_lift 0.741. Marked: flux need > 2 x fitted eps_w (author 2026-11-19: only very strong cases); HolmIX BH2
-%         (0.37 vs 0.44, x1.2) not marked. NGC247S BH4a (mc): no photosphere, untestable.
-NGC247S BH4a, its formal best fit, fails the Monte Carlo check (App.~\ref{app:mc:bestfits}); NGC247S BH3a is the fit we use.
+$^\S$ \new{The inclination lies just beyond the edge of the funnel, where the observed flux falls steeply with $i$: a fraction of a degree changes it by a factor of about three.
+There the inclination acts as a scale of the luminosity and the hardness of the spectrum and is degenerate with the mass and the accretion rate.
+Its formal error is therefore not a measurement, and the luminosity scale of these fits depends on the assumed position and sharpness of the funnel edge.}
+% source: ‡ Note 17: NGC5408 BH2 (mc32) best fit eps_w = 0.01, need_flux 0.22, need_lift 0.99; median 0.19 +0.20/-0.14.
+%         The old ‡ (NGC300 BH2 of the round mc_0p3-10keV, summaries/wind_energy_check_refits.tsv a40ceec) is removed:
+%         the wind energy test of the final round is reported only for NGC5408. AUTHOR/calc session: test all Table 6 fits.
+%         § Note 19 (author's decision 2026-11-28, PLAN C33): |i - theta_c| < 4 deg; NGC5408 0.2, NGC247SS BH4a 1.9
+%         (theta_c = 72.5 for its omega), M101ULS 3.4; all others >= 7 deg. Suggested text of Note 19.
+%         Removed with v0: § "M101ULS BH4a rejected" and "NGC247S BH4a fails the MC check" (it passes in the final round, Note 18).
 \end{table*}
 
 \subsection{Fits with and without the transfer correction}
@@ -166,13 +183,16 @@ NGC247S BH4a, its formal best fit, fails the Monte Carlo check (App.~\ref{app:mc
 % source: ULXspectra-mc docs/transfer_correction_results.md sect. 7, summaries/mc_vs_nomc_BH3a_BH4a.tsv (b551655);
 %         chi2 of the saved best fit, sigma = 0.08 dex (PLAN C24)
 
-To see what the transfer correction (App.~\ref{app:mc}) does to the fits, we fitted all 14 sources with BH3a and BH4a over 0.3--10\,keV with and without it.
+To see what the transfer correction (App.~\ref{app:mc}) does to the fits, we fitted all 14 sources with BH3a and BH4a over 0.3--10\,keV with and without it\new{, in an earlier round of fits (transfer table of 117 runs); for HolmIX BH3a we repeated the comparison in the final round}.
 %With the correction the fit is better or equal in 26 of the 28 pairs; it is slightly worse only for BH3a of M101ULS ($\chi^2 = 153$ against 149) and NGC55 (1.91 against 1.21).
 %The largest gains are for BH4a: M101ULS ($\chi^2$ from 1438 to 3.95), NGC247SS (1897 to 734), M51ULS (655 to 412), NGC1313H (74.8 to 19.4) and M81ULS (53.1 to 0.47); for BH3a, HolmIX (35.5 to 10.0) and NGC247SS (452 to 355).
 
 \textbf{Without the correction} the model \textbf{funnel is too faint}, by a factor of 1.2--3.5 (App.~\ref{app:mc:bestfits}), and the fits move in inclination to compensate.
 %The BH3a fits go towards face-on (M51ULS from $49^\circ$ to $4^\circ$, NGC247SS from $47^\circ$ to $2^\circ$, NGC6946 from $47^\circ$ to $5^\circ$, NGC300 from $56^\circ$ to $22^\circ$), and the BH4a fits mostly towards edge-on (NGC1313H from $1^\circ$ to $68^\circ$, NGC5408 from $35^\circ$ to $79^\circ$, NGC1313B from $22^\circ$ to $68^\circ$, NGC247SS from $62^\circ$ to $86^\circ$).
 The physical parameters change too.
-For HolmIX, BH3a with the correction is a supercritical wind solution ($\dot m_0 = 2.6$, $\epsilon_{\rm w} = 0.02$), while without it the fit is subcritical ($\dot m_0 = 0.84$) and leaves the wind parameters unconstrained (Fig.~\ref{fig:holmix_mcnomc} in App.~\ref{app:mc:nomc}).
+For HolmIX, BH3a with the correction is a supercritical wind solution ($\dot m_0 = \new{2.7}$, $\epsilon_{\rm w} = 0.02$), while without it the fit is subcritical ($\dot m_0 = \new{0.85}$) and leaves the wind parameters unconstrained (Fig.~\ref{fig:holmix_mcnomc} in App.~\ref{app:mc:nomc}).
 Other shifts by $3\sigma$ or more: M51ULS BH3a, $\dot m_0 = 672$ against 30 and $\epsilon_{\rm w} = 0.02$ against 0.92; M101ULS BH4a, $M = 2900$ against $106\,M_\odot$ and $\rin = 1.1$ against $18\,\rg$; NGC1313H BH4a, $\dot m_0 = 21$ against 0.94; NGC247SS BH4a, $\dot m_0 = 284$ against 33.
-% values: posterior medians with / without (mc_vs_nomc_BH3a_BH4a.txt)
+% values: posterior medians with / without (mc_vs_nomc_BH3a_BH4a.txt; earlier round mc_0p3-10keV / nomc_0p3-10keV).
+%         HolmIX BH3a, final round (Note 18, item 3): mc28_0p3-10keV mdot0 2.69 +0.90/-1.00, eps_w 0.021 +0.041/-0.016,
+%         chi2 10.0; nomc32_0p3-10keV (a650c54, mc_transfer = 0) mdot0 0.85 +0.10/-0.11, eps_w 0.52 +0.33/-0.34, chi2 35.5.
+% AUTHOR: the other shifts and the factor 1.2-3.5 are from the earlier round; redo with the final round, or keep as is?

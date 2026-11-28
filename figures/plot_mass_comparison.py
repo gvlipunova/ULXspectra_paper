@@ -1,14 +1,17 @@
 """Mass from the fits against published masses (fig:masses; layout: the author's sketch 2026-11-19).
 
 x: published range of M_X (tab:masses, sections/A5_masses.tex); y: 68% posterior interval of M of the best BH
-fit of the source (set "BH" of summaries/best_refit_per_source.tsv, posterior_summary.txt in
-summaries/best_refit_spectra/; NGC247S: BH3a). One rectangle per published estimate, labelled with the source
+fit of the source and band in the final round (column best_BH of ULXspectra-mc
+summaries/final_round_best_per_source.tsv, 9fc8e3c; posterior_summary.txt of its run; final_round_data.py).
+NGC247SS is drawn twice, for the 0.3-10 keV fit (BH4a) and the 0.3-1.7 keV fit (BH2), both against Jin+11. One rectangle per published estimate, labelled with the source
 name (once per source; Table tab:masses lists the estimates). Limits: the rectangle runs to the edge of the plot, with a dashed outline. A single value (~5000 Msun) is drawn
 +-5%. Sources with no published mass (NS, n.m.) are not shown.
 
     python3 figures/plot_mass_comparison.py [ULXspectra-mc] [OUT.pdf]
 """
-import sys
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import final_round_data as frd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -34,25 +37,17 @@ PUB = [("HolmII", 16, 36, "range", "Barra+24"), ("HolmII", 16, 70, "range", "Fog
        ("NGC6946", 214, 696, "range", "Majumder+23, a=0.99"),
        ("NGC7793", None, 15, "upper", "Motch+14")]
 
-best_bh = {}
-for l in open(B + "/summaries/best_refit_per_source.tsv"):
-    f = l.split("\t")
-    if f[0] == "BH":
-        best_bh[f[1]] = f"{B}/summaries/best_refit_spectra/{f[1]}.{f[2]}/posterior_summary.txt"
-best_bh["NGC247S"] = ("/aux/muses01b/glipunova/rabota/ULX_spectra/mcmcfit/ULXspectra-refit/results/"
-                      "mcmc_NGC247S.BH3a.mc_0p3-10keV/posterior_summary.txt")
+FITS, BEST = frd.load(B)
 
 
-def mass_interval(path):
-    on = False
-    for l in open(path):
-        if "physical parameters" in l:
-            on = True
-        elif on and l.startswith("log_m_bh"):
-            m, lo, hi = map(float, l.split()[1:4])
-            return m - lo, m + hi
-    raise KeyError(path)
+def mass_interval(src, band=frd.FULL):
+    m, lo, hi = frd.posterior(FITS[(src, band, BEST[(src, band)]["best_BH"])], "log_m_bh")   # linear M
+    return m - lo, m + hi
 
+
+# NGC247SS a second time, for the fit below 1.7 keV
+PUB = PUB + [("NGC247SS, <1.7 keV", 600, None, "lower", "Jin+11")]
+BAND = {"NGC247SS, <1.7 keV": ("NGC247SS", frd.SOFT)}
 
 srcs = sorted({p[0] for p in PUB}, key=[p[0] for p in PUB].index)
 col = {s: plt.cm.tab10(i % 10) for i, s in enumerate(srcs)}
@@ -60,7 +55,7 @@ fig, ax = plt.subplots(figsize=(3.4, 3.3))
 ys = []
 labelled = set()
 for src, lo, hi, kind, tag in PUB:
-    y0, y1 = mass_interval(best_bh[src]); ys += [y0, y1]
+    y0, y1 = mass_interval(*BAND.get(src, (src,))); ys += [y0, y1]
     if kind == "value":
         lo, hi = lo * 0.95, hi * 1.05
     x0 = XMIN if kind == "upper" else lo
@@ -70,9 +65,12 @@ for src, lo, hi, kind, tag in PUB:
     ax.add_patch(Rectangle((x0, y0), x1 - x0, y1 - y0, fill=False, ec=col[src], lw=1.2, ls=ls))
     if src not in labelled:   # one label per source, at its first estimate
         labelled.add(src)
-        ax.text(x0 * 1.05, y1 * 1.04, src, fontsize=7, color=col[src], va="bottom")
+        if src in BAND:   # second NGC247SS rectangle: label below it, so that it does not cover the first one
+            ax.text(XMAX / 1.1, y0 / 1.04, src, fontsize=7, color=col[src], va="top", ha="right")
+        else:
+            ax.text(x0 * 1.05, y1 * 1.04, src, fontsize=7, color=col[src], va="bottom")
 ax.plot([XMIN, XMAX], [XMIN, XMAX], color="0.4", lw=0.8)
-ax.text(4e3, 6e3, "1:1", fontsize=8, color="0.4")
+ax.text(30, 50, "1:1", fontsize=8, color="0.4", rotation=38)
 ax.set_xscale("log"); ax.set_yscale("log")
 ax.set_xlim(XMIN, XMAX); ax.set_ylim(min(ys) / 1.5, max(ys) * 3)
 ax.set_xlabel(r"$M_{\rm X}$, published ($M_\odot$)")
